@@ -3,7 +3,7 @@ package info.u_team.useful_railroads.block;
 import info.u_team.u_team_core.api.IModelProvider;
 import info.u_team.u_team_core.api.registry.IUBlock;
 import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
-import net.minecraft.block.BlockRailPowered;
+import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -14,6 +14,8 @@ public class BlockCustomPoweredRail extends BlockRailPowered implements IUBlock,
 	public BlockCustomPoweredRail(String name) {
 		this.name = name;
 		setCreativeTab(UsefulRailroadsCreativeTabs.tab);
+		setHardness(0.7F);
+		setSoundType(SoundType.METAL);
 	}
 	
 	@Override
