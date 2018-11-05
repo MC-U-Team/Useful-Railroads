@@ -1,0 +1,15 @@
+[
+	{
+		"modid": "usefulrailroads",
+		"name": "Useful Railroads",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"description": "Who don't want to travel fast? I do! So i created some high speed minecraft rails: Speed 100 blocks/second. This is just a very beta, cause I have many more plans for rails.",
+		"url": "https://u-team.info/mod/usefulrailroads",
+		"authorList": [
+			"HyCraftHD"
+		],
+		"credits": "Team U-Team",
+		"logoFile": "assets/usefulrailroads/logo.png"
+	}
+]

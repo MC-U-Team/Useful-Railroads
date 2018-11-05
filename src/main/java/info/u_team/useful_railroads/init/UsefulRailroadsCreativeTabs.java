@@ -8,7 +8,7 @@ public class UsefulRailroadsCreativeTabs {
 	public static final UCreativeTab tab = new UCreativeTab(UsefulRailroadsConstants.MODID, "tab");
 	
 	public static void init() {
-		// tab.setIcon(XXX);
+		tab.setIcon(UsefulRailroadsBlocks.rail_highspeedrail);
 	}
 	
 }

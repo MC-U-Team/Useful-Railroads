@@ -1,0 +1,30 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"XDX",
+		"L#L",
+		"XRX"
+	],
+	"key": {
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"#": {
+			"item": "minecraft:stick"
+		},
+		"X": {
+			"item": "minecraft:iron_ingot"
+		},
+		"D": {
+			"item": "minecraft:diamond"
+		},
+		"L": {
+			"item": "minecraft:dye",
+			"data": 4
+		}
+	},
+	"result": {
+		"item": "usefulrailroads:rail_highspeed",
+		"count": 24
+	}
+}
