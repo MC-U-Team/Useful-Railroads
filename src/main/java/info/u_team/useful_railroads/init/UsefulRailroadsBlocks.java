@@ -8,7 +8,11 @@ import net.minecraft.block.Block;
 
 public class UsefulRailroadsBlocks {
 	
-	public static final BlockCustomPoweredRail rail_highspeedrail = new BlockCustomRailHighSpeed("rail_highspeed");
+	public static final BlockRailHighSpeed rail_highspeedrail = new BlockRailHighSpeed("rail_highspeed");
+	
+	public static final BlockRailTeleport rail_teleport = new BlockRailTeleport("rail_teleport");
+	
+	public static final BlockRailDirection rail_direction = new BlockRailDirection("rail_direction");
 	
 	public static void preinit() {
 		BlockRegistry.register(UsefulRailroadsConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UsefulRailroadsBlocks.class));

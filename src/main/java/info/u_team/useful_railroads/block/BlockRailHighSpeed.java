@@ -5,9 +5,9 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-public class BlockCustomRailHighSpeed extends BlockCustomPoweredRail {
+public class BlockRailHighSpeed extends BlockCustomRailPowered {
 	
-	public BlockCustomRailHighSpeed(String name) {
+	public BlockRailHighSpeed(String name) {
 		super(name);
 	}
 	

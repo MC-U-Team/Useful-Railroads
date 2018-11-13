@@ -7,11 +7,11 @@ import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockCustomPoweredRail extends BlockRailPowered implements IUBlock, IModelProvider {
+public class BlockCustomRailPowered extends BlockRailPowered implements IUBlock, IModelProvider {
 	
 	protected final String name;
 	
-	public BlockCustomPoweredRail(String name) {
+	public BlockCustomRailPowered(String name) {
 		this.name = name;
 		setCreativeTab(UsefulRailroadsCreativeTabs.tab);
 		setHardness(0.7F);
