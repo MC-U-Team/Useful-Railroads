@@ -66,7 +66,16 @@ public class TileEntityRailTeleport extends UTileEntity {
 		this.teleportPos = teleportPos;
 	}
 	
+	public void setLocation(int dimension, BlockPos pos) {
+		setDimension(dimension);
+		setTeleportPos(pos);
+		setNeedFuel(calculateFuel());
+	}
+	
 	public void teleport(World world, EntityMinecart cart, BlockPos pos) {
+		cart.motionX = 0;
+		cart.motionY = 0;
+		cart.motionZ = 0;
 		
 	}
 	
@@ -74,7 +83,6 @@ public class TileEntityRailTeleport extends UTileEntity {
 		if (!hasWorld()) {
 			return 0;
 		}
-		
 		int needFuel = 0;
 		
 		int currentDim = world.provider.getDimension();
