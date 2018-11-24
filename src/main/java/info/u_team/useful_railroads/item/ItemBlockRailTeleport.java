@@ -3,16 +3,18 @@ package info.u_team.useful_railroads.item;
 import java.util.List;
 
 import info.u_team.useful_railroads.tilentity.TileEntityRailTeleport;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.*;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class ItemBlockRailTeleport extends ItemBlock {
@@ -58,20 +60,37 @@ public class ItemBlockRailTeleport extends ItemBlock {
 	
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		super.addInformation(stack, world, tooltip, flag);
 		if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("dim")) {
 			return;
 		}
 		NBTTagCompound compound = stack.getTagCompound();
-		tooltip.add("Dimension: " + compound.getInteger("dim"));
-		tooltip.add("X: " + compound.getInteger("x"));
-		tooltip.add("Y: " + compound.getInteger("y"));
-		tooltip.add("Z: " + compound.getInteger("z"));
+		tooltip.add("Dimension: " + TextFormatting.DARK_GREEN + compound.getInteger("dim"));
+		tooltip.add("X: " + TextFormatting.DARK_GREEN + compound.getInteger("x"));
+		tooltip.add("Y: " + TextFormatting.DARK_GREEN + compound.getInteger("y"));
+		tooltip.add("Z: " + TextFormatting.DARK_GREEN + compound.getInteger("z"));
+		if (compound.hasKey("fuel")) {
+			tooltip.add("");
+			tooltip.add("Fuel: " + TextFormatting.DARK_AQUA + compound.getInteger("fuel"));
+		}
+		super.addInformation(stack, world, tooltip, flag);
 	}
 	
 	@Override
 	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
-		super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
+		IBlockState state = null;
+		if (world.setBlockState(pos, newState, 11)) {
+			state = world.getBlockState(pos);
+			if (state.getBlock() == this.block) {
+				block.onBlockPlacedBy(world, pos, state, player, stack);
+				
+				if (player instanceof EntityPlayerMP) {
+					CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, stack);
+				}
+			}
+		} else {
+			return true;
+		}
+		
 		if (world.isRemote) {
 			return true;
 		}
@@ -90,6 +109,16 @@ public class ItemBlockRailTeleport extends ItemBlock {
 		NBTTagCompound compound = stack.getTagCompound();
 		
 		rail.setLocation(compound.getInteger("dim"), new BlockPos(compound.getInteger("x"), compound.getInteger("y"), compound.getInteger("z")));
+		
+		if (compound.hasKey("fuel")) {
+			rail.setFuel(compound.getInteger("fuel"));
+		}
+		
+		// Sync te to client.
+		world.markBlockRangeForRenderUpdate(pos, pos);
+		world.notifyBlockUpdate(pos, state, state, 3);
+		world.scheduleBlockUpdate(pos, state.getBlock(), 0, 0);
+		
 		rail.markDirty();
 		return true;
 	}
