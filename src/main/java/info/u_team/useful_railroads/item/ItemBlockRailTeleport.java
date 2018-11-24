@@ -2,17 +2,19 @@ package info.u_team.useful_railroads.item;
 
 import java.util.List;
 
+import info.u_team.u_team_core.util.MathUtil;
 import info.u_team.useful_railroads.tilentity.TileEntityRailTeleport;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -28,15 +30,23 @@ public class ItemBlockRailTeleport extends ItemBlock {
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityitem) {
 		ItemStack ourStack = entityitem.getItem();
-		if (entityitem.getAge() < 100 || (ourStack.hasTagCompound() && ourStack.getTagCompound().hasKey("dim"))) {
+		if (ourStack.hasTagCompound() && ourStack.getTagCompound().hasKey("dim")) {
 			return false;
 		}
 		World world = entityitem.getEntityWorld();
 		if (world.isRemote) {
-			// TODO client tings etc
+			if (world.rand.nextInt(10) == 0) {
+				for (int i = 0; i < 5; i++) {
+					System.out.println("Test");
+					world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, true, entityitem.posX, entityitem.posY + 0.5, entityitem.posZ, MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2), MathUtil.getRandomNumberInRange(world.rand, 0.1, 1.5), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2));
+				}
+			}
 		} else {
+			if (entityitem.getAge() < 100) {
+				return false;
+			}
 			AxisAlignedBB aabb = new AxisAlignedBB(entityitem.posX - 1, entityitem.posY - 1, entityitem.posZ - 1, entityitem.posX + 1, entityitem.posY + 1, entityitem.posZ + 1);
-			world.getEntitiesWithinAABBExcludingEntity(entityitem, aabb).stream().filter(entity -> entity instanceof EntityItem).map(entity -> (EntityItem) entity).forEach(entity -> {
+			world.getEntitiesWithinAABBExcludingEntity(entityitem, aabb).stream().filter(entity -> entity instanceof EntityItem).map(entity -> (EntityItem) entity).filter(entity -> entity.getAge() >= 100).forEach(entity -> {
 				ItemStack stack = entity.getItem();
 				if (!stack.isEmpty()) {
 					Item item = stack.getItem();
@@ -51,6 +61,10 @@ public class ItemBlockRailTeleport extends ItemBlock {
 						compound.setInteger("x", pos.getX());
 						compound.setInteger("y", pos.getY());
 						compound.setInteger("z", pos.getZ());
+						
+						entityitem.setItem(ourStack); // Send changes to client
+						
+						world.addWeatherEffect(new EntityLightningBolt(world, entityitem.posX, entityitem.posY, entityitem.posZ, true));
 					}
 				}
 			});
