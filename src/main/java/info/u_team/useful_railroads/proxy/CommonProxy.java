@@ -14,6 +14,7 @@ public class CommonProxy {
 	
 	public void init(FMLInitializationEvent event) {
 		UsefulRailroadsCreativeTabs.init();
+		UsefulRailroadsCraftingRecipes.init();
 		CommonRegistry.registerGuiHandler(UsefulRailroadsConstants.MODID, new UsefulRailroadsGuiHandler());
 	}
 	

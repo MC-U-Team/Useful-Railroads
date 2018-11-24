@@ -6,13 +6,14 @@ import info.u_team.useful_railroads.item.ItemBlockRailTeleport;
 import info.u_team.useful_railroads.tilentity.TileEntityRailTeleport;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.*;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -30,6 +31,17 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 		if (player.isSneaking()) {
 			return false;
 		}
+		TileEntity tile = world.getTileEntity(pos);
+		if (!(tile instanceof TileEntityRailTeleport)) {
+			return false;
+		}
+		TileEntityRailTeleport rail = (TileEntityRailTeleport) tile;
+		
+		if (rail.getTeleportPos().getY() < 0) {
+			player.sendMessage(new TextComponentString("§4You have not setup the rail yet."));
+			return true;
+		}
+		
 		player.openGui(UsefulRailroadsConstants.MODID, 0, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
@@ -49,8 +61,8 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 		if (!(tile instanceof TileEntityRailTeleport)) {
 			return;
 		}
-		TileEntityRailTeleport tileentity = (TileEntityRailTeleport) tile;
-		tileentity.teleport(world, cart, pos);
+		TileEntityRailTeleport rail = (TileEntityRailTeleport) tile;
+		rail.teleport(world, cart, pos);
 	}
 	
 	@Override
@@ -116,7 +128,9 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 		compound.setInteger("y", teleportPos.getY());
 		compound.setInteger("z", teleportPos.getZ());
 		
-		compound.setInteger("fuel", rail.getFuel());
+		if (rail.getFuel() > 0) {
+			compound.setInteger("fuel", rail.getFuel());
+		}
 		
 		return compound;
 	}
