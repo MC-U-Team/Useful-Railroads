@@ -3,7 +3,7 @@ package info.u_team.useful_railroads.block;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
 
 public class BlockRailHighSpeed extends BlockCustomRailPowered {
 	
@@ -12,14 +12,7 @@ public class BlockRailHighSpeed extends BlockCustomRailPowered {
 	}
 	
 	@Override
-	public void onMinecartPass(World world, EntityMinecart cart, BlockPos pos) {
-		
-		if (!world.getBlockState(pos).getValue(POWERED)) {
-			cart.motionX = 0;
-			cart.motionZ = 0;
-			return;
-		}
-		
+	public void onMinecartPassPowered(World world, EntityMinecart cart, BlockPos pos) {
 		double sqrt = Math.sqrt(cart.motionX * cart.motionX + cart.motionZ * cart.motionZ);
 		
 		if (sqrt > 0.01) {
@@ -42,8 +35,4 @@ public class BlockRailHighSpeed extends BlockCustomRailPowered {
 		cart.move(MoverType.SELF, mX, 0, mZ);
 	}
 	
-	@Override
-	public boolean canMakeSlopes(IBlockAccess world, BlockPos pos) {
-		return false;
-	}
 }

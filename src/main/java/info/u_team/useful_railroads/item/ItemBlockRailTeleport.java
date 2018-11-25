@@ -37,7 +37,6 @@ public class ItemBlockRailTeleport extends ItemBlock {
 		if (world.isRemote) {
 			if (world.rand.nextInt(10) == 0) {
 				for (int i = 0; i < 5; i++) {
-					System.out.println("Test");
 					world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, true, entityitem.posX, entityitem.posY + 0.5, entityitem.posZ, MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2), MathUtil.getRandomNumberInRange(world.rand, 0.1, 1.5), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2));
 				}
 			}

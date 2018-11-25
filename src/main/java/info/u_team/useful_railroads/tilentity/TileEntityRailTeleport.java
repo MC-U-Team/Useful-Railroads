@@ -161,6 +161,12 @@ public class TileEntityRailTeleport extends UTileEntity implements IInventory, I
 		if (value > 0) {
 			fuel += value * stack.getCount();
 			itemstacks.clear();
+			// Sync te to client.
+			world.markBlockRangeForRenderUpdate(pos, pos);
+			IBlockState state = world.getBlockState(pos);
+			world.notifyBlockUpdate(pos, state, state, 3);
+			world.scheduleBlockUpdate(pos, blockType, 0, 0);
+			markDirty();
 		}
 	}
 	

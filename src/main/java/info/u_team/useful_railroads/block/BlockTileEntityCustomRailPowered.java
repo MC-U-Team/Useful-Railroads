@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockTileEntityCustomRailPowered extends BlockCustomRailPowered implements ITileEntityProvider {
+public abstract class BlockTileEntityCustomRailPowered extends BlockCustomRailPowered implements ITileEntityProvider {
 	
 	private UTileEntityProvider provider;
 	

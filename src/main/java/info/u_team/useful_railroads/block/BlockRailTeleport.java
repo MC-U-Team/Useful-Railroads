@@ -6,7 +6,7 @@ import info.u_team.useful_railroads.item.ItemBlockRailTeleport;
 import info.u_team.useful_railroads.tilentity.TileEntityRailTeleport;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
 public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
@@ -47,13 +47,7 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 	}
 	
 	@Override
-	public void onMinecartPass(World world, EntityMinecart cart, BlockPos pos) {
-		if (!world.getBlockState(pos).getValue(POWERED)) {
-			cart.motionX = 0;
-			cart.motionY = 0;
-			cart.motionZ = 0;
-			return;
-		}
+	public void onMinecartPassPowered(World world, EntityMinecart cart, BlockPos pos) {
 		if (world.isRemote) {
 			return;
 		}
@@ -63,11 +57,6 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 		}
 		TileEntityRailTeleport rail = (TileEntityRailTeleport) tile;
 		rail.teleport(world, cart, pos);
-	}
-	
-	@Override
-	public boolean canMakeSlopes(IBlockAccess world, BlockPos pos) {
-		return false;
 	}
 	
 	@Override

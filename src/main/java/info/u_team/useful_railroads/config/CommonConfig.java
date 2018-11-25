@@ -27,6 +27,7 @@ public class CommonConfig {
 			fuel.put(Items.CHORUS_FRUIT_POPPED.getRegistryName().toString(), 210);
 			fuel.put(Items.REDSTONE.getRegistryName().toString(), 5);
 			fuel.put(Items.GOLD_INGOT.getRegistryName().toString(), 10);
+			fuel.put(Items.DIAMOND.getRegistryName().toString(), 50);
 		}
 	}
 	

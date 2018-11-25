@@ -1,57 +1,60 @@
-package info.u_team.useful_railroads.block;
+package info.u_team.useful_railroads.event;
 
+import info.u_team.useful_railroads.block.BlockCustomRailPowered;
 import net.minecraft.block.*;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.*;
-import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.block.BlockRailBase.EnumRailDirection;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public abstract class BlockCustomRailPowered extends BlockCustomRail {
+public class EventHandlerNeighborNotify {
 	
-	public static final PropertyBool POWERED = PropertyBool.create("powered");
+	// Just minecraft rail logic stuff, nearly all copied
 	
-	public BlockCustomRailPowered(String name) {
-		super(name, true);
-	}
-	
-	@Override
-	public void onMinecartPass(World world, EntityMinecart cart, BlockPos pos) {
-		if (!world.getBlockState(pos).getValue(POWERED)) {
-			cart.motionX = 0;
-			cart.motionY = 0;
-			cart.motionZ = 0;
+	@SubscribeEvent
+	public static void on(NeighborNotifyEvent event) {
+		IBlockState state = event.getState();
+		Block block = state.getBlock();
+		World world = event.getWorld();
+		BlockPos pos = event.getPos();
+		
+		if (!(block instanceof BlockRailPowered)) {
 			return;
 		}
-		onMinecartPassPowered(world, cart, pos);
+		
+		BlockRailPowered rail = (BlockRailPowered) block;
+		
+		if (!world.isRemote) {
+			EnumRailDirection direction = rail.getRailDirection(world, pos, world.getBlockState(pos), null);
+			boolean flag = false;
+			
+			if (!world.getBlockState(pos.down()).isSideSolid(world, pos.down(), EnumFacing.UP)) {
+				flag = true;
+			}
+			
+			if (direction == EnumRailDirection.ASCENDING_EAST && !world.getBlockState(pos.east()).isSideSolid(world, pos.east(), EnumFacing.UP)) {
+				flag = true;
+			} else if (direction == EnumRailDirection.ASCENDING_WEST && !world.getBlockState(pos.west()).isSideSolid(world, pos.west(), EnumFacing.UP)) {
+				flag = true;
+			} else if (direction == EnumRailDirection.ASCENDING_NORTH && !world.getBlockState(pos.north()).isSideSolid(world, pos.north(), EnumFacing.UP)) {
+				flag = true;
+			} else if (direction == EnumRailDirection.ASCENDING_SOUTH && !world.getBlockState(pos.south()).isSideSolid(world, pos.south(), EnumFacing.UP)) {
+				flag = true;
+			}
+			
+			if (flag && !world.isAirBlock(pos)) {
+				rail.dropBlockAsItem(world, pos, state, 0);
+				world.setBlockToAir(pos);
+			} else {
+				updateState(state, world, pos, rail);
+			}
+		}
 	}
 	
-	public abstract void onMinecartPassPowered(World world, EntityMinecart cart, BlockPos pos);
-	
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		int shape = state.getValue(SHAPE).getMetadata();
-		boolean powered = state.getValue(POWERED);
-		int meta = shape;
-		meta |= (powered ? 1 : 0) << 1;
-		return meta;
-	}
-	
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		int shape = meta & 1;
-		boolean powered = ((meta >> 1) & 1) == 1;
-		return blockState.getBaseState().withProperty(SHAPE, EnumRailDirection.byMetadata(shape)).withProperty(POWERED, powered);
-	}
-	
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, SHAPE, POWERED);
-	}
-	
-	// Just minecraft rail logic for power
-	
-	protected boolean findPoweredRailSignal(World world, BlockPos pos, IBlockState state, boolean positive_axis, int distance) {
+	protected static boolean findPoweredRailSignal(World world, BlockPos pos, IBlockState state, boolean positive_axis, int distance) {
 		if (distance >= 8) {
 			return false;
 		} else {
@@ -66,7 +69,7 @@ public abstract class BlockCustomRailPowered extends BlockCustomRail {
 			if (block instanceof BlockRailPowered) {
 				direction = state.getValue(BlockRailPowered.SHAPE);
 			} else {
-				direction = state.getValue(SHAPE);
+				direction = state.getValue(BlockCustomRailPowered.SHAPE);
 			}
 			
 			switch (direction) {
@@ -139,25 +142,25 @@ public abstract class BlockCustomRailPowered extends BlockCustomRail {
 				break;
 			}
 			
-			if (this.isSameRailWithPower(world, new BlockPos(i, j, k), positive_axis, distance, direction)) {
+			if (isSameRailWithPower(world, new BlockPos(i, j, k), positive_axis, distance, direction)) {
 				return true;
 			} else {
-				return flag && this.isSameRailWithPower(world, new BlockPos(i, j - 1, k), positive_axis, distance, direction);
+				return flag && isSameRailWithPower(world, new BlockPos(i, j - 1, k), positive_axis, distance, direction);
 			}
 		}
 	}
 	
-	protected boolean isSameRailWithPower(World world, BlockPos pos, boolean p_176567_3_, int distance, EnumRailDirection direction) {
+	protected static boolean isSameRailWithPower(World world, BlockPos pos, boolean p_176567_3_, int distance, EnumRailDirection direction) {
 		IBlockState iblockstate = world.getBlockState(pos);
 		Block block = iblockstate.getBlock();
 		
-		if (block instanceof BlockCustomRailPowered || block instanceof BlockRailPowered) {
+		if (block instanceof BlockCustomRailPowered) {
 			
 			EnumRailDirection directionOther;
 			if (block instanceof BlockRailPowered) {
 				directionOther = iblockstate.getValue(BlockRailPowered.SHAPE);
 			} else {
-				directionOther = iblockstate.getValue(SHAPE);
+				directionOther = iblockstate.getValue(BlockCustomRailPowered.SHAPE);
 			}
 			
 			if (direction != EnumRailDirection.EAST_WEST || directionOther != EnumRailDirection.NORTH_SOUTH && directionOther != EnumRailDirection.ASCENDING_NORTH && directionOther != EnumRailDirection.ASCENDING_SOUTH) {
@@ -167,7 +170,7 @@ public abstract class BlockCustomRailPowered extends BlockCustomRail {
 					if (block instanceof BlockRailPowered) {
 						powered = iblockstate.getValue(BlockRailPowered.POWERED);
 					} else {
-						powered = iblockstate.getValue(POWERED);
+						powered = iblockstate.getValue(BlockCustomRailPowered.POWERED);
 					}
 					
 					if (powered) {
@@ -185,8 +188,7 @@ public abstract class BlockCustomRailPowered extends BlockCustomRail {
 		return false;
 	}
 	
-	protected void updateState(IBlockState state, World world, BlockPos pos, Block block) {
-		
+	protected static void updateState(IBlockState state, World world, BlockPos pos, Block block) {
 		boolean powered;
 		if (block instanceof BlockRailPowered) {
 			powered = state.getValue(BlockRailPowered.POWERED);
@@ -203,7 +205,7 @@ public abstract class BlockCustomRailPowered extends BlockCustomRail {
 			} else {
 				world.setBlockState(pos, state.withProperty(BlockCustomRailPowered.POWERED, flag1), 3);
 			}
-			world.notifyNeighborsOfStateChange(pos.down(), this, false);
+			world.notifyNeighborsOfStateChange(pos.down(), block, false);
 			
 			if (block instanceof BlockRailPowered) {
 				if (state.getValue(BlockRailPowered.SHAPE).isAscending()) {
