@@ -20,7 +20,6 @@ public class RecipeTeleportRail extends IForgeRegistryEntry.Impl<IRecipe> implem
 				count = 0;
 			}
 		}
-		System.out.println(count);
 		return count == 1;
 	}
 	
