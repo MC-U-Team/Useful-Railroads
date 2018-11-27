@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.block;
 
-import net.minecraft.block.properties.*;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
@@ -11,11 +11,15 @@ import net.minecraft.world.World;
 
 public class BlockRailDirection extends BlockCustomRailPowered {
 	
+	// BROKEN
 	public static final PropertyBool AXIS_DIRECTION = PropertyBool.create("positive_axis");
 	
 	public BlockRailDirection(String name) {
 		super(name);
-		setDefaultState(blockState.getBaseState().withProperty(POWERED, false).withProperty(AXIS_DIRECTION, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH));
+		// setDefaultState(blockState.getBaseState().withProperty(POWERED,
+		// false).withProperty(AXIS_DIRECTION, false).withProperty(SHAPE,
+		// EnumRailDirection.NORTH_SOUTH));
+		
 	}
 	
 	@Override
