@@ -11,15 +11,11 @@ import net.minecraft.world.World;
 
 public class BlockRailDirection extends BlockCustomRailPowered {
 	
-	// BROKEN
 	public static final PropertyBool AXIS_DIRECTION = PropertyBool.create("positive_axis");
 	
 	public BlockRailDirection(String name) {
 		super(name);
-		// setDefaultState(blockState.getBaseState().withProperty(POWERED,
-		// false).withProperty(AXIS_DIRECTION, false).withProperty(SHAPE,
-		// EnumRailDirection.NORTH_SOUTH));
-		
+		setDefaultState(blockState.getBaseState().withProperty(POWERED, false).withProperty(AXIS_DIRECTION, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH));
 	}
 	
 	@Override
@@ -54,6 +50,9 @@ public class BlockRailDirection extends BlockCustomRailPowered {
 		boolean powered = state.getValue(POWERED);
 		boolean axis_direction = state.getValue(AXIS_DIRECTION);
 		int shape = state.getValue(SHAPE).getMetadata();
+		if (shape > 1) {
+			shape = 1; // Don't use other states of the shape
+		}
 		int meta = powered ? 1 : 0;
 		meta |= (axis_direction ? 1 : 0) << 1;
 		meta |= shape << 2;

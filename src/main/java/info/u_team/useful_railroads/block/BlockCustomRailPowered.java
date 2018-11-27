@@ -7,7 +7,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.item.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.fml.relauncher.*;
 
 public abstract class BlockCustomRailPowered extends BlockRailPowered implements IUBlock, IModelProvider {
@@ -40,6 +40,11 @@ public abstract class BlockCustomRailPowered extends BlockRailPowered implements
 	@Override
 	public ItemBlock getItemBlock() {
 		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
+	}
+	
+	@Override
+	public boolean canMakeSlopes(IBlockAccess world, BlockPos pos) {
+		return false;
 	}
 	
 	@Override
