@@ -1,46 +1,18 @@
 {
 	"variants": {
 		"powered=false,shape=north_south": {
-			"model": "usefulrailroads:rail_highspeed_flat"
+			"model": "usefulrailroads:rail_highspeed"
 		},
 		"powered=false,shape=east_west": {
-			"model": "usefulrailroads:rail_highspeed_flat",
+			"model": "usefulrailroads:rail_highspeed",
 			"y": 90
-		},
-		"powered=false,shape=ascending_east": {
-			"model": "usefulrailroads:rail_highspeed_raised_ne",
-			"y": 90
-		},
-		"powered=false,shape=ascending_west": {
-			"model": "usefulrailroads:rail_highspeed_raised_sw",
-			"y": 90
-		},
-		"powered=false,shape=ascending_north": {
-			"model": "usefulrailroads:rail_highspeed_raised_ne"
-		},
-		"powered=false,shape=ascending_south": {
-			"model": "usefulrailroads:rail_highspeed_raised_sw"
 		},
 		"powered=true,shape=north_south": {
-			"model": "usefulrailroads:rail_highspeed_active_flat"
+			"model": "usefulrailroads:rail_highspeed_active"
 		},
 		"powered=true,shape=east_west": {
-			"model": "usefulrailroads:rail_highspeed_active_flat",
+			"model": "usefulrailroads:rail_highspeed_active",
 			"y": 90
-		},
-		"powered=true,shape=ascending_east": {
-			"model": "usefulrailroads:rail_highspeed_active_raised_ne",
-			"y": 90
-		},
-		"powered=true,shape=ascending_west": {
-			"model": "usefulrailroads:rail_highspeed_active_raised_sw",
-			"y": 90
-		},
-		"powered=true,shape=ascending_north": {
-			"model": "usefulrailroads:rail_highspeed_active_raised_ne"
-		},
-		"powered=true,shape=ascending_south": {
-			"model": "usefulrailroads:rail_highspeed_active_raised_sw"
 		}
 	}
 }

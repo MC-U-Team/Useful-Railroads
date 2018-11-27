@@ -1,13 +1,21 @@
 package info.u_team.useful_railroads.block;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import info.u_team.u_team_core.api.IModelProvider;
 import info.u_team.u_team_core.api.registry.IUBlock;
 import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import net.minecraft.block.*;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.item.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.*;
 
 public abstract class BlockCustomRailPowered extends BlockRailPowered implements IUBlock, IModelProvider {
@@ -30,6 +38,16 @@ public abstract class BlockCustomRailPowered extends BlockRailPowered implements
 	@Override
 	public void registerModel() {
 		setModel(getItem(), 0, getRegistryName());
+		
+		ModelLoader.setCustomStateMapper(this, (block) -> {
+			Map<IBlockState, ModelResourceLocation> models = Maps.newLinkedHashMap();
+			ResourceLocation registryname = block.getRegistryName();
+			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH), new ModelResourceLocation(registryname, "powered=false,shape=north_south"));
+			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.EAST_WEST), new ModelResourceLocation(registryname, "powered=false,shape=east_west"));
+			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH), new ModelResourceLocation(registryname, "powered=true,shape=north_south"));
+			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.EAST_WEST), new ModelResourceLocation(registryname, "powered=true,shape=east_west"));
+			return models;
+		});
 	}
 	
 	@Override

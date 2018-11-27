@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.container;
 
 import info.u_team.useful_railroads.tilentity.TileEntityRailTeleport;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class SlotRailTeleportFuel extends Slot {

@@ -13,9 +13,9 @@ public class UsefulRailroadsGuiHandler implements IGuiHandler {
 	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if(ID == 0) {
+		if (ID == 0) {
 			TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-			if(tile instanceof TileEntityRailTeleport) {
+			if (tile instanceof TileEntityRailTeleport) {
 				return new ContainerRailTeleport((TileEntityRailTeleport) tile, player);
 			}
 		}
@@ -24,9 +24,9 @@ public class UsefulRailroadsGuiHandler implements IGuiHandler {
 	
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if(ID == 0) {
+		if (ID == 0) {
 			TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-			if(tile instanceof TileEntityRailTeleport) {
+			if (tile instanceof TileEntityRailTeleport) {
 				return new GuiRailTeleport((TileEntityRailTeleport) tile, player);
 			}
 		}

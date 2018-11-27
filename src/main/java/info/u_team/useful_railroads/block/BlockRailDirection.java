@@ -15,7 +15,7 @@ public class BlockRailDirection extends BlockCustomRailPowered {
 	
 	public BlockRailDirection(String name) {
 		super(name);
-		setDefaultState(blockState.getBaseState().withProperty(POWERED, false).withProperty(AXIS_DIRECTION, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH));
+		setDefaultState(getDefaultState().withProperty(AXIS_DIRECTION, false));
 	}
 	
 	@Override
@@ -50,9 +50,7 @@ public class BlockRailDirection extends BlockCustomRailPowered {
 		boolean powered = state.getValue(POWERED);
 		boolean axis_direction = state.getValue(AXIS_DIRECTION);
 		int shape = state.getValue(SHAPE).getMetadata();
-		if (shape > 1) {
-			shape = 1; // Don't use other states of the shape
-		}
+		shape %= 2; // Don't save states that are higher than 1
 		int meta = powered ? 1 : 0;
 		meta |= (axis_direction ? 1 : 0) << 1;
 		meta |= shape << 2;
