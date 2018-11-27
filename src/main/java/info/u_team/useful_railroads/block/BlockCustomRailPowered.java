@@ -42,6 +42,7 @@ public abstract class BlockCustomRailPowered extends BlockRailPowered implements
 		ModelLoader.setCustomStateMapper(this, (block) -> {
 			Map<IBlockState, ModelResourceLocation> models = Maps.newLinkedHashMap();
 			ResourceLocation registryname = block.getRegistryName();
+			
 			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH), new ModelResourceLocation(registryname, "powered=false,shape=north_south"));
 			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.EAST_WEST), new ModelResourceLocation(registryname, "powered=false,shape=east_west"));
 			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH), new ModelResourceLocation(registryname, "powered=true,shape=north_south"));

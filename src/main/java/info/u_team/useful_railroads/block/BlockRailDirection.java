@@ -1,13 +1,20 @@
 package info.u_team.useful_railroads.block;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.*;
 import net.minecraft.util.EnumFacing.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.*;
 
 public class BlockRailDirection extends BlockCustomRailPowered {
 	
@@ -30,6 +37,28 @@ public class BlockRailDirection extends BlockCustomRailPowered {
 		} else if (shape == EnumRailDirection.NORTH_SOUTH) {
 			cart.motionZ = positive_axis ? -0.02 : 0.02;
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerModel() {
+		setModel(getItem(), 0, getRegistryName());
+		
+		ModelLoader.setCustomStateMapper(this, (block) -> {
+			Map<IBlockState, ModelResourceLocation> models = Maps.newLinkedHashMap();
+			ResourceLocation registryname = block.getRegistryName();
+			
+			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH).withProperty(AXIS_DIRECTION, false), new ModelResourceLocation(registryname, "powered=false,shape=north"));
+			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.EAST_WEST).withProperty(AXIS_DIRECTION, false), new ModelResourceLocation(registryname, "powered=false,shape=west"));
+			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH).withProperty(AXIS_DIRECTION, false), new ModelResourceLocation(registryname, "powered=true,shape=north"));
+			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.EAST_WEST).withProperty(AXIS_DIRECTION, false), new ModelResourceLocation(registryname, "powered=true,shape=west"));
+			
+			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH).withProperty(AXIS_DIRECTION, true), new ModelResourceLocation(registryname, "powered=false,shape=south"));
+			models.put(getDefaultState().withProperty(POWERED, false).withProperty(SHAPE, EnumRailDirection.EAST_WEST).withProperty(AXIS_DIRECTION, true), new ModelResourceLocation(registryname, "powered=false,shape=east"));
+			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH).withProperty(AXIS_DIRECTION, true), new ModelResourceLocation(registryname, "powered=true,shape=south"));
+			models.put(getDefaultState().withProperty(POWERED, true).withProperty(SHAPE, EnumRailDirection.EAST_WEST).withProperty(AXIS_DIRECTION, true), new ModelResourceLocation(registryname, "powered=true,shape=east"));
+			return models;
+		});
 	}
 	
 	@Override
