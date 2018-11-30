@@ -56,7 +56,7 @@ minecraft {
 	
 	replace '${version}', project.version
 	replace '${mcversion}', project.minecraft.version
-	replaceIn "XXX"
+	replaceIn "info/u_team/useful_railroads/UsefulRailroadsConstants.java"
 }
 
 def normalManifest = {
@@ -64,6 +64,7 @@ def normalManifest = {
 		"Implementation-Title": config.mod.name,
     	"Implementation-Version": project.version,
 		"Built-On": minecraft.version,
+		"FMLAT": "usefulrailroads_at.cfg"
 	)
 }
 
@@ -133,6 +134,7 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude "mcmod.info"
     }
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 compileJava {
