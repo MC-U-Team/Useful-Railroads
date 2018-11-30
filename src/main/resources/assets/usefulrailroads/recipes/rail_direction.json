@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"XDX",
+		"X#X",
+		"XRX"
+	],
+	"key": {
+		"R": {
+			"item": "minecraft:stick"
+		},
+		"#": {
+			"item": "minecraft:redstone"
+		},
+		"X": {
+			"item": "minecraft:iron_ingot"
+		},
+		"D": {
+			"item": "minecraft:repeater"
+		}
+	},
+	"result": {
+		"item": "usefulrailroads:rail_direction",
+		"count": 16
+	}
+}
