@@ -18,7 +18,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.ITeleporter;
@@ -94,14 +94,14 @@ public class TileEntityRailTeleport extends UTileEntity implements IInventory, I
 		
 		if (teleportPos.getY() < 0) {
 			if (entity instanceof EntityPlayerMP) {
-				((EntityPlayerMP) entity).sendStatusMessage(new TextComponentString("§4You have not setup the rail yet."), true);
+				((EntityPlayerMP) entity).sendStatusMessage(new TextComponentString(TextFormatting.DARK_RED + "You have not setup the rail yet."), true);
 			}
 			return;
 		}
 		
 		if (fuel < needFuel) {
 			if (entity instanceof EntityPlayerMP) {
-				((EntityPlayerMP) entity).sendStatusMessage(new TextComponentString("§4Fuel missing! Need: §6" + needFuel + "§4. Have: §6" + fuel), true);
+				((EntityPlayerMP) entity).sendStatusMessage(new TextComponentString(TextFormatting.DARK_RED + "Fuel missing! Need: " + TextFormatting.GOLD + needFuel + TextFormatting.DARK_RED + ". Have: " + TextFormatting.GOLD + fuel), true);
 			}
 			return;
 		}

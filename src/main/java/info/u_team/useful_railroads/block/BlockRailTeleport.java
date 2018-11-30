@@ -13,7 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -38,7 +38,7 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 		TileEntityRailTeleport rail = (TileEntityRailTeleport) tile;
 		
 		if (rail.getTeleportPos().getY() < 0) {
-			player.sendMessage(new TextComponentString("§4You have not setup the rail yet."));
+			player.sendMessage(new TextComponentString(TextFormatting.DARK_RED + "You have not setup the rail yet."));
 			return true;
 		}
 		
