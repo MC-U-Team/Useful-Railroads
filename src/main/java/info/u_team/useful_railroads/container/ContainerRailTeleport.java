@@ -22,20 +22,6 @@ public class ContainerRailTeleport extends UContainer {
 	}
 	
 	@Override
-	public void appendPlayerInventory(InventoryPlayer inventory, int x, int y) {
-		int startIndex = inventorySlots.size();
-		for (int height = 0; height < 4; height++) {
-			for (int width = 0; width < 9; width++) {
-				if (height == 3) {
-					addSlotToContainer(new Slot(inventory, startIndex + width, width * 18 + x, height * 18 + 4 + y));
-					continue;
-				}
-				addSlotToContainer(new Slot(inventory, startIndex + (width + height * 9 + 9), width * 18 + x, height * 18 + y));
-			}
-		}
-	}
-	
-	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		BlockPos pos = tile.getPos();
 		if (player.getEntityWorld().getBlockState(pos).getBlock() != UsefulRailroadsBlocks.rail_teleport) {
