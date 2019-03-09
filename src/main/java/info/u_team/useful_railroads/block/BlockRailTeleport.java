@@ -37,7 +37,7 @@ public class BlockRailTeleport extends BlockTileEntityCustomRailPowered {
 		}
 		TileEntityRailTeleport rail = (TileEntityRailTeleport) tile;
 		
-		if (rail.getTeleportPos().getY() < 0) {
+		if (rail.getTeleportPos().getY() < -2000000000) {
 			player.sendMessage(new TextComponentString(TextFormatting.DARK_RED + "You have not setup the rail yet."));
 			return true;
 		}
