@@ -34,7 +34,7 @@ public class TileEntityRailTeleport extends UTileEntity implements IInventory, I
 	protected int fuel = 0;
 	protected int needFuel = 0;
 	protected int dimension = 0;
-	protected BlockPos teleportPos = new BlockPos(0, -1, 0);
+	protected BlockPos teleportPos = new BlockPos(0, -2000000001, 0);
 	
 	protected NonNullList<ItemStack> itemstacks;
 	
@@ -92,7 +92,7 @@ public class TileEntityRailTeleport extends UTileEntity implements IInventory, I
 		
 		Entity entity = cart.getPassengers().isEmpty() ? null : (Entity) cart.getPassengers().get(0);
 		
-		if (teleportPos.getY() < 0) {
+		if (teleportPos.getY() < -2000000000) {
 			if (entity instanceof EntityPlayerMP) {
 				((EntityPlayerMP) entity).sendStatusMessage(new TextComponentString(TextFormatting.DARK_RED + "You have not setup the rail yet."), true);
 			}
