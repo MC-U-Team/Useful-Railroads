@@ -29,8 +29,8 @@ public class BlockRailHighSpeed extends BlockCustomRailPowered {
 			mZ *= 4;
 		}
 		
-		mX = MathHelper.clamp(mX, -5, 5);
-		mZ = MathHelper.clamp(mZ, -5, 5);
+		mX = MathHelper.clamp(mX, -8, 8);
+		mZ = MathHelper.clamp(mZ, -8, 8);
 		
 		cart.move(MoverType.SELF, mX, 0, mZ);
 	}
