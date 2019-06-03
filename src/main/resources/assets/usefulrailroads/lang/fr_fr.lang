@@ -3,3 +3,4 @@ itemGroup.usefulrailroads:tab=Rails utiles
 tile.usefulrailroads:rail_highspeed.name=Rail a très haute vitesse (5 Blocs/Tick)
 tile.usefulrailroads:rail_teleport.name=Rail de téléportation
 tile.usefulrailroads:rail_direction.name=Rail de direction
+tile.usefulrailroads:rail_intersection.name=Rail d'intersection

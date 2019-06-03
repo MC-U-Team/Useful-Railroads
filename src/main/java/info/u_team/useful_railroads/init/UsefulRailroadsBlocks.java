@@ -14,6 +14,8 @@ public class UsefulRailroadsBlocks {
 	
 	public static final BlockRailDirection rail_direction = new BlockRailDirection("rail_direction");
 	
+	public static final BlockRailIntersection rail_intersection = new BlockRailIntersection("rail_intersection");
+	
 	public static void preinit() {
 		BlockRegistry.register(UsefulRailroadsConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UsefulRailroadsBlocks.class));
 	}
