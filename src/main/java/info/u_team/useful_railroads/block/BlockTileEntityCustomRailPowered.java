@@ -1,31 +1,27 @@
 package info.u_team.useful_railroads.block;
 
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import java.util.function.Supplier;
 
-public abstract class BlockTileEntityCustomRailPowered extends BlockCustomRailPowered implements ITileEntityProvider {
+import net.minecraft.block.BlockState;
+import net.minecraft.tileentity.*;
+import net.minecraft.world.IBlockReader;
+
+public abstract class BlockTileEntityCustomRailPowered extends BlockCustomRailPowered {
 	
-	private UTileEntityProvider provider;
+	protected final Supplier<TileEntityType<?>> tileEntityType;
 	
-	public BlockTileEntityCustomRailPowered(String name, UTileEntityProvider provider) {
+	public BlockTileEntityCustomRailPowered(String name, Supplier<TileEntityType<?>> tileEntityType) {
 		super(name);
-		this.provider = provider;
-		this.hasTileEntity = true;
+		this.tileEntityType = tileEntityType;
 	}
 	
 	@Override
-	public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param) {
-		TileEntity tileentity = world.getTileEntity(pos);
-		return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
+	public boolean hasTileEntity(BlockState state) {
+		return true;
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return provider.create(world, meta);
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		return tileEntityType.get().create();
 	}
-	
 }

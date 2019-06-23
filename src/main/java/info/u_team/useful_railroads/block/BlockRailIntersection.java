@@ -1,17 +1,10 @@
 package info.u_team.useful_railroads.block;
 
-import java.util.Map;
-
-import com.google.common.collect.Maps;
-
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
+import net.minecraft.state.properties.RailShape;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.world.IBlockReader;
 
 public class BlockRailIntersection extends BlockCustomRail {
 	
@@ -19,41 +12,25 @@ public class BlockRailIntersection extends BlockCustomRail {
 		super(name);
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerModel() {
-		super.registerModel();
-		
-		ModelLoader.setCustomStateMapper(this, (block) -> {
-			Map<IBlockState, ModelResourceLocation> models = Maps.newLinkedHashMap();
-			ResourceLocation registryname = block.getRegistryName();
-			
-			for (EnumRailDirection direction : EnumRailDirection.values()) {
-				models.put(getDefaultState().withProperty(SHAPE, direction), new ModelResourceLocation(registryname, "normal"));
-			}
-			return models;
-		});
-	}
-	
-	@Override
-	public EnumRailDirection getRailDirection(IBlockAccess world, BlockPos pos, IBlockState state, EntityMinecart cart) {
+	public RailShape getRailDirection(BlockState state, IBlockReader world, BlockPos pos, AbstractMinecartEntity cart) {
 		if (cart != null) {
-			if (Math.abs(cart.motionX) > 0) {
-				return EnumRailDirection.EAST_WEST;
-			} else if (Math.abs(cart.motionZ) > 0) {
-				return EnumRailDirection.NORTH_SOUTH;
+			if (Math.abs(cart.getMotion().getX()) > 0) {
+				return RailShape.EAST_WEST;
+			} else if (Math.abs(cart.getMotion().getZ()) > 0) {
+				return RailShape.NORTH_SOUTH;
 			}
 		}
-		return super.getRailDirection(world, pos, state, cart);
+		return super.getRailDirection(state, world, pos, cart);
 	}
 	
 	@Override
-	public boolean canMakeSlopes(IBlockAccess world, BlockPos pos) {
+	public boolean canMakeSlopes(BlockState state, IBlockReader world, BlockPos pos) {
 		return false;
 	}
 	
 	@Override
-	public boolean isFlexibleRail(IBlockAccess world, BlockPos pos) {
+	public boolean isFlexibleRail(BlockState state, IBlockReader world, BlockPos pos) {
 		return false;
 	}
 }
