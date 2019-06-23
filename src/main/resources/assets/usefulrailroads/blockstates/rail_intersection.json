@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"normal": {
-			"model": "usefulrailroads:rail_intersection"
+		"": {
+			"model": "usefulrailroads:block/rail_intersection"
 		}
 	}
 }

@@ -1,17 +1,17 @@
 {
 	"variants": {
 		"powered=false,shape=north_south": {
-			"model": "usefulrailroads:rail_teleport"
+			"model": "usefulrailroads:block/rail_teleport"
 		},
 		"powered=false,shape=east_west": {
-			"model": "usefulrailroads:rail_teleport",
+			"model": "usefulrailroads:block/rail_teleport",
 			"y": 90
 		},
 		"powered=true,shape=north_south": {
-			"model": "usefulrailroads:rail_teleport_active"
+			"model": "usefulrailroads:block/rail_teleport_active"
 		},
 		"powered=true,shape=east_west": {
-			"model": "usefulrailroads:rail_teleport_active",
+			"model": "usefulrailroads:block/rail_teleport_active",
 			"y": 90
 		}
 	}

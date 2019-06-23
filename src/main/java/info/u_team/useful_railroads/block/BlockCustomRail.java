@@ -5,6 +5,10 @@ import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.*;
+import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public abstract class BlockCustomRail extends RailBlock implements IUBlockRegistryType {
 	
@@ -20,6 +24,11 @@ public abstract class BlockCustomRail extends RailBlock implements IUBlockRegist
 	@Override
 	public String getEntryName() {
 		return name;
+	}
+
+	@Override
+	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+		super.fillStateContainer(builder);
 	}
 	
 	@Override

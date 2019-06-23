@@ -1,33 +1,33 @@
 {
 	"variants": {
 		"powered=false,shape=north": {
-			"model": "usefulrailroads:rail_direction"
+			"model": "usefulrailroads:block/rail_direction"
 		},
 		"powered=false,shape=west": {
-			"model": "usefulrailroads:rail_direction",
+			"model": "usefulrailroads:block/rail_direction",
 			"y": -90
 		},
 		"powered=true,shape=north": {
-			"model": "usefulrailroads:rail_direction_active"
+			"model": "usefulrailroads:block/rail_direction_active"
 		},
 		"powered=true,shape=west": {
-			"model": "usefulrailroads:rail_direction_active",
+			"model": "usefulrailroads:block/rail_direction_active",
 			"y": -90
 		},
 		"powered=false,shape=south": {
-			"model": "usefulrailroads:rail_direction",
+			"model": "usefulrailroads:block/rail_direction",
 			"y": 180
 		},
 		"powered=false,shape=east": {
-			"model": "usefulrailroads:rail_direction",
+			"model": "usefulrailroads:block/rail_direction",
 			"y": 90
 		},
 		"powered=true,shape=south": {
-			"model": "usefulrailroads:rail_direction_active",
+			"model": "usefulrailroads:block/rail_direction_active",
 			"y": 180
 		},
 		"powered=true,shape=east": {
-			"model": "usefulrailroads:rail_direction_active",
+			"model": "usefulrailroads:block/rail_direction_active",
 			"y": 90
 		}
 	}

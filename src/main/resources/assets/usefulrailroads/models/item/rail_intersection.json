@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "usefulrailroads:blocks/rail_intersection"
+		"layer0": "usefulrailroads:block/rail_intersection"
 	}
 }
