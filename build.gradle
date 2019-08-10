@@ -24,7 +24,7 @@ apply plugin: "maven"
 
 repositories {
     maven { url = "https://repo.u-team.info" }
-    maven { url = "https://dvs1.progwml6.com/files/maven/" }
+    maven { url = "https://dvs1.progwml6.com/files/maven" }
 }
 
 getBuildNumber()
@@ -149,8 +149,8 @@ sourceSets {
 dependencies {
     minecraft "net.minecraftforge:forge:$config.forge.version"
 	compile "info.u-team:u_team_core-${config.forge.mcversion}:${config.uteamcore.version}:dev"
-  	compileOnly fg.deobf("mezz.jei:jei-1.14.3:${config.jei.version}:api")
-  	runtimeOnly fg.deobf("mezz.jei:jei-1.14.3:${config.jei.version}")
+  	compileOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}:api")
+  	runtimeOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}")
 }
 
 compileJava {
