@@ -109,6 +109,11 @@ public class CustomPoweredRailBlock extends PoweredRailBlock implements IUBlockR
 	protected void controllSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
 	}
 	
+	protected void speedUpCart(AbstractMinecartEntity cart, double speedMultiplier, double speedClamp) {
+		final Vec3d motion = cart.getMotion();
+		cart.move(MoverType.SELF, new Vec3d(MathHelper.clamp(speedMultiplier * motion.x, -speedClamp, speedClamp), 0.0D, MathHelper.clamp(speedMultiplier * motion.z, -speedClamp, speedClamp)));
+	}
+	
 	private static boolean isNormalCube(World world, BlockPos pos) {
 		return world.getBlockState(pos).isNormalCube(world, pos);
 	}
