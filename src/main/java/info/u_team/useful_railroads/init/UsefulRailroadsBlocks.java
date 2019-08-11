@@ -4,7 +4,7 @@ import java.util.List;
 
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.block.HighSpeedRailBlock;
+import info.u_team.useful_railroads.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class UsefulRailroadsBlocks {
 	
 	public static final HighSpeedRailBlock HIGHSPEED_RAIL = new HighSpeedRailBlock("highspeed");
+	public static final DirectionRailBlock DIRECTION_RAIL = new DirectionRailBlock("direction");
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {

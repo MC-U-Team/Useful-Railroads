@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"usefulrailroads:rail_highspeed"
+		"usefulrailroads:rail_highspeed",
+		"usefulrailroads:rail_direction"
 	]
 }

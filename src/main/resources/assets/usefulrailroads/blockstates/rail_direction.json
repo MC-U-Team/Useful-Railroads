@@ -1,32 +1,32 @@
 {
 	"variants": {
-		"powered=false,shape=north": {
+		"positive_axis=false,powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/rail_direction"
 		},
-		"powered=false,shape=west": {
+		"positive_axis=false,powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/rail_direction",
 			"y": -90
 		},
-		"powered=true,shape=north": {
+		"positive_axis=false,powered=true,shape=north_south": {
 			"model": "usefulrailroads:block/rail_direction_active"
 		},
-		"powered=true,shape=west": {
+		"positive_axis=false,powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/rail_direction_active",
 			"y": -90
 		},
-		"powered=false,shape=south": {
+		"positive_axis=true,powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/rail_direction",
 			"y": 180
 		},
-		"powered=false,shape=east": {
+		"positive_axis=true,powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/rail_direction",
 			"y": 90
 		},
-		"powered=true,shape=south": {
+		"positive_axis=true,powered=true,shape=north_south": {
 			"model": "usefulrailroads:block/rail_direction_active",
 			"y": 180
 		},
-		"powered=true,shape=east": {
+		"positive_axis=true,powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/rail_direction_active",
 			"y": 90
 		}
