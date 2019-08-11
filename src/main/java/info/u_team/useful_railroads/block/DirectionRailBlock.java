@@ -52,24 +52,13 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 				boolean hasRailEast = func_208512_d(pos.east());
 				
 				RailShape shape = null;
-				boolean positiveAxis = newState.get(AXIS_DIRECTION);
 				
 				if ((hasRailNorth || hasRailSouth) && !hasRailWest && !hasRailEast) {
 					shape = RailShape.NORTH_SOUTH;
-					if (hasRailNorth && !hasRailSouth) {
-						positiveAxis = false;
-					} else if (hasRailSouth && !hasRailNorth) {
-						positiveAxis = true;
-					}
 				}
 				
 				if ((hasRailWest || hasRailEast) && !hasRailNorth && !hasRailSouth) {
 					shape = RailShape.EAST_WEST;
-					if (hasRailWest && !hasRailEast) {
-						positiveAxis = false;
-					} else if (hasRailEast && !hasRailWest) {
-						positiveAxis = true;
-					}
 				}
 				
 				if (shape == null) {
@@ -77,7 +66,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 				}
 				
 				reset(shape);
-				newState = newState.with(SHAPE, shape).with(AXIS_DIRECTION, positiveAxis);
+				newState = newState.with(SHAPE, shape);
 				
 				if (placing || world.getBlockState(pos) != newState) {
 					world.setBlockState(pos, newState, 3);
