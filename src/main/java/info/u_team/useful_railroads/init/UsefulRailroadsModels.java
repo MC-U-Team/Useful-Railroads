@@ -21,6 +21,7 @@ public class UsefulRailroadsModels {
 	public static void register(Register<Block> event) {
 		ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(HIGHSPEED_RAIL)).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(BlockState::new));
 		ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(DIRECTION_RAIL)).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(BlockState::new));
+		ModelUtil.addCustomStateContainer(INTERSECTION_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(INTERSECTION_RAIL)).add(EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(BlockState::new));
 	}
 	
 }

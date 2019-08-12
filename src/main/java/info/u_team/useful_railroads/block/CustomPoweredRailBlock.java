@@ -12,7 +12,7 @@ import net.minecraft.state.properties.RailShape;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-public class CustomPoweredRailBlock extends PoweredRailBlock implements IUBlockRegistryType {
+public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements IUBlockRegistryType {
 	
 	protected final String name;
 	

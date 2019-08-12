@@ -1,6 +1,9 @@
 {
 	"variants": {
-		"": {
+		"shape=north_south": {
+			"model": "usefulrailroads:block/rail_intersection"
+		},
+		"shape=east_west": {
 			"model": "usefulrailroads:block/rail_intersection"
 		}
 	}

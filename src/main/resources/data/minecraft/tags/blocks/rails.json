@@ -2,6 +2,7 @@
 	"replace": false,
 	"values": [
 		"usefulrailroads:rail_highspeed",
-		"usefulrailroads:rail_direction"
+		"usefulrailroads:rail_direction",
+		"usefulrailroads:rail_intersection"
 	]
 }
