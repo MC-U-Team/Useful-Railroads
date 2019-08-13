@@ -7,7 +7,7 @@ import info.u_team.useful_railroads.init.UsefulRailroadsTileEntities;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
@@ -23,19 +23,54 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int fuel;
 	private int cost;
 	
-	private final LazyOptional<ItemStackHandler> slot = LazyOptional.of(() -> new ItemStackHandler(1) {
+	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new IItemHandlerModifiable() {
 		
-		public void setStackInSlot(int slot, ItemStack stack) {
-			System.out.println("CALL: " + world.isRemote);
-			validateSlotIndex(slot);
-			if (world.isRemote) {
-				return;
+		@Override
+		public boolean isItemValid(int slot, ItemStack stack) {
+			return stack.getItem() == Items.DIAMOND;
+		}
+		
+		@Override
+		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+			if (stack.isEmpty()) {
+				return ItemStack.EMPTY;
 			}
-			System.out.println("UPDATE FLUEL");
-			fuel += stack.getCount() * 100;
-			onContentsChanged(slot);
-		};
+			
+			if (!isItemValid(slot, stack)) {
+				return stack;
+			}
+			if (!simulate) {
+				setStackInSlot(slot, stack);
+			}
+			return ItemStack.EMPTY;
+		}
 		
+		@Override
+		public ItemStack getStackInSlot(int slot) {
+			return ItemStack.EMPTY;
+		}
+		
+		@Override
+		public int getSlots() {
+			return 1;
+		}
+		
+		@Override
+		public int getSlotLimit(int slot) {
+			return 64;
+		}
+		
+		@Override
+		public ItemStack extractItem(int slot, int amount, boolean simulate) {
+			return ItemStack.EMPTY;
+		}
+		
+		@Override
+		public void setStackInSlot(int slot, ItemStack stack) {
+			if (!world.isRemote) {
+				fuel += 100 * stack.getCount();
+			}
+		}
 	});
 	
 	public TeleportRailTileEntity() {
