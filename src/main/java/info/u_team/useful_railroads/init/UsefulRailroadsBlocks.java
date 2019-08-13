@@ -18,6 +18,7 @@ public class UsefulRailroadsBlocks {
 	public static final HighSpeedRailBlock HIGHSPEED_RAIL = new HighSpeedRailBlock("highspeed");
 	public static final DirectionRailBlock DIRECTION_RAIL = new DirectionRailBlock("direction");
 	public static final IntersectionRailBlock INTERSECTION_RAIL = new IntersectionRailBlock("intersection");
+	public static final TeleportRailBlock TELEPORT_RAIL = new TeleportRailBlock("teleport");
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {

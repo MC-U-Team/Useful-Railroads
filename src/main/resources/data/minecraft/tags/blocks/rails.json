@@ -3,6 +3,7 @@
 	"values": [
 		"usefulrailroads:rail_highspeed",
 		"usefulrailroads:rail_direction",
-		"usefulrailroads:rail_intersection"
+		"usefulrailroads:rail_intersection",
+		"usefulrailroads:rail_teleport"
 	]
 }
