@@ -30,6 +30,6 @@ authors="HyCraftHD"
 	[[dependencies.usefulrailroads]]
 	    modId="uteamcore"
 	    mandatory=true
-	    versionRange="[2.7.0.129,)"
+	    versionRange="[2.7.1.130,)"
 	    ordering="NONE"
 	    side="BOTH"
