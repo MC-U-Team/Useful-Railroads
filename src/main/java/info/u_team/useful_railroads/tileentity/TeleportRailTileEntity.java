@@ -26,10 +26,12 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private final LazyOptional<ItemStackHandler> slot = LazyOptional.of(() -> new ItemStackHandler(1) {
 		
 		public void setStackInSlot(int slot, ItemStack stack) {
+			System.out.println("CALL: " + world.isRemote);
 			validateSlotIndex(slot);
 			if (world.isRemote) {
 				return;
 			}
+			System.out.println("UPDATE FLUEL");
 			fuel += stack.getCount() * 100;
 			onContentsChanged(slot);
 		};
@@ -93,5 +95,13 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	
 	public void setFuel(int fuel) {
 		this.fuel = fuel;
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	public int getCost() {
+		return cost;
 	}
 }

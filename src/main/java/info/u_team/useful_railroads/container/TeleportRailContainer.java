@@ -20,8 +20,8 @@ public class TeleportRailContainer extends UTileeEntityContainer<TeleportRailTil
 	
 	@Override
 	protected void init(boolean server) {
-		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> appendInventory(handler, 1, 1, 152, 32));
-		appendPlayerInventory(playerInventory, 8, 64);
+		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> appendInventory(handler, 1, 1, 152, 75));
+		appendPlayerInventory(playerInventory, 8, 107);
 		trackInt(new IntReferenceHolder() {
 			
 			@Override
