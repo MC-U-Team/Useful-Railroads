@@ -9,7 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> {
 	
-	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/rail_teleport.png");
 	
 	public TeleportRailScreen(TeleportRailContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title, BACKGROUND);

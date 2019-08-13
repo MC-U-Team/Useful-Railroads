@@ -25,14 +25,15 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	
 	private final LazyOptional<ItemStackHandler> slot = LazyOptional.of(() -> new ItemStackHandler(1) {
 		
-		protected void onContentsChanged(int slot) {
+		public void setStackInSlot(int slot, ItemStack stack) {
+			validateSlotIndex(slot);
 			if (world.isRemote) {
 				return;
 			}
-			final ItemStack stack = getStackInSlot(slot); // Validate item with config value
 			fuel += stack.getCount() * 100;
-			setStackInSlot(slot, ItemStack.EMPTY);
+			onContentsChanged(slot);
 		};
+		
 	});
 	
 	public TeleportRailTileEntity() {
@@ -70,7 +71,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side != Direction.UP) {
 			return slot.cast();
 		}
 		return super.getCapability(capability, side);
@@ -84,5 +85,13 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	@Override
 	public ITextComponent getDisplayName() {
 		return new StringTextComponent("Teleport rail"); // TODO use translation
+	}
+	
+	public int getFuel() {
+		return fuel;
+	}
+	
+	public void setFuel(int fuel) {
+		this.fuel = fuel;
 	}
 }
