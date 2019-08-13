@@ -1,19 +1,23 @@
 package info.u_team.useful_railroads.tileentity;
 
+import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
+import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntities;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.container.*;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.*;
+import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.*;
 
-public class TeleportRailTileEntity extends UTileEntity implements INamedContainerProvider {
+public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTileEntity {
 	
 	private Location location = Location.ORIGIN;
 	private int fuel;
@@ -50,13 +54,18 @@ public class TeleportRailTileEntity extends UTileEntity implements INamedContain
 	}
 	
 	@Override
-	public void sendChunkLoadData(CompoundNBT compound) {
-		writeNBT(compound);
+	public void sendInitialDataBuffer(PacketBuffer buffer) {
+		location.serialize(buffer);
+		buffer.writeInt(fuel);
+		buffer.writeInt(cost);
 	}
 	
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void handleChunkLoadData(CompoundNBT compound) {
-		readNBT(compound);
+	public void handleInitialDataBuffer(PacketBuffer buffer) {
+		location.deserialize(buffer);
+		fuel = buffer.readInt();
+		cost = buffer.readInt();
 	}
 	
 	@Override
@@ -69,7 +78,7 @@ public class TeleportRailTileEntity extends UTileEntity implements INamedContain
 	
 	@Override
 	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-		return null;
+		return new TeleportRailContainer(id, playerInventory, this);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package info.u_team.useful_railroads.util;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.dimension.DimensionType;
@@ -32,6 +33,22 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	
 	public void setPos(BlockPos pos) {
 		this.pos = pos;
+	}
+	
+	public void serialize(PacketBuffer buffer) {
+		buffer.writeString(dimensionType.getRegistryName().toString());
+		buffer.writeBlockPos(pos);
+	}
+	
+	public void deserialize(PacketBuffer buffer) {
+		final ResourceLocation dimensionLocation = ResourceLocation.tryCreate(buffer.readString());
+		if (dimensionLocation != null) {
+			dimensionType = DimensionType.byName(dimensionLocation);
+		}
+		if (dimensionType == null) {
+			dimensionType = DimensionType.OVERWORLD;
+		}
+		pos = buffer.readBlockPos();
 	}
 	
 	@Override
