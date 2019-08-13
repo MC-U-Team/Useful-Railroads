@@ -13,6 +13,22 @@ public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> 
 	
 	public TeleportRailScreen(TeleportRailContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title, BACKGROUND);
+		xSize = 176;
+		ySize = 146;
+	}
+	
+	@Override
+	public void render(int mouseX, int mouseY, float partialTicks) {
+		renderBackground();
+		super.render(mouseX, mouseY, partialTicks);
+		buttons.forEach(button -> button.renderToolTip(mouseX, mouseY));
+		renderHoveredToolTip(mouseX, mouseY);
+	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		font.drawString(title.getFormattedText(), 8, 6, 4210752);
+		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 94, 4210752);
 	}
 	
 }
