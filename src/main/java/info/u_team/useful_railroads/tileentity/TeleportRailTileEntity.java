@@ -7,7 +7,6 @@ import info.u_team.useful_railroads.init.UsefulRailroadsTileEntities;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
@@ -23,55 +22,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int fuel;
 	private int cost;
 	
-	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new IItemHandlerModifiable() {
-		
-		@Override
-		public boolean isItemValid(int slot, ItemStack stack) {
-			return stack.getItem() == Items.DIAMOND;
-		}
-		
-		@Override
-		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-			if (stack.isEmpty()) {
-				return ItemStack.EMPTY;
-			}
-			
-			if (!isItemValid(slot, stack)) {
-				return stack;
-			}
-			if (!simulate) {
-				setStackInSlot(slot, stack);
-			}
-			return ItemStack.EMPTY;
-		}
-		
-		@Override
-		public ItemStack getStackInSlot(int slot) {
-			return ItemStack.EMPTY;
-		}
-		
-		@Override
-		public int getSlots() {
-			return 1;
-		}
-		
-		@Override
-		public int getSlotLimit(int slot) {
-			return 64;
-		}
-		
-		@Override
-		public ItemStack extractItem(int slot, int amount, boolean simulate) {
-			return ItemStack.EMPTY;
-		}
-		
-		@Override
-		public void setStackInSlot(int slot, ItemStack stack) {
-			if (!world.isRemote) {
-				fuel += 100 * stack.getCount();
-			}
-		}
-	});
+	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new TeleportRailItemHandler(() -> getWorld().isRemote, fuelAdder -> fuel += fuelAdder));
 	
 	public TeleportRailTileEntity() {
 		super(UsefulRailroadsTileEntities.TELEPORT_RAIL);
