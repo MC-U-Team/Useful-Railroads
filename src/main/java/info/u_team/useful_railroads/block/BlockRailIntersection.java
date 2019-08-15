@@ -38,9 +38,9 @@ public class BlockRailIntersection extends BlockCustomRail {
 	@Override
 	public EnumRailDirection getRailDirection(IBlockAccess world, BlockPos pos, IBlockState state, EntityMinecart cart) {
 		if (cart != null) {
-			if (Math.abs(cart.motionX) > 0) {
+			if (Math.abs(cart.motionX) > Math.abs(cart.motionZ)) {
 				return EnumRailDirection.EAST_WEST;
-			} else if (Math.abs(cart.motionZ) > 0) {
+			} else {
 				return EnumRailDirection.NORTH_SOUTH;
 			}
 		}
