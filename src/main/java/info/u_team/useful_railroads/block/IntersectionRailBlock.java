@@ -16,7 +16,7 @@ public class IntersectionRailBlock extends CustomRailBlock {
 	public RailShape getRailDirection(BlockState state, IBlockReader world, BlockPos pos, AbstractMinecartEntity cart) {
 		if (cart != null) {
 			final Vec3d motion = cart.getMotion();
-			if (Math.abs(motion.getX()) > Math.abs(motion.getY())) {
+			if (Math.abs(motion.getX()) > Math.abs(motion.getZ())) {
 				return RailShape.EAST_WEST;
 			} else {
 				return RailShape.NORTH_SOUTH;
