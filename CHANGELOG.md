@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.12.2-1.1.1.8] - 2019-08-15
+### Added
+- Added crafting recipe for intersection rail (Implements [#6](https://github.com/MC-U-Team/Useful-Railroads/issues/6))
+
+### Changed
+- Make intersection rail more reliable
+
 ## [1.12.2-1.1.0.7] - 2019-06-03
 ### Added
 - Added intersection rail. This rail does not need any power
