@@ -1,26 +1,32 @@
 package info.u_team.useful_railroads.tileentity;
 
-import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Supplier;
 
-import info.u_team.useful_railroads.config.CommonExtendedConfig;
+import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
+import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class TeleportRailItemHandler implements IItemHandlerModifiable {
 	
-	private final Supplier<Boolean> isRemote;
+	private final Supplier<World> worldSupplier;
 	private final Consumer<Integer> fuelAdder;
 	
-	public TeleportRailItemHandler(Supplier<Boolean> isRemote, Consumer<Integer> fuelAdder) {
-		this.isRemote = isRemote;
+	private TeleportRailFuelRecipe currentRecipe;
+	private ItemStack failedMatch = ItemStack.EMPTY;
+	
+	public TeleportRailItemHandler(Supplier<World> worldSupplier, Consumer<Integer> fuelAdder) {
+		this.worldSupplier = worldSupplier;
 		this.fuelAdder = fuelAdder;
 	}
 	
 	@Override
 	public boolean isItemValid(int slot, ItemStack stack) {
-		return CommonExtendedConfig.getFuel().keySet().stream().filter(ingedient -> ingedient.test(stack)).findAny().isPresent();
+		return getRecipe(stack, worldSupplier.get()).isPresent();
 	}
 	
 	@Override
@@ -60,10 +66,26 @@ public class TeleportRailItemHandler implements IItemHandlerModifiable {
 	
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		if (!isRemote.get()) {
-			CommonExtendedConfig.getFuel().entrySet().stream().filter(entry -> entry.getKey().test(stack)).findAny().map(Entry::getValue).ifPresent(value -> {
-				fuelAdder.accept(stack.getCount() * value);
-			});
+		final World world = worldSupplier.get();
+		if (!world.isRemote) {
+			getRecipe(stack, world).ifPresent(recipe -> fuelAdder.accept(stack.getCount() * recipe.getFuel()));
+		}
+	}
+	
+	private Optional<TeleportRailFuelRecipe> getRecipe(ItemStack stack, World world) {
+		final IInventory inventory = new Inventory(stack);
+		if (stack.isEmpty() || stack == failedMatch)
+			return Optional.empty();
+		if (currentRecipe != null && currentRecipe.matches(inventory, world)) {
+			return Optional.of(currentRecipe);
+		} else {
+			TeleportRailFuelRecipe recipe = world.getRecipeManager().getRecipe(UsefulRailroadsRecipeTypes.TELEPORT_FUEL, inventory, world).orElse(null);
+			if (recipe == null) {
+				failedMatch = stack;
+			} else {
+				failedMatch = ItemStack.EMPTY;
+			}
+			return Optional.ofNullable(currentRecipe = recipe);
 		}
 	}
 }

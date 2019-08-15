@@ -19,11 +19,11 @@
 			"item": "minecraft:diamond"
 		},
 		"L": {
-			"item": "minecraft:ender_pearl"
+			"item": "minecraft:lapis_lazuli"
 		}
 	},
 	"result": {
-		"item": "usefulrailroads:rail_teleport",
-		"count": 1
+		"item": "usefulrailroads:rail_highspeed",
+		"count": 24
 	}
 }

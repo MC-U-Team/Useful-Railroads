@@ -22,7 +22,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int fuel;
 	private int cost;
 	
-	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new TeleportRailItemHandler(() -> getWorld().isRemote, fuelAdder -> fuel += fuelAdder));
+	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new TeleportRailItemHandler(() -> getWorld(), fuelAdder -> fuel += fuelAdder));
 	
 	public TeleportRailTileEntity() {
 		super(UsefulRailroadsTileEntities.TELEPORT_RAIL);
