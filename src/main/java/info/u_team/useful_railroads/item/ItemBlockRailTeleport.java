@@ -41,7 +41,7 @@ public class ItemBlockRailTeleport extends ItemBlock {
 				}
 			}
 		} else {
-			if (entityitem.getAge() < 100) {
+			if (entityitem.age < 100) {
 				return false;
 			}
 			AxisAlignedBB aabb = new AxisAlignedBB(entityitem.posX - 1, entityitem.posY - 1, entityitem.posZ - 1, entityitem.posX + 1, entityitem.posY + 1, entityitem.posZ + 1);
