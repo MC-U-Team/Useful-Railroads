@@ -45,7 +45,7 @@ public class ItemBlockRailTeleport extends ItemBlock {
 				return false;
 			}
 			AxisAlignedBB aabb = new AxisAlignedBB(entityitem.posX - 1, entityitem.posY - 1, entityitem.posZ - 1, entityitem.posX + 1, entityitem.posY + 1, entityitem.posZ + 1);
-			world.getEntitiesWithinAABBExcludingEntity(entityitem, aabb).stream().filter(entity -> entity instanceof EntityItem).map(entity -> (EntityItem) entity).filter(entity -> entity.getAge() >= 100).forEach(entity -> {
+			world.getEntitiesWithinAABBExcludingEntity(entityitem, aabb).stream().filter(entity -> entity instanceof EntityItem).map(entity -> (EntityItem) entity).filter(entity -> entity.age >= 100).forEach(entity -> {
 				ItemStack stack = entity.getItem();
 				if (!stack.isEmpty()) {
 					Item item = stack.getItem();
