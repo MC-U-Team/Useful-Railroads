@@ -55,46 +55,46 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	private void addCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
 		
 		ShapedRecipeBuilder.shapedRecipe(HIGHSPEED_RAIL, 24) //
-				.patternLine("XDX") //
-				.patternLine("L#L") //
-				.patternLine("XRX") //
+				.patternLine("IDI") //
+				.patternLine("LSL") //
+				.patternLine("IRI") //
 				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('#', Items.STICK) //
-				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.key('S', Items.STICK) //
+				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
 				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
 				.key('L', getIngredientOfTag(Tags.Items.GEMS_LAPIS)) //
 				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
 				.build(consumer);
 		
 		ShapedRecipeBuilder.shapedRecipe(DIRECTION_RAIL, 16) //
-				.patternLine("XDX") //
-				.patternLine("X#X") //
-				.patternLine("XRX") //
-				.key('R', Items.STICK) //
-				.key('#', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('D', Items.REPEATER) //
+				.patternLine("IEI") //
+				.patternLine("IRI") //
+				.patternLine("ISI") //
+				.key('S', Items.STICK) //
+				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.key('E', Items.REPEATER) //
 				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
 				.build(consumer);
 		
 		ShapedRecipeBuilder.shapedRecipe(TELEPORT_RAIL, 1) //
-				.patternLine("XDX") //
-				.patternLine("L#L") //
-				.patternLine("XRX") //
+				.patternLine("IDI") //
+				.patternLine("ESE") //
+				.patternLine("IRI") //
 				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('#', Items.STICK) //
-				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.key('S', Items.STICK) //
+				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
 				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
-				.key('L', Items.ENDER_PEARL) //
+				.key('E', Items.ENDER_PEARL) //
 				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
 				.build(consumer);
 		
 		ShapedRecipeBuilder.shapedRecipe(INTERSECTION_RAIL, 8) //
-				.patternLine("XXX") //
-				.patternLine("X#X") //
-				.patternLine("XXX") //
-				.key('#', Items.STICK) //
-				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.patternLine("III") //
+				.patternLine("ISI") //
+				.patternLine("III") //
+				.key('S', Items.STICK) //
+				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
 				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
 				.build(consumer);
 	}

@@ -1,18 +1,18 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"XDX",
-		"L#L",
-		"XRX"
+		"IDI",
+		"LSL",
+		"IRI"
 	],
 	"key": {
 		"R": {
 			"tag": "forge:dusts/redstone"
 		},
-		"#": {
+		"S": {
 			"item": "minecraft:stick"
 		},
-		"X": {
+		"I": {
 			"tag": "forge:ingots/iron"
 		},
 		"D": {

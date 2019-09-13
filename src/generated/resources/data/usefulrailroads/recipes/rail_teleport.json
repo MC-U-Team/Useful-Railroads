@@ -1,24 +1,24 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"XDX",
-		"L#L",
-		"XRX"
+		"IDI",
+		"ESE",
+		"IRI"
 	],
 	"key": {
 		"R": {
 			"tag": "forge:dusts/redstone"
 		},
-		"#": {
+		"S": {
 			"item": "minecraft:stick"
 		},
-		"X": {
+		"I": {
 			"tag": "forge:ingots/iron"
 		},
 		"D": {
 			"tag": "forge:gems/diamond"
 		},
-		"L": {
+		"E": {
 			"item": "minecraft:ender_pearl"
 		}
 	},

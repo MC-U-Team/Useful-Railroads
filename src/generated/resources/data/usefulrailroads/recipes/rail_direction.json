@@ -1,21 +1,21 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"XDX",
-		"X#X",
-		"XRX"
+		"IEI",
+		"IRI",
+		"ISI"
 	],
 	"key": {
-		"R": {
+		"S": {
 			"item": "minecraft:stick"
 		},
-		"#": {
+		"R": {
 			"tag": "forge:dusts/redstone"
 		},
-		"X": {
+		"I": {
 			"tag": "forge:ingots/iron"
 		},
-		"D": {
+		"E": {
 			"item": "minecraft:repeater"
 		}
 	},
