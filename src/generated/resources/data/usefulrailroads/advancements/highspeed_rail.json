@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"usefulrailroads:rail_direction"
+			"usefulrailroads:highspeed_rail"
 		]
 	},
 	"criteria": {
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "usefulrailroads:rail_direction"
+				"recipe": "usefulrailroads:highspeed_rail"
 			}
 		}
 	},

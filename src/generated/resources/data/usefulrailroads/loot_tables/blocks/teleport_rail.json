@@ -6,7 +6,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "usefulrailroads:rail_teleport"
+					"name": "usefulrailroads:teleport_rail"
 				}
 			],
 			"conditions": [

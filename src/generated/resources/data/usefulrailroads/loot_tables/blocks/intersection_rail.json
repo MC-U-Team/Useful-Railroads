@@ -6,7 +6,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "usefulrailroads:rail_highspeed"
+					"name": "usefulrailroads:intersection_rail"
 				}
 			],
 			"conditions": [

@@ -2,7 +2,7 @@
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
 		"IDI",
-		"ESE",
+		"LSL",
 		"IRI"
 	],
 	"key": {
@@ -18,11 +18,12 @@
 		"D": {
 			"tag": "forge:gems/diamond"
 		},
-		"E": {
-			"item": "minecraft:ender_pearl"
+		"L": {
+			"tag": "forge:gems/lapis"
 		}
 	},
 	"result": {
-		"item": "usefulrailroads:rail_teleport"
+		"item": "usefulrailroads:highspeed_rail",
+		"count": 24
 	}
 }
