@@ -20,7 +20,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	
 	public CustomPoweredRailBlock(String name) {
 		super(Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.7F).sound(SoundType.METAL), true);
-		this.name = "rail_" + name;
+		this.name = name + "_rail";
 		blockItem = createBlockItem(new Item.Properties().group(UsefulRailroadsItemGroups.GROUP));
 	}
 	

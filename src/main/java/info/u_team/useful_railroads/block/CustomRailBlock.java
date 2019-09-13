@@ -14,7 +14,7 @@ public abstract class CustomRailBlock extends RailBlock implements IUBlockRegist
 	
 	public CustomRailBlock(String name) {
 		super(Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.7F).sound(SoundType.METAL));
-		this.name = "rail_" + name;
+		this.name = name + "_rail";
 		blockItem = createBlockItem(new Item.Properties().group(UsefulRailroadsItemGroups.GROUP));
 	}
 	

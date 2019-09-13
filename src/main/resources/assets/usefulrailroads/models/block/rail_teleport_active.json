@@ -1,6 +1,0 @@
-{
-    "parent": "block/rail_flat",
-    "textures": {
-        "rail": "usefulrailroads:block/rail_teleport_powered"
-    }
-}
