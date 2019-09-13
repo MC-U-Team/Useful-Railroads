@@ -1,0 +1,7 @@
+{
+	"itemGroup.usefulrailroads.group": "Rails utiles",
+	"block.usefulrailroads.highspeed_rail": "Rail a très haute vitesse (5 Blocs/Tick)",
+	"block.usefulrailroads.direction_rail": "Rail de direction",
+	"block.usefulrailroads.intersection_rail": "Rail d'intersection",
+	"block.usefulrailroads.teleport_rail": "Rail de téléportation"
+}
