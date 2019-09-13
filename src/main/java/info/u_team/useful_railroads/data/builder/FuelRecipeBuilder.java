@@ -20,6 +20,10 @@ public class FuelRecipeBuilder {
 	private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
 	private String group;
 	
+	public static FuelRecipeBuilder fuelRecipe(Ingredient ingredient, int fuel) {
+		return new FuelRecipeBuilder(ingredient, fuel);
+	}
+	
 	public FuelRecipeBuilder(Ingredient ingredient, int fuel) {
 		this.ingredient = ingredient;
 		this.fuel = fuel;

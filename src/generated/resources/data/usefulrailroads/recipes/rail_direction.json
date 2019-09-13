@@ -10,10 +10,10 @@
 			"item": "minecraft:stick"
 		},
 		"#": {
-			"item": "minecraft:redstone"
+			"tag": "forge:dusts/redstone"
 		},
 		"X": {
-			"item": "minecraft:iron_ingot"
+			"tag": "forge:ingots/iron"
 		},
 		"D": {
 			"item": "minecraft:repeater"

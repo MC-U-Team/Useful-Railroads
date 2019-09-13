@@ -28,17 +28,17 @@ public class UsefulRailroadsLootTableProvider extends CommonProvider {
 		writeBasicBlockLootTable(cache, TELEPORT_RAIL);
 	}
 	
+	@Override
+	protected Path resolvePath(Path outputFolder) {
+		return resolveData(outputFolder, UsefulRailroadsMod.MODID).resolve("loot_tables");
+	}
+	
 	private void writeBasicBlockLootTable(DirectoryCache cache, IItemProvider itemProvider) throws IOException {
 		write(cache, getBasicBlockLootTable(itemProvider), path.resolve("blocks").resolve(itemProvider.asItem().getRegistryName().getPath() + ".json"));
 	}
 	
 	private JsonElement getBasicBlockLootTable(IItemProvider itemProvider) {
 		return LootTableManager.toJson(LootTable.builder().setParameterSet(LootParameterSets.BLOCK).addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(itemProvider)).acceptCondition(SurvivesExplosion.builder())).build());
-	}
-	
-	@Override
-	protected Path resolvePath(Path outputFolder) {
-		return resolveData(outputFolder, UsefulRailroadsMod.MODID).resolve("loot_tables");
 	}
 	
 }

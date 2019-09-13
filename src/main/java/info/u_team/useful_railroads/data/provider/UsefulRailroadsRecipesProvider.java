@@ -1,8 +1,12 @@
 package info.u_team.useful_railroads.data.provider;
 
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
+
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import info.u_team.u_team_core.data.CommonProvider;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
@@ -10,9 +14,12 @@ import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
 import net.minecraft.advancements.criterion.*;
 import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
 import net.minecraft.data.*;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.Ingredient.TagList;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.*;
+import net.minecraftforge.common.Tags;
 
 public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	
@@ -36,6 +43,7 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 			}
 		};
 		
+		addCraftingRecipes(consumer);
 		addFuelRecipes(consumer);
 	}
 	
@@ -44,8 +52,55 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 		return resolveData(outputFolder, UsefulRailroadsMod.MODID);
 	}
 	
+	private void addCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
+		
+		ShapedRecipeBuilder.shapedRecipe(HIGHSPEED_RAIL, 24) //
+				.patternLine("XDX") //
+				.patternLine("L#L") //
+				.patternLine("XRX") //
+				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.key('#', Items.STICK) //
+				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.key('L', getIngredientOfTag(Tags.Items.GEMS_LAPIS)) //
+				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
+				.build(consumer);
+		
+		ShapedRecipeBuilder.shapedRecipe(DIRECTION_RAIL, 16) //
+				.patternLine("XDX") //
+				.patternLine("X#X") //
+				.patternLine("XRX") //
+				.key('R', Items.STICK) //
+				.key('#', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.key('D', Items.REPEATER) //
+				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
+				.build(consumer);
+		
+		ShapedRecipeBuilder.shapedRecipe(TELEPORT_RAIL, 1) //
+				.patternLine("XDX") //
+				.patternLine("L#L") //
+				.patternLine("XRX") //
+				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.key('#', Items.STICK) //
+				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.key('L', Items.ENDER_PEARL) //
+				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
+				.build(consumer);
+		
+		ShapedRecipeBuilder.shapedRecipe(INTERSECTION_RAIL, 8) //
+				.patternLine("XXX") //
+				.patternLine("X#X") //
+				.patternLine("XXX") //
+				.key('#', Items.STICK) //
+				.key('X', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
+				.build(consumer);
+	}
+	
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
-		new FuelRecipeBuilder(Ingredient.fromItems(Items.ENDER_PEARL), 100).addCriterion("test", hasItem(Items.ENDER_PEARL)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel_enderpearl"));
+		FuelRecipeBuilder.fuelRecipe(Ingredient.fromItems(Items.ENDER_PEARL), 100).addCriterion("test", hasItem(Items.ENDER_PEARL)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel_enderpearl"));
 	}
 	
 	private InventoryChangeTrigger.Instance hasItem(IItemProvider item) {
@@ -54,5 +109,15 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	
 	private InventoryChangeTrigger.Instance hasItem(ItemPredicate... predicates) {
 		return new InventoryChangeTrigger.Instance(IntBound.UNBOUNDED, IntBound.UNBOUNDED, IntBound.UNBOUNDED, predicates);
+	}
+	
+	private Ingredient getIngredientOfTag(Tag<Item> tag) {
+		return Ingredient.fromItemListStream(Stream.of(new TagList(tag) {
+			
+			@Override
+			public Collection<ItemStack> getStacks() {
+				return Arrays.asList(new ItemStack(Items.ACACIA_BOAT)); // Return default value, so the ingredient will serialize our tag.
+			}
+		}));
 	}
 }
