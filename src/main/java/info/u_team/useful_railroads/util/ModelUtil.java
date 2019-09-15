@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.util;
 
 import static net.minecraft.client.renderer.model.ModelBakery.STATE_CONTAINER_OVERRIDES;
 
-import java.util.HashMap;
+import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -14,7 +14,9 @@ public class ModelUtil {
 	
 	static {
 		if (STATE_CONTAINER_OVERRIDES instanceof ImmutableMap) {
-			STATE_CONTAINER_OVERRIDES = new HashMap<ResourceLocation, StateContainer<Block, BlockState>>();
+			final Map<ResourceLocation, StateContainer<Block, BlockState>> mutableMap = new HashMap<>();
+			STATE_CONTAINER_OVERRIDES.forEach(mutableMap::put);
+			STATE_CONTAINER_OVERRIDES = mutableMap;
 		}
 	}
 	
