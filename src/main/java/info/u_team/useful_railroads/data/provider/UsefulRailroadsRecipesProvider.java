@@ -102,7 +102,7 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
 		addBasicFuelRecipe(Items.ENDER_PEARL, 100, consumer, "ender_pearl");
 		addBasicFuelRecipe(Items.ENDER_EYE, 150, consumer, "ender_eye");
-		addBasicFuelRecipe(Items.CHORUS_FLOWER, 200, consumer, "chorus_flower");
+		addBasicFuelRecipe(Items.CHORUS_FLOWER, 250, consumer, "chorus_flower");
 		addBasicFuelRecipe(Items.CHORUS_FRUIT, 200, consumer, "chorus_fruit");
 		addBasicFuelRecipe(Items.POPPED_CHORUS_FRUIT, 210, consumer, "popped_chorus_fruit");
 		addBasicFuelRecipe(Tags.Items.DUSTS_REDSTONE, 5, consumer, "redstone_dusts");
