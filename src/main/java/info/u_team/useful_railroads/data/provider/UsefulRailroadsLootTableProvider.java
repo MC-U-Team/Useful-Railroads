@@ -25,7 +25,6 @@ public class UsefulRailroadsLootTableProvider extends CommonProvider {
 		writeBasicBlockLootTable(cache, HIGHSPEED_RAIL);
 		writeBasicBlockLootTable(cache, DIRECTION_RAIL);
 		writeBasicBlockLootTable(cache, INTERSECTION_RAIL);
-		writeBasicBlockLootTable(cache, TELEPORT_RAIL);
 	}
 	
 	@Override
