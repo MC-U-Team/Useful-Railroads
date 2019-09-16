@@ -62,8 +62,10 @@ public class TeleportRailBlockItem extends BlockItem {
 					.filter(otherStack -> otherStack.getItem() == Items.ENDER_PEARL) //
 					.findAny() //
 					.ifPresent(otherStack -> {
-						// If it's an enderpearl set the location and consume the enderpearl
+						// Consume enderpearl
 						otherStack.shrink(1);
+						
+						// Set location to the stack
 						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
 						
 						final ItemEntity newItemEntity = new ItemEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, stack);
