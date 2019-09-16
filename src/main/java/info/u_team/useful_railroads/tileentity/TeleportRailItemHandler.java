@@ -79,7 +79,7 @@ public class TeleportRailItemHandler implements IItemHandlerModifiable {
 		if (currentRecipe != null && currentRecipe.matches(inventory, world)) {
 			return Optional.of(currentRecipe);
 		} else {
-			TeleportRailFuelRecipe recipe = world.getRecipeManager().getRecipe(UsefulRailroadsRecipeTypes.TELEPORT_FUEL, inventory, world).orElse(null);
+			final TeleportRailFuelRecipe recipe = world.getRecipeManager().getRecipe(UsefulRailroadsRecipeTypes.TELEPORT_FUEL, inventory, world).orElse(null);
 			if (recipe == null) {
 				failedMatch = stack;
 			} else {
