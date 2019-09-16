@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.block;
 
-import java.util.List;
+import java.util.*;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
@@ -37,7 +37,10 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
 	@Override
 	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
-		super.onMinecartPass(state, world, pos, cart);
+		if (world.isRemote) {
+			return;
+		}
+		isTileEntityFromType(world, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(world, pos, cart));
 	}
 	
 	@Override
