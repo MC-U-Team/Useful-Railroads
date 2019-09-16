@@ -28,7 +28,7 @@ public class TeleportRailBlockItem extends BlockItem {
 			return super.tryPlace(context);
 		}
 		final PlayerEntity player = context.getPlayer();
-		if (player != null) {
+		if (player != null && player.getEntityWorld().isRemote) {
 			player.sendMessage(new StringTextComponent(TextFormatting.DARK_RED + "You need to setup the rail first."));
 		}
 		return ActionResultType.FAIL;
