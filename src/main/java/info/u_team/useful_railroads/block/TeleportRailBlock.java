@@ -86,10 +86,5 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 		if (compoundExists) {
 			tooltip.add(new StringTextComponent("Fuel: " + TextFormatting.DARK_AQUA + compound.getInt("fuel")));
 		}
-		
-		if (stack.hasTag()) {
-			tooltip.add(new StringTextComponent(stack.getTag().getString()));
-		}
 	}
-	
 }
