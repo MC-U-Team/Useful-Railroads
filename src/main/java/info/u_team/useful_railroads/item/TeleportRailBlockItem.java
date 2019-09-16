@@ -14,6 +14,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class TeleportRailBlockItem extends BlockItem {
 	
@@ -64,8 +65,9 @@ public class TeleportRailBlockItem extends BlockItem {
 						// If it's an enderpearl set the location and consume the enderpearl
 						otherStack.shrink(1);
 						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
-						// itemEntity.setItem(stack);
-						world.addEntity(new LightningBoltEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, true));
+						if (world instanceof ServerWorld) {
+							((ServerWorld) world).addLightningBolt(new LightningBoltEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, true));
+						}
 					});
 		}
 		return false;
