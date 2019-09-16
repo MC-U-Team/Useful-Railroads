@@ -58,8 +58,13 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	
 	public void teleport(BlockPos pos, AbstractMinecartEntity cart) {
 		checkCost();
+		
+		// Reset motion
+		cart.setMotion(0, 0, 0);
+		
 		final Entity entity = cart.getPassengers().isEmpty() ? null : (Entity) cart.getPassengers().get(0);
 		
+		// Check fuel
 		if (fuel < cost) {
 			if (entity instanceof PlayerEntity) {
 				((PlayerEntity) entity).sendStatusMessage(new StringTextComponent(TextFormatting.DARK_RED + "Fuel missing! Need: " + TextFormatting.GOLD + cost + TextFormatting.DARK_RED + ". Have: " + TextFormatting.GOLD + fuel), true);
@@ -70,9 +75,12 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		markDirty();
 		
 		// Teleportation process
+		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getDimensionType());
+		
 		if (entity != null) {
-			teleportEntity(entity, cart.getServer().getWorld(location.getDimensionType()), location.getPos());
+			teleportEntity(entity, teleportWorld, location.getPos());
 		}
+		// teleportEntity(cart, teleportWorld, location.getPos());
 	}
 	
 	private static void teleportEntity(Entity entity, ServerWorld world, BlockPos pos) {
@@ -85,11 +93,14 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 			final ChunkPos chunkpos = new ChunkPos(new BlockPos(x, y, z));
 			world.getChunkProvider().func_217228_a(TicketType.POST_TELEPORT, chunkpos, 1, entity.getEntityId());
 			entity.stopRiding(); // TODO
+			entity.removePassengers();
 			
 			if (world == entity.world) {
 				player.connection.setPlayerLocation(x, y, z, yaw, pitch);
 			} else {
+				player.getServerWorld().tickingEntities = false;
 				player.teleport(world, x, y, z, yaw, pitch);
+				player.getServerWorld().tickingEntities = true;
 			}
 			
 			entity.setRotationYawHead(yaw);

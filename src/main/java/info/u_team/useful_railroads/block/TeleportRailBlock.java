@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.block;
 
-import java.util.*;
+import java.util.List;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
