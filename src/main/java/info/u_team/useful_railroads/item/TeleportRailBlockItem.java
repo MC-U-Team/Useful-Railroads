@@ -7,6 +7,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.*;
+import net.minecraft.world.World;
 
 public class TeleportRailBlockItem extends BlockItem {
 	
@@ -29,6 +30,16 @@ public class TeleportRailBlockItem extends BlockItem {
 	
 	@Override
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
+		final CompoundNBT compound = stack.getChildTag("BlockEntityTag");
+		if (compound != null && compound.contains("location")) { // Prevent overwriting already installed rails
+			return false;
+		}
+		final World world = entity.getEntityWorld();
+		if (world.isRemote) {
+			// Do client things
+		} else {
+			
+		}
 		return false;
 	}
 	
