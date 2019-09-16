@@ -1,0 +1,7 @@
+{
+	"type": "usefulrailroads:teleport_fuel",
+	"ingredient": {
+		"item": "minecraft:chorus_flower"
+	},
+	"fuel": 200
+}

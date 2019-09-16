@@ -2,16 +2,16 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"usefulrailroads:fuel_enderpearl"
+			"usefulrailroads:fuel/gold_ingots"
 		]
 	},
 	"criteria": {
-		"test": {
+		"has_ingredient": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
-						"item": "minecraft:ender_pearl"
+						"tag": "forge:ingots/gold"
 					}
 				]
 			}
@@ -19,13 +19,13 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "usefulrailroads:fuel_enderpearl"
+				"recipe": "usefulrailroads:fuel/gold_ingots"
 			}
 		}
 	},
 	"requirements": [
 		[
-			"test",
+			"has_ingredient",
 			"has_the_recipe"
 		]
 	]

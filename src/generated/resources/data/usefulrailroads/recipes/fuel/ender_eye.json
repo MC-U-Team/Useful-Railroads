@@ -1,0 +1,7 @@
+{
+	"type": "usefulrailroads:teleport_fuel",
+	"ingredient": {
+		"item": "minecraft:ender_eye"
+	},
+	"fuel": 150
+}

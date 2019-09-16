@@ -1,0 +1,7 @@
+{
+	"type": "usefulrailroads:teleport_fuel",
+	"ingredient": {
+		"item": "minecraft:popped_chorus_fruit"
+	},
+	"fuel": 210
+}
