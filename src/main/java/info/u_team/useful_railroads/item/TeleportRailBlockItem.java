@@ -65,6 +65,16 @@ public class TeleportRailBlockItem extends BlockItem {
 						// If it's an enderpearl set the location and consume the enderpearl
 						otherStack.shrink(1);
 						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
+						
+						final ItemEntity newItemEntity = new ItemEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, stack);
+						newItemEntity.setDefaultPickupDelay();
+						
+						// Delete old entity
+						itemEntity.remove();
+						
+						// Spawn new one with updated stack
+						world.addEntity(newItemEntity);
+						
 						if (world instanceof ServerWorld) {
 							((ServerWorld) world).addLightningBolt(new LightningBoltEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, true));
 						}
