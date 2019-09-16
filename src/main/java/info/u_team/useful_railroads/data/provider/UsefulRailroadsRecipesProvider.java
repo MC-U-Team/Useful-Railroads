@@ -11,11 +11,12 @@ import java.util.stream.Stream;
 import info.u_team.u_team_core.data.CommonProvider;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
+import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import net.minecraft.advancements.criterion.*;
 import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
 import net.minecraft.data.*;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.*;
 import net.minecraft.item.crafting.Ingredient.TagList;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.*;
@@ -97,6 +98,8 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
 				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
 				.build(consumer);
+		
+		CustomRecipeBuilder.func_218656_a(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL).build(consumer, "teleport_rail_remove_location");
 	}
 	
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
