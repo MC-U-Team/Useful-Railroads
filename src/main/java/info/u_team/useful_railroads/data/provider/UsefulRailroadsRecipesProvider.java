@@ -100,7 +100,26 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	}
 	
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
-		FuelRecipeBuilder.fuelRecipe(Ingredient.fromItems(Items.ENDER_PEARL), 100).addCriterion("has_enderpearl", hasItem(Items.ENDER_PEARL)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel_enderpearl"));
+		addBasicFuelRecipe(Items.ENDER_PEARL, 100, consumer, "ender_pearl");
+		addBasicFuelRecipe(Items.ENDER_EYE, 150, consumer, "ender_eye");
+		addBasicFuelRecipe(Items.CHORUS_FLOWER, 200, consumer, "chorus_flower");
+		addBasicFuelRecipe(Items.CHORUS_FRUIT, 200, consumer, "chorus_fruit");
+		addBasicFuelRecipe(Items.POPPED_CHORUS_FRUIT, 210, consumer, "popped_chorus_fruit");
+		addBasicFuelRecipe(Tags.Items.DUSTS_REDSTONE, 5, consumer, "redstone_dusts");
+		addBasicFuelRecipe(Tags.Items.INGOTS_GOLD, 10, consumer, "gold_ingots");
+		addBasicFuelRecipe(Tags.Items.GEMS_DIAMOND, 50, consumer, "diamond_gems");
+	}
+	
+	private void addBasicFuelRecipe(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		FuelRecipeBuilder.fuelRecipe(Ingredient.fromItems(item), fuel).addCriterion("has_ingredient", hasItem(item)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/" + name));
+	}
+	
+	private void addBasicFuelRecipe(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		FuelRecipeBuilder.fuelRecipe(getIngredientOfTag(tag), fuel).addCriterion("has_ingredient", hasItem(tag)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/" + name));
+	}
+	
+	protected InventoryChangeTrigger.Instance hasItem(Tag<Item> tag) {
+		return hasItem(ItemPredicate.Builder.create().tag(tag).build());
 	}
 	
 	private InventoryChangeTrigger.Instance hasItem(IItemProvider item) {
