@@ -40,7 +40,7 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 		if (world.isRemote) {
 			return;
 		}
-		isTileEntityFromType(world, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(world, pos, cart));
+		isTileEntityFromType(world, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(pos, cart));
 	}
 	
 	@Override

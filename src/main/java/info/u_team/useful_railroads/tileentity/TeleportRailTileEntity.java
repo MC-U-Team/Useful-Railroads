@@ -14,7 +14,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
-import net.minecraft.world.World;
+import net.minecraft.world.server.*;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -56,11 +56,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		return calculatedCost;
 	}
 	
-	public void teleport(World world, BlockPos pos, AbstractMinecartEntity cart) {
-		if (world.isRemote) {
-			return;
-		}
-		
+	public void teleport(BlockPos pos, AbstractMinecartEntity cart) {
 		checkCost();
 		final Entity entity = cart.getPassengers().isEmpty() ? null : (Entity) cart.getPassengers().get(0);
 		
@@ -73,6 +69,52 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		fuel -= cost;
 		markDirty();
 		
+		// Teleportation process
+		if (entity != null) {
+			teleportEntity(entity, cart.getServer().getWorld(location.getDimensionType()), location.getPos());
+		}
+	}
+	
+	private static void teleportEntity(Entity entity, ServerWorld world, BlockPos pos) {
+		teleportEntity(entity, world, pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
+	}
+	
+	private static void teleportEntity(Entity entity, ServerWorld world, double x, double y, double z, float yaw, float pitch) {
+		if (entity instanceof ServerPlayerEntity) {
+			final ServerPlayerEntity player = (ServerPlayerEntity) entity;
+			final ChunkPos chunkpos = new ChunkPos(new BlockPos(x, y, z));
+			world.getChunkProvider().func_217228_a(TicketType.POST_TELEPORT, chunkpos, 1, entity.getEntityId());
+			entity.stopRiding(); // TODO
+			
+			if (world == entity.world) {
+				player.connection.setPlayerLocation(x, y, z, yaw, pitch);
+			} else {
+				player.teleport(world, x, y, z, yaw, pitch);
+			}
+			
+			entity.setRotationYawHead(yaw);
+		} else {
+			final float wrapedYaw = MathHelper.wrapDegrees(yaw);
+			final float wrapedPitch = MathHelper.clamp(MathHelper.wrapDegrees(pitch), -90.0F, 90.0F);
+			if (world == entity.world) {
+				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
+				entity.setRotationYawHead(wrapedYaw);
+			} else {
+				entity.detach(); // TODO
+				entity.dimension = world.dimension.getType();
+				
+				final Entity entityCopy = entity;
+				entity = entity.getType().create(world);
+				if (entity == null) {
+					return;
+				}
+				
+				entity.copyDataFromOld(entityCopy);
+				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
+				entity.setRotationYawHead(wrapedYaw);
+				world.func_217460_e(entity);
+			}
+		}
 	}
 	
 	@Override
