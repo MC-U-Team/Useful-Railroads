@@ -24,28 +24,28 @@ public class FuelRecipeBuilder {
 		return new FuelRecipeBuilder(ingredient, fuel);
 	}
 	
-	public FuelRecipeBuilder(Ingredient ingredient, int fuel) {
+	protected FuelRecipeBuilder(Ingredient ingredient, int fuel) {
 		this.ingredient = ingredient;
 		this.fuel = fuel;
 	}
 	
-	public FuelRecipeBuilder addCriterion(String name, ICriterionInstance criterionIn) {
-		this.advancementBuilder.withCriterion(name, criterionIn);
+	public FuelRecipeBuilder addCriterion(String name, ICriterionInstance criterion) {
+		advancementBuilder.withCriterion(name, criterion);
 		return this;
 	}
 	
-	public void build(Consumer<IFinishedRecipe> consumerIn, String save) {
-		this.build(consumerIn, new ResourceLocation(save));
+	public void build(Consumer<IFinishedRecipe> consumer, String save) {
+		build(consumer, new ResourceLocation(save));
 	}
 	
-	public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
-		this.validate(id);
-		this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(id)).withRewards(AdvancementRewards.Builder.recipe(id)).withRequirementsStrategy(IRequirementsStrategy.OR);
-		consumerIn.accept(new FuelRecipeBuilder.Result(id, group == null ? "" : group, ingredient, fuel, advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath())));
+	public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+		validate(id);
+		advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(id)).withRewards(AdvancementRewards.Builder.recipe(id)).withRequirementsStrategy(IRequirementsStrategy.OR);
+		consumer.accept(new FuelRecipeBuilder.Result(id, group == null ? "" : group, ingredient, fuel, advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath())));
 	}
 	
 	private void validate(ResourceLocation id) {
-		if (this.advancementBuilder.getCriteria().isEmpty()) {
+		if (advancementBuilder.getCriteria().isEmpty()) {
 			throw new IllegalStateException("No way of obtaining recipe " + id);
 		}
 	}

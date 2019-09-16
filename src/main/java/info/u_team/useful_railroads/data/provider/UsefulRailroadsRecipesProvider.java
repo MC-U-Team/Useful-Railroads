@@ -100,7 +100,7 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	}
 	
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
-		FuelRecipeBuilder.fuelRecipe(Ingredient.fromItems(Items.ENDER_PEARL), 100).addCriterion("test", hasItem(Items.ENDER_PEARL)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel_enderpearl"));
+		FuelRecipeBuilder.fuelRecipe(Ingredient.fromItems(Items.ENDER_PEARL), 100).addCriterion("has_enderpearl", hasItem(Items.ENDER_PEARL)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel_enderpearl"));
 	}
 	
 	private InventoryChangeTrigger.Instance hasItem(IItemProvider item) {
