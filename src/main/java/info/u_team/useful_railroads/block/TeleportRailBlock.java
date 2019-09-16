@@ -72,8 +72,19 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		if (stack.hasTag()) {
-			tooltip.add(new StringTextComponent(stack.getTag().getString()));
+		final CompoundNBT compound = stack.getChildTag("BlockEntityTag");
+		final boolean compoundExists = compound != null;
+		if (compoundExists && compound.contains("location")) {
+			final CompoundNBT locationCompound = compound.getCompound("location");
+			tooltip.add(new StringTextComponent("Dimension: " + TextFormatting.DARK_GREEN + locationCompound.getString("dimension")));
+			tooltip.add(new StringTextComponent("X: " + TextFormatting.DARK_GREEN + locationCompound.getInt("x")));
+			tooltip.add(new StringTextComponent("Y: " + TextFormatting.DARK_GREEN + locationCompound.getInt("y")));
+			tooltip.add(new StringTextComponent("Z: " + TextFormatting.DARK_GREEN + locationCompound.getInt("z")));
+		} else {
+			tooltip.add(new StringTextComponent(TextFormatting.DARK_RED + "This rail is not setuped yet."));
+		}
+		if (compoundExists) {
+			tooltip.add(new StringTextComponent("Fuel: " + TextFormatting.DARK_AQUA + compound.getInt("fuel")));
 		}
 	}
 	

@@ -32,14 +32,12 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	public void writeNBT(CompoundNBT compound) {
 		compound.put("location", location.serializeNBT());
 		compound.putInt("fuel", fuel);
-		compound.putInt("cost", cost);
 	}
 	
 	@Override
 	public void readNBT(CompoundNBT compound) {
 		location.deserializeNBT(compound.getCompound("location"));
 		fuel = compound.getInt("fuel");
-		cost = compound.getInt("cost");
 	}
 	
 	@Override
