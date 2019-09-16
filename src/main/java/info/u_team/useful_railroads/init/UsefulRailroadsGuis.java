@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.*;
 public class UsefulRailroadsGuis {
 	
 	public static void construct() {
-		ScreenManager.registerFactory(UsefulRailroadsContainers.TELEPORT_RAIL, TeleportRailScreen::new);
+		ScreenManager.registerFactory(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
 	}
 	
 }

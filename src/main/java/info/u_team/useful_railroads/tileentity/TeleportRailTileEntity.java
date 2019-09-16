@@ -3,7 +3,7 @@ package info.u_team.useful_railroads.tileentity;
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
-import info.u_team.useful_railroads.init.UsefulRailroadsTileEntities;
+import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;
@@ -25,7 +25,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new TeleportRailItemHandler(() -> getWorld(), fuelAdder -> fuel += fuelAdder));
 	
 	public TeleportRailTileEntity() {
-		super(UsefulRailroadsTileEntities.TELEPORT_RAIL);
+		super(UsefulRailroadsTileEntityTypes.TELEPORT_RAIL);
 	}
 	
 	@Override

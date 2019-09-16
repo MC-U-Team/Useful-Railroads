@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
-public class UsefulRailroadsTileEntities {
+public class UsefulRailroadsTileEntityTypes {
 	
 	public static final TileEntityType<TeleportRailTileEntity> TELEPORT_RAIL = UBuilder.create("teleport_rail", TeleportRailTileEntity::new, UsefulRailroadsBlocks.TELEPORT_RAIL).build();
 	

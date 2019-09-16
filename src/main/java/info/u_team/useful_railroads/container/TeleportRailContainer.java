@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.container;
 
 import info.u_team.u_team_core.container.UTileEntityContainer;
-import info.u_team.useful_railroads.init.UsefulRailroadsContainers;
+import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
@@ -11,11 +11,11 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class TeleportRailContainer extends UTileEntityContainer<TeleportRailTileEntity> {
 	
 	public TeleportRailContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(UsefulRailroadsContainers.TELEPORT_RAIL, id, playerInventory, buffer);
+		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL, id, playerInventory, buffer);
 	}
 	
 	public TeleportRailContainer(int id, PlayerInventory playerInventory, TeleportRailTileEntity tileEntity) {
-		super(UsefulRailroadsContainers.TELEPORT_RAIL, id, playerInventory, tileEntity);
+		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL, id, playerInventory, tileEntity);
 	}
 	
 	@Override

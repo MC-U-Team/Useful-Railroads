@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.block;
 
-import info.u_team.useful_railroads.init.UsefulRailroadsTileEntities;
+import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
 	public TeleportRailBlock(String name) {
-		super(name, () -> UsefulRailroadsTileEntities.TELEPORT_RAIL);
+		super(name, () -> UsefulRailroadsTileEntityTypes.TELEPORT_RAIL);
 	}
 	
 	@Override

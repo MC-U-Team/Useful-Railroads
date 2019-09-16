@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
-public class UsefulRailroadsContainers {
+public class UsefulRailroadsContainerTypes {
 	
 	public static final ContainerType<TeleportRailContainer> TELEPORT_RAIL = new UContainerType<>("teleport_rail", TeleportRailContainer::new);
 	
