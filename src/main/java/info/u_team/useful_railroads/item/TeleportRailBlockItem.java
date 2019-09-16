@@ -63,7 +63,7 @@ public class TeleportRailBlockItem extends BlockItem {
 					.ifPresent(otherStack -> {
 						// If it's an enderpearl set the location and consume the enderpearl
 						otherStack.shrink(1);
-						compound.put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
+						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
 						// itemEntity.setItem(stack);
 						world.addEntity(new LightningBoltEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, true));
 					});
