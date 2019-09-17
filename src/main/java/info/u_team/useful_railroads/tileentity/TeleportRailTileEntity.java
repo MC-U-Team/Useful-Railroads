@@ -78,13 +78,20 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Teleportation process
 		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getDimensionType());
 		
+		// Enqueue the teleportation to be executed after the ticks of entites because
+		// else the teleportation will crash
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
+			// Teleport entity riding if there is one
 			if (entity != null) {
-				entity.detach();
+				entity.detach(); // Detach entity
 				teleportEntity(entity, teleportWorld, location.getPos());
 			}
+			
+			// Teleport minecart
 			teleportEntity(cart, teleportWorld, location.getPos());
+			// Reatach entity
 			if (entity != null) {
+				// Because the entity will be destroyed when changing dimensions we use the uuid
 				entity.startRiding(teleportWorld.getEntityByUuid(cart.getUniqueID()), true);
 			}
 		}));
@@ -123,6 +130,8 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 				}
 				
 				entity.copyDataFromOld(entityCopy);
+				// Need to remove the old entity (Why the heck does TeleportCommand don't do
+				// this and it works ?????)
 				entityCopy.remove(false);
 				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
 				entity.setRotationYawHead(wrapedYaw);
