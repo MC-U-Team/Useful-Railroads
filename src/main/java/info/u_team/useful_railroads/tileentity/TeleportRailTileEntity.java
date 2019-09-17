@@ -12,6 +12,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.server.*;
@@ -77,10 +78,17 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Teleportation process
 		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getDimensionType());
 		
-		if (entity != null) {
-			teleportEntity(entity, teleportWorld, location.getPos());
-		}
-		// teleportEntity(cart, teleportWorld, location.getPos());
+		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
+			if (entity != null) {
+				// entity.detach();
+				teleportEntity(entity, teleportWorld, location.getPos());
+			}
+			teleportEntity(cart, teleportWorld, location.getPos());
+			if (entity != null) {
+				entity.startRiding(cart, true);
+			}
+		}));
+		
 	}
 	
 	private static void teleportEntity(Entity entity, ServerWorld world, BlockPos pos) {
@@ -92,15 +100,10 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 			final ServerPlayerEntity player = (ServerPlayerEntity) entity;
 			final ChunkPos chunkpos = new ChunkPos(new BlockPos(x, y, z));
 			world.getChunkProvider().func_217228_a(TicketType.POST_TELEPORT, chunkpos, 1, entity.getEntityId());
-			entity.stopRiding(); // TODO
-			entity.removePassengers();
-			
 			if (world == entity.world) {
 				player.connection.setPlayerLocation(x, y, z, yaw, pitch);
 			} else {
-				player.getServerWorld().tickingEntities = false;
 				player.teleport(world, x, y, z, yaw, pitch);
-				player.getServerWorld().tickingEntities = true;
 			}
 			
 			entity.setRotationYawHead(yaw);
@@ -111,7 +114,6 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
 				entity.setRotationYawHead(wrapedYaw);
 			} else {
-				entity.detach(); // TODO
 				entity.dimension = world.dimension.getType();
 				
 				final Entity entityCopy = entity;
@@ -121,6 +123,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 				}
 				
 				entity.copyDataFromOld(entityCopy);
+				entityCopy.remove(false);
 				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
 				entity.setRotationYawHead(wrapedYaw);
 				world.func_217460_e(entity);
