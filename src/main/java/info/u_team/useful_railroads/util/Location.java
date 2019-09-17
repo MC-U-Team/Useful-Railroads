@@ -9,7 +9,9 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class Location implements INBTSerializable<CompoundNBT> {
 	
-	public static Location ORIGIN = new Location(DimensionType.OVERWORLD, BlockPos.ZERO);
+	public static Location getOrigin() {
+		return new Location(DimensionType.OVERWORLD, BlockPos.ZERO);
+	}
 	
 	private DimensionType dimensionType;
 	private BlockPos pos;
@@ -36,15 +38,12 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	}
 	
 	public void serialize(PacketBuffer buffer) {
-		buffer.writeString(dimensionType.getRegistryName().toString());
+		buffer.writeResourceLocation(dimensionType.getRegistryName());
 		buffer.writeBlockPos(pos);
 	}
 	
 	public void deserialize(PacketBuffer buffer) {
-		final ResourceLocation dimensionLocation = ResourceLocation.tryCreate(buffer.readString());
-		if (dimensionLocation != null) {
-			dimensionType = DimensionType.byName(dimensionLocation);
-		}
+		dimensionType = DimensionType.byName(buffer.readResourceLocation());
 		if (dimensionType == null) {
 			dimensionType = DimensionType.OVERWORLD;
 		}

@@ -23,7 +23,7 @@ import net.minecraftforge.items.*;
 
 public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTileEntity {
 	
-	private Location location = Location.ORIGIN;
+	private Location location = Location.getOrigin();
 	private int fuel;
 	private int cost;
 	
@@ -80,12 +80,12 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
 			if (entity != null) {
-				// entity.detach();
+				entity.detach();
 				teleportEntity(entity, teleportWorld, location.getPos());
 			}
 			teleportEntity(cart, teleportWorld, location.getPos());
 			if (entity != null) {
-				entity.startRiding(cart, true);
+				entity.startRiding(teleportWorld.getEntityByUuid(cart.getUniqueID()), true);
 			}
 		}));
 		
