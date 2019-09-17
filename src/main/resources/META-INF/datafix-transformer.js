@@ -26,6 +26,16 @@ function initializeCoreMod() {
 }
 
 function injectAddFixerCall(instructions) {
+
+	// Search last label node
+	var iterator = instructions.iterator(instructions.size());
+	// Go 4 steps back
+	for (var i = 0; i < 4; i++) {
+		iterator.previous();
+	}
+	var labelNode = iterator.next();
+
+	// Build inject list
 	var injectList = new InsnList();
 
 	injectList.add(new VarInsnNode(ALOAD, 0)); // builder
@@ -41,5 +51,11 @@ function injectAddFixerCall(instructions) {
 	// boolean isInterface
 	false));
 
-	instructions.insert(injectList);
+	// Inject list before last label node
+	instructions.insertBefore(labelNode, injectList)
+
+	// Debug
+	instructions.iterator().forEachRemaining(function(el) {
+		print(el);
+	});
 }
