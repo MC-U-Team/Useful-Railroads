@@ -34,18 +34,19 @@ public class TrackBuilderItem extends UItem {
 		if (!(player instanceof ServerPlayerEntity)) {
 			return;
 		}
+		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.world);
 		NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 			
 			@Override
 			public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-				return new TrackBuilderContainer(id, playerInventory, new TrackBuilderInventoryWrapper.Server(stack, () -> player.world));
+				return new TrackBuilderContainer(id, playerInventory, wrapper);
 			}
 			
 			@Override
 			public ITextComponent getDisplayName() {
 				return stack.getDisplayName();
 			}
-		});
+		}, buffer -> buffer.writeVarInt(wrapper.getFuel()));
 	}
 	
 	@Override

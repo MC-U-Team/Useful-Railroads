@@ -4,6 +4,7 @@ import info.u_team.u_team_core.container.UContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.*;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IntReferenceHolder;
 
 public class TrackBuilderContainer extends UContainer {
@@ -11,8 +12,8 @@ public class TrackBuilderContainer extends UContainer {
 	private final TrackBuilderInventoryWrapper wrapper;
 	
 	// Client
-	public TrackBuilderContainer(int id, PlayerInventory playerInventory) {
-		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(() -> playerInventory.player.world));
+	public TrackBuilderContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
+		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), () -> playerInventory.player.world));
 	}
 	
 	// Server

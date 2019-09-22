@@ -54,8 +54,9 @@ public class TrackBuilderInventoryWrapper {
 	
 	public static class Client extends TrackBuilderInventoryWrapper {
 		
-		public Client(Supplier<World> worldSupplier) {
+		public Client(int fuel, Supplier<World> worldSupplier) {
 			super(worldSupplier);
+			this.fuel = fuel;
 		}
 		
 	}
