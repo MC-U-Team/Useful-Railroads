@@ -1,11 +1,10 @@
 package info.u_team.useful_railroads.inventory;
 
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
 import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
-import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

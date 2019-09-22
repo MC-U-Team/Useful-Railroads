@@ -11,9 +11,9 @@ import net.minecraftforge.items.*;
 
 public class TrackBuilderInventoryWrapper {
 	
-	protected final ItemStackHandler railInventory = new TagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 9);
-	protected final ItemStackHandler groundBlockInventory = new TagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 27);
-	protected final ItemStackHandler redstoneTorchInventory = new TagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
+	protected final ItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 9);
+	protected final ItemStackHandler groundBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 27);
+	protected final ItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
 	protected final IItemHandler fuelInventory;
 	
 	protected int fuel;

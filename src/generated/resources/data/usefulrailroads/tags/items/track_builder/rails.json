@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"#minecraft:rails"
+		"minecraft:powered_rail",
+		"usefulrailroads:highspeed_rail"
 	]
 }
