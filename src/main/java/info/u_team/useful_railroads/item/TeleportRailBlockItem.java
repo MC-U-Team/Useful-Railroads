@@ -19,7 +19,7 @@ import net.minecraft.world.server.ServerWorld;
 public class TeleportRailBlockItem extends BlockItem {
 	
 	public TeleportRailBlockItem(TeleportRailBlock block, Properties builder) {
-		super(block, builder.maxStackSize(1));
+		super(block, builder.maxStackSize(1).rarity(Rarity.EPIC));
 	}
 	
 	@Override
