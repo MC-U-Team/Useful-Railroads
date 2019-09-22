@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.inventory;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import info.u_team.useful_railroads.init.UsefulRailroadsTags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
@@ -10,13 +11,9 @@ import net.minecraftforge.items.*;
 
 public class TrackBuilderInventoryWrapper {
 	
-	public static final int RAIL_INVENTORY_SIZE = 9;
-	public static final int GROUND_BLOCK_INVENTORY_SIZE = 27;
-	public static final int REDSTONE_TORCH_SIZE = 2;
-	
-	protected final ItemStackHandler railInventory = new ItemStackHandler(RAIL_INVENTORY_SIZE);
-	protected final ItemStackHandler groundBlockInventory = new ItemStackHandler(GROUND_BLOCK_INVENTORY_SIZE);
-	protected final ItemStackHandler redstoneTorchInventory = new ItemStackHandler(REDSTONE_TORCH_SIZE);
+	protected final ItemStackHandler railInventory = new TagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 9);
+	protected final ItemStackHandler groundBlockInventory = new TagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 27);
+	protected final ItemStackHandler redstoneTorchInventory = new TagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
 	protected final IItemHandler fuelInventory;
 	
 	protected int fuel;
