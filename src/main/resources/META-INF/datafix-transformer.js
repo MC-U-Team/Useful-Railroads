@@ -55,7 +55,7 @@ function injectAddFixerCall(instructions) {
 	instructions.insertBefore(labelNode, injectList)
 
 	// Debug
-	instructions.iterator().forEachRemaining(function(el) {
-		print(el);
-	});
+	// instructions.iterator().forEachRemaining(function(el) {
+	// print(el);
+	// });
 }
