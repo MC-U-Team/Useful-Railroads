@@ -3,5 +3,6 @@
 	"block.usefulrailroads.highspeed_rail": "High Speed Rail (5 Blocks/Tick)",
 	"block.usefulrailroads.direction_rail": "Direction Rail",
 	"block.usefulrailroads.intersection_rail": "Intersection Rail",
-	"block.usefulrailroads.teleport_rail": "Teleport Rail"
+	"block.usefulrailroads.teleport_rail": "Teleport Rail",
+	"item.usefulrailroads.track_builder": "Track Builder"
 }
