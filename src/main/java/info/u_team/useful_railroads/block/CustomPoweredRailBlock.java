@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.block;
 
 import info.u_team.u_team_core.api.registry.IUBlockRegistryType;
-import info.u_team.useful_railroads.init.*;
+import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;

@@ -16,7 +16,7 @@ import net.minecraft.advancements.criterion.*;
 import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
 import net.minecraft.data.*;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.Ingredient.TagList;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.*;
