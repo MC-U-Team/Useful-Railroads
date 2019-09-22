@@ -4,6 +4,7 @@ import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
+import info.u_team.useful_railroads.inventory.TeleportRailFuelItemHandler;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -27,7 +28,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int fuel;
 	private int cost;
 	
-	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new TeleportRailItemHandler(() -> getWorld(), fuelAdder -> {
+	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new TeleportRailFuelItemHandler(() -> getWorld(), fuelAdder -> {
 		fuel += fuelAdder;
 		markDirty();
 	}));

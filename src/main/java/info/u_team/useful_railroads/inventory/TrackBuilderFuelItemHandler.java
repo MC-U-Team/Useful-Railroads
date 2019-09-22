@@ -1,4 +1,4 @@
-package info.u_team.useful_railroads.tileentity;
+package info.u_team.useful_railroads.inventory;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public class TeleportRailItemHandler implements IItemHandlerModifiable {
+public class TrackBuilderFuelItemHandler implements IItemHandlerModifiable {
 	
 	private final Supplier<World> worldSupplier;
 	private final Consumer<Integer> fuelAdder;
@@ -19,7 +19,7 @@ public class TeleportRailItemHandler implements IItemHandlerModifiable {
 	private TeleportRailFuelRecipe currentRecipe;
 	private ItemStack failedMatch = ItemStack.EMPTY;
 	
-	public TeleportRailItemHandler(Supplier<World> worldSupplier, Consumer<Integer> fuelAdder) {
+	public TrackBuilderFuelItemHandler(Supplier<World> worldSupplier, Consumer<Integer> fuelAdder) {
 		this.worldSupplier = worldSupplier;
 		this.fuelAdder = fuelAdder;
 	}
