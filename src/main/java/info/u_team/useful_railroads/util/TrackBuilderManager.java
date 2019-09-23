@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import info.u_team.useful_railroads.inventory.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.*;
 import net.minecraft.util.math.*;
@@ -93,13 +94,31 @@ public class TrackBuilderManager {
 		
 		wrapper.setFuel(wrapper.getFuel() - cost);
 		
-		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> {
-			destroyBlock(pos);
-		});
+		final List<ItemStack> railStacks = extractItems(wrapper.getRailInventory(), railSet);
+		final List<ItemStack> groundBlockStacks = extractItems(wrapper.getGroundBlockInventory(), groundBlockSet);
+		final List<ItemStack> redstoneTorchStacks = extractItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet);
+		
+		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(pos));
 		
 		cobbleSet.forEach(pos -> placeBlock(pos, Blocks.COBBLESTONE.getDefaultState()));
+		redstoneTorchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(redstoneTorchStacks)));
+		groundBlockSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(groundBlockStacks)));
+		railSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(railStacks)));
 		
 		wrapper.writeItemStack();
+	}
+	
+	private void placeItemBlock(BlockPos pos, ItemStack stack) {
+		if (stack.isEmpty()) {
+			System.out.println("ERROROROROROROROOROROROROOROROROOROROROOROR");
+			return;
+		}
+		if (!(stack.getItem() instanceof BlockItem)) {
+			System.out.println("WHAT WTF");
+		}
+		final Block block = ((BlockItem) stack.getItem()).getBlock();
+		placeBlock(pos, block.getDefaultState()); // Use default state currently. Maybe we should make that better ??
+		BlockItem.setTileEntityNBT(world, null, pos, stack);
 	}
 	
 	private boolean placeBlock(BlockPos pos, BlockState state) {
@@ -124,6 +143,10 @@ public class TrackBuilderManager {
 				state.getBlock().dropXpOnBlockBreak(world, startPos, exp); // Drop exp on start pos
 			}
 		}
+	}
+	
+	private List<ItemStack> extractItems(BlockTagItemStackHandler handler, Set<BlockPos> set) {
+		return ItemHandlerUtil.extractItems(handler, handler::getCondition, set.size());
 	}
 	
 	private boolean hasEnoughItems(BlockTagItemStackHandler handler, Set<BlockPos> set) {
