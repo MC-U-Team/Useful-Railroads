@@ -13,12 +13,15 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class TrackBuilderManager {
 	
 	private final World world;
 	private final Direction direction;
 	private final BlockPos startPos;
+	
+	private final BlockPos firstRailPos;
 	
 	private final Set<BlockPos> allPositionSet = new HashSet<>();
 	
@@ -39,6 +42,8 @@ public class TrackBuilderManager {
 			rayTracePos = rayTracePos.down();
 		}
 		startPos = rayTracePos.toImmutable();
+		
+		firstRailPos = startPos.offset(direction).up();
 	}
 	
 	public boolean calculateBlockPosition() {
@@ -51,22 +56,22 @@ public class TrackBuilderManager {
 		final Direction crossWisePositiveDirection = Direction.getFacingFromAxisDirection(crossWiseAxis, AxisDirection.POSITIVE);
 		final Direction crossWiseNegativeDirection = Direction.getFacingFromAxisDirection(crossWiseAxis, AxisDirection.NEGATIVE);
 		
-		BlockPos.getAllInBox(startPos.offset(direction).up(), startPos.offset(direction, 16).up()) //
+		BlockPos.getAllInBox(startPos.offset(direction).up(), startPos.offset(direction, 17).up()) //
 				.map(BlockPos::toImmutable) //
 				.forEach(railSet::add);
 		
-		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection), startPos.offset(direction, 16).offset(crossWiseNegativeDirection)) //
+		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection), startPos.offset(direction, 17).offset(crossWiseNegativeDirection)) //
 				.map(BlockPos::toImmutable) //
 				.forEach(groundBlockSet::add);
 		
-		redstoneTorchSet.add(startPos.offset(direction, 8).down().toImmutable());
+		redstoneTorchSet.add(startPos.offset(direction, 9).down().toImmutable());
 		
-		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection).down(), startPos.offset(direction, 16).offset(crossWiseNegativeDirection).down(2)) //
+		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection).down(), startPos.offset(direction, 17).offset(crossWiseNegativeDirection).down(2)) //
 				.map(BlockPos::toImmutable) //
 				.filter(Predicates.not(redstoneTorchSet::contains)) //
 				.forEach(cobbleSet::add);
 		
-		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection).up(1), startPos.offset(direction, 16).offset(crossWiseNegativeDirection).up(3)) //
+		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection).up(1), startPos.offset(direction, 17).offset(crossWiseNegativeDirection).up(3)) //
 				.map(BlockPos::toImmutable) //
 				.filter(Predicates.not(railSet::contains)) //
 				.forEach(airSet::add);
@@ -98,7 +103,7 @@ public class TrackBuilderManager {
 		final List<ItemStack> groundBlockStacks = extractItems(wrapper.getGroundBlockInventory(), groundBlockSet);
 		final List<ItemStack> redstoneTorchStacks = extractItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet);
 		
-		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(pos));
+		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(player, pos));
 		
 		cobbleSet.forEach(pos -> placeBlock(pos, Blocks.COBBLESTONE.getDefaultState()));
 		redstoneTorchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(redstoneTorchStacks)));
@@ -109,15 +114,11 @@ public class TrackBuilderManager {
 	}
 	
 	private void placeItemBlock(BlockPos pos, ItemStack stack) {
-		if (stack.isEmpty()) {
-			System.out.println("ERROROROROROROROOROROROROOROROROOROROROOROR");
+		if (stack.isEmpty() && !(stack.getItem() instanceof BlockItem)) {
 			return;
 		}
-		if (!(stack.getItem() instanceof BlockItem)) {
-			System.out.println("WHAT WTF");
-		}
 		final Block block = ((BlockItem) stack.getItem()).getBlock();
-		placeBlock(pos, block.getDefaultState()); // Use default state currently. Maybe we should make that better ??
+		placeBlock(pos, block.getDefaultState()); // Use default state currently
 		BlockItem.setTileEntityNBT(world, null, pos, stack);
 	}
 	
@@ -133,14 +134,17 @@ public class TrackBuilderManager {
 		return placed;
 	}
 	
-	private void destroyBlock(BlockPos pos) {
+	private void destroyBlock(PlayerEntity player, BlockPos pos) {
 		final BlockState state = world.getBlockState(pos);
 		final int exp = state.getExpDrop(world, pos, 0, 0);
 		
 		if (placeBlock(pos, world.getFluidState(pos).getBlockState())) {
-			Block.spawnDrops(state, world, startPos, world.getTileEntity(pos)); // Drop items on start pos
+			if (world instanceof ServerWorld) {
+				Block.getDrops(state, (ServerWorld) world, pos, world.getTileEntity(pos)).forEach((stack) -> ItemHandlerHelper.giveItemToPlayer(player, stack));
+				state.spawnAdditionalDrops(world, player.getPosition(), ItemStack.EMPTY);
+			}
 			if (exp > 0) {
-				state.getBlock().dropXpOnBlockBreak(world, startPos, exp); // Drop exp on start pos
+				state.getBlock().dropXpOnBlockBreak(world, player.getPosition(), exp);
 			}
 		}
 	}
@@ -161,6 +165,10 @@ public class TrackBuilderManager {
 	}
 	
 	public Set<BlockPos> getAllPositionsSet() {
-		return allPositionSet;
+		return Collections.unmodifiableSet(allPositionSet);
+	}
+	
+	public BlockPos getFirstRailPos() {
+		return firstRailPos;
 	}
 }

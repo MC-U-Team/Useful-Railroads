@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.handler;
 
-import java.util.Collection;
+import java.util.*;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
@@ -48,6 +48,7 @@ public class DrawTrackBuilderSelection {
 				blue = 1;
 			}
 			drawSelectionBox(event.getInfo().getProjectedView(), manager.getAllPositionsSet(), red, 0, blue, 1);
+			drawSelectionBox(event.getInfo().getProjectedView(), Arrays.asList(manager.getFirstRailPos()), 0, 1, 0, 1);
 			event.setCanceled(true);
 		}
 	}
