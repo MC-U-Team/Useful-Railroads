@@ -37,7 +37,7 @@ public class DrawTrackBuilderSelection {
 		
 		final TrackBuilderManager manager = new TrackBuilderManager(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, event.getInfo().getLookDirection());
 		
-		if (!manager.hasErrorOccured()) {
+		if (manager.calculateBlockPosition()) {
 			final int red;
 			final int blue;
 			if (player.isSneaking()) {
@@ -47,7 +47,7 @@ public class DrawTrackBuilderSelection {
 				red = 0;
 				blue = 1;
 			}
-			drawSelectionBox(event.getInfo().getProjectedView(), manager.getRenderSet(), red, 0, blue, 1);
+			drawSelectionBox(event.getInfo().getProjectedView(), manager.getAllPositionsSet(), red, 0, blue, 1);
 			event.setCanceled(true);
 		}
 	}

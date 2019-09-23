@@ -1,19 +1,14 @@
 package info.u_team.useful_railroads.item;
 
-import java.util.stream.IntStream;
-
 import info.u_team.u_team_core.item.UItem;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
-import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.*;
-import net.minecraft.network.play.server.SMultiBlockChangePacket;
 import net.minecraft.util.*;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -61,11 +56,17 @@ public class TrackBuilderItem extends UItem {
 		
 		final TrackBuilderManager manager = new TrackBuilderManager(context.getPos(), context.getFace(), world, player.getLookVec());
 		
-		manager.getRenderSet().forEach(pos -> {
-			BlockState previous = world.getBlockState(pos);
-			world.setBlockState(pos, Blocks.DIAMOND_ORE.getDefaultState());
+		if (!manager.calculateBlockPosition()) {
+			return ActionResultType.PASS;
+		}
+		
+		manager.execute(player, wrapper);
+		
+//		manager.getAllPositionsSet().forEach(pos -> {
+//			BlockState previous = world.getBlockState(pos);
+//			world.setBlockState(pos, Blocks.DIAMOND_ORE.getDefaultState());
 //			world.markAndNotifyBlock(pos, world.getChunkAt(pos), Blocks.AIR.getDefaultState(), Blocks.DIAMOND_ORE.getDefaultState(), 3);
-		});
+//		});
 		
 		// Short[] objectArray = manager.getRenderSet().stream() //
 		// .map(pos -> new Vec3i(pos.getX() & 15, pos.getY(), pos.getZ() & 15)) //

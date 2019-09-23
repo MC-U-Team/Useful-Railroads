@@ -15,6 +15,10 @@ public class TagItemStackHandler extends ItemStackHandler {
 	
 	@Override
 	public boolean isItemValid(int slot, ItemStack stack) {
+		return getCondition(stack);
+	}
+	
+	public boolean getCondition(ItemStack stack) {
 		return stack.getItem().isIn(tag);
 	}
 }

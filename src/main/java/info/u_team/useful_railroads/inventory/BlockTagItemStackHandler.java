@@ -10,8 +10,7 @@ public class BlockTagItemStackHandler extends TagItemStackHandler {
 	}
 	
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
-		return super.isItemValid(slot, stack) && stack.getItem() instanceof BlockItem;
+	public boolean getCondition(ItemStack stack) {
+		return super.getCondition(stack) && stack.getItem() instanceof BlockItem;
 	}
-	
 }

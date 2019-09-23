@@ -11,9 +11,9 @@ import net.minecraftforge.items.*;
 
 public class TrackBuilderInventoryWrapper {
 	
-	protected final ItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 9);
-	protected final ItemStackHandler groundBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 27);
-	protected final ItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
+	protected final BlockTagItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 9);
+	protected final BlockTagItemStackHandler groundBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 27);
+	protected final BlockTagItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
 	protected final IItemHandler fuelInventory;
 	
 	protected int fuel;
@@ -22,15 +22,15 @@ public class TrackBuilderInventoryWrapper {
 		fuelInventory = new TrackBuilderFuelItemHandler(worldSupplier, fuelAdder -> fuel += fuelAdder);
 	}
 	
-	public ItemStackHandler getRailInventory() {
+	public BlockTagItemStackHandler getRailInventory() {
 		return railInventory;
 	}
 	
-	public ItemStackHandler getGroundBlockInventory() {
+	public BlockTagItemStackHandler getGroundBlockInventory() {
 		return groundBlockInventory;
 	}
 	
-	public ItemStackHandler getRedstoneTorchInventory() {
+	public BlockTagItemStackHandler getRedstoneTorchInventory() {
 		return redstoneTorchInventory;
 	}
 	
