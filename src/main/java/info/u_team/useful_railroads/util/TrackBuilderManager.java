@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -93,12 +93,12 @@ public class TrackBuilderManager {
 		
 		final int cost = calculateCost();
 		if (wrapper.getFuel() < cost) {
-			player.sendMessage(new StringTextComponent("Not enough fuel."));
+			player.sendMessage(new TranslationTextComponent("container.usefulrailroads.track_builder.not_enough_fuel", cost).setStyle(new Style().setColor(TextFormatting.RED)));
 			return;
 		}
 		
 		if (!hasEnoughItems(wrapper.getRailInventory(), railSet) || !hasEnoughItems(wrapper.getGroundBlockInventory(), groundBlockSet) || !hasEnoughItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet)) {
-			player.sendMessage(new StringTextComponent("Missing blocks."));
+			player.sendMessage(new TranslationTextComponent("container.usefulrailroads.track_builder.not_enough_blocks").setStyle(new Style().setColor(TextFormatting.RED)));
 			return;
 		}
 		

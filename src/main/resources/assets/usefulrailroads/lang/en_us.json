@@ -13,5 +13,7 @@
 	"container.usefulrailroads.track_builder.mode": "Mode",
 	"container.usefulrailroads.track_builder.mode.noair": "No extra tunnel",
 	"container.usefulrailroads.track_builder.mode.3x3": "3x3 tunnel",
-	"container.usefulrailroads.track_builder.mode.5x5": "5x5 tunnel"
+	"container.usefulrailroads.track_builder.mode.5x5": "5x5 tunnel",
+	"container.usefulrailroads.track_builder.not_enough_fuel": "Not enough fuel. This operation costs %s fuel.",
+	"container.usefulrailroads.track_builder.not_enough_blocks": "Not enough blocks."
 }
