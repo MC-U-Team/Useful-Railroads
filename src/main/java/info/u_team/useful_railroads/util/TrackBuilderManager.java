@@ -23,6 +23,8 @@ public class TrackBuilderManager {
 	
 	private final BlockPos firstRailPos;
 	
+	private final TrackBuilderMode mode;
+	
 	private final Set<BlockPos> allPositionSet = new HashSet<>();
 	
 	private final Set<BlockPos> railSet = new HashSet<>();
@@ -31,7 +33,7 @@ public class TrackBuilderManager {
 	private final Set<BlockPos> cobbleSet = new HashSet<>();
 	private final Set<BlockPos> airSet = new HashSet<>();
 	
-	public TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector) {
+	public TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector, TrackBuilderMode mode) {
 		this.world = world;
 		direction = Direction.getFacingFromVector(lookVector.x, lookVector.y, lookVector.z);
 		
@@ -42,8 +44,9 @@ public class TrackBuilderManager {
 			rayTracePos = rayTracePos.down();
 		}
 		startPos = rayTracePos.toImmutable();
-		
 		firstRailPos = startPos.offset(direction).up();
+		
+		this.mode = mode;
 	}
 	
 	public boolean calculateBlockPosition() {
@@ -71,10 +74,12 @@ public class TrackBuilderManager {
 				.filter(Predicates.not(redstoneTorchSet::contains)) //
 				.forEach(cobbleSet::add);
 		
-		BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection).up(1), startPos.offset(direction, 17).offset(crossWiseNegativeDirection).up(3)) //
-				.map(BlockPos::toImmutable) //
-				.filter(Predicates.not(railSet::contains)) //
-				.forEach(airSet::add);
+		if (mode != TrackBuilderMode.MODE_NOAIR) {
+			BlockPos.getAllInBox(startPos.offset(direction).offset(crossWisePositiveDirection, mode.getDistanceSide()).up(1), startPos.offset(direction, 17).offset(crossWiseNegativeDirection, mode.getDistanceSide()).up(mode.getDistanceUp())) //
+					.map(BlockPos::toImmutable) //
+					.filter(Predicates.not(railSet::contains)) //
+					.forEach(airSet::add);
+		}
 		
 		Stream.of(railSet, groundBlockSet, redstoneTorchSet, cobbleSet, airSet).flatMap(Set::stream).forEach(allPositionSet::add);
 		

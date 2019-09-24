@@ -9,7 +9,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -34,7 +34,7 @@ public class TrackBuilderItem extends UItem {
 				
 				@Override
 				public ITextComponent getDisplayName() {
-					return stack.getDisplayName();
+					return new TranslationTextComponent("container.usefulrailroads.track_builder");
 				}
 			}, buffer -> {
 				buffer.writeVarInt(wrapper.getFuel());
@@ -51,16 +51,17 @@ public class TrackBuilderItem extends UItem {
 			return ActionResultType.PASS;
 		}
 		final PlayerEntity player = context.getPlayer();
-		if (player == null || !context.isPlacerSneaking()) { // No player or no sneaking
+		if (player == null || !context.isPlacerSneaking() || context.getHand() == Hand.OFF_HAND) { // No player or no sneaking and no offhand
 			return ActionResultType.PASS;
 		}
-		final TrackBuilderManager manager = new TrackBuilderManager(context.getPos(), context.getFace(), world, player.getLookVec());
+		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(context.getItem(), () -> player.world);
+		final TrackBuilderManager manager = new TrackBuilderManager(context.getPos(), context.getFace(), world, player.getLookVec(), wrapper.getMode());
 		
 		if (!manager.calculateBlockPosition()) {
 			return ActionResultType.PASS;
 		}
 		
-		manager.execute(player, new TrackBuilderInventoryWrapper.Server(context.getItem(), () -> player.world));
+		manager.execute(player, wrapper);
 		
 		return super.onItemUse(context);
 	}

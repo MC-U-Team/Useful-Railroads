@@ -6,10 +6,11 @@ import com.mojang.blaze3d.platform.GlStateManager;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.init.UsefulRailroadsItems;
-import info.u_team.useful_railroads.util.TrackBuilderManager;
+import info.u_team.useful_railroads.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -25,17 +26,26 @@ public class DrawTrackBuilderSelection {
 	@SubscribeEvent
 	public static void onBblockHighlight(DrawBlockHighlightEvent event) {
 		final PlayerEntity player = Minecraft.getInstance().player;
+		final ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 		
-		if (player.getHeldItem(Hand.MAIN_HAND).getItem() != UsefulRailroadsItems.TRACK_BUILDER) {
+		if (stack.getItem() != UsefulRailroadsItems.TRACK_BUILDER) {
 			return;
 		}
 		
 		if (event.getTarget().getType() != RayTraceResult.Type.BLOCK) {
 			return;
 		}
+		
+		final TrackBuilderMode mode;
+		if (stack.hasTag()) {
+			mode = TrackBuilderMode.byName(stack.getTag().getString("mode"));
+		} else {
+			mode = TrackBuilderMode.MODE_NOAIR;
+		}
+		
 		final BlockRayTraceResult rayTraceResult = (BlockRayTraceResult) event.getTarget();
 		
-		final TrackBuilderManager manager = new TrackBuilderManager(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, event.getInfo().getLookDirection());
+		final TrackBuilderManager manager = new TrackBuilderManager(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, event.getInfo().getLookDirection(), mode);
 		
 		if (manager.calculateBlockPosition()) {
 			final int red;
