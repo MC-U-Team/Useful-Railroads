@@ -51,8 +51,8 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8, ySize - 94, 4210752);
 		
 		font.drawString("Rails", 8, 20, 4210752);
-		font.drawString("Ground blocks", 8, 52, 4210752);
-		font.drawString("Power", 8, 120, 4210752);
+		font.drawString("Ground Blocks", 8, 52, 4210752);
+		font.drawString("Redstone Power", 8, 120, 4210752);
 		font.drawString("Fuel: " + TextFormatting.DARK_AQUA + container.getWrapper().getFuel(), 70, 136, 4210752);
 	}
 	
