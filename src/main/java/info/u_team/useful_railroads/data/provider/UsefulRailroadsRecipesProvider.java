@@ -99,7 +99,7 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 				.addCriterion("has_minecart", this.hasItem(Items.MINECART)) //
 				.build(consumer);
 		
-		CustomRecipeBuilder.func_218656_a(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL).build(consumer, "teleport_rail_remove_location");
+		CustomRecipeBuilder.func_218656_a(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION).build(consumer, "teleport_rail_remove_location");
 	}
 	
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {

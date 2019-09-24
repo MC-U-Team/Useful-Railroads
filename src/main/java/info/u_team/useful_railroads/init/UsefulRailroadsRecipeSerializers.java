@@ -17,7 +17,7 @@ public class UsefulRailroadsRecipeSerializers {
 	
 	public static final FuelRecipe.Serializer<TrackBuilderFuelRecipe> TRACK_BUILDER_FUEL = new FuelRecipe.Serializer<>("track_builder_fuel", TrackBuilderFuelRecipe::new);
 	
-	public static final SpecialRecipeSerializer<TeleportRailSpecialCraftingRecipe> CRAFTING_SPECIAL_TELEPORT_RAIL = new USpecialRecipeSerializer<>("crafting_special_teleport_rail", TeleportRailSpecialCraftingRecipe::new);
+	public static final SpecialRecipeSerializer<TeleportRailSpecialCraftingRecipe> CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION = new USpecialRecipeSerializer<>("crafting_special_teleport_rail_remove_location", TeleportRailSpecialCraftingRecipe::new);
 	
 	@SubscribeEvent
 	public static void register(Register<IRecipeSerializer<?>> event) {
