@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"usefulrailroads:fuel/ender_pearl"
+			"usefulrailroads:fuel/teleport_rail/ender_eye"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "minecraft:ender_pearl"
+						"item": "minecraft:ender_eye"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "usefulrailroads:fuel/ender_pearl"
+				"recipe": "usefulrailroads:fuel/teleport_rail/ender_eye"
 			}
 		}
 	},

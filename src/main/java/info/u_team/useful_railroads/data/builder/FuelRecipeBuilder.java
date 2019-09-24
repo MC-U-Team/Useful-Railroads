@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonObject;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
+import info.u_team.useful_railroads.recipe.FuelRecipe;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.IFinishedRecipe;
@@ -15,16 +16,23 @@ import net.minecraft.util.ResourceLocation;
 
 public class FuelRecipeBuilder {
 	
+	private final FuelRecipe.Serializer<?> serializer;
+	
 	private final Ingredient ingredient;
 	private final int fuel;
 	private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
 	private String group;
 	
-	public static FuelRecipeBuilder fuelRecipe(Ingredient ingredient, int fuel) {
-		return new FuelRecipeBuilder(ingredient, fuel);
+	public static FuelRecipeBuilder teleportRailFuel(Ingredient ingredient, int fuel) {
+		return new FuelRecipeBuilder(UsefulRailroadsRecipeSerializers.TELEPORT_RAIL_FUEL, ingredient, fuel);
 	}
 	
-	protected FuelRecipeBuilder(Ingredient ingredient, int fuel) {
+	public static FuelRecipeBuilder trackBuilderFuel(Ingredient ingredient, int fuel) {
+		return new FuelRecipeBuilder(UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL, ingredient, fuel);
+	}
+	
+	protected FuelRecipeBuilder(FuelRecipe.Serializer<?> serializer, Ingredient ingredient, int fuel) {
+		this.serializer = serializer;
 		this.ingredient = ingredient;
 		this.fuel = fuel;
 	}
@@ -41,7 +49,7 @@ public class FuelRecipeBuilder {
 	public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
 		validate(id);
 		advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(id)).withRewards(AdvancementRewards.Builder.recipe(id)).withRequirementsStrategy(IRequirementsStrategy.OR);
-		consumer.accept(new FuelRecipeBuilder.Result(id, group == null ? "" : group, ingredient, fuel, advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath())));
+		consumer.accept(new FuelRecipeBuilder.Result(serializer, id, group == null ? "" : group, ingredient, fuel, advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath())));
 	}
 	
 	private void validate(ResourceLocation id) {
@@ -52,6 +60,8 @@ public class FuelRecipeBuilder {
 	
 	public static class Result implements IFinishedRecipe {
 		
+		private final FuelRecipe.Serializer<?> serializer;
+		
 		private final ResourceLocation id;
 		private final String group;
 		private final Ingredient ingredient;
@@ -59,7 +69,8 @@ public class FuelRecipeBuilder {
 		private final Advancement.Builder advancementBuilder;
 		private final ResourceLocation advancementId;
 		
-		public Result(ResourceLocation id, String group, Ingredient ingredient, int fuel, Advancement.Builder advancementBuilder, ResourceLocation advancementId) {
+		public Result(FuelRecipe.Serializer<?> serializer, ResourceLocation id, String group, Ingredient ingredient, int fuel, Advancement.Builder advancementBuilder, ResourceLocation advancementId) {
+			this.serializer = serializer;
 			this.id = id;
 			this.group = group;
 			this.ingredient = ingredient;
@@ -78,7 +89,7 @@ public class FuelRecipeBuilder {
 		}
 		
 		public IRecipeSerializer<?> getSerializer() {
-			return UsefulRailroadsRecipeSerializers.TELEPORT_FUEL;
+			return serializer;
 		}
 		
 		public ResourceLocation getID() {

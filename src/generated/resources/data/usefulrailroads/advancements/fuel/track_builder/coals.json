@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"usefulrailroads:fuel/chorus_flower"
+			"usefulrailroads:fuel/track_builder/coals"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "minecraft:chorus_flower"
+						"tag": "minecraft:coals"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "usefulrailroads:fuel/chorus_flower"
+				"recipe": "usefulrailroads:fuel/track_builder/coals"
 			}
 		}
 	},

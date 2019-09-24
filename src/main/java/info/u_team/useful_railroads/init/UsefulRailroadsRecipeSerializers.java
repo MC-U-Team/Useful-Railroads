@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsRecipeSerializers {
 	
-	public static final IRecipeSerializer<TeleportRailFuelRecipe> TELEPORT_FUEL = new FuelRecipe.Serializer<>("teleport_fuel", TeleportRailFuelRecipe::new);
+	public static final FuelRecipe.Serializer<TeleportRailFuelRecipe> TELEPORT_RAIL_FUEL = new FuelRecipe.Serializer<>("teleport_rail_fuel", TeleportRailFuelRecipe::new);
 	
-	public static final IRecipeSerializer<TrackBuilderFuelRecipe> TRACK_BUILDER_FUEL = new FuelRecipe.Serializer<>("track_builder_fuel", TrackBuilderFuelRecipe::new);
+	public static final FuelRecipe.Serializer<TrackBuilderFuelRecipe> TRACK_BUILDER_FUEL = new FuelRecipe.Serializer<>("track_builder_fuel", TrackBuilderFuelRecipe::new);
 	
 	public static final SpecialRecipeSerializer<TeleportRailSpecialCraftingRecipe> CRAFTING_SPECIAL_TELEPORT_RAIL = new USpecialRecipeSerializer<>("crafting_special_teleport_rail", TeleportRailSpecialCraftingRecipe::new);
 	

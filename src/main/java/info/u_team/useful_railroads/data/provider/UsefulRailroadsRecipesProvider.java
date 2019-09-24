@@ -18,7 +18,7 @@ import net.minecraft.data.*;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.Ingredient.TagList;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.Tags;
 
@@ -103,22 +103,41 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 	}
 	
 	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
-		addBasicFuelRecipe(Items.ENDER_PEARL, 100, consumer, "ender_pearl");
-		addBasicFuelRecipe(Items.ENDER_EYE, 150, consumer, "ender_eye");
-		addBasicFuelRecipe(Items.CHORUS_FLOWER, 250, consumer, "chorus_flower");
-		addBasicFuelRecipe(Items.CHORUS_FRUIT, 200, consumer, "chorus_fruit");
-		addBasicFuelRecipe(Items.POPPED_CHORUS_FRUIT, 210, consumer, "popped_chorus_fruit");
-		addBasicFuelRecipe(Tags.Items.DUSTS_REDSTONE, 5, consumer, "redstone_dusts");
-		addBasicFuelRecipe(Tags.Items.INGOTS_GOLD, 10, consumer, "gold_ingots");
-		addBasicFuelRecipe(Tags.Items.GEMS_DIAMOND, 50, consumer, "diamond_gems");
+		addTeleportRailFuel(Items.ENDER_PEARL, 100, consumer, "ender_pearl");
+		addTeleportRailFuel(Items.ENDER_EYE, 150, consumer, "ender_eye");
+		addTeleportRailFuel(Items.CHORUS_FLOWER, 250, consumer, "chorus_flower");
+		addTeleportRailFuel(Items.CHORUS_FRUIT, 200, consumer, "chorus_fruit");
+		addTeleportRailFuel(Items.POPPED_CHORUS_FRUIT, 210, consumer, "popped_chorus_fruit");
+		addTeleportRailFuel(Tags.Items.DUSTS_REDSTONE, 5, consumer, "redstone_dusts");
+		addTeleportRailFuel(Tags.Items.INGOTS_GOLD, 10, consumer, "gold_ingots");
+		addTeleportRailFuel(Tags.Items.GEMS_DIAMOND, 50, consumer, "diamond_gems");
+		
+		addTrackBuilderFuel(ItemTags.COALS, 80, consumer, "coals");
+		addTrackBuilderFuel(Tags.Items.STORAGE_BLOCKS_COAL, 720, consumer, "coal_blocks");
 	}
 	
-	private void addBasicFuelRecipe(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-		FuelRecipeBuilder.fuelRecipe(Ingredient.fromItems(item), fuel).addCriterion("has_ingredient", hasItem(item)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/" + name));
+	private void addTeleportRailFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		addTeleportRailFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
 	}
 	
-	private void addBasicFuelRecipe(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-		FuelRecipeBuilder.fuelRecipe(getIngredientOfTag(tag), fuel).addCriterion("has_ingredient", hasItem(tag)).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/" + name));
+	private void addTeleportRailFuel(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		addTeleportRailFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
+	}
+	
+	private void addTeleportRailFuel(Ingredient ingredient, InventoryChangeTrigger.Instance trigger, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
+	}
+	
+//	private void addTrackBuilderFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+//		addTrackBuilderFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
+//	}
+	
+	private void addTrackBuilderFuel(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		addTrackBuilderFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
+	}
+	
+	private void addTrackBuilderFuel(Ingredient ingredient, InventoryChangeTrigger.Instance trigger, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+		FuelRecipeBuilder.trackBuilderFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/track_builder/" + name));
 	}
 	
 	protected InventoryChangeTrigger.Instance hasItem(Tag<Item> tag) {

@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"usefulrailroads:fuel/diamond_gems"
+			"usefulrailroads:fuel/teleport_rail/chorus_flower"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"tag": "forge:gems/diamond"
+						"item": "minecraft:chorus_flower"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "usefulrailroads:fuel/diamond_gems"
+				"recipe": "usefulrailroads:fuel/teleport_rail/chorus_flower"
 			}
 		}
 	},

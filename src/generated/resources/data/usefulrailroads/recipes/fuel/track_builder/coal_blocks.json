@@ -1,0 +1,7 @@
+{
+	"type": "usefulrailroads:track_builder_fuel",
+	"ingredient": {
+		"tag": "forge:storage_blocks/coal"
+	},
+	"fuel": 720
+}

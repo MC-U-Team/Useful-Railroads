@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"usefulrailroads:fuel/redstone_dusts"
+			"usefulrailroads:fuel/teleport_rail/redstone_dusts"
 		]
 	},
 	"criteria": {
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "usefulrailroads:fuel/redstone_dusts"
+				"recipe": "usefulrailroads:fuel/teleport_rail/redstone_dusts"
 			}
 		}
 	},
