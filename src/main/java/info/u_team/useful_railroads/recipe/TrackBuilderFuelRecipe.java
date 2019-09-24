@@ -4,20 +4,20 @@ import info.u_team.useful_railroads.init.*;
 import net.minecraft.item.crafting.*;
 import net.minecraft.util.ResourceLocation;
 
-public class TeleportRailFuelRecipe extends FuelRecipe {
+public class TrackBuilderFuelRecipe extends FuelRecipe {
 	
-	public TeleportRailFuelRecipe(ResourceLocation id, String group, Ingredient ingredient, int fuel) {
+	public TrackBuilderFuelRecipe(ResourceLocation id, String group, Ingredient ingredient, int fuel) {
 		super(id, group, ingredient, fuel);
 	}
 	
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return UsefulRailroadsRecipeSerializers.TELEPORT_FUEL;
+		return UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL;
 	}
 	
 	@Override
 	public IRecipeType<?> getType() {
-		return UsefulRailroadsRecipeTypes.TELEPORT_FUEL;
+		return UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL;
 	}
 	
 }

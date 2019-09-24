@@ -1,24 +1,28 @@
 package info.u_team.useful_railroads.inventory;
 
 import java.util.Optional;
-import java.util.function.*;
+import java.util.function.Supplier;
 
-import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
-import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
+import info.u_team.useful_railroads.recipe.FuelRecipe;
+import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public class TrackBuilderFuelItemHandler implements IItemHandlerModifiable {
+public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifiable {
+	
+	private final IRecipeType<T> recipeType;
 	
 	private final Supplier<World> worldSupplier;
 	private final Consumer<Integer> fuelAdder;
 	
-	private TeleportRailFuelRecipe currentRecipe;
+	private T currentRecipe;
 	private ItemStack failedMatch = ItemStack.EMPTY;
 	
-	public TrackBuilderFuelItemHandler(Supplier<World> worldSupplier, Consumer<Integer> fuelAdder) {
+	public FuelItemHandler(IRecipeType<T> recipeType, Supplier<World> worldSupplier, Consumer<Integer> fuelAdder) {
+		this.recipeType = recipeType;
 		this.worldSupplier = worldSupplier;
 		this.fuelAdder = fuelAdder;
 	}
@@ -71,14 +75,14 @@ public class TrackBuilderFuelItemHandler implements IItemHandlerModifiable {
 		}
 	}
 	
-	private Optional<TeleportRailFuelRecipe> getRecipe(ItemStack stack, World world) {
+	private Optional<T> getRecipe(ItemStack stack, World world) {
 		final IInventory inventory = new Inventory(stack);
 		if (stack.isEmpty() || stack == failedMatch)
 			return Optional.empty();
 		if (currentRecipe != null && currentRecipe.matches(inventory, world)) {
 			return Optional.of(currentRecipe);
 		} else {
-			final TeleportRailFuelRecipe recipe = world.getRecipeManager().getRecipe(UsefulRailroadsRecipeTypes.TELEPORT_FUEL, inventory, world).orElse(null);
+			final T recipe = world.getRecipeManager().getRecipe(recipeType, inventory, world).orElse(null);
 			if (recipe == null) {
 				failedMatch = stack;
 			} else {

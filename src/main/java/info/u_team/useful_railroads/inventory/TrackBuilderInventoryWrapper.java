@@ -3,7 +3,7 @@ package info.u_team.useful_railroads.inventory;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-import info.u_team.useful_railroads.init.UsefulRailroadsTags;
+import info.u_team.useful_railroads.init.*;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,7 +22,7 @@ public class TrackBuilderInventoryWrapper {
 	protected TrackBuilderMode mode = TrackBuilderMode.MODE_NOAIR;
 	
 	private TrackBuilderInventoryWrapper(Supplier<World> worldSupplier) {
-		fuelInventory = new TrackBuilderFuelItemHandler(worldSupplier, fuelAdder -> fuel += fuelAdder);
+		fuelInventory = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL, worldSupplier, fuelAdder -> fuel += fuelAdder);
 	}
 	
 	public BlockTagItemStackHandler getRailInventory() {
