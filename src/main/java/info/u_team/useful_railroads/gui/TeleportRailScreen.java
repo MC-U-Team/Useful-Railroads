@@ -9,7 +9,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.*;
+import net.minecraftforge.api.distmarker.*;
 
+@OnlyIn(Dist.CLIENT)
 public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");

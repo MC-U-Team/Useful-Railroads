@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsTags;
+import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
@@ -16,7 +17,9 @@ public class TrackBuilderInventoryWrapper {
 	protected final BlockTagItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
 	protected final IItemHandler fuelInventory;
 	
-	protected int fuel;
+	protected int fuel = 0;
+	
+	protected TrackBuilderMode mode = TrackBuilderMode.MODE_NOAIR;
 	
 	private TrackBuilderInventoryWrapper(Supplier<World> worldSupplier) {
 		fuelInventory = new TrackBuilderFuelItemHandler(worldSupplier, fuelAdder -> fuel += fuelAdder);
@@ -52,11 +55,20 @@ public class TrackBuilderInventoryWrapper {
 		this.fuel = fuel;
 	}
 	
+	public TrackBuilderMode getMode() {
+		return mode;
+	}
+	
+	public void setMode(TrackBuilderMode mode) {
+		this.mode = mode;
+	}
+	
 	public static class Client extends TrackBuilderInventoryWrapper {
 		
-		public Client(int fuel, Supplier<World> worldSupplier) {
+		public Client(int fuel, TrackBuilderMode mode, Supplier<World> worldSupplier) {
 			super(worldSupplier);
 			this.fuel = fuel;
+			this.mode = mode;
 		}
 		
 	}
@@ -80,6 +92,7 @@ public class TrackBuilderInventoryWrapper {
 			final CompoundNBT compound = stack.getTag();
 			if (compound != null) {
 				fuel = compound.getInt("fuel");
+				mode = TrackBuilderMode.byName(compound.getString("mode"));
 			}
 		}
 		
@@ -96,6 +109,16 @@ public class TrackBuilderInventoryWrapper {
 				final CompoundNBT compound = stack.getTag();
 				if (compound != null) {
 					compound.remove("fuel");
+				}
+			}
+			
+			if (mode != TrackBuilderMode.MODE_NOAIR) {
+				final CompoundNBT compound = stack.getOrCreateTag();
+				compound.putString("mode", mode.getName());
+			} else {
+				final CompoundNBT compound = stack.getTag();
+				if (compound != null) {
+					compound.remove("mode");
 				}
 			}
 		}

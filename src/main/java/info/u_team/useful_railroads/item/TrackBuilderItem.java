@@ -36,7 +36,10 @@ public class TrackBuilderItem extends UItem {
 				public ITextComponent getDisplayName() {
 					return stack.getDisplayName();
 				}
-			}, buffer -> buffer.writeVarInt(wrapper.getFuel()));
+			}, buffer -> {
+				buffer.writeVarInt(wrapper.getFuel());
+				buffer.writeEnumValue(wrapper.getMode());
+			});
 		}
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 	}

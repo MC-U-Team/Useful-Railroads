@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.container;
 import info.u_team.u_team_core.container.UContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.*;
+import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IntReferenceHolder;
@@ -13,7 +14,7 @@ public class TrackBuilderContainer extends UContainer {
 	
 	// Client
 	public TrackBuilderContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), () -> playerInventory.player.world));
+		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnumValue(TrackBuilderMode.class), () -> playerInventory.player.world));
 	}
 	
 	// Server
@@ -37,6 +38,18 @@ public class TrackBuilderContainer extends UContainer {
 				wrapper.setFuel(fuel);
 			}
 			
+		});
+		trackInt(new IntReferenceHolder() {
+			
+			@Override
+			public int get() {
+				return wrapper.getMode().ordinal();
+			}
+			
+			@Override
+			public void set(int ordinal) {
+				wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[ordinal]);
+			}
 		});
 	}
 	
