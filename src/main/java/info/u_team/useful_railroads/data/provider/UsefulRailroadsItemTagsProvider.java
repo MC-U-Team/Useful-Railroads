@@ -19,7 +19,7 @@ public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 		copy(BlockTags.RAILS, ItemTags.RAILS);
 		getBuilder(TRACK_BUILDER_RAILS).add(Items.POWERED_RAIL, UsefulRailroadsBlocks.HIGHSPEED_RAIL.asItem());
 		getBuilder(TRACK_BUILDER_GROUND_BLOCKS).add(Items.GRAVEL);
-		getBuilder(TRACK_BUILDER_REDSTONE_TORCHES).add(Items.REDSTONE_TORCH);
+		getBuilder(TRACK_BUILDER_REDSTONE_TORCHES).add(Items.REDSTONE_TORCH, Items.REDSTONE_BLOCK);
 	}
 	
 }
