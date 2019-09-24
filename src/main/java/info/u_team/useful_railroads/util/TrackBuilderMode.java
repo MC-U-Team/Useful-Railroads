@@ -3,6 +3,9 @@ package info.u_team.useful_railroads.util;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraftforge.api.distmarker.*;
+
 public enum TrackBuilderMode {
 	
 	MODE_NOAIR("noair"),
@@ -19,6 +22,11 @@ public enum TrackBuilderMode {
 	
 	public String getName() {
 		return name;
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public String getDisplayString() {
+		return I18n.format("container.usefulrailroads.track_builder.mode." + name);
 	}
 	
 	public static TrackBuilderMode byName(String name) {

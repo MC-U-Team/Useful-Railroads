@@ -4,5 +4,9 @@
 	"block.usefulrailroads.direction_rail": "Direction Rail",
 	"block.usefulrailroads.intersection_rail": "Intersection Rail",
 	"block.usefulrailroads.teleport_rail": "Teleport Rail",
-	"item.usefulrailroads.track_builder": "Track Builder"
+	"item.usefulrailroads.track_builder": "Track Builder",
+	"container.usefulrailroads.track_builder.mode": "Mode",
+	"container.usefulrailroads.track_builder.mode.noair": "No extra tunnel",
+	"container.usefulrailroads.track_builder.mode.3x3": "3x3 tunnel",
+	"container.usefulrailroads.track_builder.mode.5x5": "5x5 tunnel"
 }
