@@ -5,7 +5,9 @@ import java.util.stream.Stream;
 
 import info.u_team.useful_railroads.inventory.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.*;
@@ -13,7 +15,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class TrackBuilderManager {
 	
@@ -108,7 +109,9 @@ public class TrackBuilderManager {
 		final List<ItemStack> groundBlockStacks = extractItems(wrapper.getGroundBlockInventory(), groundBlockSet);
 		final List<ItemStack> redstoneTorchStacks = extractItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet);
 		
-		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(player, pos));
+		final Inventory dropInventory = new Inventory(100);
+		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(player, pos, dropInventory));
+		InventoryHelper.dropInventoryItems(world, player, dropInventory);
 		
 		cobbleSet.forEach(pos -> placeBlock(pos, Blocks.COBBLESTONE.getDefaultState()));
 		redstoneTorchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(redstoneTorchStacks)));
@@ -139,13 +142,16 @@ public class TrackBuilderManager {
 		return placed;
 	}
 	
-	private void destroyBlock(PlayerEntity player, BlockPos pos) {
+	private void destroyBlock(PlayerEntity player, BlockPos pos, Inventory inventory) {
 		final BlockState state = world.getBlockState(pos);
 		final int exp = state.getExpDrop(world, pos, 0, 0);
 		
 		if (placeBlock(pos, world.getFluidState(pos).getBlockState())) {
 			if (world instanceof ServerWorld) {
-				Block.getDrops(state, (ServerWorld) world, pos, world.getTileEntity(pos)).forEach((stack) -> ItemHandlerHelper.giveItemToPlayer(player, stack));
+				Block.getDrops(state, (ServerWorld) world, pos, world.getTileEntity(pos)).stream() //
+						.map(inventory::addItem) //
+						.filter(Predicates.not(ItemStack::isEmpty)) //
+						.forEach(stack -> Block.spawnAsEntity(world, pos, stack));
 				state.spawnAdditionalDrops(world, player.getPosition(), ItemStack.EMPTY);
 			}
 			if (exp > 0) {
