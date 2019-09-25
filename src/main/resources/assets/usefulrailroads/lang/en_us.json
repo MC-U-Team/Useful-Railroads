@@ -22,7 +22,8 @@
 	"container.usefulrailroads.track_builder.mode.noair": "No extra tunnel",
 	"container.usefulrailroads.track_builder.mode.3x3": "3x3 tunnel",
 	"container.usefulrailroads.track_builder.mode.5x5": "5x5 tunnel",
-	"item.usefulrailroads.track_builder": "Track Builder",
+	"item.usefulrailroads.single_track_builder": "Single Track Builder",
+	"item.usefulrailroads.double_track_builder": "Double Track Builder",
 	"item.usefulrailroads.track_builder.not_enough_fuel": "Not enough fuel. This operation costs %s fuel.",
 	"item.usefulrailroads.track_builder.not_enough_blocks": "Not enough blocks."
 }

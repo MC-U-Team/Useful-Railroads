@@ -12,7 +12,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsItems {
 	
-	public static final TrackBuilderItem TRACK_BUILDER = new TrackBuilderItem("track_builder");
+	public static final TrackBuilderItem SINGLE_TRACK_BUILDER = new TrackBuilderItem("single_track_builder", false);
+	
+	public static final TrackBuilderItem DOUBLE_TRACK_BUILDER = new TrackBuilderItem("double_track_builder", true);
 	
 	@SubscribeEvent
 	public static void register(Register<Item> event) {

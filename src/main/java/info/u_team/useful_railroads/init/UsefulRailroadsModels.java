@@ -2,9 +2,10 @@ package info.u_team.useful_railroads.init;
 
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 
+import info.u_team.u_team_core.util.ModelUtil;
+import info.u_team.u_team_core.util.ModelUtil.EmptyStateContainer;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
-import info.u_team.useful_railroads.util.*;
 import net.minecraft.block.*;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.RailShape;

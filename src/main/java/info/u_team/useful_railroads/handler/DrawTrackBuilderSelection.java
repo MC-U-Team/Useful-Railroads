@@ -5,7 +5,7 @@ import java.util.*;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.init.UsefulRailroadsItems;
+import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -28,7 +28,7 @@ public class DrawTrackBuilderSelection {
 		final PlayerEntity player = Minecraft.getInstance().player;
 		final ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 		
-		if (stack.getItem() != UsefulRailroadsItems.TRACK_BUILDER) {
+		if (!(stack.getItem() instanceof TrackBuilderItem)) {
 			return;
 		}
 		

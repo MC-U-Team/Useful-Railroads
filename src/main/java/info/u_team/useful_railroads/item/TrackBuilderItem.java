@@ -15,8 +15,11 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class TrackBuilderItem extends UItem {
 	
-	public TrackBuilderItem(String name) {
-		super(name, UsefulRailroadsItemGroups.GROUP, new Properties().maxStackSize(1).rarity(Rarity.RARE));
+	private final boolean doubleTrack;
+	
+	public TrackBuilderItem(String name, boolean doubleTrack) {
+		super(name, UsefulRailroadsItemGroups.GROUP, new Properties().maxStackSize(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
+		this.doubleTrack = doubleTrack;
 	}
 	
 	@Override
