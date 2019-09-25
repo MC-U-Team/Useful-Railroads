@@ -1,10 +1,9 @@
 package info.u_team.useful_railroads.inventory;
 
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 import info.u_team.useful_railroads.recipe.FuelRecipe;
-import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -16,20 +15,27 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 	private final IRecipeType<T> recipeType;
 	
 	private final Supplier<World> worldSupplier;
-	private final Consumer<Integer> fuelAdder;
+	
+	private final BooleanSupplier canAddFuel;
+	private final IntConsumer fuelAdder;
 	
 	private T currentRecipe;
 	private ItemStack failedMatch = ItemStack.EMPTY;
 	
-	public FuelItemHandler(IRecipeType<T> recipeType, Supplier<World> worldSupplier, Consumer<Integer> fuelAdder) {
+	public FuelItemHandler(IRecipeType<T> recipeType, Supplier<World> worldSupplier, IntConsumer fuelAdder) {
+		this(recipeType, worldSupplier, () -> true, fuelAdder);
+	}
+	
+	public FuelItemHandler(IRecipeType<T> recipeType, Supplier<World> worldSupplier, BooleanSupplier canAddFuel, IntConsumer fuelAdder) {
 		this.recipeType = recipeType;
 		this.worldSupplier = worldSupplier;
+		this.canAddFuel = canAddFuel;
 		this.fuelAdder = fuelAdder;
 	}
 	
 	@Override
 	public boolean isItemValid(int slot, ItemStack stack) {
-		return getRecipe(stack, worldSupplier.get()).isPresent();
+		return canAddFuel.getAsBoolean() && getRecipe(stack, worldSupplier.get()).isPresent();
 	}
 	
 	@Override
