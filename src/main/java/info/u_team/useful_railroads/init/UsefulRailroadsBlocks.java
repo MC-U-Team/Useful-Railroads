@@ -20,6 +20,8 @@ public class UsefulRailroadsBlocks {
 	public static final IntersectionRailBlock INTERSECTION_RAIL = new IntersectionRailBlock("intersection");
 	public static final TeleportRailBlock TELEPORT_RAIL = new TeleportRailBlock("teleport");
 	
+	public static final BufferStopBlock BUFFER_STOP = new BufferStopBlock("buffer_stop");
+	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
 		entries = BaseRegistryUtil.getAllRegistryEntriesAndApplyNames(UsefulRailroadsMod.MODID, Block.class);

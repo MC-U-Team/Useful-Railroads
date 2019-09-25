@@ -4,6 +4,7 @@
 	"block.usefulrailroads.direction_rail": "Direction Rail",
 	"block.usefulrailroads.intersection_rail": "Intersection Rail",
 	"block.usefulrailroads.teleport_rail": "Teleport Rail",
+	"block.usefulrailroads.buffer_stop": "Buffer Stop",
 	"block.usefulrailroads.teleport_rail.missing_setup": "Cannot place. Setup the rail first.",
 	"block.usefulrailroads.teleport_rail.not_enough_fuel": "Not enough fuel. This teleportation costs %s fuel.",
 	"container.usefulrailroads.teleport_rail": "Teleport Rail",

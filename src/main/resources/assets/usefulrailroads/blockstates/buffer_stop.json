@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "usefulrailroads:block/buffer_stop"
+		},
+		"facing=south": {
+			"model": "usefulrailroads:block/buffer_stop",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "usefulrailroads:block/buffer_stop",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "usefulrailroads:block/buffer_stop",
+			"y": 90
+		}
+	}
+}
