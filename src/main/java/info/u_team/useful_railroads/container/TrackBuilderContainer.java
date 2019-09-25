@@ -99,7 +99,6 @@ public class TrackBuilderContainer extends UContainer {
 	
 	@Override
 	public ItemStack slotClick(int index, int dragType, ClickType clickType, PlayerEntity player) {
-		System.out.println(index);
 		Slot tmpSlot;
 		if (index >= 0 && index < inventorySlots.size()) {
 			tmpSlot = inventorySlots.get(index);

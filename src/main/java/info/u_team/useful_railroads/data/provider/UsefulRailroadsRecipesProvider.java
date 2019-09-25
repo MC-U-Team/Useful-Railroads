@@ -112,8 +112,8 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 		addTeleportRailFuel(Tags.Items.INGOTS_GOLD, 10, consumer, "gold_ingots");
 		addTeleportRailFuel(Tags.Items.GEMS_DIAMOND, 50, consumer, "diamond_gems");
 		
-		addTrackBuilderFuel(ItemTags.COALS, 80, consumer, "coals");
-		addTrackBuilderFuel(Tags.Items.STORAGE_BLOCKS_COAL, 720, consumer, "coal_blocks");
+		addTrackBuilderFuel(ItemTags.COALS, 100, consumer, "coals");
+		addTrackBuilderFuel(Tags.Items.STORAGE_BLOCKS_COAL, 900, consumer, "coal_blocks");
 	}
 	
 	private void addTeleportRailFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
@@ -128,9 +128,9 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
 	}
 	
-//	private void addTrackBuilderFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-//		addTrackBuilderFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
-//	}
+	// private void addTrackBuilderFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+	// addTrackBuilderFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
+	// }
 	
 	private void addTrackBuilderFuel(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
 		addTrackBuilderFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
