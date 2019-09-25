@@ -58,19 +58,19 @@ public class TrackBuilderItem extends UItem {
 			return ActionResultType.PASS;
 		}
 		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(context.getItem(), () -> player.world);
-		final TrackBuilderManager manager = new TrackBuilderManager(context.getPos(), context.getFace(), world, player.getLookVec(), wrapper.getMode());
 		
-		if (!manager.calculateBlockPosition()) {
-			return ActionResultType.PASS;
-		}
-		
-		manager.execute(player, wrapper);
-		
-		return super.onItemUse(context);
+		TrackBuilderManager.create(context.getPos(), context.getFace(), world, player.getLookVec(), wrapper.getMode(), doubleTrack).ifPresent(manager -> {
+			manager.execute(player, wrapper);
+		});
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return !ItemStack.areItemsEqual(oldStack, newStack);
+	}
+	
+	public boolean isDoubleTrack() {
+		return doubleTrack;
 	}
 }

@@ -10,7 +10,7 @@ import info.u_team.useful_railroads.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -32,6 +32,8 @@ public class DrawTrackBuilderSelection {
 			return;
 		}
 		
+		final boolean doubleTrack = ((TrackBuilderItem) stack.getItem()).isDoubleTrack();
+		
 		if (event.getTarget().getType() != RayTraceResult.Type.BLOCK) {
 			return;
 		}
@@ -45,9 +47,7 @@ public class DrawTrackBuilderSelection {
 		
 		final BlockRayTraceResult rayTraceResult = (BlockRayTraceResult) event.getTarget();
 		
-		final TrackBuilderManager manager = new TrackBuilderManager(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, event.getInfo().getLookDirection(), mode);
-		
-		if (manager.calculateBlockPosition()) {
+		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, event.getInfo().getLookDirection(), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
 			final int blue;
 			if (player.isSneaking()) {
@@ -58,9 +58,9 @@ public class DrawTrackBuilderSelection {
 				blue = 1;
 			}
 			drawSelectionBox(event.getInfo().getProjectedView(), manager.getAllPositionsSet(), red, 0, blue, 1);
-			drawSelectionBox(event.getInfo().getProjectedView(), Arrays.asList(manager.getFirstRailPos()), 0, 1, 0, 1);
+			drawSelectionBox(event.getInfo().getProjectedView(), manager.getFirstRailPos(), 0, 1, 0, 1);
 			event.setCanceled(true);
-		}
+		});
 	}
 	
 	public static void drawSelectionBox(Vec3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
