@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 
 import info.u_team.useful_railroads.inventory.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -109,7 +108,7 @@ public class TrackBuilderManager {
 		final List<ItemStack> groundBlockStacks = extractItems(wrapper.getGroundBlockInventory(), groundBlockSet);
 		final List<ItemStack> redstoneTorchStacks = extractItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet);
 		
-		final Inventory dropInventory = new Inventory(100);
+		final Inventory dropInventory = new Inventory(50);
 		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(player, pos, dropInventory));
 		InventoryHelper.dropInventoryItems(world, player, dropInventory);
 		
