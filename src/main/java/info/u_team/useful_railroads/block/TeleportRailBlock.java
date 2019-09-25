@@ -6,6 +6,7 @@ import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import net.minecraft.block.*;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -80,17 +81,20 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		final CompoundNBT compound = stack.getChildTag("BlockEntityTag");
 		final boolean compoundExists = compound != null;
+		
+		final String langKey = "container.usefulrailroads.teleport_rail.";
+		
 		if (compoundExists && compound.contains("location")) {
 			final CompoundNBT locationCompound = compound.getCompound("location");
-			tooltip.add(new StringTextComponent("Dimension: " + TextFormatting.DARK_GREEN + locationCompound.getString("dimension")));
-			tooltip.add(new StringTextComponent("X: " + TextFormatting.DARK_GREEN + locationCompound.getInt("x")));
-			tooltip.add(new StringTextComponent("Y: " + TextFormatting.DARK_GREEN + locationCompound.getInt("y")));
-			tooltip.add(new StringTextComponent("Z: " + TextFormatting.DARK_GREEN + locationCompound.getInt("z")));
+			tooltip.add(new StringTextComponent(I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + locationCompound.getString("dimension")));
+			tooltip.add(new StringTextComponent(I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("x")));
+			tooltip.add(new StringTextComponent(I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("y")));
+			tooltip.add(new StringTextComponent(I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("z")));
 		} else {
-			tooltip.add(new StringTextComponent(TextFormatting.DARK_RED + "This rail is not setuped yet."));
+			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").setStyle(new Style().setColor(TextFormatting.RED)));
 		}
 		if (compoundExists) {
-			tooltip.add(new StringTextComponent("Fuel: " + TextFormatting.DARK_AQUA + compound.getInt("fuel")));
+			tooltip.add(new StringTextComponent(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + compound.getInt("fuel")));
 		}
 	}
 }

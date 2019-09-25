@@ -69,7 +69,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Check fuel
 		if (fuel < cost) {
 			if (entity instanceof PlayerEntity) {
-				((PlayerEntity) entity).sendStatusMessage(new StringTextComponent(TextFormatting.DARK_RED + "Fuel missing! Need: " + TextFormatting.GOLD + cost + TextFormatting.DARK_RED + ". Have: " + TextFormatting.GOLD + fuel), true);
+				((PlayerEntity) entity).sendStatusMessage(new TranslationTextComponent("block.usefulrailroads.teleport_rail.not_enough_fuel", cost).setStyle(new Style().setColor(TextFormatting.RED)), true);
 			}
 			return;
 		}
@@ -186,7 +186,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent("Teleport rail"); // TODO use translation
+		return new TranslationTextComponent("container.usefulrailroads.teleport_rail");
 	}
 	
 	public int getFuel() {

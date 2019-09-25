@@ -30,7 +30,7 @@ public class TeleportRailBlockItem extends BlockItem {
 		}
 		final PlayerEntity player = context.getPlayer();
 		if (player != null && player.getEntityWorld().isRemote) {
-			player.sendMessage(new StringTextComponent(TextFormatting.DARK_RED + "You need to setup the rail first."));
+			player.sendMessage(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").setStyle(new Style().setColor(TextFormatting.RED)));
 		}
 		return ActionResultType.FAIL;
 	}

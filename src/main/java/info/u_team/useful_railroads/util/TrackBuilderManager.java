@@ -93,12 +93,12 @@ public class TrackBuilderManager {
 		
 		final int cost = calculateCost();
 		if (wrapper.getFuel() < cost) {
-			player.sendMessage(new TranslationTextComponent("container.usefulrailroads.track_builder.not_enough_fuel", cost).setStyle(new Style().setColor(TextFormatting.RED)));
+			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_fuel", cost).setStyle(new Style().setColor(TextFormatting.RED)));
 			return;
 		}
 		
 		if (!hasEnoughItems(wrapper.getRailInventory(), railSet) || !hasEnoughItems(wrapper.getGroundBlockInventory(), groundBlockSet) || !hasEnoughItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet)) {
-			player.sendMessage(new TranslationTextComponent("container.usefulrailroads.track_builder.not_enough_blocks").setStyle(new Style().setColor(TextFormatting.RED)));
+			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_blocks").setStyle(new Style().setColor(TextFormatting.RED)));
 			return;
 		}
 		
