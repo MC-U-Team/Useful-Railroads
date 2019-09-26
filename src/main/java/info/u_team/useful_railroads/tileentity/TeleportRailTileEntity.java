@@ -172,11 +172,11 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side != Direction.UP) {
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction != Direction.UP) {
 			return slot.cast();
 		}
-		return super.getCapability(capability, side);
+		return super.getCapability(capability, direction);
 	}
 	
 	@Override

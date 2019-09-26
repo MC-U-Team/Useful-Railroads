@@ -14,7 +14,7 @@ public class UsefulRailroadsBlockTagsProvider extends CommonBlockTagsProvider {
 	
 	@Override
 	protected void registerTags() {
-		getBuilder(BlockTags.RAILS).add(HIGHSPEED_RAIL, DIRECTION_RAIL, INTERSECTION_RAIL, TELEPORT_RAIL);
+		getBuilder(BlockTags.RAILS).add(HIGHSPEED_RAIL, DIRECTION_RAIL, INTERSECTION_RAIL, TELEPORT_RAIL, BUFFER_STOP);
 	}
 	
 }

@@ -4,6 +4,7 @@
 		"usefulrailroads:highspeed_rail",
 		"usefulrailroads:direction_rail",
 		"usefulrailroads:intersection_rail",
-		"usefulrailroads:teleport_rail"
+		"usefulrailroads:teleport_rail",
+		"usefulrailroads:buffer_stop"
 	]
 }
