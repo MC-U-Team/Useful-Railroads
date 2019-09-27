@@ -11,7 +11,7 @@ public enum TrackBuilderMode {
 	MODE_NOAIR("noair", -1, -1),
 	MODE_3X3("3x3", 1, 3),
 	MODE_5X5("5x5", 2, 5),
-	MODE_TUNNEL("tunnel", 2, 5);
+	MODE_TUNNEL("tunnel", -1, -1);
 	
 	private static final Map<String, TrackBuilderMode> NAME_LOOKUP = Arrays.stream(values()).collect(Collectors.toMap(TrackBuilderMode::getName, mode -> mode));
 	
@@ -35,6 +35,14 @@ public enum TrackBuilderMode {
 	
 	public int getDistanceUp() {
 		return distanceUp;
+	}
+	
+	public boolean isFullTunnel() {
+		return this == MODE_TUNNEL;
+	}
+	
+	public boolean isNoTunnel() {
+		return this == MODE_NOAIR;
 	}
 	
 	@OnlyIn(Dist.CLIENT)

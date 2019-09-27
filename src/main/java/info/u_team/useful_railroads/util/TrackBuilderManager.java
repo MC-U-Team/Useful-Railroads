@@ -26,10 +26,12 @@ public abstract class TrackBuilderManager {
 	
 	protected final Set<BlockPos> firstRailPos = new HashSet<>();
 	protected final Set<BlockPos> railSet = new HashSet<>();
-	protected final Set<BlockPos> groundBlockSet = new HashSet<>();
+	protected final Set<BlockPos> groundSet = new HashSet<>();
 	protected final Set<BlockPos> redstoneTorchSet = new HashSet<>();
 	protected final Set<BlockPos> cobbleSet = new HashSet<>();
 	protected final Set<BlockPos> airSet = new HashSet<>();
+	protected final Set<BlockPos> tunnelSet = new HashSet<>();
+	protected final Set<BlockPos> torchSet = new HashSet<>();
 	
 	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector, TrackBuilderMode mode) {
 		this.world = world;
@@ -49,7 +51,7 @@ public abstract class TrackBuilderManager {
 		final Direction directionLeft = direction.rotateYCCW();
 		final Direction directionRight = direction.rotateY();
 		calculate(directionLeft, directionRight);
-		Stream.of(railSet, groundBlockSet, redstoneTorchSet, cobbleSet, airSet).flatMap(Set::stream).forEach(allPositionSet::add);
+		Stream.of(railSet, groundSet, tunnelSet, redstoneTorchSet, torchSet, cobbleSet, airSet).flatMap(Set::stream).forEach(allPositionSet::add);
 	}
 	
 	protected abstract void calculate(Direction directionLeft, Direction directionRight);
@@ -65,7 +67,7 @@ public abstract class TrackBuilderManager {
 			return;
 		}
 		
-		if (!hasEnoughItems(wrapper.getRailInventory(), railSet) || !hasEnoughItems(wrapper.getGroundBlockInventory(), groundBlockSet) || !hasEnoughItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet)) {
+		if (!hasEnoughItems(wrapper.getRailInventory(), railSet) || !hasEnoughItems(wrapper.getGroundInventory(), groundSet) || !hasEnoughItems(wrapper.getTunnelInventory(), tunnelSet) || !hasEnoughItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet) || !hasEnoughItems(wrapper.getTorchInventory(), torchSet)) {
 			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_blocks").setStyle(new Style().setColor(TextFormatting.RED)));
 			return;
 		}
@@ -73,8 +75,10 @@ public abstract class TrackBuilderManager {
 		wrapper.setFuel(wrapper.getFuel() - cost);
 		
 		final List<ItemStack> railStacks = extractItems(wrapper.getRailInventory(), railSet);
-		final List<ItemStack> groundBlockStacks = extractItems(wrapper.getGroundBlockInventory(), groundBlockSet);
+		final List<ItemStack> groundStacks = extractItems(wrapper.getGroundInventory(), groundSet);
+		final List<ItemStack> tunnelStacks = extractItems(wrapper.getTunnelInventory(), tunnelSet);
 		final List<ItemStack> redstoneTorchStacks = extractItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet);
+		final List<ItemStack> torchStacks = extractItems(wrapper.getTorchInventory(), torchSet);
 		
 		final Inventory dropInventory = new Inventory(50);
 		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(player, pos, dropInventory));
@@ -82,8 +86,10 @@ public abstract class TrackBuilderManager {
 		
 		cobbleSet.forEach(pos -> placeBlock(pos, Blocks.COBBLESTONE.getDefaultState()));
 		redstoneTorchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(redstoneTorchStacks)));
-		groundBlockSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(groundBlockStacks)));
+		groundSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(groundStacks)));
 		railSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(railStacks)));
+		tunnelSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(tunnelStacks)));
+		torchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(torchStacks)));
 		
 		wrapper.writeItemStack();
 	}
@@ -183,7 +189,7 @@ public abstract class TrackBuilderManager {
 			// Ground blocks
 			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft), startPos.offset(direction, 17).offset(directionRight)) //
 					.map(BlockPos::toImmutable) //
-					.forEach(groundBlockSet::add);
+					.forEach(groundSet::add);
 			
 			// Cobblestone ground
 			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft).down(), startPos.offset(direction, 17).offset(directionRight).down(2)) //
@@ -191,8 +197,28 @@ public abstract class TrackBuilderManager {
 					.filter(Predicates.not(redstoneTorchSet::contains)) //
 					.forEach(cobbleSet::add);
 			
-			// Air blocks
-			if (mode != TrackBuilderMode.MODE_NOAIR) {
+			if (mode.isFullTunnel()) {
+				// Air blocks (without removed blocks still)
+				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 1).up(), startPos.offset(direction, 17).offset(directionRight, 1).up(4)) //
+						.map(BlockPos::toImmutable) //
+						.forEach(airSet::add);
+				
+				// Tunnel blocks
+				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2).up(), startPos.offset(direction, 17).offset(directionRight, 2).up(5)) //
+						.map(BlockPos::toImmutable) //
+						.filter(Predicates.not(airSet::contains)) //
+						.forEach(tunnelSet::add);
+				
+				// Torch blocks
+				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionLeft, 1).toImmutable());
+				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionRight, 1).toImmutable());
+				
+				// Remove replaced blocks from air blocks
+				airSet.removeAll(torchSet);
+				airSet.removeAll(railSet);
+				
+			} else if (!mode.isNoTunnel()) {
+				// Air blocks
 				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, mode.getDistanceSide()).up(), startPos.offset(direction, 17).offset(directionRight, mode.getDistanceSide()).up(mode.getDistanceUp())) //
 						.map(BlockPos::toImmutable) //
 						.filter(Predicates.not(railSet::contains)) //
@@ -228,7 +254,7 @@ public abstract class TrackBuilderManager {
 			// Ground blocks
 			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2), startPos.offset(direction, 17).offset(directionRight, 2)) //
 					.map(BlockPos::toImmutable) //
-					.forEach(groundBlockSet::add);
+					.forEach(groundSet::add);
 			
 			// Cobblestone ground
 			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2).down(), startPos.offset(direction, 17).offset(directionRight, 2).down(2)) //
@@ -236,8 +262,28 @@ public abstract class TrackBuilderManager {
 					.filter(Predicates.not(redstoneTorchSet::contains)) //
 					.forEach(cobbleSet::add);
 			
-			// Air blocks
-			if (mode != TrackBuilderMode.MODE_NOAIR) {
+			if (mode.isFullTunnel()) {
+				// Air blocks (without removed blocks still)
+				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2).up(), startPos.offset(direction, 17).offset(directionRight, 2).up(4)) //
+						.map(BlockPos::toImmutable) //
+						.forEach(airSet::add);
+				
+				// Tunnel blocks
+				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 3).up(), startPos.offset(direction, 17).offset(directionRight, 3).up(5)) //
+						.map(BlockPos::toImmutable) //
+						.filter(Predicates.not(airSet::contains)) //
+						.forEach(tunnelSet::add);
+				
+				// Torch blocks
+				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionLeft, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionRight, 2).toImmutable());
+				
+				// Remove replaced blocks from air blocks
+				airSet.removeAll(torchSet);
+				airSet.removeAll(railSet);
+				
+			} else if (!mode.isNoTunnel()) {
+				// Air blocks
 				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, mode.getDistanceSide() + 1).up(), startPos.offset(direction, 17).offset(directionRight, mode.getDistanceSide() + 1).up(mode.getDistanceUp())) //
 						.map(BlockPos::toImmutable) //
 						.filter(Predicates.not(railSet::contains)) //

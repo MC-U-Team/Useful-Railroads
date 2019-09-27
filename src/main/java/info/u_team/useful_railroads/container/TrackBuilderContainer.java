@@ -25,8 +25,8 @@ public class TrackBuilderContainer extends UContainer {
 		this.wrapper = wrapper;
 		appendInventory(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
 		appendInventory(wrapper.getRailInventory(), 1, 15, 8, 32);
-		appendInventory(wrapper.getGroundBlockInventory(), 2, 15, 8, 64);
-		appendInventory(wrapper.getTunnelBlockInventory(), 3, 15, 8, 114);
+		appendInventory(wrapper.getGroundInventory(), 2, 15, 8, 64);
+		appendInventory(wrapper.getTunnelInventory(), 3, 15, 8, 114);
 		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 5, 8, 182);
 		appendInventory(wrapper.getTorchInventory(), 1, 4, 116, 182);
 		appendPlayerInventory(playerInventory, 62, 214);

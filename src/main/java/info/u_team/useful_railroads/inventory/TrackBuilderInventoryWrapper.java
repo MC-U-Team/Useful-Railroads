@@ -13,8 +13,8 @@ import net.minecraftforge.items.*;
 public class TrackBuilderInventoryWrapper {
 	
 	protected final BlockTagItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 15);
-	protected final BlockTagItemStackHandler groundBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 30);
-	protected final BlockTagItemStackHandler tunnelBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_TUNNEL_BLOCKS, 45);
+	protected final BlockTagItemStackHandler groundInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 30);
+	protected final BlockTagItemStackHandler tunnelInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_TUNNEL_BLOCKS, 45);
 	protected final BlockTagItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 5);
 	protected final BlockTagItemStackHandler torchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_TORCHES, 4);
 	protected final IItemHandler fuelInventory;
@@ -31,12 +31,12 @@ public class TrackBuilderInventoryWrapper {
 		return railInventory;
 	}
 	
-	public BlockTagItemStackHandler getGroundBlockInventory() {
-		return groundBlockInventory;
+	public BlockTagItemStackHandler getGroundInventory() {
+		return groundInventory;
 	}
 	
-	public BlockTagItemStackHandler getTunnelBlockInventory() {
-		return tunnelBlockInventory;
+	public BlockTagItemStackHandler getTunnelInventory() {
+		return tunnelInventory;
 	}
 	
 	public BlockTagItemStackHandler getRedstoneTorchInventory() {
@@ -96,8 +96,10 @@ public class TrackBuilderInventoryWrapper {
 		@Override
 		public void readItemStack() {
 			readItemHandler(railInventory, "rail");
-			readItemHandler(groundBlockInventory, "ground_block");
+			readItemHandler(groundInventory, "ground");
+			readItemHandler(tunnelInventory, "tunnel");
 			readItemHandler(redstoneTorchInventory, "redstone_torch");
+			readItemHandler(torchInventory, "torch");
 			
 			final CompoundNBT compound = stack.getTag();
 			if (compound != null) {
@@ -109,8 +111,10 @@ public class TrackBuilderInventoryWrapper {
 		@Override
 		public void writeItemStack() {
 			writeItemHandler(railInventory, "rail");
-			writeItemHandler(groundBlockInventory, "ground_block");
+			writeItemHandler(groundInventory, "ground");
+			writeItemHandler(tunnelInventory, "tunnel");
 			writeItemHandler(redstoneTorchInventory, "redstone_torch");
+			writeItemHandler(torchInventory, "torch");
 			
 			if (fuel > 0) {
 				final CompoundNBT compound = stack.getOrCreateTag();
