@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.14.4-1.2.0.11] - 2019-09-27
+### Chaged
+- Fixed crash on server side when opening guis with fuel slot
+
 ## [1.14.4-1.2.0.10] - 2019-09-27
 ### Changed
 - Port to 1.14.4
