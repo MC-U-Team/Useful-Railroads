@@ -27,8 +27,8 @@ public class TrackBuilderContainer extends UContainer {
 		appendInventory(wrapper.getRailInventory(), 1, 15, 8, 32);
 		appendInventory(wrapper.getGroundBlockInventory(), 2, 15, 8, 64);
 		appendInventory(wrapper.getTunnelBlockInventory(), 3, 15, 8, 114);
-		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 3, 8, 182);
-		appendInventory(wrapper.getTorchInventory(), 1, 3, 80, 182);
+		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 5, 8, 182);
+		appendInventory(wrapper.getTorchInventory(), 1, 4, 116, 182);
 		appendPlayerInventory(playerInventory, 62, 214);
 		trackInt(new IntReferenceHolder() {
 			
@@ -101,7 +101,6 @@ public class TrackBuilderContainer extends UContainer {
 	
 	@Override
 	public ItemStack slotClick(int index, int dragType, ClickType clickType, PlayerEntity player) {
-		System.out.println(index);
 		Slot tmpSlot;
 		if (index >= 0 && index < inventorySlots.size()) {
 			tmpSlot = inventorySlots.get(index);

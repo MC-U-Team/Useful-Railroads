@@ -28,7 +28,7 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 	protected void init() {
 		super.init();
 		
-		addButton(new BetterButton(guiLeft + 205, guiTop + 16, 72, 11, 0.7F, "", button -> {
+		addButton(new BetterButton(guiLeft + 169, guiTop + 16, 108, 11, 0.7F, "", button -> {
 			UsefulRailroadsNetwork.NETWORK.sendToServer(new CycleTrackBuilderMessage());
 		}) {
 			
@@ -54,13 +54,17 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 		
 		final String langKey = "container.usefulrailroads.track_builder.";
 		
-		font.drawString(I18n.format(langKey + "mode"), 205, 6, 4210752);
+		font.drawString(I18n.format(langKey + "mode"), 169, 6, 4210752);
 		
 		font.drawString(I18n.format(langKey + "rails"), 8, 20, 4210752);
 		font.drawString(I18n.format(langKey + "ground_blocks"), 8, 52, 4210752);
 		font.drawString(I18n.format(langKey + "tunnel_blocks"), 8, 102, 4210752);
 		font.drawString(I18n.format(langKey + "redstone_torches"), 8, 170, 4210752);
-		font.drawString(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + container.getWrapper().getFuel(), 165, 185, 4210752);
+		font.drawString(I18n.format(langKey + "torches"), 116, 170, 4210752);
+		
+		final String fuelString = I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + container.getWrapper().getFuel();
+		
+		font.drawString(fuelString, xSize - font.getStringWidth(fuelString) - 6, 170, 4210752);
 	}
 	
 }
