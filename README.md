@@ -1,17 +1,17 @@
-# U-Team-Core
+# Useful-Railroads
 
 [
-![Curseforge Downloads](http://cf.way2muchnoise.eu/u-team-core.svg)
-![Curseforge Versions](http://cf.way2muchnoise.eu/versions/u-team-core.svg)
-](https://www.curseforge.com/minecraft/mc-mods/u-team-core)
+![Curseforge Downloads](http://cf.way2muchnoise.eu/useful-railroads.svg)
+![Curseforge Versions](http://cf.way2muchnoise.eu/versions/useful-railroads.svg)
+](https://www.curseforge.com/minecraft/mc-mods/useful-railroads)
 [
 ![Discord](https://img.shields.io/discord/297104769649213441?label=Discord)
 ](https://discordapp.com/invite/QXbWS36)
 
-### This is an opensource api and library for u-team's mods.
+### This mod adds some rails and utility items and blocks for creating railroads.
 
-- Download on [curseforge](https://www.curseforge.com/minecraft/mc-mods/u-team-core).  
-- Find more information on our [website](https://u-team.info/mods/uteamcore).
+- Download on [curseforge](https://www.curseforge.com/minecraft/mc-mods/useful-railroads).  
+- Find more information on our [website](https://u-team.info/mods/usefulrailroads).
 - Updates can be found in the [changelog](CHANGELOG.md).
 
 ### How to build this mod
@@ -30,9 +30,9 @@
 ### How to include this mod
 
 - Repository: [repo.u-team.info](https://repo.u-team.info)
-- Artifact: **info.u-team:u_team_core-${config.forge.mcversion}:${config.uteamcore.version}** 
+- Artifact: **info.u-team:useful_railroads-${config.forge.mcversion}:${config.usefulrailroads.version}** 
 - *{config.forge.mcversion}* is the minecraft version.
-- *{config.uteamcore.version}* is the uteamcore version.
+- *{config.usefulrailroads.version}* is the usefulrailroads version.
 
 #### Using in Forge Gradle 3:
 ```gradle
@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies {
-  compileOnly fg.deobf("info.u-team:u_team_core-${config.forge.mcversion}:${config.uteamcore.version}")
+  compileOnly fg.deobf("info.u-team:useful_railroads-${config.forge.mcversion}:${config.usefulrailroads.version}")
 }
 ```
 
