@@ -1,0 +1,54 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"usefulrailroads:single_track_builder"
+		]
+	},
+	"criteria": {
+		"has_redstone": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"tag": "forge:dusts/redstone"
+					}
+				]
+			}
+		},
+		"has_iron": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"tag": "forge:ingots/iron"
+					}
+				]
+			}
+		},
+		"has_rail": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "minecraft:powered_rail"
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "usefulrailroads:single_track_builder"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_redstone",
+			"has_iron",
+			"has_rail",
+			"has_the_recipe"
+		]
+	]
+}

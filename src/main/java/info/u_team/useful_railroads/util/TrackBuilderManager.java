@@ -1,6 +1,7 @@
 package info.u_team.useful_railroads.util;
 
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.Stream;
 
 import info.u_team.useful_railroads.inventory.*;
@@ -8,7 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.util.Direction;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
@@ -89,17 +90,34 @@ public abstract class TrackBuilderManager {
 		groundSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(groundStacks)));
 		railSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(railStacks)));
 		tunnelSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(tunnelStacks)));
-		torchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(torchStacks)));
+		torchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(torchStacks), (item, block) -> {
+			final boolean redstoneTorch = item == Items.REDSTONE_TORCH;
+			if (redstoneTorch || item == Items.TORCH) {
+				final Block torchWall = redstoneTorch ? Blocks.REDSTONE_WALL_TORCH : Blocks.WALL_TORCH;
+				final Block torchGround = redstoneTorch ? Blocks.REDSTONE_TORCH : Blocks.TORCH;
+				
+				return Stream.of(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST) //
+						.map(direction -> torchWall.getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, direction)) //
+						.filter(state -> state.isValidPosition(world, pos)) //
+						.findAny() //
+						.orElseGet(torchGround::getDefaultState);
+			}
+			return block.getDefaultState();
+		}));
 		
 		wrapper.writeItemStack();
 	}
 	
 	private void placeItemBlock(BlockPos pos, ItemStack stack) {
+		placeItemBlock(pos, stack, (item, block) -> block.getDefaultState()); // Use default state normally
+	}
+	
+	private void placeItemBlock(BlockPos pos, ItemStack stack, BiFunction<Item, Block, BlockState> function) {
 		if (stack.isEmpty() && !(stack.getItem() instanceof BlockItem)) {
 			return;
 		}
 		final Block block = ((BlockItem) stack.getItem()).getBlock();
-		placeBlock(pos, block.getDefaultState()); // Use default state currently
+		placeBlock(pos, function.apply(stack.getItem(), block));
 		BlockItem.setTileEntityNBT(world, null, pos, stack);
 	}
 	
@@ -119,7 +137,7 @@ public abstract class TrackBuilderManager {
 		final BlockState state = world.getBlockState(pos);
 		final int exp = state.getExpDrop(world, pos, 0, 0);
 		
-		if (placeBlock(pos, world.getFluidState(pos).getBlockState())) {
+		if (placeBlock(pos, Blocks.AIR.getDefaultState())) { // Normally we place the fluid state but we don't want fluids here
 			if (world instanceof ServerWorld) {
 				Block.getDrops(state, (ServerWorld) world, pos, world.getTileEntity(pos)).stream() //
 						.map(inventory::addItem) //

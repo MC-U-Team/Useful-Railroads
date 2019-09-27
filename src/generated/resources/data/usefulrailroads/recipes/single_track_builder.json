@@ -1,0 +1,31 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IBI",
+		"PRC",
+		"IAI"
+	],
+	"key": {
+		"I": {
+			"tag": "forge:ingots/iron"
+		},
+		"B": {
+			"tag": "forge:storage_blocks/redstone"
+		},
+		"P": {
+			"item": "minecraft:repeater"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		},
+		"C": {
+			"item": "minecraft:comparator"
+		},
+		"A": {
+			"item": "minecraft:powered_rail"
+		}
+	},
+	"result": {
+		"item": "usefulrailroads:single_track_builder"
+	}
+}
