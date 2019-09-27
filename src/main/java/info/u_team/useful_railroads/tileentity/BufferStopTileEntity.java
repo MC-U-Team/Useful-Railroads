@@ -11,7 +11,7 @@ import net.minecraftforge.items.*;
 
 public class BufferStopTileEntity extends UTileEntity {
 	
-	private final LazyOptional<ItemStackHandler> slots = LazyOptional.of(() -> new ItemStackHandler(1) {
+	private final LazyOptional<ItemStackHandler> slots = LazyOptional.of(() -> new ItemStackHandler(10) {
 		
 		@Override
 		protected int getStackLimit(int slot, ItemStack stack) {
@@ -35,7 +35,7 @@ public class BufferStopTileEntity extends UTileEntity {
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction == Direction.DOWN) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction == Direction.DOWN || direction == null) {
 			return slots.cast();
 		}
 		return super.getCapability(capability, direction);

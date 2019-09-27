@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
-import info.u_team.useful_railroads.util.VoxelShapeUtil;
+import info.u_team.useful_railroads.tileentity.BufferStopTileEntity;
+import info.u_team.useful_railroads.util.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.*;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.*;
@@ -19,6 +21,7 @@ import net.minecraft.util.Direction.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.*;
 import net.minecraft.world.*;
+import net.minecraftforge.items.*;
 
 public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
@@ -59,9 +62,26 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	@Override
 	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
+		if (world.isRemote) {
+			return;
+		}
 		cart.setMotion(0, 0, 0);
-		cart.removePassengers();
-		cart.remove();
+		
+		final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
+		tileEntityOptional.map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)).ifPresent(lazyOptional -> lazyOptional.ifPresent(handler -> {
+			cart.removePassengers();
+			
+			final Collection<ItemEntity> drops = new ArrayList<>();
+			cart.captureDrops(drops);
+			cart.killMinecart(DamageSource.MAGIC);
+			
+			drops.stream().map(ItemEntity::getItem).forEach(stack -> {
+				final ItemStack stackLeft = ItemHandlerHelper.insertItem(handler, stack, false);
+				if (!stackLeft.isEmpty()) {
+					spawnAsEntity(world, pos, stackLeft);
+				}
+			});
+		}));
 	}
 	
 	@Override
@@ -107,6 +127,12 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 					world.setBlockState(pos, newState.with(SHAPE, RailShape.EAST_WEST));
 				}
 			}
+		} else {
+			final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
+			tileEntityOptional.map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)).ifPresent(lazyOptional -> lazyOptional.ifPresent(handler -> {
+				ItemHandlerUtil.getStackStream(handler).forEach(stack -> spawnAsEntity(world, pos, stack));
+			}));
+			world.updateComparatorOutputLevel(pos, this);
 		}
 		super.onReplaced(state, world, pos, newState, isMoving);
 	}
