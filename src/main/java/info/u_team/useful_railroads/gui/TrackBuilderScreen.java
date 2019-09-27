@@ -19,15 +19,16 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 	
 	public TrackBuilderScreen(TrackBuilderContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title, BACKGROUND);
-		xSize = 176;
-		ySize = 246;
+		backgroundWidth = backgroundHeight = 512;
+		xSize = 284;
+		ySize = 296;
 	}
 	
 	@Override
 	protected void init() {
 		super.init();
 		
-		addButton(new BetterButton(guiLeft + 97, guiTop + 16, 72, 11, 0.7F, "", button -> {
+		addButton(new BetterButton(guiLeft + 205, guiTop + 16, 72, 11, 0.7F, "", button -> {
 			UsefulRailroadsNetwork.NETWORK.sendToServer(new CycleTrackBuilderMessage());
 		}) {
 			
@@ -49,16 +50,17 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		font.drawString(title.getFormattedText(), 8, 6, 4210752);
-		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8, ySize - 94, 4210752);
+		font.drawString(playerInventory.getDisplayName().getFormattedText(), 62, ySize - 94, 4210752);
 		
 		final String langKey = "container.usefulrailroads.track_builder.";
 		
-		font.drawString(I18n.format(langKey + "mode"), 97, 6, 4210752);
+		font.drawString(I18n.format(langKey + "mode"), 205, 6, 4210752);
 		
 		font.drawString(I18n.format(langKey + "rails"), 8, 20, 4210752);
 		font.drawString(I18n.format(langKey + "ground_blocks"), 8, 52, 4210752);
-		font.drawString(I18n.format(langKey + "redstone_torches"), 8, 120, 4210752);
-		font.drawString(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + container.getWrapper().getFuel(), 70, 136, 4210752);
+		font.drawString(I18n.format(langKey + "tunnel_blocks"), 8, 102, 4210752);
+		font.drawString(I18n.format(langKey + "redstone_torches"), 8, 170, 4210752);
+		font.drawString(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + container.getWrapper().getFuel(), 165, 185, 4210752);
 	}
 	
 }

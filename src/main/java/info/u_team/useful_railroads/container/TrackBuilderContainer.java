@@ -23,11 +23,13 @@ public class TrackBuilderContainer extends UContainer {
 	public TrackBuilderContainer(int id, PlayerInventory playerInventory, TrackBuilderInventoryWrapper wrapper) {
 		super(UsefulRailroadsContainerTypes.TRACK_BUILDER, id);
 		this.wrapper = wrapper;
-		appendInventory(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 152, 132);
-		appendInventory(wrapper.getRailInventory(), 1, 9, 8, 32);
-		appendInventory(wrapper.getGroundBlockInventory(), 3, 9, 8, 64);
-		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 2, 8, 132);
-		appendPlayerInventory(playerInventory, 8, 164);
+		appendInventory(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
+		appendInventory(wrapper.getRailInventory(), 1, 15, 8, 32);
+		appendInventory(wrapper.getGroundBlockInventory(), 2, 15, 8, 64);
+		appendInventory(wrapper.getTunnelBlockInventory(), 3, 15, 8, 114);
+		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 3, 8, 182);
+		appendInventory(wrapper.getTorchInventory(), 1, 3, 80, 182);
+		appendPlayerInventory(playerInventory, 62, 214);
 		trackInt(new IntReferenceHolder() {
 			
 			@Override
@@ -70,18 +72,18 @@ public class TrackBuilderContainer extends UContainer {
 			final ItemStack stack = slot.getStack();
 			remainingStack = stack.copy();
 			
-			if (index < 39) {
-				if (!mergeItemStack(stack, 39, inventorySlots.size(), true)) {
+			if (index < 97) {
+				if (!mergeItemStack(stack, 97, inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (index >= 66) {
-					if (!mergeItemStack(stack, 0, 66, false)) {
+				if (index >= 124) {
+					if (!mergeItemStack(stack, 0, 124, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else {
-					if (!mergeItemStack(stack, 0, 39, false)) {
-						if (!mergeItemStack(stack, 66, 75, false)) {
+					if (!mergeItemStack(stack, 0, 97, false)) {
+						if (!mergeItemStack(stack, 124, 133, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
@@ -99,6 +101,7 @@ public class TrackBuilderContainer extends UContainer {
 	
 	@Override
 	public ItemStack slotClick(int index, int dragType, ClickType clickType, PlayerEntity player) {
+		System.out.println(index);
 		Slot tmpSlot;
 		if (index >= 0 && index < inventorySlots.size()) {
 			tmpSlot = inventorySlots.get(index);

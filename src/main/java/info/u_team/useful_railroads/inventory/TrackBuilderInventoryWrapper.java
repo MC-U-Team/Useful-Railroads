@@ -12,9 +12,11 @@ import net.minecraftforge.items.*;
 
 public class TrackBuilderInventoryWrapper {
 	
-	protected final BlockTagItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 9);
-	protected final BlockTagItemStackHandler groundBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 27);
-	protected final BlockTagItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 2);
+	protected final BlockTagItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 15);
+	protected final BlockTagItemStackHandler groundBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 30);
+	protected final BlockTagItemStackHandler tunnelBlockInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 45);
+	protected final BlockTagItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 3);
+	protected final BlockTagItemStackHandler torchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 3);
 	protected final IItemHandler fuelInventory;
 	
 	protected int fuel = 0;
@@ -33,8 +35,16 @@ public class TrackBuilderInventoryWrapper {
 		return groundBlockInventory;
 	}
 	
+	public BlockTagItemStackHandler getTunnelBlockInventory() {
+		return tunnelBlockInventory;
+	}
+	
 	public BlockTagItemStackHandler getRedstoneTorchInventory() {
 		return redstoneTorchInventory;
+	}
+	
+	public BlockTagItemStackHandler getTorchInventory() {
+		return torchInventory;
 	}
 	
 	public IItemHandler getFuelInventory() {
