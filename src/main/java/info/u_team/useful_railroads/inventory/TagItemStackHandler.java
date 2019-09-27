@@ -2,9 +2,8 @@ package info.u_team.useful_railroads.inventory;
 
 import net.minecraft.item.*;
 import net.minecraft.tags.Tag;
-import net.minecraftforge.items.ItemStackHandler;
 
-public class TagItemStackHandler extends ItemStackHandler {
+public class TagItemStackHandler extends FixedSizeItemStackHandler {
 	
 	private final Tag<Item> tag;
 	
