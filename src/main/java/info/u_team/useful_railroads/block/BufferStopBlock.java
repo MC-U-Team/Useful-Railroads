@@ -15,7 +15,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.*;
 import net.minecraft.util.*;
-import net.minecraft.util.Direction.Axis;
+import net.minecraft.util.Direction.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.*;
 import net.minecraft.world.*;
@@ -48,7 +48,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	public BufferStopBlock(String name) {
-		super(name, Properties.create(Material.IRON).doesNotBlockMovement().hardnessAndResistance(1.5F).sound(SoundType.METAL), () -> UsefulRailroadsTileEntityTypes.BUFFER_STOP);
+		super(name, Properties.create(Material.IRON).hardnessAndResistance(1.5F).sound(SoundType.METAL), () -> UsefulRailroadsTileEntityTypes.BUFFER_STOP);
 		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH).with(FACING, Direction.NORTH));
 	}
 	
@@ -62,6 +62,26 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 		cart.setMotion(0, 0, 0);
 		cart.removePassengers();
 		cart.remove();
+	}
+	
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+		if (context.getEntity() instanceof AbstractMinecartEntity) {
+			final Vec3d motion = context.getEntity().getMotion();
+			
+			final Direction oppositeDirection = state.get(FACING).getOpposite();
+			final Axis axis = oppositeDirection.getAxis();
+			final AxisDirection axisDirection = oppositeDirection.getAxisDirection();
+			
+			if (isRightCollision(axis, Axis.X, axisDirection, motion.getX()) || isRightCollision(axis, Axis.Z, axisDirection, motion.getZ())) {
+				return VoxelShapes.empty();
+			}
+		}
+		return state.getShape(world, pos);
+	}
+	
+	private final boolean isRightCollision(Axis axis, Axis axisToCheck, AxisDirection axisDirection, double motion) {
+		return axis == axisToCheck && Math.abs(motion) > 0.01 && (axisDirection == AxisDirection.NEGATIVE && motion < 0 || axisDirection == AxisDirection.POSITIVE && motion > 0);
 	}
 	
 	@Override
