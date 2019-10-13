@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
 		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.3.0"
+		classpath "com.wynprice.cursemaven:CurseMaven:1.2.3"
     }
 }
 
@@ -21,6 +22,7 @@ apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse"
 apply plugin: "com.matthewprenger.cursegradle"
 apply plugin: "maven"
+apply plugin: "com.wynprice.cursemaven"
 
 repositories {
     maven { url = "https://repo.u-team.info" }
@@ -150,6 +152,7 @@ dependencies {
 	compile "info.u-team:u_team_core-${config.forge.mcversion}:${config.uteamcore.version}:dev"
   	compileOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}:api")
   	runtimeOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}")
+  	runtimeOnly fg.deobf(curse.resolveID("light-overlay", config.light_overlay.version))
 }
 
 compileJava {

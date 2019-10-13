@@ -228,8 +228,10 @@ public abstract class TrackBuilderManager {
 						.forEach(tunnelSet::add);
 				
 				// Torch blocks
-				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionLeft, 1).toImmutable());
-				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionRight, 1).toImmutable());
+				torchSet.add(startPos.offset(direction, 9 - 4).up(3).offset(directionLeft, 1).toImmutable());
+				torchSet.add(startPos.offset(direction, 9 + 4).up(3).offset(directionLeft, 1).toImmutable());
+				torchSet.add(startPos.offset(direction, 9 - 4).up(3).offset(directionRight, 1).toImmutable());
+				torchSet.add(startPos.offset(direction, 9 + 4).up(3).offset(directionRight, 1).toImmutable());
 				
 				// Remove replaced blocks from air blocks
 				airSet.removeAll(torchSet);
@@ -293,8 +295,15 @@ public abstract class TrackBuilderManager {
 						.forEach(tunnelSet::add);
 				
 				// Torch blocks
-				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionLeft, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 9).up(3).offset(directionRight, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 3).up(3).offset(directionLeft, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 7).up(3).offset(directionLeft, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 11).up(3).offset(directionLeft, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 15).up(3).offset(directionLeft, 2).toImmutable());
+				
+				torchSet.add(startPos.offset(direction, 3).up(3).offset(directionRight, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 7).up(3).offset(directionRight, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 11).up(3).offset(directionRight, 2).toImmutable());
+				torchSet.add(startPos.offset(direction, 15).up(3).offset(directionRight, 2).toImmutable());
 				
 				// Remove replaced blocks from air blocks
 				airSet.removeAll(torchSet);
