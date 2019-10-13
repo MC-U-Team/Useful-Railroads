@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.14.4-1.2.1.12] - 2019-10-13
+### Chaged
+ - Track builder now places enough torches so mobs cannot spawn.
+
 ## [1.14.4-1.2.0.11] - 2019-09-27
 ### Chaged
 - Fixed crash on server side when opening guis with fuel slot
