@@ -1,12 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.14.4-1.2.2.13] - 2019-10-20
+### Changed
+ - Teleport rail now use the block middle
+ - Buffer stop must now be powered to consume the minecarts
+ - First 1.14.4 release
+
 ## [1.14.4-1.2.1.12] - 2019-10-13
-### Chaged
+### Changed
  - Track builder now places enough torches so mobs cannot spawn.
 
 ## [1.14.4-1.2.0.11] - 2019-09-27
-### Chaged
+### Changed
 - Fixed crash on server side when opening guis with fuel slot
 
 ## [1.14.4-1.2.0.10] - 2019-09-27
