@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.block;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,10 +10,11 @@ import info.u_team.useful_railroads.tileentity.BufferStopTileEntity;
 import info.u_team.useful_railroads.util.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.item.*;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.*;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.*;
 import net.minecraft.util.*;
@@ -26,6 +27,7 @@ import net.minecraftforge.items.*;
 public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	
 	private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
 	
@@ -52,7 +54,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	public BufferStopBlock(String name) {
 		super(name, Properties.create(Material.IRON).hardnessAndResistance(1.5F).sound(SoundType.METAL), () -> UsefulRailroadsTileEntityTypes.BUFFER_STOP);
-		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH).with(FACING, Direction.NORTH));
+		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH).with(FACING, Direction.NORTH).with(POWERED, false));
 	}
 	
 	@Override
@@ -62,11 +64,10 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	@Override
 	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
-		if (world.isRemote) {
+		cart.setMotion(0, 0, 0);
+		if (world.isRemote || !state.get(POWERED)) {
 			return;
 		}
-		cart.setMotion(0, 0, 0);
-		
 		final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
 		tileEntityOptional.map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)).ifPresent(lazyOptional -> lazyOptional.ifPresent(handler -> {
 			cart.removePassengers();
@@ -138,13 +139,51 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		updatePower(world, state, pos);
+	}
+	
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+		updatePower(world, state, pos);
+	}
+	
+	private void updatePower(World world, BlockState state, BlockPos pos) {
+		final boolean powered = isPowered(world, pos);
+		if (powered != state.get(POWERED)) {
+			world.setBlockState(pos, state.with(POWERED, powered));
+		}
+	}
+	
+	private boolean isPowered(World world, BlockPos pos) {
+		return Stream.of(Direction.values()).anyMatch(direction -> isPowered(world, pos, direction));
+	}
+	
+	private boolean isPowered(World world, BlockPos pos, Direction direction) {
+		final BlockPos relativePos = pos.offset(direction);
+		final int value = world.getRedstonePower(relativePos, direction);
+		if (value >= 15) {
+			return true;
+		} else {
+			final BlockState relativeState = world.getBlockState(relativePos);
+			return Math.max(value, relativeState.getBlock() == Blocks.REDSTONE_WIRE ? relativeState.get(RedstoneWireBlock.POWER) : 0) > 0;
+		}
+	}
+	
+	@Override
+	public boolean canProvidePower(BlockState state) {
+		return true;
+	}
+	
+	@Override
 	public float getRailMaxSpeed(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
 		return 0;
 	}
 	
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(SHAPE, FACING);
+		builder.add(SHAPE, FACING, POWERED);
 	}
 	
 	@Override
