@@ -65,9 +65,19 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	@Override
 	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
 		cart.setMotion(0, 0, 0);
-		if (world.isRemote || !state.get(POWERED)) {
+		
+		final boolean powered = state.get(POWERED);
+		
+		if (!powered) {
+			final Direction direction = state.get(FACING);
+			final Vec3d vec = cart.getPositionVector().add(direction.getXOffset() * 1.1, 0, direction.getZOffset() * 1.1);
+			cart.setLocationAndAngles(vec.getX(), vec.getY(), vec.getZ(), cart.rotationYaw, cart.rotationPitch);
+		}
+		
+		if (world.isRemote || !powered) {
 			return;
 		}
+		
 		final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
 		tileEntityOptional.map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)).ifPresent(lazyOptional -> lazyOptional.ifPresent(handler -> {
 			cart.removePassengers();
