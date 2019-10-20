@@ -2,6 +2,7 @@ package info.u_team.useful_railroads.tileentity;
 
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
+import info.u_team.u_team_core.util.world.WorldUtil;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.*;
 import info.u_team.useful_railroads.inventory.FuelItemHandler;
@@ -82,14 +83,16 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Enqueue the teleportation to be executed after the ticks of entites because
 		// else the teleportation will crash
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
+			final Vec3d teleportPos = new Vec3d(location.getPos()).add(0.5, 0, 0.5);
+			
 			// Teleport entity riding if there is one
 			if (entity != null) {
 				entity.detach(); // Detach entity
-				teleportEntity(entity, teleportWorld, location.getPos());
+				WorldUtil.teleportEntity(entity, teleportWorld, teleportPos);
 			}
 			
 			// Teleport minecart
-			teleportEntity(cart, teleportWorld, location.getPos());
+			WorldUtil.teleportEntity(cart, teleportWorld, teleportPos);
 			// Reatach entity
 			if (entity != null) {
 				// Because the entity will be destroyed when changing dimensions we use the uuid
@@ -97,48 +100,6 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 			}
 		}));
 		
-	}
-	
-	private static void teleportEntity(Entity entity, ServerWorld world, BlockPos pos) {
-		teleportEntity(entity, world, pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
-	}
-	
-	private static void teleportEntity(Entity entity, ServerWorld world, double x, double y, double z, float yaw, float pitch) {
-		if (entity instanceof ServerPlayerEntity) {
-			final ServerPlayerEntity player = (ServerPlayerEntity) entity;
-			final ChunkPos chunkpos = new ChunkPos(new BlockPos(x, y, z));
-			world.getChunkProvider().func_217228_a(TicketType.POST_TELEPORT, chunkpos, 1, entity.getEntityId());
-			if (world == entity.world) {
-				player.connection.setPlayerLocation(x, y, z, yaw, pitch);
-			} else {
-				player.teleport(world, x, y, z, yaw, pitch);
-			}
-			
-			entity.setRotationYawHead(yaw);
-		} else {
-			final float wrapedYaw = MathHelper.wrapDegrees(yaw);
-			final float wrapedPitch = MathHelper.clamp(MathHelper.wrapDegrees(pitch), -90.0F, 90.0F);
-			if (world == entity.world) {
-				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
-				entity.setRotationYawHead(wrapedYaw);
-			} else {
-				entity.dimension = world.dimension.getType();
-				
-				final Entity entityCopy = entity;
-				entity = entity.getType().create(world);
-				if (entity == null) {
-					return;
-				}
-				
-				entity.copyDataFromOld(entityCopy);
-				// Need to remove the old entity (Why the heck does TeleportCommand don't do
-				// this and it works ?????)
-				entityCopy.remove(false);
-				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
-				entity.setRotationYawHead(wrapedYaw);
-				world.func_217460_e(entity);
-			}
-		}
 	}
 	
 	@Override
