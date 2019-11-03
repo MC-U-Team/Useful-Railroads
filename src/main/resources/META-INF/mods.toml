@@ -16,7 +16,7 @@ authors="HyCraftHD"
 	[[dependencies.usefulrailroads]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[28.1.47,)"
+	    versionRange="[28.1.79,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
@@ -30,6 +30,6 @@ authors="HyCraftHD"
 	[[dependencies.usefulrailroads]]
 	    modId="uteamcore"
 	    mandatory=true
-	    versionRange="[2.7.4.134,)"
+	    versionRange="[2.7.8.138,)"
 	    ordering="NONE"
 	    side="BOTH"
