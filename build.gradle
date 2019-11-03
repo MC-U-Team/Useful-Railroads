@@ -67,7 +67,7 @@ minecraft {
         }
         data = {
             workingDirectory project.file("run/data").canonicalPath
-            args "--mod", "usefulrailroads", "--all", "--output", "\"" + file("src/generated/resources").toString() + "\""
+            args "--mod", "usefulrailroads", "--all", "--output", "\"" + file("src/generated/resources").toString() + "\"", "--validate", "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
             mods {
                 usefulrailroads {
                     source sourceSets.main
