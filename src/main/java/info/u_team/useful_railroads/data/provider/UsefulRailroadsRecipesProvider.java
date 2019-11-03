@@ -3,59 +3,33 @@ package info.u_team.useful_railroads.data.provider;
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
-import info.u_team.u_team_core.data.CommonProvider;
+import info.u_team.u_team_core.data.CommonRecipesProvider;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
-import net.minecraft.advancements.criterion.*;
-import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.data.*;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.Ingredient.TagList;
 import net.minecraft.tags.*;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
-public class UsefulRailroadsRecipesProvider extends CommonProvider {
+public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 	
 	public UsefulRailroadsRecipesProvider(DataGenerator generator) {
-		super("Recipes", generator);
+		super(generator);
 	}
 	
 	@Override
-	public void act(DirectoryCache cache) throws IOException {
-		final Path recipePath = path.resolve("recipes");
-		final Path advancementPath = path.resolve("advancements");
-		
-		final Consumer<IFinishedRecipe> consumer = recipe -> {
-			try {
-				write(cache, recipe.getRecipeJson(), recipePath.resolve(recipe.getID().getPath() + ".json"));
-				if (recipe.getAdvancementJson() != null) {
-					write(cache, recipe.getAdvancementJson(), advancementPath.resolve(recipe.getID().getPath() + ".json"));
-				}
-			} catch (IOException ex) {
-				LOGGER.error(marker, "Could not write data.", ex);
-			}
-		};
-		
-		addCraftingRecipes(consumer);
-		addFuelRecipes(consumer);
+	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+		registerCraftingRecipes(consumer);
+		registerFuelRecipes(consumer);
 	}
 	
-	@Override
-	protected Path resolvePath(Path outputFolder) {
-		return resolveData(outputFolder, UsefulRailroadsMod.MODID);
-	}
-	
-	private void addCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
-		
+	private void registerCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
 		ShapedRecipeBuilder.shapedRecipe(HIGHSPEED_RAIL, 24) //
 				.patternLine("IDI") //
 				.patternLine("LSL") //
@@ -142,7 +116,7 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 		CustomRecipeBuilder.func_218656_a(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION).build(consumer, "teleport_rail_remove_location");
 	}
 	
-	private void addFuelRecipes(Consumer<IFinishedRecipe> consumer) {
+	private void registerFuelRecipes(Consumer<IFinishedRecipe> consumer) {
 		addTeleportRailFuel(Items.ENDER_PEARL, 100, consumer, "ender_pearl");
 		addTeleportRailFuel(Items.ENDER_EYE, 150, consumer, "ender_eye");
 		addTeleportRailFuel(Items.CHORUS_FLOWER, 250, consumer, "chorus_flower");
@@ -168,37 +142,11 @@ public class UsefulRailroadsRecipesProvider extends CommonProvider {
 		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
 	}
 	
-	// private void addTrackBuilderFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-	// addTrackBuilderFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
-	// }
-	
 	private void addTrackBuilderFuel(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
 		addTrackBuilderFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
 	}
 	
 	private void addTrackBuilderFuel(Ingredient ingredient, InventoryChangeTrigger.Instance trigger, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
 		FuelRecipeBuilder.trackBuilderFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/track_builder/" + name));
-	}
-	
-	protected InventoryChangeTrigger.Instance hasItem(Tag<Item> tag) {
-		return hasItem(ItemPredicate.Builder.create().tag(tag).build());
-	}
-	
-	private InventoryChangeTrigger.Instance hasItem(IItemProvider item) {
-		return hasItem(ItemPredicate.Builder.create().item(item).build());
-	}
-	
-	private InventoryChangeTrigger.Instance hasItem(ItemPredicate... predicates) {
-		return new InventoryChangeTrigger.Instance(IntBound.UNBOUNDED, IntBound.UNBOUNDED, IntBound.UNBOUNDED, predicates);
-	}
-	
-	private Ingredient getIngredientOfTag(Tag<Item> tag) {
-		return Ingredient.fromItemListStream(Stream.of(new TagList(tag) {
-			
-			@Override
-			public Collection<ItemStack> getStacks() {
-				return Arrays.asList(new ItemStack(Items.ACACIA_BOAT)); // Return default value, so the ingredient will serialize our tag.
-			}
-		}));
 	}
 }

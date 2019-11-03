@@ -12,7 +12,7 @@ import net.minecraftforge.common.Tags;
 public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 	
 	public UsefulRailroadsItemTagsProvider(DataGenerator generator) {
-		super("Item-Tags", generator);
+		super(generator);
 	}
 	
 	@Override

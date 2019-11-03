@@ -9,7 +9,7 @@ import net.minecraft.tags.BlockTags;
 public class UsefulRailroadsBlockTagsProvider extends CommonBlockTagsProvider {
 	
 	public UsefulRailroadsBlockTagsProvider(DataGenerator generator) {
-		super("Block-Tags", generator);
+		super(generator);
 	}
 	
 	@Override
