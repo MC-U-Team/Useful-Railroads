@@ -2,17 +2,16 @@ package info.u_team.useful_railroads.data.provider;
 
 import static info.u_team.useful_railroads.init.UsefulRailroadsTags.Items.*;
 
-import info.u_team.u_team_core.data.CommonItemTagsProvider;
+import info.u_team.u_team_core.data.*;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlocks;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.tags.*;
 import net.minecraftforge.common.Tags;
 
 public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 	
-	public UsefulRailroadsItemTagsProvider(DataGenerator generator) {
-		super(generator);
+	public UsefulRailroadsItemTagsProvider(GenerationData data) {
+		super(data);
 	}
 	
 	@Override

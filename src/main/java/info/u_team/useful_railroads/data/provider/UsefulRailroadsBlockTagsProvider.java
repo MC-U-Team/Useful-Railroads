@@ -2,14 +2,13 @@ package info.u_team.useful_railroads.data.provider;
 
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 
-import info.u_team.u_team_core.data.CommonBlockTagsProvider;
-import net.minecraft.data.DataGenerator;
+import info.u_team.u_team_core.data.*;
 import net.minecraft.tags.BlockTags;
 
 public class UsefulRailroadsBlockTagsProvider extends CommonBlockTagsProvider {
 	
-	public UsefulRailroadsBlockTagsProvider(DataGenerator generator) {
-		super(generator);
+	public UsefulRailroadsBlockTagsProvider(GenerationData data) {
+		super(data);
 	}
 	
 	@Override

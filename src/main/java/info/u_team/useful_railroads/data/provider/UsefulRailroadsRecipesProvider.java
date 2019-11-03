@@ -5,7 +5,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
 
 import java.util.function.Consumer;
 
-import info.u_team.u_team_core.data.CommonRecipesProvider;
+import info.u_team.u_team_core.data.*;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
@@ -19,8 +19,8 @@ import net.minecraftforge.common.Tags;
 
 public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 	
-	public UsefulRailroadsRecipesProvider(DataGenerator generator) {
-		super(generator);
+	public UsefulRailroadsRecipesProvider(GenerationData data) {
+		super(data);
 	}
 	
 	@Override

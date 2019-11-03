@@ -1,8 +1,8 @@
 package info.u_team.useful_railroads.data;
 
+import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.provider.*;
-import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -13,13 +13,12 @@ public class UsefulRailroadsDataGenerator {
 	
 	@SubscribeEvent
 	public static void data(GatherDataEvent event) {
-		final DataGenerator generator = event.getGenerator();
+		final GenerationData data = new GenerationData(UsefulRailroadsMod.MODID, event);
 		if (event.includeServer()) {
-			generator.addProvider(new UsefulRailroadsBlockTagsProvider(generator)); // Generate block tags
-			generator.addProvider(new UsefulRailroadsItemTagsProvider(generator)); // Generate item tags
-			
-			generator.addProvider(new UsefulRailroadsLootTableProvider(generator)); // Generate loot tables
-			generator.addProvider(new UsefulRailroadsRecipesProvider(generator)); // Generate recipes
+			data.addProvider(UsefulRailroadsBlockTagsProvider::new);
+			data.addProvider(UsefulRailroadsItemTagsProvider::new);
+			data.addProvider(UsefulRailroadsLootTableProvider::new);
+			data.addProvider(UsefulRailroadsRecipesProvider::new);
 		}
 	}
 	
