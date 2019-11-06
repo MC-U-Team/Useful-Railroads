@@ -20,6 +20,9 @@ public class UsefulRailroadsDataGenerator {
 			data.addProvider(UsefulRailroadsLootTableProvider::new);
 			data.addProvider(UsefulRailroadsRecipesProvider::new);
 		}
+		if (event.includeClient()) {
+			data.addProvider(UsefulRailroadsItemModelsProvider::new);
+			data.addProvider(UsefulRailroadsBlockStatesProvider::new);
+		}
 	}
-	
 }

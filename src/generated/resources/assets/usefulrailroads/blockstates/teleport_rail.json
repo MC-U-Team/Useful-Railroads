@@ -3,12 +3,12 @@
 		"powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/teleport_rail"
 		},
+		"powered=true,shape=north_south": {
+			"model": "usefulrailroads:block/teleport_powered_rail"
+		},
 		"powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/teleport_rail",
 			"y": 90
-		},
-		"powered=true,shape=north_south": {
-			"model": "usefulrailroads:block/teleport_powered_rail"
 		},
 		"powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/teleport_powered_rail",
