@@ -57,6 +57,44 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(trackBuilderContainerKey + ".mode.3x3", "3x3 air tunnel");
 		add(trackBuilderContainerKey + ".mode.5x5", "5x5 air tunnel");
 		add(trackBuilderContainerKey + ".mode.tunnel", "Tunnel with blocks & light");
+		
+		// German
+		
+		add("de_de", GROUP, "Nützliche Eisenbahn Erweiterungen");
+		
+		add("de_de", HIGHSPEED_RAIL, "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)");
+		add("de_de", DIRECTION_RAIL, "Richtungsschiene");
+		add("de_de", INTERSECTION_RAIL, "Kreuzungsschiene");
+		add("de_de", TELEPORT_RAIL, "Teleportationsschiene");
+		
+		add("de_de", BUFFER_STOP, "Prellbock");
+		add("de_de", teleportRailBlockKey + ".missing_setup", "Kann nicht platziert werden. Richte zuerst die Schiene ein.");
+		add("de_de", teleportRailBlockKey + ".not_enough_fuel", "Nicht genug Treibstoff. Diese Teleportation kostet %s Treibstoff.");
+		
+		add("de_de", SINGLE_TRACK_BUILDER, "Einzelner Gleisbauer");
+		add("de_de", DOUBLE_TRACK_BUILDER, "Doppelter Gleisbauer");
+		add("de_de", trackBuilderItemKey + ".not_enough_fuel", "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.");
+		add("de_de", trackBuilderItemKey + ".not_enough_blocks", "Nicht genügend Blöcke.");
+		
+		add("de_de", teleportRailContainerKey, "Teleportationsschiene");
+		add("de_de", teleportRailContainerKey + ".dimension", "Dimension");
+		add("de_de", teleportRailContainerKey + ".x", "X");
+		add("de_de", teleportRailContainerKey + ".y", "Y");
+		add("de_de", teleportRailContainerKey + ".z", "Z");
+		add("de_de", teleportRailContainerKey + ".fuel", "Treibstoff");
+		add("de_de", teleportRailContainerKey + ".consumption", "Verbrauch");
+		add("de_de", trackBuilderContainerKey, "Gleisbauer");
+		add("de_de", trackBuilderContainerKey + ".rails", "Schienen");
+		add("de_de", trackBuilderContainerKey + ".ground_blocks", "Schotterblöcke");
+		add("de_de", trackBuilderContainerKey + ".tunnel_blocks", "Tunnelblöcke");
+		add("de_de", trackBuilderContainerKey + ".redstone_torches", "Redstone Fackeln");
+		add("de_de", trackBuilderContainerKey + ".torches", "Fackeln (Licht)");
+		add("de_de", trackBuilderContainerKey + ".fuel", "Treibstoff");
+		add("de_de", trackBuilderContainerKey + ".mode", "Modus");
+		add("de_de", trackBuilderContainerKey + ".mode.noair", "Kein extra Tunnel");
+		add("de_de", trackBuilderContainerKey + ".mode.3x3", "3x3 Lufttunnel");
+		add("de_de", trackBuilderContainerKey + ".mode.5x5", "5x5 Lufttunnel");
+		add("de_de", trackBuilderContainerKey + ".mode.tunnel", "Tunnel mit Blöcken & Licht");
 	}
 	
 }
