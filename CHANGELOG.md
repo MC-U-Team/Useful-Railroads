@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.14.4-1.2.2.14] - 2019-11-06
+### Changed
+ - Generate now all models (except the buffer stop)
+ - Generate all other data files now (advancements moved place, but who cares about recipe book advancements?)
+ - Fix bug, that buffer stop may not save the items inside
+ - Fix bug, that the fuel shows negative values, if the values if above the short max value
+ 
+### Added
+ - Added german translation
+
 ## [1.14.4-1.2.2.13] - 2019-10-20
 ### Changed
  - Teleport rail now use the block middle
