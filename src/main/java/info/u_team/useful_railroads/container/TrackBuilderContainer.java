@@ -1,5 +1,6 @@
 package info.u_team.useful_railroads.container;
 
+import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.container.UContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.*;
@@ -8,7 +9,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IntReferenceHolder;
 
 public class TrackBuilderContainer extends UContainer {
 	
@@ -30,31 +30,8 @@ public class TrackBuilderContainer extends UContainer {
 		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 5, 8, 182);
 		appendInventory(wrapper.getTorchInventory(), 1, 4, 116, 182);
 		appendPlayerInventory(playerInventory, 62, 214);
-		trackInt(new IntReferenceHolder() {
-			
-			@Override
-			public int get() {
-				return wrapper.getFuel();
-			}
-			
-			@Override
-			public void set(int fuel) {
-				wrapper.setFuel(fuel);
-			}
-			
-		});
-		trackInt(new IntReferenceHolder() {
-			
-			@Override
-			public int get() {
-				return wrapper.getMode().ordinal();
-			}
-			
-			@Override
-			public void set(int ordinal) {
-				wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[ordinal]);
-			}
-		});
+		addServerToClientTracker(BufferReferenceHolder.createIntHolder(wrapper::getFuel, wrapper::setFuel));
+		addServerToClientTracker(BufferReferenceHolder.createByteHolder(() -> (byte) wrapper.getMode().ordinal(), value -> wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[value])));
 	}
 	
 	@Override
