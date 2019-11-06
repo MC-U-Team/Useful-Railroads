@@ -36,7 +36,7 @@ public class BufferStopTileEntity extends UTileEntity {
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction == Direction.DOWN || direction == null) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (direction == Direction.DOWN || direction == null)) {
 			return slots.cast();
 		}
 		return super.getCapability(capability, direction);
