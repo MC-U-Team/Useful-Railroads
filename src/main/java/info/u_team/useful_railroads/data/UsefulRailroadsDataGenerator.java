@@ -23,6 +23,7 @@ public class UsefulRailroadsDataGenerator {
 		if (event.includeClient()) {
 			data.addProvider(UsefulRailroadsItemModelsProvider::new);
 			data.addProvider(UsefulRailroadsBlockStatesProvider::new);
+			data.addProvider(UsefulRailroadsLanguagesProvider::new);
 		}
 	}
 }
