@@ -1,6 +1,7 @@
 package info.u_team.useful_railroads.container;
 
-import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
+import info.u_team.u_team_core.api.sync.*;
+import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
 import info.u_team.u_team_core.container.UContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.*;
@@ -13,6 +14,8 @@ import net.minecraft.network.PacketBuffer;
 public class TrackBuilderContainer extends UContainer {
 	
 	private final TrackBuilderInventoryWrapper wrapper;
+	
+	private final EmptyMessageHolder changeModeMessage;
 	
 	// Client
 	public TrackBuilderContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
@@ -32,6 +35,10 @@ public class TrackBuilderContainer extends UContainer {
 		appendPlayerInventory(playerInventory, 62, 214);
 		addServerToClientTracker(BufferReferenceHolder.createIntHolder(wrapper::getFuel, wrapper::setFuel));
 		addServerToClientTracker(BufferReferenceHolder.createByteHolder(() -> (byte) wrapper.getMode().ordinal(), value -> wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[value])));
+		changeModeMessage = addClientToServerTracker(new EmptyMessageHolder(() -> {
+			wrapper.setMode(TrackBuilderMode.cycle(wrapper.getMode()));
+			wrapper.writeItemStack();
+		}));
 	}
 	
 	@Override
@@ -100,6 +107,10 @@ public class TrackBuilderContainer extends UContainer {
 	
 	public TrackBuilderInventoryWrapper getWrapper() {
 		return wrapper;
+	}
+	
+	public EmptyMessageHolder getChangeModeMessage() {
+		return changeModeMessage;
 	}
 	
 }

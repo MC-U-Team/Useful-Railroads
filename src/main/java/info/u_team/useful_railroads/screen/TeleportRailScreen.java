@@ -1,4 +1,4 @@
-package info.u_team.useful_railroads.gui;
+package info.u_team.useful_railroads.screen;
 
 import info.u_team.u_team_core.gui.UContainerScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;

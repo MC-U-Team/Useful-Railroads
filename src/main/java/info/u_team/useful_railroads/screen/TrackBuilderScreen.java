@@ -1,10 +1,8 @@
-package info.u_team.useful_railroads.gui;
+package info.u_team.useful_railroads.screen;
 
 import info.u_team.u_team_core.gui.UContainerScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
-import info.u_team.useful_railroads.init.UsefulRailroadsNetwork;
-import info.u_team.useful_railroads.network.CycleTrackBuilderMessage;
 import info.u_team.useful_railroads.util.BetterButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,7 +27,7 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 		super.init();
 		
 		addButton(new BetterButton(guiLeft + 169, guiTop + 16, 108, 11, 0.7F, "", button -> {
-			UsefulRailroadsNetwork.NETWORK.sendToServer(new CycleTrackBuilderMessage());
+			container.getChangeModeMessage().triggerMessage();
 		}) {
 			
 			@Override
