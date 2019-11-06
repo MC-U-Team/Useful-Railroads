@@ -1,5 +1,6 @@
 package info.u_team.useful_railroads.tileentity;
 
+import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import net.minecraft.item.ItemStack;
@@ -11,7 +12,7 @@ import net.minecraftforge.items.*;
 
 public class BufferStopTileEntity extends UTileEntity {
 	
-	private final LazyOptional<ItemStackHandler> slots = LazyOptional.of(() -> new ItemStackHandler(10) {
+	private final LazyOptional<ItemStackHandler> slots = LazyOptional.of(() -> new TileEntityUItemStackHandler(10, this) {
 		
 		@Override
 		protected int getStackLimit(int slot, ItemStack stack) {
@@ -39,6 +40,12 @@ public class BufferStopTileEntity extends UTileEntity {
 			return slots.cast();
 		}
 		return super.getCapability(capability, direction);
+	}
+	
+	@Override
+	public void remove() {
+		slots.invalidate();
+		super.remove();
 	}
 	
 }
