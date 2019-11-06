@@ -9,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IntReferenceHolder;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TeleportRailContainer extends UTileEntityContainer<TeleportRailTileEntity> {
 	
@@ -25,7 +24,7 @@ public class TeleportRailContainer extends UTileEntityContainer<TeleportRailTile
 	
 	@Override
 	protected void init(boolean server) {
-		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> appendInventory(handler, FuelItemSlotHandler::new, 1, 1, 152, 75));
+		tileEntity.getSlot().ifPresent(handler -> appendInventory(handler, FuelItemSlotHandler::new, 1, 1, 152, 75));
 		appendPlayerInventory(playerInventory, 8, 107);
 		trackInt(new IntReferenceHolder() {
 			

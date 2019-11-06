@@ -140,6 +140,10 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		return super.getCapability(capability, direction);
 	}
 	
+	public LazyOptional<IItemHandler> getSlot() {
+		return slot;
+	}
+	
 	@Override
 	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
 		return new TeleportRailContainer(id, playerInventory, this);
