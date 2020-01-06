@@ -16,20 +16,20 @@ authors="HyCraftHD"
 	[[dependencies.usefulrailroads]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[28.1.111,)"
+	    versionRange="[30.0.30,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
 	[[dependencies.usefulrailroads]]
 	    modId="minecraft"
 	    mandatory=true
-	    versionRange="[1.14.4]"
+	    versionRange="[1.15.1]"
 	    ordering="NONE"
 	    side="BOTH"
 	    
 	[[dependencies.usefulrailroads]]
 	    modId="uteamcore"
 	    mandatory=true
-	    versionRange="[2.8.0.140,)"
+	    versionRange="[2.9.3.145,)"
 	    ordering="NONE"
 	    side="BOTH"
