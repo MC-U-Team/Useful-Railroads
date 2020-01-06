@@ -1,7 +1,6 @@
 package info.u_team.useful_railroads.item;
 
-import java.util.Random;
-
+import info.u_team.u_team_core.util.MathUtil;
 import info.u_team.useful_railroads.block.TeleportRailBlock;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.effect.LightningBoltEntity;
@@ -45,7 +44,7 @@ public class TeleportRailBlockItem extends BlockItem {
 		if (world.isRemote) { // Do client particles
 			if (world.rand.nextInt(10) == 0) {
 				for (int i = 0; i < 5; i++) {
-					world.addParticle(ParticleTypes.ENCHANT, true, itemEntity.posX, itemEntity.posY + 0.5, itemEntity.posZ, getRandomNumberInRange(world.rand, -0.2, 0.2), getRandomNumberInRange(world.rand, 0.1, 1.5), getRandomNumberInRange(world.rand, -0.2, 0.2));
+					world.addParticle(ParticleTypes.ENCHANT, true, itemEntity.posX, itemEntity.posY + 0.5, itemEntity.posZ, MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2), MathUtil.getRandomNumberInRange(world.rand, 0.1, 1.5), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2));
 				}
 			}
 		} else { // Do server stuff
@@ -83,17 +82,5 @@ public class TeleportRailBlockItem extends BlockItem {
 					});
 		}
 		return false;
-	}
-	
-	/**
-	 * Just a helper method. Might be in uteamcore soon again TODO
-	 * 
-	 * @param random
-	 * @param min
-	 * @param max
-	 * @return
-	 */
-	public static double getRandomNumberInRange(Random random, double min, double max) {
-		return random.nextDouble() * (max - min) + min;
 	}
 }

@@ -5,6 +5,8 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsItemGroups.GROUP;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
 
 import info.u_team.u_team_core.data.*;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 
 public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	
@@ -58,6 +60,9 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(trackBuilderContainerKey + ".mode.5x5", "5x5 air tunnel");
 		add(trackBuilderContainerKey + ".mode.tunnel", "Tunnel with blocks & light");
 		
+		add("usefulrailroads.tooltip.right_click", "RIGHT CLICK");
+		add("usefulrailroads.tooltip.shift_right_click", "SHIFT + RIGHT CLICK");
+		
 		// German
 		
 		add("de_de", GROUP, "Nützliche Eisenbahn Erweiterungen");
@@ -95,6 +100,25 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", trackBuilderContainerKey + ".mode.3x3", "3x3 Lufttunnel");
 		add("de_de", trackBuilderContainerKey + ".mode.5x5", "5x5 Lufttunnel");
 		add("de_de", trackBuilderContainerKey + ".mode.tunnel", "Tunnel mit Blöcken & Licht");
+		
+		add("de_de", "usefulrailroads.tooltip.right_click", "RECHTS KLICK");
+		add("de_de", "usefulrailroads.tooltip.shift_right_click", "UMSCHALTTASTE + RECHTS KLICK");
+	}
+	
+	protected void addTooltip(Block key, int line, String value) {
+		addTooltip(key.asItem(), line, value);
+	}
+	
+	protected void addTooltip(String locale, Block key, int line, String value) {
+		addTooltip(locale, key.asItem(), line, value);
+	}
+	
+	protected void addTooltip(Item key, int line, String value) {
+		add(key.getTranslationKey() + ".tooltip." + line, value);
+	}
+	
+	protected void addTooltip(String locale, Item key, int line, String value) {
+		add(key.getTranslationKey() + ".tooltip" + line, value);
 	}
 	
 }

@@ -1,16 +1,20 @@
 package info.u_team.useful_railroads.item;
 
+import java.util.List;
+
 import info.u_team.u_team_core.item.UItem;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class TrackBuilderItem extends UItem {
@@ -73,4 +77,11 @@ public class TrackBuilderItem extends UItem {
 	public boolean isDoubleTrack() {
 		return doubleTrack;
 	}
+	
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(new TranslationTextComponent("", new TranslationTextComponent("usefulrailroads.tooltip.right_click")));
+	}
+	
 }
