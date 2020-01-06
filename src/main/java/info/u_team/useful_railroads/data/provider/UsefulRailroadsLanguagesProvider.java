@@ -126,7 +126,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	}
 	
 	protected void addTooltip(String locale, Item key, int line, String value) {
-		add(locale, key.getTranslationKey() + ".tooltip" + line, value);
+		add(locale, key.getTranslationKey() + ".tooltip." + line, value);
 	}
 	
 }
