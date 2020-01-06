@@ -4,6 +4,7 @@
 	"block.usefulrailroads.highspeed_rail": "High Speed Rail (5 Blocks/Tick)",
 	"block.usefulrailroads.intersection_rail": "Intersection Rail",
 	"block.usefulrailroads.teleport_rail": "Teleport Rail",
+	"block.usefulrailroads.teleport_rail.how_to_setup": "Drop the rail and an enderpearl at a location and wait till a lightning stike appears.",
 	"block.usefulrailroads.teleport_rail.missing_setup": "Cannot place. Setup the rail first.",
 	"block.usefulrailroads.teleport_rail.not_enough_fuel": "Not enough fuel. This teleportation costs %s fuel.",
 	"container.usefulrailroads.teleport_rail": "Teleport Rail",

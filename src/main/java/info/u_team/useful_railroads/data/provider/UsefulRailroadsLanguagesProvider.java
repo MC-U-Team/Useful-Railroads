@@ -33,6 +33,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		add(BUFFER_STOP, "Buffer Stop");
 		add(teleportRailBlockKey + ".missing_setup", "Cannot place. Setup the rail first.");
+		add(teleportRailBlockKey + ".how_to_setup", "Drop the rail and an enderpearl at a location and wait till a lightning stike appears.");
 		add(teleportRailBlockKey + ".not_enough_fuel", "Not enough fuel. This teleportation costs %s fuel.");
 		
 		add(SINGLE_TRACK_BUILDER, "Single Track Builder");
@@ -78,6 +79,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		add("de_de", BUFFER_STOP, "Prellbock");
 		add("de_de", teleportRailBlockKey + ".missing_setup", "Kann nicht platziert werden. Richte zuerst die Schiene ein.");
+		add("de_de", teleportRailBlockKey + ".how_to_setup", "Lege die Schiene und eine Enderperle auf den Boden und warte bis ein Blitz dort einschlägt.");
 		add("de_de", teleportRailBlockKey + ".not_enough_fuel", "Nicht genug Treibstoff. Diese Teleportation kostet %s Treibstoff.");
 		
 		add("de_de", SINGLE_TRACK_BUILDER, "Einzelner Gleisbauer");

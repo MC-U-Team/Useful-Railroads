@@ -91,7 +91,8 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 			tooltip.add(new StringTextComponent(I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("y")));
 			tooltip.add(new StringTextComponent(I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("z")));
 		} else {
-			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").setStyle(new Style().setColor(TextFormatting.RED)));
+			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").applyTextStyle(TextFormatting.RED));
+			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.how_to_setup").applyTextStyle(TextFormatting.GRAY));
 		}
 		if (compoundExists) {
 			tooltip.add(new StringTextComponent(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + compound.getInt("fuel")));

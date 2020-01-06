@@ -4,6 +4,7 @@
 	"block.usefulrailroads.highspeed_rail": "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)",
 	"block.usefulrailroads.intersection_rail": "Kreuzungsschiene",
 	"block.usefulrailroads.teleport_rail": "Teleportationsschiene",
+	"block.usefulrailroads.teleport_rail.how_to_setup": "Lege die Schiene und eine Enderperle auf den Boden und warte bis ein Blitz dort einschlägt.",
 	"block.usefulrailroads.teleport_rail.missing_setup": "Kann nicht platziert werden. Richte zuerst die Schiene ein.",
 	"block.usefulrailroads.teleport_rail.not_enough_fuel": "Nicht genug Treibstoff. Diese Teleportation kostet %s Treibstoff.",
 	"container.usefulrailroads.teleport_rail": "Teleportationsschiene",
