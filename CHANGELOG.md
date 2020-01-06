@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.14.4-1.2.3.15] - 2020-01-06
+### Added
+ - Added tooltip information for track builder
+ - Added tooltip information for teleport rail
+
 ## [1.14.4-1.2.2.14] - 2019-11-06
 ### Changed
  - Generate now all models (except the buffer stop)
