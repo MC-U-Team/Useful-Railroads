@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -41,10 +41,11 @@ public class TeleportRailBlockItem extends BlockItem {
 			return false;
 		}
 		final World world = itemEntity.getEntityWorld();
+		final Vec3d itemEntityVector = itemEntity.getPositionVector();
 		if (world.isRemote) { // Do client particles
 			if (world.rand.nextInt(10) == 0) {
 				for (int i = 0; i < 5; i++) {
-					world.addParticle(ParticleTypes.ENCHANT, true, itemEntity.posX, itemEntity.posY + 0.5, itemEntity.posZ, MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2), MathUtil.getRandomNumberInRange(world.rand, 0.1, 1.5), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2));
+					world.addParticle(ParticleTypes.ENCHANT, true, itemEntityVector.getX(), itemEntityVector.getY() + 0.5, itemEntityVector.getZ(), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2), MathUtil.getRandomNumberInRange(world.rand, 0.1, 1.5), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2));
 				}
 			}
 		} else { // Do server stuff
@@ -52,7 +53,7 @@ public class TeleportRailBlockItem extends BlockItem {
 			if (age < 100) { // Don't do anything when the age is not above 100 ticks
 				return false;
 			}
-			final AxisAlignedBB aabb = new AxisAlignedBB(itemEntity.posX - 1, itemEntity.posY - 1, itemEntity.posZ - 1, itemEntity.posX + 1, itemEntity.posY + 1, itemEntity.posZ + 1);
+			final AxisAlignedBB aabb = new AxisAlignedBB(itemEntityVector.getX() - 1, itemEntityVector.getY() - 1, itemEntityVector.getZ() - 1, itemEntityVector.getX() + 1, itemEntityVector.getY() + 1, itemEntityVector.getZ() + 1);
 			// Search all item entities in a range of 1 block away from the origin entity.
 			// Then lookup if it's an enderpearl.
 			world.getEntitiesInAABBexcluding(itemEntity, aabb, ItemEntity.class::isInstance).stream() //
@@ -67,7 +68,7 @@ public class TeleportRailBlockItem extends BlockItem {
 						// Set location to the stack
 						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
 						
-						final ItemEntity newItemEntity = new ItemEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, stack);
+						final ItemEntity newItemEntity = new ItemEntity(world, itemEntityVector.getX(), itemEntityVector.getY(), itemEntityVector.getZ(), stack);
 						newItemEntity.setDefaultPickupDelay();
 						
 						// Delete old entity
@@ -77,7 +78,7 @@ public class TeleportRailBlockItem extends BlockItem {
 						world.addEntity(newItemEntity);
 						
 						if (world instanceof ServerWorld) {
-							((ServerWorld) world).addLightningBolt(new LightningBoltEntity(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, true));
+							((ServerWorld) world).addLightningBolt(new LightningBoltEntity(world, itemEntityVector.getX(), itemEntityVector.getY(), itemEntityVector.getZ(), true));
 						}
 					});
 		}
