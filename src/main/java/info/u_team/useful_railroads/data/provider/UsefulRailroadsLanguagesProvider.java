@@ -64,8 +64,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(trackBuilderContainerKey + ".mode.5x5", "5x5 air tunnel");
 		add(trackBuilderContainerKey + ".mode.tunnel", "Tunnel with blocks & light");
 		
-		add("usefulrailroads.tooltip.right_click", "Right Click");
-		add("usefulrailroads.tooltip.shift_right_click", "Shift + Right Click");
+		add("usefulrailroads.tooltip.right_click", "Right click");
+		add("usefulrailroads.tooltip.shift_right_click", "Shift + Right click");
 		
 		// German
 		
@@ -81,7 +81,11 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", teleportRailBlockKey + ".not_enough_fuel", "Nicht genug Treibstoff. Diese Teleportation kostet %s Treibstoff.");
 		
 		add("de_de", SINGLE_TRACK_BUILDER, "Einzelner Gleisbauer");
+		addTooltip("de_de", SINGLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
+		addTooltip("de_de", SINGLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
 		add("de_de", DOUBLE_TRACK_BUILDER, "Doppelter Gleisbauer");
+		addTooltip("de_de", DOUBLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
+		addTooltip("de_de", DOUBLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
 		add("de_de", trackBuilderItemKey + ".not_enough_fuel", "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.");
 		add("de_de", trackBuilderItemKey + ".not_enough_blocks", "Nicht genügend Blöcke.");
 		
@@ -105,8 +109,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", trackBuilderContainerKey + ".mode.5x5", "5x5 Lufttunnel");
 		add("de_de", trackBuilderContainerKey + ".mode.tunnel", "Tunnel mit Blöcken & Licht");
 		
-		add("de_de", "usefulrailroads.tooltip.right_click", "Rechts Klick");
-		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechts Klick");
+		add("de_de", "usefulrailroads.tooltip.right_click", "Rechtsklick");
+		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechtsklick");
 	}
 	
 	protected void addTooltip(Block key, int line, String value) {
@@ -122,7 +126,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	}
 	
 	protected void addTooltip(String locale, Item key, int line, String value) {
-		add(key.getTranslationKey() + ".tooltip" + line, value);
+		add(locale, key.getTranslationKey() + ".tooltip" + line, value);
 	}
 	
 }

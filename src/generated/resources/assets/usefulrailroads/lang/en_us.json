@@ -26,14 +26,14 @@
 	"container.usefulrailroads.track_builder.torches": "Torches (light)",
 	"container.usefulrailroads.track_builder.tunnel_blocks": "Tunnel Blocks",
 	"item.usefulrailroads.double_track_builder": "Double Track Builder",
-	"item.usefulrailroads.double_track_builder.tooltip.0": "%s Open settings gui",
-	"item.usefulrailroads.double_track_builder.tooltip.1": "%s Execute build operation",
+	"item.usefulrailroads.double_track_builder.tooltip.0": "%s to open settings gui",
+	"item.usefulrailroads.double_track_builder.tooltip.1": "%s to execute build operation",
 	"item.usefulrailroads.single_track_builder": "Single Track Builder",
-	"item.usefulrailroads.single_track_builder.tooltip.0": "%s Open settings gui",
-	"item.usefulrailroads.single_track_builder.tooltip.1": "%s Execute build operation",
+	"item.usefulrailroads.single_track_builder.tooltip.0": "%s to open settings gui",
+	"item.usefulrailroads.single_track_builder.tooltip.1": "%s to execute build operation",
 	"item.usefulrailroads.track_builder.not_enough_blocks": "Not enough blocks.",
 	"item.usefulrailroads.track_builder.not_enough_fuel": "Not enough fuel. This operation costs %s fuel.",
 	"itemGroup.usefulrailroads.group": "Useful Railroads",
-	"usefulrailroads.tooltip.right_click": "Right Click",
-	"usefulrailroads.tooltip.shift_right_click": "Shift + Right Click"
+	"usefulrailroads.tooltip.right_click": "Right click",
+	"usefulrailroads.tooltip.shift_right_click": "Shift + Right click"
 }
