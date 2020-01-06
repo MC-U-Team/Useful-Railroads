@@ -29,7 +29,7 @@ public class TrackBuilderItem extends UItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		final ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote && !player.isSneaking() && player instanceof ServerPlayerEntity) { // Server & Player not sneaking
+		if (!world.isRemote && !player.func_226563_dT_() && player instanceof ServerPlayerEntity) { // Server & Player not sneaking
 			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.world);
 			
 			NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
@@ -58,7 +58,7 @@ public class TrackBuilderItem extends UItem {
 			return ActionResultType.PASS;
 		}
 		final PlayerEntity player = context.getPlayer();
-		if (player == null || !context.isPlacerSneaking() || context.getHand() == Hand.OFF_HAND) { // No player or no sneaking and no offhand
+		if (player == null || !context.func_225518_g_() || context.getHand() == Hand.OFF_HAND) { // No player or no sneaking and no offhand
 			return ActionResultType.PASS;
 		}
 		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(context.getItem(), () -> player.world);
