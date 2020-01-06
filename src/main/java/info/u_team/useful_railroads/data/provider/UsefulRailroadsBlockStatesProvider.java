@@ -52,7 +52,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		// Buffer stop
 		getVariantBuilder(BUFFER_STOP).forAllStatesExcept(state -> { //
 			return ConfiguredModel.builder() //
-					.modelFile(new ExistingModelFile(modLoc("block/buffer_stop"), existingFileHelper)) //
+					.modelFile(new ExistingModelFile(modLoc("block/buffer_stop"), models().existingFileHelper)) //
 					.rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360) //
 					.build();
 		}, BufferStopBlock.POWERED, BufferStopBlock.SHAPE);
@@ -81,7 +81,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 			final PartialBlockstate partialState = newPartialBlockState(builder.getOwner(), Maps.newLinkedHashMap(fullState.getValues()), builder);
 			if (seen.add(partialState)) {
 				final RailShape shape = fullState.get(CustomPoweredRailBlock.SHAPE);
-				if (shape.getMeta() < 2) { // We only generate the NORTH_SOUTH and EAST_WEST shapes
+				if (shape == RailShape.NORTH_SOUTH || shape == RailShape.EAST_WEST) { // We only generate the NORTH_SOUTH and EAST_WEST shapes
 					builder.setModels(partialState, mapper.apply(fullState));
 				}
 			}
@@ -90,7 +90,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 	}
 	
 	private BlockModelBuilder flatRail(String name) {
-		return withExistingParent(name, "block/rail_flat") //
+		return models().withExistingParent(name, "block/rail_flat") //
 				.texture("rail", modLoc("block/" + name));
 	}
 	
