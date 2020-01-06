@@ -197,11 +197,6 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
-	}
-	
-	@Override
 	public boolean canMakeSlopes(BlockState state, IBlockReader world, BlockPos pos) {
 		return false;
 	}
