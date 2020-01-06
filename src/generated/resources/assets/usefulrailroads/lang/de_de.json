@@ -29,5 +29,7 @@
 	"item.usefulrailroads.single_track_builder": "Einzelner Gleisbauer",
 	"item.usefulrailroads.track_builder.not_enough_blocks": "Nicht genügend Blöcke.",
 	"item.usefulrailroads.track_builder.not_enough_fuel": "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.",
-	"itemGroup.usefulrailroads.group": "Nützliche Eisenbahn Erweiterungen"
+	"itemGroup.usefulrailroads.group": "Nützliche Eisenbahn Erweiterungen",
+	"usefulrailroads.tooltip.right_click": "Rechts Klick",
+	"usefulrailroads.tooltip.shift_right_click": "Umschalttaste + Rechts Klick"
 }

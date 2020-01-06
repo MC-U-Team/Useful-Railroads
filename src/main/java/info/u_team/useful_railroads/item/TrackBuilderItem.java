@@ -81,7 +81,8 @@ public class TrackBuilderItem extends UItem {
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(new TranslationTextComponent("", new TranslationTextComponent("usefulrailroads.tooltip.right_click")));
+		tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip.0", new TranslationTextComponent("usefulrailroads.tooltip.right_click").applyTextStyles(TextFormatting.ITALIC, TextFormatting.GOLD)).applyTextStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip.1", new TranslationTextComponent("usefulrailroads.tooltip.shift_right_click").applyTextStyles(TextFormatting.ITALIC, TextFormatting.GOLD)).applyTextStyle(TextFormatting.GRAY));
 	}
 	
 }

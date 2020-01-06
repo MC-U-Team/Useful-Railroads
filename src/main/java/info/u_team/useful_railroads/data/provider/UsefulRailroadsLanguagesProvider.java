@@ -36,7 +36,11 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(teleportRailBlockKey + ".not_enough_fuel", "Not enough fuel. This teleportation costs %s fuel.");
 		
 		add(SINGLE_TRACK_BUILDER, "Single Track Builder");
+		addTooltip(SINGLE_TRACK_BUILDER, 0, "%s to open settings gui");
+		addTooltip(SINGLE_TRACK_BUILDER, 1, "%s to execute build operation");
 		add(DOUBLE_TRACK_BUILDER, "Double Track Builder");
+		addTooltip(DOUBLE_TRACK_BUILDER, 0, "%s to open settings gui");
+		addTooltip(DOUBLE_TRACK_BUILDER, 1, "%s to execute build operation");
 		add(trackBuilderItemKey + ".not_enough_fuel", "Not enough fuel. This operation costs %s fuel.");
 		add(trackBuilderItemKey + ".not_enough_blocks", "Not enough blocks.");
 		
@@ -60,8 +64,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(trackBuilderContainerKey + ".mode.5x5", "5x5 air tunnel");
 		add(trackBuilderContainerKey + ".mode.tunnel", "Tunnel with blocks & light");
 		
-		add("usefulrailroads.tooltip.right_click", "RIGHT CLICK");
-		add("usefulrailroads.tooltip.shift_right_click", "SHIFT + RIGHT CLICK");
+		add("usefulrailroads.tooltip.right_click", "Right Click");
+		add("usefulrailroads.tooltip.shift_right_click", "Shift + Right Click");
 		
 		// German
 		
@@ -101,8 +105,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", trackBuilderContainerKey + ".mode.5x5", "5x5 Lufttunnel");
 		add("de_de", trackBuilderContainerKey + ".mode.tunnel", "Tunnel mit Blöcken & Licht");
 		
-		add("de_de", "usefulrailroads.tooltip.right_click", "RECHTS KLICK");
-		add("de_de", "usefulrailroads.tooltip.shift_right_click", "UMSCHALTTASTE + RECHTS KLICK");
+		add("de_de", "usefulrailroads.tooltip.right_click", "Rechts Klick");
+		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechts Klick");
 	}
 	
 	protected void addTooltip(Block key, int line, String value) {
