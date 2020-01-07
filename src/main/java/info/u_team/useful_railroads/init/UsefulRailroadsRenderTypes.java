@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.init;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import net.minecraft.client.renderer.*;
@@ -17,6 +17,11 @@ public class UsefulRailroadsRenderTypes {
 	public static void register(FMLClientSetupEvent event) {
 		// Cutout
 		final RenderType cutout = RenderType.func_228643_e_();
+		
+		RenderTypeLookup.setRenderLayer(HIGHSPEED_RAIL, cutout);
+		RenderTypeLookup.setRenderLayer(DIRECTION_RAIL, cutout);
+		RenderTypeLookup.setRenderLayer(INTERSECTION_RAIL, cutout);
+		RenderTypeLookup.setRenderLayer(TELEPORT_RAIL, cutout);
 		
 		RenderTypeLookup.setRenderLayer(BUFFER_STOP, cutout);
 	}
