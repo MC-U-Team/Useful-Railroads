@@ -3,8 +3,6 @@ package info.u_team.useful_railroads.handler;
 import java.util.Collection;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
@@ -27,7 +25,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class DrawTrackBuilderSelection {
 	
 	@SubscribeEvent
-	public static void onBblockHighlight(HighlightBlock event) {
+	public static void onBlockHighlight(HighlightBlock event) {
 		final PlayerEntity player = Minecraft.getInstance().player;
 		final ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 		
@@ -60,33 +58,29 @@ public class DrawTrackBuilderSelection {
 				red = 0;
 				blue = 1;
 			}
-			drawSelectionBox(event.getInfo().getProjectedView(), manager.getAllPositionsSet(), red, 0, blue, 1);
-			drawSelectionBox(event.getInfo().getProjectedView(), manager.getFirstRailPos(), 0, 1, 0, 1);
+			
+			final MatrixStack matrixStack = new MatrixStack();
+			
+			// Copy of GameRender (without the roll of the camera. Duno if we need this)
+			matrixStack.func_227863_a_(Vector3f.field_229179_b_.func_229187_a_(event.getInfo().getPitch()));
+			matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(event.getInfo().getYaw() + 180.0F));
+			
+			final Vec3d projectedView = event.getInfo().getProjectedView();
+			
+			drawSelectionBox(matrixStack, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);
+			drawSelectionBox(matrixStack, projectedView, manager.getFirstRailPos(), 0, 1, 0, 1);
 			event.setCanceled(true);
 		});
 	}
 	
-	public static void drawSelectionBox(Vec3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
-		RenderSystem.enableBlend();
-		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		RenderSystem.lineWidth(Math.max(2.5F, Minecraft.getInstance().func_228018_at_().getFramebufferWidth() / 1920.0F * 2.5F));
-		RenderSystem.disableTexture();
-		RenderSystem.depthMask(false);
-		RenderSystem.matrixMode(5889);
-		RenderSystem.pushMatrix();
-		RenderSystem.scalef(1, 1, 0.999F);
+	public static void drawSelectionBox(MatrixStack stack, Vec3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
+		final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.func_228455_a_(Tessellator.getInstance().getBuffer());
 		
-		final IRenderTypeBuffer buffer = IRenderTypeBuffer.func_228455_a_(Tessellator.getInstance().getBuffer());
-		final IVertexBuilder builder = buffer.getBuffer(RenderType.func_228659_m_());
-		
-		posList.forEach(pos -> WorldRenderer.func_228431_a_(new MatrixStack(), builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha));
-		
-		RenderSystem.popMatrix();
-		RenderSystem.matrixMode(5888);
-		RenderSystem.depthMask(true);
-		RenderSystem.enableTexture();
-		RenderSystem.disableBlend();
-		
+		posList.forEach(pos -> {
+			
+			final IVertexBuilder builder = buffer.getBuffer(RenderType.func_228659_m_());
+			WorldRenderer.func_228445_b_(stack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
+			buffer.func_228461_a_();
+		});
 	}
-	
 }
