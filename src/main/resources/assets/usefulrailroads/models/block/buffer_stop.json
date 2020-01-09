@@ -5901,7 +5901,6 @@
 						16,
 						16
 					],
-					"rotation": 180,
 					"texture": "#rail"
 				},
 				"down": {
@@ -5911,7 +5910,6 @@
 						16,
 						16
 					],
-					"rotation": 180,
 					"texture": "#rail"
 				}
 			}
