@@ -6,10 +6,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class FuelItemSlotHandler extends CustomTextureItemSlotHandler {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/item/empty_fuel_slot.png");
-	
 	public FuelItemSlotHandler(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
-		super(itemHandler, TEXTURE, index, xPosition, yPosition);
+		super(itemHandler, new ResourceLocation("textures/atlas/blocks.png"), new ResourceLocation(UsefulRailroadsMod.MODID, "item/empty_fuel_slot"), index, xPosition, yPosition);
 	}
 	
 }
