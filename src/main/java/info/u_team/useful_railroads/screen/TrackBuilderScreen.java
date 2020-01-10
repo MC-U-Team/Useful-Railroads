@@ -1,9 +1,9 @@
 package info.u_team.useful_railroads.screen;
 
 import info.u_team.u_team_core.gui.UContainerScreen;
+import info.u_team.u_team_core.gui.elements.BetterButton;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
-import info.u_team.useful_railroads.util.BetterButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
