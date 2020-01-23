@@ -48,7 +48,7 @@ public class DrawTrackBuilderSelection {
 		
 		final BlockRayTraceResult rayTraceResult = (BlockRayTraceResult) event.getTarget();
 		
-		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vec3d(event.getInfo().func_227996_l_()), mode, doubleTrack).ifPresent(manager -> {
+		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vec3d(event.getInfo().getViewVector()), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
 			final int blue;
 			if (player.func_226563_dT_()) {
@@ -62,8 +62,8 @@ public class DrawTrackBuilderSelection {
 			final MatrixStack matrixStack = new MatrixStack();
 			
 			// Copy of GameRender (without the roll of the camera. Duno if we need this)
-			matrixStack.func_227863_a_(Vector3f.field_229179_b_.func_229187_a_(event.getInfo().getPitch()));
-			matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(event.getInfo().getYaw() + 180.0F));
+			matrixStack.rotate(Vector3f.field_229179_b_.func_229187_a_(event.getInfo().getPitch()));
+			matrixStack.rotate(Vector3f.field_229181_d_.func_229187_a_(event.getInfo().getYaw() + 180.0F));
 			
 			final Vec3d projectedView = event.getInfo().getProjectedView();
 			
@@ -74,11 +74,11 @@ public class DrawTrackBuilderSelection {
 	}
 	
 	public static void drawSelectionBox(MatrixStack stack, Vec3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
-		final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.func_228455_a_(Tessellator.getInstance().getBuffer());
+		final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 		
 		posList.forEach(pos -> {
 			
-			final IVertexBuilder builder = buffer.getBuffer(RenderType.func_228659_m_());
+			final IVertexBuilder builder = buffer.getBuffer(RenderType.lines());
 			WorldRenderer.func_228445_b_(stack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 			buffer.func_228461_a_();
 		});
