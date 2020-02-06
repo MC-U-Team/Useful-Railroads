@@ -139,7 +139,7 @@ public abstract class TrackBuilderManager {
 		
 		if (placeBlock(pos, Blocks.AIR.getDefaultState())) { // Normally we place the fluid state but we don't want fluids here
 			if (world instanceof ServerWorld) {
-				Block.getDrops(state, (ServerWorld) world, pos, world.getTileEntity(pos)).stream() //
+				Block.func_220070_a(state, (ServerWorld) world, pos, world.getTileEntity(pos)).stream() //
 						.map(inventory::addItem) //
 						.filter(Predicates.not(ItemStack::isEmpty)) //
 						.forEach(stack -> Block.spawnAsEntity(world, pos, stack));

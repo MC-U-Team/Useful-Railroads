@@ -78,7 +78,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		markDirty();
 		
 		// Teleportation process
-		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getDimensionType());
+		final ServerWorld teleportWorld = cart.getServer().func_71218_a(location.getDimensionType());
 		
 		// Enqueue the teleportation to be executed after the ticks of entites because
 		// else the teleportation will crash
