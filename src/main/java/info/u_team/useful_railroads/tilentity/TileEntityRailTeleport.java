@@ -29,7 +29,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class TileEntityRailTeleport extends UTileEntity implements IInventory, ITickable {
 	
-	protected HashMap<String, Integer> fuelList;
+	protected final HashMap<String, Integer> fuelList;
 	
 	protected int fuel = 0;
 	protected int needFuel = 0;
