@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.14.4-1.2.4.19] - 2020-02-07
+### Changed
+ - Updated forge version to 28.2.0 and uteamcore version to 2.8.2.150
+
 ## [1.14.4-1.2.3.15] - 2020-01-06
 ### Added
  - Added tooltip information for track builder
