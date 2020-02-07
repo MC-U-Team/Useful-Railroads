@@ -59,11 +59,7 @@ public class DrawTrackBuilderSelection {
 				blue = 1;
 			}
 			
-			final MatrixStack matrixStack = new MatrixStack();
-			
-			// Copy of GameRender (without the roll of the camera. Duno if we need this)
-			matrixStack.rotate(Vector3f.XP.rotationDegrees(event.getInfo().getPitch()));
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(event.getInfo().getYaw() + 180.0F));
+			final MatrixStack matrixStack = event.getMatrix();
 			
 			final Vec3d projectedView = event.getInfo().getProjectedView();
 			
