@@ -62,8 +62,8 @@ public class DrawTrackBuilderSelection {
 			final MatrixStack matrixStack = new MatrixStack();
 			
 			// Copy of GameRender (without the roll of the camera. Duno if we need this)
-			matrixStack.rotate(Vector3f.field_229179_b_.func_229187_a_(event.getInfo().getPitch()));
-			matrixStack.rotate(Vector3f.field_229181_d_.func_229187_a_(event.getInfo().getYaw() + 180.0F));
+			matrixStack.rotate(Vector3f.XP.rotationDegrees(event.getInfo().getPitch()));
+			matrixStack.rotate(Vector3f.YP.rotationDegrees(event.getInfo().getYaw() + 180.0F));
 			
 			final Vec3d projectedView = event.getInfo().getProjectedView();
 			
@@ -79,8 +79,8 @@ public class DrawTrackBuilderSelection {
 		posList.forEach(pos -> {
 			
 			final IVertexBuilder builder = buffer.getBuffer(RenderType.lines());
-			WorldRenderer.func_228445_b_(stack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
-			buffer.func_228461_a_();
+			WorldRenderer.drawShape(stack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
+			buffer.finish();
 		});
 	}
 }
