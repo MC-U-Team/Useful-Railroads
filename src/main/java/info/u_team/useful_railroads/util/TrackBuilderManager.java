@@ -1,15 +1,16 @@
 package info.u_team.useful_railroads.util;
 
 import java.util.*;
-import java.util.function.*;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
+import info.u_team.u_team_core.util.Predicates;
 import info.u_team.useful_railroads.inventory.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
