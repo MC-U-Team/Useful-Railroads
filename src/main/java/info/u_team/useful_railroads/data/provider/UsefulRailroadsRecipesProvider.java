@@ -113,7 +113,7 @@ public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 				.addCriterion("has_rail", hasItem(Items.POWERED_RAIL)) //
 				.build(consumer);
 		
-		CustomRecipeBuilder.func_218656_a(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION).build(consumer, UsefulRailroadsMod.MODID + ":teleport_rail_remove_location");
+		CustomRecipeBuilder.customRecipe(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION).build(consumer, UsefulRailroadsMod.MODID + ":teleport_rail_remove_location");
 	}
 	
 	private void registerFuelRecipes(Consumer<IFinishedRecipe> consumer) {

@@ -16,7 +16,7 @@ public class UsefulRailroadsRenderTypes {
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
 		// Cutout
-		final RenderType cutout = RenderType.cutout();
+		final RenderType cutout = RenderType.getCutout();
 		
 		RenderTypeLookup.setRenderLayer(HIGHSPEED_RAIL, cutout);
 		RenderTypeLookup.setRenderLayer(DIRECTION_RAIL, cutout);

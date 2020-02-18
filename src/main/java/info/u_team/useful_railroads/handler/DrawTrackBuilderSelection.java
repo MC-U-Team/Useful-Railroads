@@ -74,7 +74,7 @@ public class DrawTrackBuilderSelection {
 		
 		posList.forEach(pos -> {
 			
-			final IVertexBuilder builder = buffer.getBuffer(RenderType.lines());
+			final IVertexBuilder builder = buffer.getBuffer(RenderType.getLines());
 			WorldRenderer.drawShape(stack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 			buffer.finish();
 		});
