@@ -131,7 +131,7 @@ curseforge {
 	
 	tasks.curseforge.dependsOn build
 	
-	apiKey = getValue("token")
+	// apiKey = getValue("token")
 	
   	project {
     	id = config.curse.id
