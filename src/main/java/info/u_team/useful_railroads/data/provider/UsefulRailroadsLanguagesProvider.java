@@ -27,6 +27,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(GROUP, "Useful Railroads");
 		
 		add(HIGHSPEED_RAIL, "High Speed Rail (5 Blocks/Tick)");
+		add(SPEED_CLAMP_RAIL, "Speed Clamp Rail (0.25 Blocks/Tick)");
 		add(DIRECTION_RAIL, "Direction Rail");
 		add(INTERSECTION_RAIL, "Intersection Rail");
 		add(TELEPORT_RAIL, "Teleport Rail");

@@ -22,6 +22,7 @@ public class UsefulRailroadsModels {
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
 		ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(HIGHSPEED_RAIL)).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(BlockState::new));
+		ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(SPEED_CLAMP_RAIL)).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(BlockState::new));
 		ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(DIRECTION_RAIL)).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(BlockState::new));
 		ModelUtil.addCustomStateContainer(TELEPORT_RAIL.getRegistryName(), (new StateContainer.Builder<Block, BlockState>(TELEPORT_RAIL)).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(BlockState::new));
 		

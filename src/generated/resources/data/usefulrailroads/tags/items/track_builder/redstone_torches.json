@@ -3,5 +3,6 @@
 	"values": [
 		"minecraft:redstone_torch",
 		"minecraft:redstone_block"
-	]
+	],
+	"optional": []
 }

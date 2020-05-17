@@ -19,6 +19,7 @@ public class UsefulRailroadsRenderTypes {
 		final RenderType cutout = RenderType.getCutout();
 		
 		RenderTypeLookup.setRenderLayer(HIGHSPEED_RAIL, cutout);
+		RenderTypeLookup.setRenderLayer(SPEED_CLAMP_RAIL, cutout);
 		RenderTypeLookup.setRenderLayer(DIRECTION_RAIL, cutout);
 		RenderTypeLookup.setRenderLayer(INTERSECTION_RAIL, cutout);
 		RenderTypeLookup.setRenderLayer(TELEPORT_RAIL, cutout);
