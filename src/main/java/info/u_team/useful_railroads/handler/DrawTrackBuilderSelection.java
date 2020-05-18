@@ -51,7 +51,7 @@ public class DrawTrackBuilderSelection {
 		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vec3d(event.getInfo().getViewVector()), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
 			final int blue;
-			if (player.func_226563_dT_()) {
+			if (player.isSneaking()) {
 				red = 1;
 				blue = 0;
 			} else {
