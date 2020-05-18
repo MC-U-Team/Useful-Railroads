@@ -22,6 +22,7 @@ public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider 
 		
 		// Rails
 		simpleRail(HIGHSPEED_RAIL);
+		simpleRail(SPEED_CLAMP_RAIL);
 		simpleRail(DIRECTION_RAIL);
 		simpleRail(INTERSECTION_RAIL);
 		simpleRail(TELEPORT_RAIL);

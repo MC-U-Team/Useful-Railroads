@@ -32,6 +32,9 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		// Highspeed rail
 		customFlatPoweredRail(HIGHSPEED_RAIL, flatRail("highspeed_rail"), flatRail("highspeed_powered_rail"));
 		
+		// Speed Clamp rail
+		customFlatPoweredRail(SPEED_CLAMP_RAIL, flatRail("clamp_rail"), flatRail("clamp_powered_rail"));
+		
 		// Direction rail
 		forAllFlatRailStates(getUncheckedVariantBuilder(DIRECTION_RAIL), state -> {
 			final RailShape shape = state.get(DirectionRailBlock.SHAPE);
