@@ -2,18 +2,27 @@ package info.u_team.useful_railroads.handler;
 
 import java.util.Collection;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
+import info.u_team.useful_railroads.item.StandardGaugeBuilder;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
-import info.u_team.useful_railroads.util.*;
+import info.u_team.useful_railroads.util.TrackBuilderManager;
+import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.DrawHighlightEvent.HighlightBlock;
@@ -28,7 +37,12 @@ public class DrawTrackBuilderSelection {
 	public static void onBlockHighlight(HighlightBlock event) {
 		final PlayerEntity player = Minecraft.getInstance().player;
 		final ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
-		
+				
+		if(stack.getItem() instanceof StandardGaugeBuilder) {
+			drawSleeperTool(event);
+			return;
+		}
+
 		if (!(stack.getItem() instanceof TrackBuilderItem)) {
 			return;
 		}
@@ -79,4 +93,19 @@ public class DrawTrackBuilderSelection {
 			buffer.finish();
 		});
 	}
+	
+	public static void drawSleeperTool(final HighlightBlock event) {
+		final BlockRayTraceResult rayTraceResult = (BlockRayTraceResult) event.getTarget();
+		final BlockPos pos = rayTraceResult.getPos().up();		
+		@SuppressWarnings("resource")
+		final PlayerEntity player = Minecraft.getInstance().player;
+		final BlockPos nextpos = pos.offset(player.getHorizontalFacing().rotateY());
+
+		final MatrixStack matrixStack = event.getMatrix();
+		final Vec3d projectedView = event.getInfo().getProjectedView();
+
+		drawSelectionBox(matrixStack, projectedView, Lists.newArrayList(pos, nextpos), 1, 0, 0, 1);
+		event.setCanceled(true);
+	}
+	
 }

@@ -1,23 +1,42 @@
 package info.u_team.useful_railroads.data.provider;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TRACK_BLOCK;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 
-import info.u_team.u_team_core.data.*;
-import info.u_team.useful_railroads.block.*;
-import net.minecraft.block.*;
+import info.u_team.u_team_core.data.CommonBlockStatesProvider;
+import info.u_team.u_team_core.data.CommonProvider;
+import info.u_team.u_team_core.data.GenerationData;
+import info.u_team.useful_railroads.block.BufferStopBlock;
+import info.u_team.useful_railroads.block.CustomPoweredRailBlock;
+import info.u_team.useful_railroads.block.DirectionRailBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.state.IProperty;
-import net.minecraft.state.properties.*;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.RailShape;
+import net.minecraft.util.Direction;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.IGeneratedBlockstate;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -59,6 +78,15 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 					.rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360) //
 					.build();
 		}, BufferStopBlock.POWERED, BufferStopBlock.SHAPE);
+		
+		// Standard gauge track
+	    getVariantBuilder(TRACK_BLOCK).forAllStates(state -> {
+            final Direction direction = state.get(BlockStateProperties.HORIZONTAL_FACING);
+            return ConfiguredModel.builder() //
+                    .modelFile(models().getExistingFile(modLoc("block/sleeper"))) //
+                    .rotationY(direction.getAxis().isVertical() ? 0 : (((int) direction.getHorizontalAngle()) + 180) % 360) //
+                    .build(); //
+        });
 	}
 	
 	private void customFlatPoweredRail(CustomPoweredRailBlock block, ModelFile normal, ModelFile powered) {

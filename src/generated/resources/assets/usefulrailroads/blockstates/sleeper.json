@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=north,track=false": {
+			"model": "usefulrailroads:block/sleeper"
+		},
+		"facing=south,track=false": {
+			"model": "usefulrailroads:block/sleeper",
+			"y": 180
+		},
+		"facing=west,track=false": {
+			"model": "usefulrailroads:block/sleeper",
+			"y": 270
+		},
+		"facing=east,track=false": {
+			"model": "usefulrailroads:block/sleeper",
+			"y": 90
+		},
+		"facing=north,track=true": {
+			"model": "usefulrailroads:block/sleeper"
+		},
+		"facing=south,track=true": {
+			"model": "usefulrailroads:block/sleeper",
+			"y": 180
+		},
+		"facing=west,track=true": {
+			"model": "usefulrailroads:block/sleeper",
+			"y": 270
+		},
+		"facing=east,track=true": {
+			"model": "usefulrailroads:block/sleeper",
+			"y": 90
+		}
+	}
+}

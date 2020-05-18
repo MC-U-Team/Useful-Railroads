@@ -23,7 +23,8 @@ public class UsefulRailroadsRenderTypes {
 		RenderTypeLookup.setRenderLayer(DIRECTION_RAIL, cutout);
 		RenderTypeLookup.setRenderLayer(INTERSECTION_RAIL, cutout);
 		RenderTypeLookup.setRenderLayer(TELEPORT_RAIL, cutout);
-		
+		RenderTypeLookup.setRenderLayer(TRACK_BLOCK, cutout);
+
 		RenderTypeLookup.setRenderLayer(BUFFER_STOP, cutout);
 	}
 	

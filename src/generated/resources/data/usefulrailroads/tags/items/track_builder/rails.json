@@ -3,7 +3,6 @@
 	"values": [
 		"minecraft:powered_rail",
 		"usefulrailroads:highspeed_rail",
-		"minecraft:powered_rail",
 		"usefulrailroads:clamp_rail"
 	]
 }

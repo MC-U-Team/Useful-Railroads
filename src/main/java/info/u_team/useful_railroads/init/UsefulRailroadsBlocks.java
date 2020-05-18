@@ -20,6 +20,7 @@ public class UsefulRailroadsBlocks {
 	public static final DirectionRailBlock DIRECTION_RAIL = new DirectionRailBlock("direction");
 	public static final IntersectionRailBlock INTERSECTION_RAIL = new IntersectionRailBlock("intersection");
 	public static final TeleportRailBlock TELEPORT_RAIL = new TeleportRailBlock("teleport");
+	public static final StandardTrackBlock TRACK_BLOCK = new StandardTrackBlock("sleeper");
 	
 	public static final BufferStopBlock BUFFER_STOP = new BufferStopBlock("buffer_stop");
 	
