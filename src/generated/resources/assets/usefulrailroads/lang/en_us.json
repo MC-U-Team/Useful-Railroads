@@ -1,5 +1,6 @@
 {
 	"block.usefulrailroads.buffer_stop": "Buffer Stop",
+	"block.usefulrailroads.clamp_rail": "Speed Clamp Rail (0.25 Blocks/Tick)",
 	"block.usefulrailroads.direction_rail": "Direction Rail",
 	"block.usefulrailroads.highspeed_rail": "High Speed Rail (5 Blocks/Tick)",
 	"block.usefulrailroads.intersection_rail": "Intersection Rail",

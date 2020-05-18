@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IDI",
+		"LSL",
+		"IRI"
+	],
+	"key": {
+		"R": {
+			"tag": "forge:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		},
+		"I": {
+			"tag": "forge:ingots/iron"
+		},
+		"D": {
+			"tag": "forge:gems/diamond"
+		},
+		"L": {
+			"tag": "forge:slimeballs"
+		}
+	},
+	"result": {
+		"item": "usefulrailroads:clamp_rail",
+		"count": 24
+	}
+}

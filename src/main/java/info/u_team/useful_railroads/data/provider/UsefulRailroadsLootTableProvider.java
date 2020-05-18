@@ -17,6 +17,7 @@ public class UsefulRailroadsLootTableProvider extends CommonLootTablesProvider {
 	@Override
 	protected void registerLootTables(BiConsumer<ResourceLocation, LootTable> consumer) {
 		registerBlock(HIGHSPEED_RAIL, addBasicBlockLootTable(HIGHSPEED_RAIL), consumer);
+		registerBlock(SPEED_CLAMP_RAIL, addBasicBlockLootTable(SPEED_CLAMP_RAIL), consumer);
 		registerBlock(DIRECTION_RAIL, addBasicBlockLootTable(DIRECTION_RAIL), consumer);
 		registerBlock(INTERSECTION_RAIL, addBasicBlockLootTable(INTERSECTION_RAIL), consumer);
 		registerBlock(BUFFER_STOP, addBasicBlockLootTable(BUFFER_STOP), consumer);

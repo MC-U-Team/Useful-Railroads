@@ -1,0 +1,18 @@
+{
+	"variants": {
+		"powered=false,shape=north_south": {
+			"model": "usefulrailroads:block/clamp_rail"
+		},
+		"powered=true,shape=north_south": {
+			"model": "usefulrailroads:block/clamp_powered_rail"
+		},
+		"powered=false,shape=east_west": {
+			"model": "usefulrailroads:block/clamp_rail",
+			"y": 90
+		},
+		"powered=true,shape=east_west": {
+			"model": "usefulrailroads:block/clamp_powered_rail",
+			"y": 90
+		}
+	}
+}

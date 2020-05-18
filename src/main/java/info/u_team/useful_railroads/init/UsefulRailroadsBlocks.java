@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class UsefulRailroadsBlocks {
 	
 	public static final HighSpeedRailBlock HIGHSPEED_RAIL = new HighSpeedRailBlock("highspeed");
+	public static final SpeedClampRailBlock SPEED_CLAMP_RAIL = new SpeedClampRailBlock("clamp");
 	public static final DirectionRailBlock DIRECTION_RAIL = new DirectionRailBlock("direction");
 	public static final IntersectionRailBlock INTERSECTION_RAIL = new IntersectionRailBlock("intersection");
 	public static final TeleportRailBlock TELEPORT_RAIL = new TeleportRailBlock("teleport");

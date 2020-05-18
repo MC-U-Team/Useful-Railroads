@@ -17,7 +17,7 @@ public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 	@Override
 	protected void registerTags() {
 		copy(BlockTags.RAILS, ItemTags.RAILS);
-		getBuilder(TRACK_BUILDER_RAILS).add(Items.POWERED_RAIL, UsefulRailroadsBlocks.HIGHSPEED_RAIL.asItem());
+		getBuilder(TRACK_BUILDER_RAILS).add(Items.POWERED_RAIL, UsefulRailroadsBlocks.HIGHSPEED_RAIL.asItem(), UsefulRailroadsBlocks.SPEED_CLAMP_RAIL.asItem());
 		getBuilder(TRACK_BUILDER_GROUND_BLOCKS).add(Items.GRAVEL);
 		getBuilder(TRACK_BUILDER_TUNNEL_BLOCKS).add(ItemTags.STONE_BRICKS).add(Tags.Items.STONE).add(Tags.Items.COBBLESTONE).add(Tags.Items.SANDSTONE);
 		getBuilder(TRACK_BUILDER_REDSTONE_TORCHES).add(Items.REDSTONE_TORCH, Items.REDSTONE_BLOCK);
