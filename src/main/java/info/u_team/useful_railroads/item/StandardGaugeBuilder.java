@@ -1,6 +1,7 @@
 package info.u_team.useful_railroads.item;
 
 import info.u_team.u_team_core.item.UItem;
+import info.u_team.useful_railroads.block.StandardTrackBlock;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlocks;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
 import net.minecraft.block.BlockState;
@@ -8,7 +9,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -21,18 +24,32 @@ public class StandardGaugeBuilder extends UItem {
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
 		final World world = context.getWorld();
+		
+		final BlockPos currentPos = context.getPos();
+		final BlockState currentBlock = world.getBlockState(currentPos);
+		if(currentBlock.getBlock().equals(UsefulRailroadsBlocks.TRACK_BLOCK)) {
+			world.setBlockState(currentPos, currentBlock.with(StandardTrackBlock.HAS_TRACKS, true), 11);
+			return ActionResultType.SUCCESS;
+		}
+		
 		final BlockItemUseContext usecontext = new BlockItemUseContext(context);
 		final BlockPos position = usecontext.getPos();
 
 		final BlockPos checkPosition = position.down();
-		final BlockPos checkPositionnext = checkPosition.offset(usecontext.getPlacementHorizontalFacing().rotateY());
+		
+		final Direction placementFacing = usecontext.getPlacementHorizontalFacing();
+		final BlockPos checkPositionnext = checkPosition.offset(placementFacing.rotateY());
 		final BlockPos checkNear = checkPositionnext.up();
 
+		final BlockState nearBlock = world.getBlockState(checkNear);
+		
 		if (usecontext.canPlace() && validPlacement(world, checkPosition, context.getPlayer())
-				&& validPlacement(world, checkPositionnext, context.getPlayer()) && world.isAirBlock(checkNear)) {
-			BlockState placementState = UsefulRailroadsBlocks.TRACK_BLOCK.getStateForPlacement(usecontext);
+				&& validPlacement(world, checkPositionnext, context.getPlayer())
+				&& nearBlock.isReplaceable(usecontext)) {
+			
+			final BlockState placementState = UsefulRailroadsBlocks.TRACK_BLOCK.getStateForPlacement(usecontext);
 			world.setBlockState(position, placementState, 11);
-			world.setBlockState(checkNear, placementState, 11);
+			world.setBlockState(checkNear, placementState.with(BlockStateProperties.HORIZONTAL_FACING, placementFacing.getOpposite()), 11);
 			return ActionResultType.SUCCESS;
 		}
 		return ActionResultType.FAIL;

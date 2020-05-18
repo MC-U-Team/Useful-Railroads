@@ -25,6 +25,7 @@ import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.block.BufferStopBlock;
 import info.u_team.useful_railroads.block.CustomPoweredRailBlock;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
+import info.u_team.useful_railroads.block.StandardTrackBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.IProperty;
@@ -82,9 +83,11 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		// Standard gauge track
 	    getVariantBuilder(TRACK_BLOCK).forAllStates(state -> {
             final Direction direction = state.get(BlockStateProperties.HORIZONTAL_FACING);
+            final boolean reverse = direction.equals(Direction.SOUTH) || direction.equals(Direction.EAST); 
+            final boolean hasTrack = state.get(StandardTrackBlock.HAS_TRACKS);
             return ConfiguredModel.builder() //
-                    .modelFile(models().getExistingFile(modLoc("block/sleeper"))) //
-                    .rotationY(direction.getAxis().isVertical() ? 0 : (((int) direction.getHorizontalAngle()) + 180) % 360) //
+                    .modelFile(models().getExistingFile(modLoc(hasTrack ? (reverse ? "block/sleepertrack2":"block/sleepertrack"):"block/sleeper"))) //
+                    .rotationY(direction.getAxis().isVertical() ? 0 : (((int) direction.getHorizontalAngle()) + (reverse ? 0:180)) % 360) //
                     .build(); //
         });
 	}
