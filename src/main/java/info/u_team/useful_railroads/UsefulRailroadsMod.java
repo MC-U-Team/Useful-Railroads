@@ -17,8 +17,6 @@ public class UsefulRailroadsMod {
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, UsefulRailroadsConfig.COMMON_CONFIG);
 
-		UsefulRailroadsConfig.loadConfig(UsefulRailroadsConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("usefulrailroads-common.toml"));
-
 	}
 	
 }

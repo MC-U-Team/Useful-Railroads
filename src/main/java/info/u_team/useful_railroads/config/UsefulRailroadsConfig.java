@@ -59,15 +59,4 @@ public class UsefulRailroadsConfig {
 		COMMON_BUILDER.pop();
 	}
 
-	public static void loadConfig(ForgeConfigSpec spec, Path path) {
-
-		final CommentedFileConfig configData = CommentedFileConfig.builder(path)
-				.sync()
-				.autosave()
-				.writingMode(WritingMode.REPLACE)
-				.build();
-
-		configData.load();
-		spec.setConfig(configData);
-	}
 }
