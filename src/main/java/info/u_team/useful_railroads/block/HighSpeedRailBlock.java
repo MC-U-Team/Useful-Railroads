@@ -13,7 +13,7 @@ public class HighSpeedRailBlock extends CustomPoweredRailBlock {
 	}
 	
 	@Override
-	protected void controllSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
+	protected void controlSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
 		final double speedClamp = UsefulRailroadsConfig.HIGH_SPEED_RAIL_MAX_SPEED.get();
 		final double accelOcc = UsefulRailroadsConfig.HIGH_SPEED_RAIL_ACCEL_OCCUPIED.get();
 		final double accelUnocc = UsefulRailroadsConfig.HIGH_SPEED_RAIL_ACCEL_UNOCCUPIED.get();

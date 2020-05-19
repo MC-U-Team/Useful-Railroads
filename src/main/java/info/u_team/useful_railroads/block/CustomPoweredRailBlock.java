@@ -80,7 +80,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 			final double cartDistance = getPlaneSqrtDistance(cartMotion);
 			if (cartDistance > 0.01D) {
 				cart.setMotion(cartMotion.add(cartMotion.x / cartDistance * 0.06D, 0.0D, cartMotion.z / cartDistance * 0.06D));
-				controllSpeed(pos, state, cart);
+				controlSpeed(pos, state, cart);
 			} else {
 				double xCartMotion = cartMotion.x;
 				double zCartMotion = cartMotion.z;
@@ -106,7 +106,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		}
 	}
 	
-	protected void controllSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
+	protected void controlSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
 	}
 	
 	protected void speedUpCart(AbstractMinecartEntity cart, double speedMultiplier, double speedClamp) {

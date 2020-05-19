@@ -14,7 +14,7 @@ public class SpeedClampRailBlock extends CustomPoweredRailBlock {
 	}
 
 	@Override
-	protected void controllSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
+	protected void controlSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
 		final double clampVelocity = UsefulRailroadsConfig.SPEED_CLAMP_RAIL_SPEED.get();
 		final double currentVelocity = cart.getMotion().length();
 
