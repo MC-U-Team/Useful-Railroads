@@ -8,7 +8,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 import java.nio.file.Path;
 
-public class Config {
+public class UsefulRailroadsConfig {
 	public static final String CATEGORY_RAIL = "rail";
 	public static final String SUBCATEGORY_RAIL_HIGHSPEED = "highspeedrail";
 	public static final String SUBCATEGORY_RAIL_SPEEDCLAMP = "speedclamprail";
@@ -70,14 +70,4 @@ public class Config {
 		configData.load();
 		spec.setConfig(configData);
 	}
-
-	@SubscribeEvent
-	public static void onLoad(final ModConfig.Loading configEvent) {
-
-	}
-
-	@SubscribeEvent
-	public static void onReload(final ModConfig.Reloading configEvent) {
-	}
-
 }

@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads;
 
 import info.u_team.u_team_core.util.verify.JarSignVerifier;
-import info.u_team.useful_railroads.config.Config;
+import info.u_team.useful_railroads.config.UsefulRailroadsConfig;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -15,9 +15,9 @@ public class UsefulRailroadsMod {
 	public UsefulRailroadsMod() {
 		JarSignVerifier.checkSigned(MODID);
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, UsefulRailroadsConfig.COMMON_CONFIG);
 
-		Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("usefulrailroads-common.toml"));
+		UsefulRailroadsConfig.loadConfig(UsefulRailroadsConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("usefulrailroads-common.toml"));
 
 	}
 	

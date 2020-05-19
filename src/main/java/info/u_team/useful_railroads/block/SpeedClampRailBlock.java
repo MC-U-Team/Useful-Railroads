@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.block;
 
-import info.u_team.useful_railroads.config.Config;
+import info.u_team.useful_railroads.config.UsefulRailroadsConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +15,7 @@ public class SpeedClampRailBlock extends CustomPoweredRailBlock {
 
 	@Override
 	protected void controllSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
-		final double clampVelocity = Config.SPEED_CLAMP_RAIL_SPEED.get();
+		final double clampVelocity = UsefulRailroadsConfig.SPEED_CLAMP_RAIL_SPEED.get();
 		final double currentVelocity = cart.getMotion().length();
 
 		Vec3d direction = Vec3d.ZERO;
