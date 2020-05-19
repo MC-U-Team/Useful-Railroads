@@ -1,5 +1,6 @@
 package info.u_team.useful_railroads.block;
 
+import info.u_team.useful_railroads.config.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +14,11 @@ public class HighSpeedRailBlock extends CustomPoweredRailBlock {
 	
 	@Override
 	protected void controllSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
-		speedUpCart(cart, cart.isBeingRidden() ? 4 : 2, 5);
+		final double speedClamp = Config.HIGH_SPEED_RAIL_MAX_SPEED.get();
+		final double accelOcc = Config.HIGH_SPEED_RAIL_ACCEL_OCCUPIED.get();
+		final double accelUnocc = Config.HIGH_SPEED_RAIL_ACCEL_UNOCCUPIED.get();
+
+		speedUpCart(cart, cart.isBeingRidden() ? accelOcc : accelUnocc, speedClamp);
 	}
 	
 	@Override
