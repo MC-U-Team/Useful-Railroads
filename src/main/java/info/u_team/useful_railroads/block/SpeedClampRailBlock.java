@@ -2,11 +2,9 @@ package info.u_team.useful_railroads.block;
 
 import info.u_team.useful_railroads.config.Config;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IBlockReader;
 
 public class SpeedClampRailBlock extends CustomPoweredRailBlock {
