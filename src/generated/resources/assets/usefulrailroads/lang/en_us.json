@@ -36,6 +36,7 @@
 	"item.usefulrailroads.track_builder.not_enough_blocks": "Not enough blocks.",
 	"item.usefulrailroads.track_builder.not_enough_fuel": "Not enough fuel. This operation costs %s fuel.",
 	"itemGroup.usefulrailroads.group": "Useful Railroads",
+	"msg.actionfail": "You need 6x %s to perform this action!",
 	"usefulrailroads.tooltip.right_click": "Right click",
 	"usefulrailroads.tooltip.shift_right_click": "Shift + Right click"
 }

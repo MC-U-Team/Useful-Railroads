@@ -35,6 +35,7 @@
 	"item.usefulrailroads.track_builder.not_enough_blocks": "Nicht genügend Blöcke.",
 	"item.usefulrailroads.track_builder.not_enough_fuel": "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.",
 	"itemGroup.usefulrailroads.group": "Nützliche Eisenbahn Erweiterungen",
+	"msg.actionfail": "Du benötigst 6x %s um diese action durch zu führen!",
 	"usefulrailroads.tooltip.right_click": "Rechtsklick",
 	"usefulrailroads.tooltip.shift_right_click": "Umschalttaste + Rechtsklick"
 }

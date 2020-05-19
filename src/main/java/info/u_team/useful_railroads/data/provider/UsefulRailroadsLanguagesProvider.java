@@ -69,6 +69,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("usefulrailroads.tooltip.right_click", "Right click");
 		add("usefulrailroads.tooltip.shift_right_click", "Shift + Right click");
 		
+		add("msg.actionfail", "You need 6x %s to perform this action!");
+		
 		// German
 		
 		add("de_de", GROUP, "Nützliche Eisenbahn Erweiterungen");
@@ -114,6 +116,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		add("de_de", "usefulrailroads.tooltip.right_click", "Rechtsklick");
 		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechtsklick");
+		
+		add("de_de", "msg.actionfail", "Du benötigst 6x %s um diese action durch zu führen!");
 	}
 	
 	protected void addTooltip(Block key, int line, String value) {

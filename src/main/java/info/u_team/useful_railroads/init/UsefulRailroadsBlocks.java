@@ -4,7 +4,13 @@ import java.util.List;
 
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.block.*;
+import info.u_team.useful_railroads.block.BufferStopBlock;
+import info.u_team.useful_railroads.block.DirectionRailBlock;
+import info.u_team.useful_railroads.block.HighSpeedRailBlock;
+import info.u_team.useful_railroads.block.IntersectionRailBlock;
+import info.u_team.useful_railroads.block.SpeedClampRailBlock;
+import info.u_team.useful_railroads.block.StandardTrackBlock;
+import info.u_team.useful_railroads.block.TeleportRailBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent.Register;
