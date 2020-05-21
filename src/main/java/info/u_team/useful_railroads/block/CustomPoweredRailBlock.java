@@ -17,6 +17,8 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	protected final String name;
 	
 	protected final BlockItem blockItem;
+
+	protected final double minSpeed = 0.01D;
 	
 	public CustomPoweredRailBlock(String name) {
 		super(Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.7F).sound(SoundType.METAL), true);
@@ -49,12 +51,13 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 
 		boolean powered = (railBlock == this) ? state.get(PoweredRailBlock.POWERED) : false;
 
-		final double cartDistanceSqr = getPlaneSqrDistance(cart.getMotion());
-		if (cartDistanceSqr < 0.01D) {
+		final double currentSpeed = getPlaneSqrtDistance(cart.getMotion());
+		if (currentSpeed < this.minSpeed) {
+			if (cart.shouldDoRailFunctions() && powered) {
+				doPushOffWall(pos, cart, railDirection, cart.getMotion());
+			}
 			doPassengerPush(cart);
-			return;
-		}
-		if (cart.shouldDoRailFunctions()) {
+		} else if (cart.shouldDoRailFunctions()) {
 			if (powered) {
 				doPoweredMovement(pos, state, cart, railDirection);
 			} else {
@@ -76,8 +79,8 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	}
 
 	protected void doUnpoweredMovement(AbstractMinecartEntity cart) {
-		final double cartDistance = getPlaneSqrtDistance(cart.getMotion());
-		if (cartDistance < 0.03D) {
+		final double currentSpeed = getPlaneSqrtDistance(cart.getMotion());
+		if (currentSpeed < this.minSpeed) {
 			cart.setMotion(Vec3d.ZERO);
 		} else {
 			cart.setMotion(cart.getMotion().mul(0.5D, 0.0D, 0.5D));
@@ -85,13 +88,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	}
 
 	protected void doPoweredMovement(BlockPos pos, BlockState state, AbstractMinecartEntity cart, RailShape railDirection) {
-		final Vec3d cartMotion = cart.getMotion();
-		final double cartDistance = getPlaneSqrtDistance(cartMotion);
-		if (cartDistance > 0.01D) {
-			controlSpeed(pos, state, cart);
-		} else {
-			doPushOffWall(pos, cart, railDirection, cartMotion);
-		}
+		controlSpeed(pos, state, cart);
 	}
 
 	protected void doPushOffWall(BlockPos pos, AbstractMinecartEntity cart, RailShape railDirection, Vec3d cartMotion) {
@@ -121,28 +118,30 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		cart.setMotion(cartMotion.add(cartMotion.x / cartDistance * 0.06D, 0.0D, cartMotion.z / cartDistance * 0.06D));
 	}
 	
-	protected void speedUpCart(AbstractMinecartEntity cart, double speedMultiplier, double speedClamp) {
+	protected void speedUpCart(AbstractMinecartEntity cart, double accel, double speedClamp) {
 		final Vec3d motion = cart.getMotion();
-		// set motion manually before calling move to override some vanilla behaviour
-		cart.setMotion(new Vec3d(MathHelper.clamp(speedMultiplier * motion.x, -speedClamp, speedClamp), 0.0D, MathHelper.clamp(speedMultiplier * motion.z, -speedClamp, speedClamp)));
-		cart.move(MoverType.SELF, new Vec3d(MathHelper.clamp(speedMultiplier * motion.x, -speedClamp, speedClamp), 0.0D, MathHelper.clamp(speedMultiplier * motion.z, -speedClamp, speedClamp)));
+		setCartSpeed(cart,
+				MathHelper.clamp(accel + motion.x, -speedClamp, speedClamp),
+				0.0D,
+				MathHelper.clamp(accel + motion.z, -speedClamp, speedClamp)
+		);
 	}
 
 	protected void setCartSpeed(AbstractMinecartEntity cart, double speed) {
+		setCartSpeed(cart, new Vec3d(speed, speed, speed));
+	}
+
+	protected void setCartSpeed(AbstractMinecartEntity cart, double speedX, double speedY, double speedZ) {
+		setCartSpeed(cart, new Vec3d(speedX, speedY, speedZ));
+	}
+
+	protected void setCartSpeed(AbstractMinecartEntity cart, Vec3d vel) {
 		final Vec3d direction = cart.getMotion().normalize();
 		// set motion manually before calling move to override some vanilla behaviour
-		cart.setMotion(
-				direction.getX() * speed,
-				direction.getY() * speed,
-				direction.getZ() * speed
-		);
-		cart.move(MoverType.SELF, new Vec3d(
-				direction.getX() * speed,
-				direction.getY() * speed,
-				direction.getZ() * speed
-		));
+		cart.setMotion(direction.mul(vel));
+		cart.move(MoverType.SELF, direction.mul(vel));
 	}
-	
+
 	private static boolean isNormalCube(World world, BlockPos pos) {
 		return world.getBlockState(pos).isNormalCube(world, pos);
 	}
