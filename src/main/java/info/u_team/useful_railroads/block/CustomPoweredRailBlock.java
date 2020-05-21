@@ -96,15 +96,15 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		double zCartMotion = cartMotion.z;
 		if (railDirection == RailShape.EAST_WEST) {
 			if (isNormalCube(cart.world, pos.west())) {
-				xCartMotion = 0.02D;
+				xCartMotion = this.minSpeed;
 			} else if (isNormalCube(cart.world, pos.east())) {
-				xCartMotion = -0.02D;
+				xCartMotion = -this.minSpeed;
 			}
 		} else if (railDirection == RailShape.NORTH_SOUTH) {
 			if (isNormalCube(cart.world, pos.north())) {
-				zCartMotion = 0.02D;
+				zCartMotion = this.minSpeed;
 			} else if (isNormalCube(cart.world, pos.south())) {
-				zCartMotion = -0.02D;
+				zCartMotion = -this.minSpeed;
 			}
 		} else {
 			return;
