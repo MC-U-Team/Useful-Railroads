@@ -38,13 +38,13 @@ public class UsefulRailroadsConfig {
 		COMMON_BUILDER.comment("High Speed Rail Settings").push(SUBCATEGORY_RAIL_HIGHSPEED);
 
 		HIGH_SPEED_RAIL_MAX_SPEED = COMMON_BUILDER
-				.comment("Maximum Speed for High Speed Rail (default: 5.0)")
+				.comment("Maximum Speed for High Speed Rail (default: 5.0 blocks/tick)")
 				.defineInRange("highSpeedRailMaxSpeed", 5.0D, 0.0D, 10.0D);
 		HIGH_SPEED_RAIL_ACCEL_OCCUPIED = COMMON_BUILDER
-				.comment("Acceleration for High Speed Rail if Occupied (default: 4.0)")
+				.comment("Acceleration for High Speed Rail if Occupied (default: 4.0 blocks/tick^2)")
 				.defineInRange("highSpeedRailAccelOccupied", 4.0D, 0.0D, 10.0D);
 		HIGH_SPEED_RAIL_ACCEL_UNOCCUPIED = COMMON_BUILDER
-				.comment("Acceleration for High Speed Rail if Unoccupied (default: 2.0)")
+				.comment("Acceleration for High Speed Rail if Unoccupied (default: 2.0 blocks/tick^2)")
 				.defineInRange("highSpeedRailAccelUnoccupied", 2.0D, 0.0D, 10.0D);
 
 		COMMON_BUILDER.pop();
@@ -53,7 +53,7 @@ public class UsefulRailroadsConfig {
 	private static void setupSpeedClampConfig() {
 		COMMON_BUILDER.comment("Speed Clamp Rail Settings").push(SUBCATEGORY_RAIL_SPEEDCLAMP);
 
-		SPEED_CLAMP_RAIL_SPEED = COMMON_BUILDER.comment("Speed for Speed Clamp Rail (default: 0.25)")
+		SPEED_CLAMP_RAIL_SPEED = COMMON_BUILDER.comment("Speed for Speed Clamp Rail (default: 0.25 blocks/tick)")
 				.defineInRange("speedClampRailSpeed", 0.25D, 0.0D, 10.0D);
 
 		COMMON_BUILDER.pop();
