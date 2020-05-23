@@ -120,26 +120,30 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	
 	protected void speedUpCart(AbstractMinecartEntity cart, double accel, double speedClamp) {
 		final Vec3d motion = cart.getMotion();
-		setCartSpeed(cart,
-				MathHelper.clamp(accel + motion.x, -speedClamp, speedClamp),
-				0.0D,
-				MathHelper.clamp(accel + motion.z, -speedClamp, speedClamp)
-		);
+		final double speed = motion.length();
+
+		final double newSpeed = MathHelper.clamp(speed + accel, -speedClamp, speedClamp);
+
+		setCartSpeed(cart, newSpeed, motion);
 	}
 
 	protected void setCartSpeed(AbstractMinecartEntity cart, double speed) {
-		setCartSpeed(cart, new Vec3d(speed, speed, speed));
+		setCartSpeed(cart, speed, cart.getMotion());
 	}
 
-	protected void setCartSpeed(AbstractMinecartEntity cart, double speedX, double speedY, double speedZ) {
-		setCartSpeed(cart, new Vec3d(speedX, speedY, speedZ));
+	protected void setCartSpeed(AbstractMinecartEntity cart, double speed, Vec3d direction) {
+		final Vec3d directionNormalised = direction.normalize(); // in case not already normalised
+		setCartSpeed(cart, directionNormalised.mul(new Vec3d(speed, speed, speed)));
+	}
+
+	protected void setCartSpeed(AbstractMinecartEntity cart, double velX, double velY, double velZ) {
+		setCartSpeed(cart, new Vec3d(velX, velY, velZ));
 	}
 
 	protected void setCartSpeed(AbstractMinecartEntity cart, Vec3d vel) {
-		final Vec3d direction = cart.getMotion().normalize();
 		// set motion manually before calling move to override some vanilla behaviour
-		cart.setMotion(direction.mul(vel));
-		cart.move(MoverType.SELF, direction.mul(vel));
+		cart.setMotion(vel);
+		cart.move(MoverType.SELF, vel);
 	}
 
 	private static boolean isNormalCube(World world, BlockPos pos) {
