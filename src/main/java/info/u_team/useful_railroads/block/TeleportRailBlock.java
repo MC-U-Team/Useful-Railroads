@@ -22,8 +22,8 @@ import net.minecraftforge.api.distmarker.*;
 
 public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
-	public TeleportRailBlock(String name) {
-		super(name, () -> UsefulRailroadsTileEntityTypes.TELEPORT_RAIL);
+	public TeleportRailBlock() {
+		super(() -> UsefulRailroadsTileEntityTypes.TELEPORT_RAIL);
 	}
 	
 	@Override

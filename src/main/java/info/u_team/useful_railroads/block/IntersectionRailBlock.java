@@ -8,10 +8,6 @@ import net.minecraft.world.IBlockReader;
 
 public class IntersectionRailBlock extends CustomRailBlock {
 	
-	public IntersectionRailBlock(String name) {
-		super(name);
-	}
-	
 	@Override
 	public RailShape getRailDirection(BlockState state, IBlockReader world, BlockPos pos, AbstractMinecartEntity cart) {
 		if (cart != null) {

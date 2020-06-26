@@ -10,10 +10,9 @@ import net.minecraft.world.IBlockReader;
 
 public class CustomTileEntityPoweredRailBlock extends CustomPoweredRailBlock implements ITileEntityBlock {
 	
-	protected final Supplier<TileEntityType<?>> tileEntityType;
+	protected final Supplier<? extends TileEntityType<?>> tileEntityType;
 	
-	public CustomTileEntityPoweredRailBlock(String name, Supplier<TileEntityType<?>> tileEntityType) {
-		super(name);
+	public CustomTileEntityPoweredRailBlock(Supplier<? extends TileEntityType<?>> tileEntityType) {
 		this.tileEntityType = tileEntityType;
 	}
 	

@@ -52,8 +52,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 		}));
 	}
 	
-	public BufferStopBlock(String name) {
-		super(name, Properties.create(Material.IRON).doesNotBlockMovement().hardnessAndResistance(1.5F).sound(SoundType.METAL), () -> UsefulRailroadsTileEntityTypes.BUFFER_STOP);
+	public BufferStopBlock() {
+		super(Properties.create(Material.IRON).doesNotBlockMovement().hardnessAndResistance(1.5F).sound(SoundType.METAL), () -> UsefulRailroadsTileEntityTypes.BUFFER_STOP);
 		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH).with(FACING, Direction.NORTH).with(POWERED, false));
 	}
 	
