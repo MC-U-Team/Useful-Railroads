@@ -63,8 +63,7 @@ public abstract class FuelRecipe implements IRecipe<IInventory> {
 		
 		private final IFactory<T> factory;
 		
-		public Serializer(String name, IFactory<T> factory) {
-			super(name);
+		public Serializer(IFactory<T> factory) {
 			this.factory = factory;
 		}
 		
