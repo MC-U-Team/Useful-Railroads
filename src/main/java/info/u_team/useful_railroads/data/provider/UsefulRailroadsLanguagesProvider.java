@@ -120,11 +120,11 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	}
 	
 	protected void addBlockTooltip(Supplier<? extends Block> key, int line, String value) {
-		addItemTooltip(key.get()::asItem, line, value);
+		addItemTooltip(() -> key.get().asItem(), line, value);
 	}
 	
 	protected void addBlockTooltip(String locale, Supplier<? extends Block> key, int line, String value) {
-		addItemTooltip(locale, key.get()::asItem, line, value);
+		addItemTooltip(locale, () -> key.get().asItem(), line, value);
 	}
 	
 	protected void addItemTooltip(Supplier<? extends Item> key, int line, String value) {
