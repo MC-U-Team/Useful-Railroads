@@ -1,41 +1,24 @@
 package info.u_team.useful_railroads.init;
 
-import java.util.List;
-
-import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
+import info.u_team.u_team_core.util.registry.*;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.block.*;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraft.item.BlockItem;
+import net.minecraftforge.eventbus.api.IEventBus;
 
-@EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsBlocks {
 	
-	public static final HighSpeedRailBlock HIGHSPEED_RAIL = new HighSpeedRailBlock("highspeed");
-	public static final SpeedClampRailBlock SPEED_CLAMP_RAIL = new SpeedClampRailBlock("clamp");
-	public static final DirectionRailBlock DIRECTION_RAIL = new DirectionRailBlock("direction");
-	public static final IntersectionRailBlock INTERSECTION_RAIL = new IntersectionRailBlock("intersection");
-	public static final TeleportRailBlock TELEPORT_RAIL = new TeleportRailBlock("teleport");
+	public static final BlockDeferredRegister BLOCKS = BlockDeferredRegister.create(UsefulRailroadsMod.MODID);
 	
-	public static final BufferStopBlock BUFFER_STOP = new BufferStopBlock("buffer_stop");
+	public static final BlockRegistryObject<HighSpeedRailBlock, BlockItem> HIGHSPEED_RAIL = BLOCKS.register("highspeed_rail", HighSpeedRailBlock::new);
+	public static final BlockRegistryObject<SpeedClampRailBlock, BlockItem> SPEED_CLAMP_RAIL = BLOCKS.register("clamp_rail", SpeedClampRailBlock::new);
+	public static final BlockRegistryObject<DirectionRailBlock, BlockItem> DIRECTION_RAIL = BLOCKS.register("direction_rail", DirectionRailBlock::new);
+	public static final BlockRegistryObject<IntersectionRailBlock, BlockItem> INTERSECTION_RAIL = BLOCKS.register("intersection_rail", IntersectionRailBlock::new);
+	public static final BlockRegistryObject<TeleportRailBlock, BlockItem> TELEPORT_RAIL = BLOCKS.register("teleport_rail", TeleportRailBlock::new);
 	
-	@SubscribeEvent
-	public static void register(Register<Block> event) {
-		entries = BaseRegistryUtil.getAllRegistryEntriesAndApplyNames(UsefulRailroadsMod.MODID, Block.class);
-		entries.forEach(event.getRegistry()::register);
+	public static final BlockRegistryObject<BufferStopBlock, BlockItem> BUFFER_STOP = BLOCKS.register("buffer_stop", BufferStopBlock::new);
+	
+	public static void register(IEventBus bus) {
+		BLOCKS.register(bus);
 	}
-	
-	@SubscribeEvent
-	public static void registerBlockItem(Register<Item> event) {
-		BaseRegistryUtil.getBlockItems(entries).forEach(event.getRegistry()::register);
-		entries = null; // Dereference list as it is no longer needed
-	}
-	
-	// Just a cache for the block item registry for performance
-	private static List<Block> entries;
-	
 }
