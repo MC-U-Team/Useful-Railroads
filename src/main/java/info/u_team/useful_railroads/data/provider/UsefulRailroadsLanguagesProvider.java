@@ -4,6 +4,8 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItemGroups.GROUP;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
 
+import java.util.function.Supplier;
+
 import info.u_team.u_team_core.data.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -26,23 +28,23 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		add(GROUP, "Useful Railroads");
 		
-		add(HIGHSPEED_RAIL, "High Speed Rail (5 Blocks/Tick)");
-		add(SPEED_CLAMP_RAIL, "Speed Clamp Rail (0.25 Blocks/Tick)");
-		add(DIRECTION_RAIL, "Direction Rail");
-		add(INTERSECTION_RAIL, "Intersection Rail");
-		add(TELEPORT_RAIL, "Teleport Rail");
+		addBlock(HIGHSPEED_RAIL, "High Speed Rail (5 Blocks/Tick)");
+		addBlock(SPEED_CLAMP_RAIL, "Speed Clamp Rail (0.25 Blocks/Tick)");
+		addBlock(DIRECTION_RAIL, "Direction Rail");
+		addBlock(INTERSECTION_RAIL, "Intersection Rail");
+		addBlock(TELEPORT_RAIL, "Teleport Rail");
 		
-		add(BUFFER_STOP, "Buffer Stop");
+		addBlock(BUFFER_STOP, "Buffer Stop");
 		add(teleportRailBlockKey + ".missing_setup", "Cannot place. Setup the rail first.");
 		add(teleportRailBlockKey + ".how_to_setup", "Drop the rail and an enderpearl at a location and wait till a lightning stike appears.");
 		add(teleportRailBlockKey + ".not_enough_fuel", "Not enough fuel. This teleportation costs %s fuel.");
 		
-		add(SINGLE_TRACK_BUILDER, "Single Track Builder");
-		addTooltip(SINGLE_TRACK_BUILDER, 0, "%s to open settings gui");
-		addTooltip(SINGLE_TRACK_BUILDER, 1, "%s to execute build operation");
-		add(DOUBLE_TRACK_BUILDER, "Double Track Builder");
-		addTooltip(DOUBLE_TRACK_BUILDER, 0, "%s to open settings gui");
-		addTooltip(DOUBLE_TRACK_BUILDER, 1, "%s to execute build operation");
+		addItem(SINGLE_TRACK_BUILDER, "Single Track Builder");
+		addItemTooltip(SINGLE_TRACK_BUILDER, 0, "%s to open settings gui");
+		addItemTooltip(SINGLE_TRACK_BUILDER, 1, "%s to execute build operation");
+		addItem(DOUBLE_TRACK_BUILDER, "Double Track Builder");
+		addItemTooltip(DOUBLE_TRACK_BUILDER, 0, "%s to open settings gui");
+		addItemTooltip(DOUBLE_TRACK_BUILDER, 1, "%s to execute build operation");
 		add(trackBuilderItemKey + ".not_enough_fuel", "Not enough fuel. This operation costs %s fuel.");
 		add(trackBuilderItemKey + ".not_enough_blocks", "Not enough blocks.");
 		
@@ -73,22 +75,22 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		add("de_de", GROUP, "Nützliche Eisenbahn Erweiterungen");
 		
-		add("de_de", HIGHSPEED_RAIL, "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)");
-		add("de_de", DIRECTION_RAIL, "Richtungsschiene");
-		add("de_de", INTERSECTION_RAIL, "Kreuzungsschiene");
-		add("de_de", TELEPORT_RAIL, "Teleportationsschiene");
+		addBlock("de_de", HIGHSPEED_RAIL, "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)");
+		addBlock("de_de", DIRECTION_RAIL, "Richtungsschiene");
+		addBlock("de_de", INTERSECTION_RAIL, "Kreuzungsschiene");
+		addBlock("de_de", TELEPORT_RAIL, "Teleportationsschiene");
 		
-		add("de_de", BUFFER_STOP, "Prellbock");
+		addBlock("de_de", BUFFER_STOP, "Prellbock");
 		add("de_de", teleportRailBlockKey + ".missing_setup", "Kann nicht platziert werden. Richte zuerst die Schiene ein.");
 		add("de_de", teleportRailBlockKey + ".how_to_setup", "Lege die Schiene und eine Enderperle auf den Boden und warte bis ein Blitz dort einschlägt.");
 		add("de_de", teleportRailBlockKey + ".not_enough_fuel", "Nicht genug Treibstoff. Diese Teleportation kostet %s Treibstoff.");
 		
-		add("de_de", SINGLE_TRACK_BUILDER, "Einzelner Gleisbauer");
-		addTooltip("de_de", SINGLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
-		addTooltip("de_de", SINGLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
-		add("de_de", DOUBLE_TRACK_BUILDER, "Doppelter Gleisbauer");
-		addTooltip("de_de", DOUBLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
-		addTooltip("de_de", DOUBLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
+		addItem("de_de", SINGLE_TRACK_BUILDER, "Einzelner Gleisbauer");
+		addItemTooltip("de_de", SINGLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
+		addItemTooltip("de_de", SINGLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
+		addItem("de_de", DOUBLE_TRACK_BUILDER, "Doppelter Gleisbauer");
+		addItemTooltip("de_de", DOUBLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
+		addItemTooltip("de_de", DOUBLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
 		add("de_de", trackBuilderItemKey + ".not_enough_fuel", "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.");
 		add("de_de", trackBuilderItemKey + ".not_enough_blocks", "Nicht genügend Blöcke.");
 		
@@ -116,20 +118,20 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechtsklick");
 	}
 	
-	protected void addTooltip(Block key, int line, String value) {
-		addTooltip(key.asItem(), line, value);
+	protected void addBlockTooltip(Supplier<? extends Block> key, int line, String value) {
+		addItemTooltip(key.get()::asItem, line, value);
 	}
 	
-	protected void addTooltip(String locale, Block key, int line, String value) {
-		addTooltip(locale, key.asItem(), line, value);
+	protected void addBlockTooltip(String locale, Supplier<? extends Block> key, int line, String value) {
+		addItemTooltip(locale, key.get()::asItem, line, value);
 	}
 	
-	protected void addTooltip(Item key, int line, String value) {
-		add(key.getTranslationKey() + ".tooltip." + line, value);
+	protected void addItemTooltip(Supplier<? extends Item> key, int line, String value) {
+		add(key.get().getTranslationKey() + ".tooltip." + line, value);
 	}
 	
-	protected void addTooltip(String locale, Item key, int line, String value) {
-		add(locale, key.getTranslationKey() + ".tooltip." + line, value);
+	protected void addItemTooltip(String locale, Supplier<? extends Item> key, int line, String value) {
+		add(locale, key.get().getTranslationKey() + ".tooltip." + line, value);
 	}
 	
 }
