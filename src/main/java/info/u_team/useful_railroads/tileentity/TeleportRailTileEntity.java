@@ -17,7 +17,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
-import net.minecraft.world.server.*;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;

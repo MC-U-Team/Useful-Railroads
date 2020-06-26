@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.container;
 
-import info.u_team.u_team_core.api.sync.*;
+import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
 import info.u_team.u_team_core.container.UContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
