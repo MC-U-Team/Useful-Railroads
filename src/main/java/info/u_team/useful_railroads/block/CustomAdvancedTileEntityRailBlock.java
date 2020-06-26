@@ -20,9 +20,9 @@ public class CustomAdvancedTileEntityRailBlock extends AbstractRailBlock impleme
 	
 	protected final BlockItem blockItem;
 	
-	protected final Supplier<TileEntityType<?>> tileEntityType;
+	protected final Supplier<? extends TileEntityType<?>> tileEntityType;
 	
-	public CustomAdvancedTileEntityRailBlock(Properties properties, Supplier<TileEntityType<?>> tileEntityType) {
+	public CustomAdvancedTileEntityRailBlock(Properties properties, Supplier<? extends TileEntityType<?>> tileEntityType) {
 		super(false, properties);
 		blockItem = createBlockItem(new Item.Properties().group(UsefulRailroadsItemGroups.GROUP));
 		this.tileEntityType = tileEntityType;
