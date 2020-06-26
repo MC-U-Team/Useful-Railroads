@@ -22,6 +22,7 @@ public class UsefulRailroadsMod {
 	private void register() {
 		BusRegister.registerMod(UsefulRailroadsBlocks::register);
 		BusRegister.registerMod(UsefulRailroadsContainerTypes::register);
+		BusRegister.registerMod(UsefulRailroadsItems::register);
 	}
 	
 }
