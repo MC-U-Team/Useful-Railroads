@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.15.2-1.4.0.22-SNAPSHOT] - 2020-06-26
+### Changed
+ - Update to uteamcore 3.0.0
+
 ## [1.15.2-1.3.2.21] - 2020-02-18
 ### Changed
  - Updated to forge 31.1.12
