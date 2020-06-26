@@ -20,7 +20,7 @@ public class TeleportRailSpecialCraftingRecipe extends SpecialRecipe {
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			final ItemStack stack = inventory.getStackInSlot(i);
 			final CompoundNBT compound = stack.getChildTag("BlockEntityTag");
-			if (stack.getItem() == UsefulRailroadsBlocks.TELEPORT_RAIL.asItem() && compound != null && compound.contains("location")) {
+			if (stack.getItem() == UsefulRailroadsBlocks.TELEPORT_RAIL.getItem().asItem() && compound != null && compound.contains("location")) {
 				count++;
 			} else if (!stack.isEmpty()) {
 				count = 0;
@@ -53,7 +53,7 @@ public class TeleportRailSpecialCraftingRecipe extends SpecialRecipe {
 	
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION;
+		return UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION.get();
 	}
 	
 }

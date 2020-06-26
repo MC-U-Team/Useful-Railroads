@@ -12,7 +12,7 @@ public class TeleportRailFuelRecipe extends FuelRecipe {
 	
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return UsefulRailroadsRecipeSerializers.TELEPORT_RAIL_FUEL;
+		return UsefulRailroadsRecipeSerializers.TELEPORT_RAIL_FUEL.get();
 	}
 	
 	@Override

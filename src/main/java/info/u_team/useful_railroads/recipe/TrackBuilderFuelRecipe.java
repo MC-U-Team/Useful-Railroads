@@ -12,7 +12,7 @@ public class TrackBuilderFuelRecipe extends FuelRecipe {
 	
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL;
+		return UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL.get();
 	}
 	
 	@Override
