@@ -21,8 +21,8 @@ public class TrackBuilderItem extends UItem {
 	
 	private final boolean doubleTrack;
 	
-	public TrackBuilderItem(String name, boolean doubleTrack) {
-		super(name, UsefulRailroadsItemGroups.GROUP, new Properties().maxStackSize(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
+	public TrackBuilderItem(boolean doubleTrack) {
+		super(UsefulRailroadsItemGroups.GROUP, new Properties().maxStackSize(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
 		this.doubleTrack = doubleTrack;
 	}
 	
