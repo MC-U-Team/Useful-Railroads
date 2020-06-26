@@ -44,7 +44,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 		return world.isRemote ? state : (new RailState(world, pos, state) {
 			
 			@Override
-			public RailState func_226941_a_(boolean powered, boolean placing, RailShape unused) {
+			public RailState placeRail(boolean powered, boolean placing, RailShape unused) {
 				boolean hasRailNorth = func_208512_d(pos.north());
 				boolean hasRailSouth = func_208512_d(pos.south());
 				boolean hasRailWest = func_208512_d(pos.west());
@@ -82,7 +82,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 				}
 				return this;
 			}
-		}).func_226941_a_(world.isBlockPowered(pos), placing, null).getNewState();
+		}).placeRail(world.isBlockPowered(pos), placing, null).getNewState();
 	}
 	
 	@Override
