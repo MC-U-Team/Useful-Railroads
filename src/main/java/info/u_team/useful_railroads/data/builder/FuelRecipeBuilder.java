@@ -24,11 +24,11 @@ public class FuelRecipeBuilder {
 	private String group;
 	
 	public static FuelRecipeBuilder teleportRailFuel(Ingredient ingredient, int fuel) {
-		return new FuelRecipeBuilder(UsefulRailroadsRecipeSerializers.TELEPORT_RAIL_FUEL, ingredient, fuel);
+		return new FuelRecipeBuilder(UsefulRailroadsRecipeSerializers.TELEPORT_RAIL_FUEL.get(), ingredient, fuel);
 	}
 	
 	public static FuelRecipeBuilder trackBuilderFuel(Ingredient ingredient, int fuel) {
-		return new FuelRecipeBuilder(UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL, ingredient, fuel);
+		return new FuelRecipeBuilder(UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL.get(), ingredient, fuel);
 	}
 	
 	protected FuelRecipeBuilder(FuelRecipe.Serializer<?> serializer, Ingredient ingredient, int fuel) {
