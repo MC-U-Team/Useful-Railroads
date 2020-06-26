@@ -1,12 +1,6 @@
 package info.u_team.useful_railroads.config;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
-
-import java.nio.file.Path;
 
 public class UsefulRailroadsConfig {
 	public static final String CATEGORY_RAIL = "rail";
