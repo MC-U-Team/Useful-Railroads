@@ -14,12 +14,12 @@ public class TeleportRailContainer extends UTileEntityContainer<TeleportRailTile
 	
 	// Client
 	public TeleportRailContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL, id, playerInventory, buffer);
+		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), id, playerInventory, buffer);
 	}
 	
 	// Server
 	public TeleportRailContainer(int id, PlayerInventory playerInventory, TeleportRailTileEntity tileEntity) {
-		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL, id, playerInventory, tileEntity);
+		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), id, playerInventory, tileEntity);
 	}
 	
 	@Override

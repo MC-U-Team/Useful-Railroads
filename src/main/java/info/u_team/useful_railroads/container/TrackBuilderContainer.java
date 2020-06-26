@@ -24,7 +24,7 @@ public class TrackBuilderContainer extends UContainer {
 	
 	// Server
 	public TrackBuilderContainer(int id, PlayerInventory playerInventory, TrackBuilderInventoryWrapper wrapper) {
-		super(UsefulRailroadsContainerTypes.TRACK_BUILDER, id);
+		super(UsefulRailroadsContainerTypes.TRACK_BUILDER.get(), id);
 		this.wrapper = wrapper;
 		appendInventory(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
 		appendInventory(wrapper.getRailInventory(), 1, 15, 8, 32);
