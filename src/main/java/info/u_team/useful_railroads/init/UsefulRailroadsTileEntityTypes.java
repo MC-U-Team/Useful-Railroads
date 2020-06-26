@@ -1,25 +1,25 @@
 package info.u_team.useful_railroads.init;
 
-import info.u_team.u_team_core.tileentitytype.UTileEntityType.UBuilder;
-import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
+import info.u_team.u_team_core.util.registry.TileEntityTypeDeferredRegister;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.tileentity.*;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsTileEntityTypes {
 	
-	public static final TileEntityType<TeleportRailTileEntity> TELEPORT_RAIL = UBuilder.create("teleport_rail", TeleportRailTileEntity::new, UsefulRailroadsBlocks.TELEPORT_RAIL).build();
+	public static final TileEntityTypeDeferredRegister TILE_ENTITY_TYPES = TileEntityTypeDeferredRegister.create(UsefulRailroadsMod.MODID);
 	
-	public static final TileEntityType<BufferStopTileEntity> BUFFER_STOP = UBuilder.create("buffer_stop", BufferStopTileEntity::new, UsefulRailroadsBlocks.BUFFER_STOP).build();
+	public static final RegistryObject<TileEntityType<TeleportRailTileEntity>> TELEPORT_RAIL = TILE_ENTITY_TYPES.register("teleport_rail", () -> TileEntityType.Builder.create(TeleportRailTileEntity::new, UsefulRailroadsBlocks.TELEPORT_RAIL.get()));
 	
-	@SubscribeEvent
-	public static void register(Register<TileEntityType<?>> event) {
-		BaseRegistryUtil.getAllGenericRegistryEntriesAndApplyNames(UsefulRailroadsMod.MODID, TileEntityType.class).forEach(event.getRegistry()::register);
+	public static final RegistryObject<TileEntityType<BufferStopTileEntity>> BUFFER_STOP = TILE_ENTITY_TYPES.register("buffer_stop", () -> TileEntityType.Builder.create(BufferStopTileEntity::new, UsefulRailroadsBlocks.BUFFER_STOP.get()));
+	
+	public static void register(IEventBus bus) {
+		TILE_ENTITY_TYPES.register(bus);
 	}
 	
 }
