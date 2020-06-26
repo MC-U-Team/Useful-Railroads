@@ -1,5 +1,6 @@
 {
 	"block.usefulrailroads.buffer_stop": "Prellbock",
+	"block.usefulrailroads.clamp_rail": "Bremsschiene (0.25 Blöcke/Tick)",
 	"block.usefulrailroads.direction_rail": "Richtungsschiene",
 	"block.usefulrailroads.highspeed_rail": "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)",
 	"block.usefulrailroads.intersection_rail": "Kreuzungsschiene",
