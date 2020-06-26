@@ -5,6 +5,6 @@ import info.u_team.useful_railroads.UsefulRailroadsMod;
 
 public class UsefulRailroadsItemGroups {
 	
-	public static final UItemGroup GROUP = new UItemGroup(UsefulRailroadsMod.MODID, "group", () -> UsefulRailroadsBlocks.HIGHSPEED_RAIL);
+	public static final UItemGroup GROUP = new UItemGroup(UsefulRailroadsMod.MODID, "group", UsefulRailroadsBlocks.HIGHSPEED_RAIL);
 	
 }
