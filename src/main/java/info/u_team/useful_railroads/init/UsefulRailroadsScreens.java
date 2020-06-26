@@ -1,8 +1,8 @@
 package info.u_team.useful_railroads.init;
 
+import info.u_team.u_team_core.util.registry.*;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.screen.*;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -14,8 +14,10 @@ public class UsefulRailroadsScreens {
 	
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
-		ScreenManager.registerFactory(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
-		ScreenManager.registerFactory(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
+		MainThreadWorker.run(() -> {
+			ClientRegistry.registryScreen(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
+			ClientRegistry.registryScreen(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
+		});
 	}
 	
 }
