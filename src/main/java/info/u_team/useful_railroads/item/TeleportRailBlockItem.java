@@ -45,7 +45,7 @@ public class TeleportRailBlockItem extends BlockItem {
 		if (world.isRemote) { // Do client particles
 			if (world.rand.nextInt(10) == 0) {
 				for (int i = 0; i < 5; i++) {
-					world.addParticle(ParticleTypes.ENCHANT, true, itemEntityVector.getX(), itemEntityVector.getY() + 0.5, itemEntityVector.getZ(), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2), MathUtil.getRandomNumberInRange(world.rand, 0.1, 1.5), MathUtil.getRandomNumberInRange(world.rand, -0.2, 0.2));
+					world.addParticle(ParticleTypes.ENCHANT, true, itemEntityVector.getX(), itemEntityVector.getY() + 0.5, itemEntityVector.getZ(), MathUtil.randomNumberInRange(world.rand, -0.2, 0.2), MathUtil.randomNumberInRange(world.rand, 0.1, 1.5), MathUtil.randomNumberInRange(world.rand, -0.2, 0.2));
 				}
 			}
 		} else { // Do server stuff
