@@ -35,7 +35,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	}));
 	
 	public TeleportRailTileEntity() {
-		super(UsefulRailroadsTileEntityTypes.TELEPORT_RAIL);
+		super(UsefulRailroadsTileEntityTypes.TELEPORT_RAIL.get());
 	}
 	
 	private void checkCost() {

@@ -21,7 +21,7 @@ public class BufferStopTileEntity extends UTileEntity {
 	});
 	
 	public BufferStopTileEntity() {
-		super(UsefulRailroadsTileEntityTypes.BUFFER_STOP);
+		super(UsefulRailroadsTileEntityTypes.BUFFER_STOP.get());
 	}
 	
 	@Override
