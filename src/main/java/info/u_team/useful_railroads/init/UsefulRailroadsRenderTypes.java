@@ -18,13 +18,13 @@ public class UsefulRailroadsRenderTypes {
 		// Cutout
 		final RenderType cutout = RenderType.getCutout();
 		
-		RenderTypeLookup.setRenderLayer(HIGHSPEED_RAIL, cutout);
-		RenderTypeLookup.setRenderLayer(SPEED_CLAMP_RAIL, cutout);
-		RenderTypeLookup.setRenderLayer(DIRECTION_RAIL, cutout);
-		RenderTypeLookup.setRenderLayer(INTERSECTION_RAIL, cutout);
-		RenderTypeLookup.setRenderLayer(TELEPORT_RAIL, cutout);
+		RenderTypeLookup.setRenderLayer(HIGHSPEED_RAIL.get(), cutout);
+		RenderTypeLookup.setRenderLayer(SPEED_CLAMP_RAIL.get(), cutout);
+		RenderTypeLookup.setRenderLayer(DIRECTION_RAIL.get(), cutout);
+		RenderTypeLookup.setRenderLayer(INTERSECTION_RAIL.get(), cutout);
+		RenderTypeLookup.setRenderLayer(TELEPORT_RAIL.get(), cutout);
 		
-		RenderTypeLookup.setRenderLayer(BUFFER_STOP, cutout);
+		RenderTypeLookup.setRenderLayer(BUFFER_STOP.get(), cutout);
 	}
 	
 }
