@@ -23,6 +23,7 @@ public class UsefulRailroadsMod {
 		BusRegister.registerMod(UsefulRailroadsBlocks::register);
 		BusRegister.registerMod(UsefulRailroadsContainerTypes::register);
 		BusRegister.registerMod(UsefulRailroadsItems::register);
+		BusRegister.registerMod(UsefulRailroadsRecipeSerializers::register);
 	}
 	
 }
