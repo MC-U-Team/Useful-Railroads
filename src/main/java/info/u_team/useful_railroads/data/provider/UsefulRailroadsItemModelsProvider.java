@@ -17,18 +17,18 @@ public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider 
 	@Override
 	protected void registerModels() {
 		// Items
-		simpleGenerated(SINGLE_TRACK_BUILDER);
-		simpleGenerated(DOUBLE_TRACK_BUILDER);
+		simpleGenerated(SINGLE_TRACK_BUILDER.get());
+		simpleGenerated(DOUBLE_TRACK_BUILDER.get());
 		
 		// Rails
-		simpleRail(HIGHSPEED_RAIL);
-		simpleRail(SPEED_CLAMP_RAIL);
-		simpleRail(DIRECTION_RAIL);
-		simpleRail(INTERSECTION_RAIL);
-		simpleRail(TELEPORT_RAIL);
+		simpleRail(HIGHSPEED_RAIL.get());
+		simpleRail(SPEED_CLAMP_RAIL.get());
+		simpleRail(DIRECTION_RAIL.get());
+		simpleRail(INTERSECTION_RAIL.get());
+		simpleRail(TELEPORT_RAIL.get());
 		
 		// Buffer stop
-		getBuilder(BUFFER_STOP.getRegistryName().getPath()) //
+		getBuilder(BUFFER_STOP.get().getRegistryName().getPath()) //
 				.parent(new ExistingModelFile(modLoc("block/buffer_stop"), existingFileHelper)) //
 				.transforms() //
 				
