@@ -30,13 +30,13 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 	@Override
 	protected void registerStatesAndModels() {
 		// Highspeed rail
-		customFlatPoweredRail(HIGHSPEED_RAIL, flatRail("highspeed_rail"), flatRail("highspeed_powered_rail"));
+		customFlatPoweredRail(HIGHSPEED_RAIL.get(), flatRail("highspeed_rail"), flatRail("highspeed_powered_rail"));
 		
 		// Speed Clamp rail
-		customFlatPoweredRail(SPEED_CLAMP_RAIL, flatRail("clamp_rail"), flatRail("clamp_powered_rail"));
+		customFlatPoweredRail(SPEED_CLAMP_RAIL.get(), flatRail("clamp_rail"), flatRail("clamp_powered_rail"));
 		
 		// Direction rail
-		forAllFlatRailStates(getUncheckedVariantBuilder(DIRECTION_RAIL), state -> {
+		forAllFlatRailStates(getUncheckedVariantBuilder(DIRECTION_RAIL.get()), state -> {
 			final RailShape shape = state.get(DirectionRailBlock.SHAPE);
 			final boolean powered = state.get(DirectionRailBlock.POWERED);
 			final boolean positiveAxis = state.get(DirectionRailBlock.AXIS_DIRECTION);
@@ -47,13 +47,13 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		});
 		
 		// Intersection rail
-		simpleBlock(INTERSECTION_RAIL, flatRail("intersection_rail"));
+		simpleBlock(INTERSECTION_RAIL.get(), flatRail("intersection_rail"));
 		
 		// Teleport rail
-		customFlatPoweredRail(TELEPORT_RAIL, flatRail("teleport_rail"), flatRail("teleport_powered_rail"));
+		customFlatPoweredRail(TELEPORT_RAIL.get(), flatRail("teleport_rail"), flatRail("teleport_powered_rail"));
 		
 		// Buffer stop
-		getVariantBuilder(BUFFER_STOP).forAllStatesExcept(state -> { //
+		getVariantBuilder(BUFFER_STOP.get()).forAllStatesExcept(state -> { //
 			return ConfiguredModel.builder() //
 					.modelFile(new ExistingModelFile(modLoc("block/buffer_stop"), models().existingFileHelper)) //
 					.rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360) //
