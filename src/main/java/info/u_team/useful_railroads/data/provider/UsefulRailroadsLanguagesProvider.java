@@ -76,6 +76,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", GROUP, "Nützliche Eisenbahn Erweiterungen");
 		
 		addBlock("de_de", HIGHSPEED_RAIL, "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)");
+		addBlock("de_de", SPEED_CLAMP_RAIL, "Bremsschiene (0.25 Blöcke/Tick)");
 		addBlock("de_de", DIRECTION_RAIL, "Richtungsschiene");
 		addBlock("de_de", INTERSECTION_RAIL, "Kreuzungsschiene");
 		addBlock("de_de", TELEPORT_RAIL, "Teleportationsschiene");
