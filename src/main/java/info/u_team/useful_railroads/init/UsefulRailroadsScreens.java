@@ -15,8 +15,8 @@ public class UsefulRailroadsScreens {
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
 		MainThreadWorker.run(() -> {
-			ClientRegistry.registryScreen(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
-			ClientRegistry.registryScreen(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
+			ClientRegistry.registerScreen(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
+			ClientRegistry.registerScreen(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
 		});
 	}
 	
