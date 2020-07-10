@@ -1,0 +1,6 @@
+itemGroup.usefulrailroads:tab=Useful Railroads
+
+tile.usefulrailroads:rail_highspeed.name=Высокоскоростной железный путь (5 блоков/тик)
+tile.usefulrailroads:rail_teleport.name=Телепортирующий путь
+tile.usefulrailroads:rail_direction.name=Направляющий путь
+tile.usefulrailroads:rail_intersection.name=Пересекающий путь
