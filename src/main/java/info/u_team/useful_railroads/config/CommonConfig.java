@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class UsefulRailroadsConfig {
+public class CommonConfig {
 	
 	public static final String CATEGORY_RAIL = "rail";
 	public static final String SUBCATEGORY_RAIL_HIGHSPEED = "highspeedrail";
