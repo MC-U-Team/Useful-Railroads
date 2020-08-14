@@ -144,8 +144,8 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		return super.getCapability(capability, direction);
 	}
 	
-	public LazyOptional<IItemHandler> getSlot() {
-		return fuelSlotOptional;
+	public FuelItemHandler<TeleportRailFuelRecipe> getFuelSlot() {
+		return fuelSlot;
 	}
 	
 	@Override
