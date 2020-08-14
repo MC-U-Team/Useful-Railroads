@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.tileentity;
 
-import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
+import info.u_team.u_team_core.inventory.*;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import net.minecraft.item.ItemStack;
@@ -8,17 +8,19 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BufferStopTileEntity extends UTileEntity {
 	
-	private final LazyOptional<ItemStackHandler> slots = LazyOptional.of(() -> new TileEntityUItemStackHandler(10, this) {
+	private final UItemStackHandler minecartSlots = new TileEntityUItemStackHandler(10, this) {
 		
 		@Override
 		protected int getStackLimit(int slot, ItemStack stack) {
 			return getSlotLimit(slot);
 		}
-	});
+	};
+	
+	private final LazyOptional<UItemStackHandler> minecartSlotsOptional = LazyOptional.of(() -> minecartSlots);
 	
 	public BufferStopTileEntity() {
 		super(UsefulRailroadsTileEntityTypes.BUFFER_STOP.get());
@@ -37,15 +39,15 @@ public class BufferStopTileEntity extends UTileEntity {
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (direction == Direction.DOWN || direction == null)) {
-			return slots.cast();
+			return minecartSlotsOptional.cast();
 		}
 		return super.getCapability(capability, direction);
 	}
 	
 	@Override
 	public void remove() {
-		slots.invalidate();
 		super.remove();
+		slots.invalidate();
 	}
 	
 }
