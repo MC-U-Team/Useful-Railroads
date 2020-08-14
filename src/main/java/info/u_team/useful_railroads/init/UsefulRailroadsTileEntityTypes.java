@@ -9,7 +9,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsTileEntityTypes {
 	
 	public static final TileEntityTypeDeferredRegister TILE_ENTITY_TYPES = TileEntityTypeDeferredRegister.create(UsefulRailroadsMod.MODID);
