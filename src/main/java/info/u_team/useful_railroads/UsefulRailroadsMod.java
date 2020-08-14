@@ -6,7 +6,7 @@ import info.u_team.useful_railroads.config.UsefulRailroadsConfig;
 import info.u_team.useful_railroads.init.*;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.config.ModConfig.Type;
 
 @Mod(UsefulRailroadsMod.MODID)
 public class UsefulRailroadsMod {
@@ -15,7 +15,7 @@ public class UsefulRailroadsMod {
 	
 	public UsefulRailroadsMod() {
 		JarSignVerifier.checkSigned(MODID);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, UsefulRailroadsConfig.COMMON_CONFIG);
+		ModLoadingContext.get().registerConfig(Type.COMMON, UsefulRailroadsConfig.COMMON_CONFIG);
 		register();
 	}
 	
