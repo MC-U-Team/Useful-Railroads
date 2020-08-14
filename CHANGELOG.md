@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.12.2-1.1.3.24] - 2020-08-14
+### Added
+ - Added russian translation. Thanks Romz24
+
 ## [1.12.2-1.1.2.18] - 2020-02-07
 ### Changed
  - Updated uteamcore to 2.2.5.147
