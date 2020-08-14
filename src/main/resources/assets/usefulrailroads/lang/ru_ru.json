@@ -1,0 +1,7 @@
+{
+	"itemGroup.usefulrailroads.group": "Useful Railroads",
+	"block.usefulrailroads.highspeed_rail": "Высокоскоростной железный путь (5 блоков/тик)",
+	"block.usefulrailroads.direction_rail": "Направляющий путь",
+	"block.usefulrailroads.intersection_rail": "Пересекающий путь",
+	"block.usefulrailroads.teleport_rail": "Телепортирующий путь"
+}
