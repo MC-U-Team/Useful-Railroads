@@ -9,7 +9,7 @@ import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.container.*;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.*;
@@ -32,18 +32,9 @@ public class TrackBuilderItem extends UItem {
 		if (!world.isRemote && !player.isSneaking() && player instanceof ServerPlayerEntity) { // Server & Player not sneaking
 			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.world);
 			
-			NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-				
-				@Override
-				public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-					return new TrackBuilderContainer(id, playerInventory, wrapper);
-				}
-				
-				@Override
-				public ITextComponent getDisplayName() {
-					return new TranslationTextComponent("container.usefulrailroads.track_builder");
-				}
-			}, buffer -> {
+			NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInventory, openPlayer) -> {
+				return new TrackBuilderContainer(id, playerInventory, wrapper);
+			}, new TranslationTextComponent("container.usefulrailroads.track_builder")), buffer -> {
 				buffer.writeVarInt(wrapper.getFuel());
 				buffer.writeEnumValue(wrapper.getMode());
 			});
