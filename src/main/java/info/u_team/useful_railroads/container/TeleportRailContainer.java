@@ -24,7 +24,7 @@ public class TeleportRailContainer extends UTileEntityContainer<TeleportRailTile
 	
 	@Override
 	protected void init(boolean server) {
-		tileEntity.getSlot().ifPresent(handler -> appendInventory(handler, FuelItemSlotHandler::new, 1, 1, 152, 75));
+		appendInventory(tileEntity.getFuelSlot(), FuelItemSlotHandler::new, 1, 1, 152, 75);
 		appendPlayerInventory(playerInventory, 8, 107);
 		addServerToClientTracker(BufferReferenceHolder.createIntHolder(getTileEntity()::getFuel, getTileEntity()::setFuel));
 	}
