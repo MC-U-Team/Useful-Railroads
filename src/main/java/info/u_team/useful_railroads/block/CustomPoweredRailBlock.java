@@ -44,7 +44,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		boolean powered = (railBlock == this) ? state.get(PoweredRailBlock.POWERED) : false;
 		
 		final double currentSpeed = getPlaneSqrtDistance(cart.getMotion());
-		if (currentSpeed < this.minSpeed) {
+		if (currentSpeed < minSpeed) {
 			if (cart.shouldDoRailFunctions() && powered) {
 				doPushOffWall(pos, cart, railDirection, cart.getMotion());
 			}
@@ -72,7 +72,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	
 	protected void doUnpoweredMovement(AbstractMinecartEntity cart) {
 		final double currentSpeed = getPlaneSqrtDistance(cart.getMotion());
-		if (currentSpeed < this.minSpeed) {
+		if (currentSpeed < minSpeed) {
 			cart.setMotion(Vec3d.ZERO);
 		} else {
 			cart.setMotion(cart.getMotion().mul(0.5D, 0.0D, 0.5D));
@@ -88,15 +88,15 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		double zCartMotion = cartMotion.z;
 		if (railDirection == RailShape.EAST_WEST) {
 			if (isNormalCube(cart.world, pos.west())) {
-				xCartMotion = this.minSpeed;
+				xCartMotion = minSpeed;
 			} else if (isNormalCube(cart.world, pos.east())) {
-				xCartMotion = -this.minSpeed;
+				xCartMotion = -minSpeed;
 			}
 		} else if (railDirection == RailShape.NORTH_SOUTH) {
 			if (isNormalCube(cart.world, pos.north())) {
-				zCartMotion = this.minSpeed;
+				zCartMotion = minSpeed;
 			} else if (isNormalCube(cart.world, pos.south())) {
-				zCartMotion = -this.minSpeed;
+				zCartMotion = -minSpeed;
 			}
 		} else {
 			return;
