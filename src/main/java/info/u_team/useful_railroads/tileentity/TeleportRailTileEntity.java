@@ -6,6 +6,7 @@ import info.u_team.u_team_core.util.world.WorldUtil;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.*;
 import info.u_team.useful_railroads.inventory.FuelItemHandler;
+import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -26,13 +27,16 @@ import net.minecraftforge.items.*;
 public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTileEntity {
 	
 	private final Location location = Location.getOrigin();
+	
 	private int fuel;
 	private int cost;
 	
-	private final LazyOptional<IItemHandler> slot = LazyOptional.of(() -> new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TELEPORT_RAIL_FUEL, () -> getWorld(), () -> fuel < 10000, fuelAdder -> {
+	private final FuelItemHandler<TeleportRailFuelRecipe> fuelSlot = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TELEPORT_RAIL_FUEL, () -> getWorld(), () -> fuel < 10000, fuelAdder -> {
 		fuel += fuelAdder;
 		markDirty();
-	}));
+	});
+	
+	private final LazyOptional<FuelItemHandler<TeleportRailFuelRecipe>> fuelSlotOptional = LazyOptional.of(() -> fuelSlot);
 	
 	public TeleportRailTileEntity() {
 		super(UsefulRailroadsTileEntityTypes.TELEPORT_RAIL.get());
@@ -135,13 +139,13 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction != Direction.UP) {
-			return slot.cast();
+			return fuelSlotOptional.cast();
 		}
 		return super.getCapability(capability, direction);
 	}
 	
 	public LazyOptional<IItemHandler> getSlot() {
-		return slot;
+		return fuelSlotOptional;
 	}
 	
 	@Override
