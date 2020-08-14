@@ -47,7 +47,7 @@ public class BufferStopTileEntity extends UTileEntity {
 	@Override
 	public void remove() {
 		super.remove();
-		slots.invalidate();
+		minecartSlotsOptional.invalidate();
 	}
 	
 }
