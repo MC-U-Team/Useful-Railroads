@@ -28,12 +28,12 @@ public class BufferStopTileEntity extends UTileEntity {
 	
 	@Override
 	public void writeNBT(CompoundNBT compound) {
-		slots.ifPresent(handler -> handler.deserializeNBT(compound.getCompound("inventory")));
+		minecartSlots.deserializeNBT(compound.getCompound("inventory"));
 	}
 	
 	@Override
 	public void readNBT(CompoundNBT compound) {
-		slots.ifPresent(handler -> compound.put("inventory", handler.serializeNBT()));
+		compound.put("inventory", minecartSlots.serializeNBT());
 	}
 	
 	@Override
