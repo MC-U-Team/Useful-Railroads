@@ -25,7 +25,7 @@ import net.minecraftforge.items.*;
 
 public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTileEntity {
 	
-	private Location location = Location.getOrigin();
+	private final Location location = Location.getOrigin();
 	private int fuel;
 	private int cost;
 	
