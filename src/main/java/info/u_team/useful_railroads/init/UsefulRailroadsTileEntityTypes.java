@@ -6,8 +6,6 @@ import info.u_team.useful_railroads.tileentity.*;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 public class UsefulRailroadsTileEntityTypes {
 	
