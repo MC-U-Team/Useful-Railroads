@@ -140,9 +140,9 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 			}
 		} else {
 			final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
-			tileEntityOptional.map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)).ifPresent(lazyOptional -> lazyOptional.ifPresent(handler -> {
-				ItemHandlerUtil.getStackStream(handler).forEach(stack -> spawnAsEntity(world, pos, stack));
-			}));
+			tileEntityOptional.map(BufferStopTileEntity::getMinecartSlots).ifPresent(minecartSlots -> {
+				ItemHandlerUtil.getStackStream(minecartSlots).forEach(stack -> spawnAsEntity(world, pos, stack));
+			});
 			world.updateComparatorOutputLevel(pos, this);
 		}
 		super.onReplaced(state, world, pos, newState, isMoving);
