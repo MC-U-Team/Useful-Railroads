@@ -22,7 +22,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTileEntity {
 	
