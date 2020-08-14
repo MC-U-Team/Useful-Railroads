@@ -44,6 +44,10 @@ public class BufferStopTileEntity extends UTileEntity {
 		return super.getCapability(capability, direction);
 	}
 	
+	public UItemStackHandler getMinecartSlots() {
+		return minecartSlots;
+	}
+	
 	@Override
 	public void remove() {
 		super.remove();
