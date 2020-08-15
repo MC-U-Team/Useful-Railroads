@@ -1,50 +1,51 @@
 package info.u_team.useful_railroads.config;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.*;
 
 public class CommonConfig {
 	
-	public static final String CATEGORY_RAIL = "rail";
-	public static final String SUBCATEGORY_RAIL_HIGHSPEED = "highspeedrail";
-	public static final String SUBCATEGORY_RAIL_SPEEDCLAMP = "speedclamprail";
-	
-	private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-	
-	public static ForgeConfigSpec COMMON_CONFIG;
-	
-	public static ForgeConfigSpec.DoubleValue HIGH_SPEED_RAIL_MAX_SPEED;
-	public static ForgeConfigSpec.DoubleValue HIGH_SPEED_RAIL_ACCEL_OCCUPIED;
-	public static ForgeConfigSpec.DoubleValue HIGH_SPEED_RAIL_ACCEL_UNOCCUPIED;
-	public static ForgeConfigSpec.DoubleValue SPEED_CLAMP_RAIL_SPEED;
+	public static final ForgeConfigSpec CONFIG;
+	private static final CommonConfig INSTANCE;
 	
 	static {
-		// build config file structure
-		COMMON_BUILDER.comment("Rail Settings").push(CATEGORY_RAIL);
-		
-		setupHighSpeedConfig();
-		setupSpeedClampConfig();
-		
-		COMMON_BUILDER.pop();
-		
-		COMMON_CONFIG = COMMON_BUILDER.build();
+		Pair<CommonConfig, ForgeConfigSpec> pair = new Builder().configure(CommonConfig::new);
+		CONFIG = pair.getRight();
+		INSTANCE = pair.getLeft();
 	}
 	
-	private static void setupHighSpeedConfig() {
-		COMMON_BUILDER.comment("High Speed Rail Settings").push(SUBCATEGORY_RAIL_HIGHSPEED);
-		
-		HIGH_SPEED_RAIL_MAX_SPEED = COMMON_BUILDER.comment("Maximum Speed for High Speed Rail (default: 5.0 blocks/tick)").defineInRange("highSpeedRailMaxSpeed", 5.0D, 0.0D, 10.0D);
-		HIGH_SPEED_RAIL_ACCEL_OCCUPIED = COMMON_BUILDER.comment("Acceleration for High Speed Rail if Occupied (default: 4.0 blocks/tick^2)").defineInRange("highSpeedRailAccelOccupied", 4.0D, 0.0D, 10.0D);
-		HIGH_SPEED_RAIL_ACCEL_UNOCCUPIED = COMMON_BUILDER.comment("Acceleration for High Speed Rail if Unoccupied (default: 2.0 blocks/tick^2)").defineInRange("highSpeedRailAccelUnoccupied", 2.0D, 0.0D, 10.0D);
-		
-		COMMON_BUILDER.pop();
+	public static CommonConfig getInstance() {
+		return INSTANCE;
 	}
 	
-	private static void setupSpeedClampConfig() {
-		COMMON_BUILDER.comment("Speed Clamp Rail Settings").push(SUBCATEGORY_RAIL_SPEEDCLAMP);
+	public final DoubleValue highspeedRailMaxSpeed;
+	public final DoubleValue highspeedRailAccelOccupied;
+	public final DoubleValue highspeedRailAccelUnoccupied;
+	
+	public final DoubleValue speedClampRailSpeed;
+	
+	private CommonConfig(Builder builder) {
+		builder.comment("Rail Settings").push("rail");
 		
-		SPEED_CLAMP_RAIL_SPEED = COMMON_BUILDER.comment("Speed for Speed Clamp Rail (default: 0.25 blocks/tick)").defineInRange("speedClampRailSpeed", 0.25D, 0.0D, 10.0D);
+		// High speed rail config
+		builder.comment("High Speed Rail Settings").push("highspeedrail");
 		
-		COMMON_BUILDER.pop();
+		highspeedRailMaxSpeed = builder.comment("Maximum Speed for High Speed Rail (default: 5.0 blocks/tick)").defineInRange("highSpeedRailMaxSpeed", 5.0D, 0.0D, 10.0D);
+		highspeedRailAccelOccupied = builder.comment("Acceleration for High Speed Rail if Occupied (default: 4.0 blocks/tick^2)").defineInRange("highSpeedRailAccelOccupied", 4.0D, 0.0D, 10.0D);
+		highspeedRailAccelUnoccupied = builder.comment("Acceleration for High Speed Rail if Unoccupied (default: 2.0 blocks/tick^2)").defineInRange("highSpeedRailAccelUnoccupied", 2.0D, 0.0D, 10.0D);
+		
+		builder.pop();
+		
+		// Clamp rail config
+		builder.comment("Speed Clamp Rail Settings").push("speedclamprail");
+		
+		speedClampRailSpeed = builder.comment("Speed for Speed Clamp Rail (default: 0.25 blocks/tick)").defineInRange("speedClampRailSpeed", 0.25D, 0.0D, 10.0D);
+		
+		builder.pop();
+		
+		builder.pop();
 	}
 	
 }
