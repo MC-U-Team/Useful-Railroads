@@ -15,7 +15,7 @@ public class UsefulRailroadsMod {
 	
 	public UsefulRailroadsMod() {
 		JarSignVerifier.checkSigned(MODID);
-		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_CONFIG);
+		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.CONFIG);
 		register();
 	}
 	
