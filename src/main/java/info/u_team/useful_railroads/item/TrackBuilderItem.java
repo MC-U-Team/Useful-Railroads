@@ -67,6 +67,11 @@ public class TrackBuilderItem extends UItem {
 		return !ItemStack.areItemsEqual(oldStack, newStack);
 	}
 	
+	@Override
+	public boolean onDroppedByPlayer(ItemStack item, PlayerEntity player) {
+		return !(player.openContainer instanceof TrackBuilderContainer);
+	}
+	
 	public boolean isDoubleTrack() {
 		return doubleTrack;
 	}
