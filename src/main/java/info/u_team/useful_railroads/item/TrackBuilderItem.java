@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.item;
 import java.util.List;
 
 import info.u_team.u_team_core.item.UItem;
+import info.u_team.useful_railroads.config.ServerConfig;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
@@ -11,6 +12,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
@@ -65,6 +67,22 @@ public class TrackBuilderItem extends UItem {
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return !ItemStack.areItemsEqual(oldStack, newStack);
+	}
+	
+	@Override
+	public CompoundNBT getShareTag(ItemStack stack) {
+		if (ServerConfig.getInstance().shareAllNBTData.get()) {
+			return super.getShareTag(stack);
+		}
+		if (!stack.hasTag()) {
+			return null;
+		}
+		final CompoundNBT compound = stack.getTag().copy();
+		compound.remove("Items");
+		if (compound.isEmpty()) {
+			return null;
+		}
+		return compound;
 	}
 	
 	@Override
