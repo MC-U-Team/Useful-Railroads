@@ -10,9 +10,9 @@ public class HighSpeedRailBlock extends CustomPoweredRailBlock {
 	
 	@Override
 	protected void controlSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
-		final double speedClamp = CommonConfig.HIGH_SPEED_RAIL_MAX_SPEED.get();
-		final double accelOcc = CommonConfig.HIGH_SPEED_RAIL_ACCEL_OCCUPIED.get();
-		final double accelUnocc = CommonConfig.HIGH_SPEED_RAIL_ACCEL_UNOCCUPIED.get();
+		final double speedClamp = CommonConfig.getInstance().highspeedRailMaxSpeed.get();
+		final double accelOcc = CommonConfig.getInstance().highspeedRailAccelOccupied.get();
+		final double accelUnocc = CommonConfig.getInstance().highspeedRailAccelUnoccupied.get();
 		
 		speedUpCart(cart, cart.isBeingRidden() ? accelOcc : accelUnocc, speedClamp);
 	}

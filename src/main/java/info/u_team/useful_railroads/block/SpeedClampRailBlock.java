@@ -10,7 +10,7 @@ public class SpeedClampRailBlock extends CustomPoweredRailBlock {
 	
 	@Override
 	protected void controlSpeed(BlockPos pos, BlockState state, AbstractMinecartEntity cart) {
-		setCartSpeed(cart, CommonConfig.SPEED_CLAMP_RAIL_SPEED.get());
+		setCartSpeed(cart, CommonConfig.getInstance().speedClampRailSpeed.get());
 	}
 	
 	@Override
