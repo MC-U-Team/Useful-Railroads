@@ -31,12 +31,14 @@ public class TrackBuilderItem extends UItem {
 		final ItemStack stack = player.getHeldItem(hand);
 		if (!world.isRemote && !player.isSneaking() && player instanceof ServerPlayerEntity) { // Server & Player not sneaking
 			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.world);
+			final int selectedSlot = hand == Hand.MAIN_HAND ? player.inventory.currentItem : -1;
 			
 			NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInventory, openPlayer) -> {
-				return new TrackBuilderContainer(id, playerInventory, wrapper);
+				return new TrackBuilderContainer(id, playerInventory, wrapper, selectedSlot);
 			}, new TranslationTextComponent("container.usefulrailroads.track_builder")), buffer -> {
 				buffer.writeVarInt(wrapper.getFuel());
 				buffer.writeEnumValue(wrapper.getMode());
+				buffer.writeVarInt(selectedSlot);
 			});
 		}
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);

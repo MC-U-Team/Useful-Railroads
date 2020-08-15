@@ -17,15 +17,18 @@ public class TrackBuilderContainer extends UContainer {
 	
 	private final EmptyMessageHolder changeModeMessage;
 	
+	private final int selectedSlot;
+	
 	// Client
 	public TrackBuilderContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnumValue(TrackBuilderMode.class), () -> playerInventory.player.world));
+		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnumValue(TrackBuilderMode.class), () -> playerInventory.player.world), buffer.readVarInt());
 	}
 	
 	// Server
-	public TrackBuilderContainer(int id, PlayerInventory playerInventory, TrackBuilderInventoryWrapper wrapper) {
+	public TrackBuilderContainer(int id, PlayerInventory playerInventory, TrackBuilderInventoryWrapper wrapper, int selectedSlot) {
 		super(UsefulRailroadsContainerTypes.TRACK_BUILDER.get(), id);
 		this.wrapper = wrapper;
+		this.selectedSlot = selectedSlot;
 		appendInventory(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
 		appendInventory(wrapper.getRailInventory(), 1, 15, 8, 32);
 		appendInventory(wrapper.getGroundInventory(), 2, 15, 8, 64);
@@ -84,25 +87,27 @@ public class TrackBuilderContainer extends UContainer {
 	}
 	
 	@Override
-	public ItemStack slotClick(int index, int dragType, ClickType clickType, PlayerEntity player) {
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickType, PlayerEntity player) {
 		Slot tmpSlot;
-		if (index >= 0 && index < inventorySlots.size()) {
-			tmpSlot = inventorySlots.get(index);
+		if (slotId >= 0 && slotId < inventorySlots.size()) {
+			tmpSlot = inventorySlots.get(slotId);
 		} else {
 			tmpSlot = null;
 		}
 		if (tmpSlot != null) {
-			if (tmpSlot.inventory == player.inventory && tmpSlot.getSlotIndex() == player.inventory.currentItem) {
+			if (tmpSlot.inventory == player.inventory && tmpSlot.getSlotIndex() == selectedSlot) {
 				return tmpSlot.getStack();
 			}
 		}
 		if (clickType == ClickType.SWAP) {
-			ItemStack stack = player.inventory.getStackInSlot(dragType);
-			if (stack == player.inventory.getCurrentItem()) {
+			final ItemStack stack = player.inventory.getStackInSlot(dragType);
+			final ItemStack currentItem = PlayerInventory.isHotbar(selectedSlot) ? player.inventory.mainInventory.get(selectedSlot) : ItemStack.EMPTY;
+			
+			if (!currentItem.isEmpty() && stack == currentItem) {
 				return ItemStack.EMPTY;
 			}
 		}
-		return super.slotClick(index, dragType, clickType, player);
+		return super.slotClick(slotId, dragType, clickType, player);
 	}
 	
 	public TrackBuilderInventoryWrapper getWrapper() {
