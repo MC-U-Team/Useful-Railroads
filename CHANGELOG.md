@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
  - Some internal refactoring for further updates
  - Fix many dupe bugs with the track builder item
  - Fix shadow in the track builder item gui texture
+ - Added share nbt config for track builder item like the one in useful backpacks
  
 ### Added
  - Added russian translation. Thanks to Romz24
