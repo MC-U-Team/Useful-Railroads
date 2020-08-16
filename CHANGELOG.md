@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.15.2-1.4.0.25] - 2020-08-16
+## [1.15.2-1.4.1.25] - 2020-08-16
 ### Changed
  - Some internal refactoring for further updates
  - Fix many dupe bugs with the track builder item
