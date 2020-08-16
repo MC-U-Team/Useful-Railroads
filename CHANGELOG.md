@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.15.2-1.4.0.25] - 2020-08-16
+### Changed
+ - Some internal refactoring for further updates
+ - Fix many dupe bugs with the track builder item
+ - Fix shadow in the track builder item gui texture
+ 
+### Added
+ - Added russian translation. Thanks to Romz24
+
 ## [1.15.2-1.4.0.23] - 2020-07-02
 ### Changed
  - Updated to forge 31.2.30
