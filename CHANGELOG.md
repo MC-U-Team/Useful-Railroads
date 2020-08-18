@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.15.2-1.4.2.26] - 2020-08-18
+### Changed
+ - Add config values for the price of the teleport rail
+ - Some more refactoring for further updates
+
 ## [1.15.2-1.4.1.25] - 2020-08-16
 ### Changed
  - Some internal refactoring for further updates
