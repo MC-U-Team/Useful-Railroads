@@ -26,6 +26,8 @@ public class CommonConfig {
 	
 	public final DoubleValue speedClampRailSpeed;
 	
+	public final IntValue teleportRailDimensionCost;
+	
 	private CommonConfig(Builder builder) {
 		builder.comment("Rail Settings").push("rail");
 		
@@ -45,6 +47,13 @@ public class CommonConfig {
 		
 		builder.pop();
 		
+		// Teleport rail config
+		builder.comment("Teleport Rail Settings").push("teleportrail");
+		
+		teleportRailDimensionCost = builder.comment("Extra cost per dimension teleport").defineInRange("teleportRailDimensionCost", 100, 0, 1_000_000);
+		
+		builder.pop();
+
 		builder.pop();
 	}
 	
