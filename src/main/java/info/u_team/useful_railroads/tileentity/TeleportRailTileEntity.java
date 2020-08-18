@@ -31,7 +31,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int fuel;
 	private int cost;
 	
-	private final FuelItemHandler<TeleportRailFuelRecipe> fuelSlot = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TELEPORT_RAIL_FUEL, () -> getWorld(), () -> fuel < 10000, fuelAdder -> {
+	private final FuelItemHandler<TeleportRailFuelRecipe> fuelSlot = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TELEPORT_RAIL_FUEL, this::getWorld, () -> fuel < 10000, fuelAdder -> {
 		fuel += fuelAdder;
 		markDirty();
 	});
