@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.tileentity;
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.u_team_core.util.world.WorldUtil;
+import info.u_team.useful_railroads.config.CommonConfig;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.*;
 import info.u_team.useful_railroads.inventory.FuelItemHandler;
@@ -52,9 +53,9 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		int calculatedCost = 0;
 		
 		if (location.getDimensionType() != world.getDimension().getType()) {
-			calculatedCost += 100;
+			calculatedCost += CommonConfig.getInstance().teleportRailDimensionCost.get();
 		}
-		double calculatedDistance = Math.log(pos.distanceSq(location.getPos())) / Math.log(5);
+		double calculatedDistance = Math.log(pos.distanceSq(location.getPos())) / Math.log(CommonConfig.getInstance().teleportRailLogDivisionCost.get());
 		calculatedDistance = calculatedDistance * calculatedDistance;
 		calculatedCost += MathHelper.floor(calculatedDistance);
 		if (calculatedCost == 0) {
