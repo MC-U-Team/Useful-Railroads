@@ -13,7 +13,6 @@ import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
@@ -64,15 +63,13 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
 	private ItemStack getItemStack(IBlockReader world, BlockPos pos) {
 		final ItemStack stack = new ItemStack(this);
-		final TileEntity tileEntity = world.getTileEntity(pos);
-		if (tileEntity instanceof TeleportRailTileEntity) {
-			final TeleportRailTileEntity teleportRailTileEntity = (TeleportRailTileEntity) tileEntity;
+		isTileEntityFromType(world, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> {
 			final CompoundNBT compound = new CompoundNBT();
-			teleportRailTileEntity.writeNBT(compound);
+			tileEntity.writeNBT(compound);
 			if (!compound.isEmpty()) {
 				stack.setTagInfo("BlockEntityTag", compound);
 			}
-		}
+		});
 		return stack;
 	}
 	
