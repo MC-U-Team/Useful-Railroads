@@ -11,7 +11,7 @@ authors="HyCraftHD"
 	version="${file.jarVersion}"
 	displayName="Useful Railroads"
 	updateJSONURL="https://api.u-team.info/update/usefulrailroads.json"
-	description="Who don't want to travel fast? I do! So i created some high speed minecraft rails: Speed 100 blocks/second. There are also many other additions such as teleport rails, buffer stops and so on."
+	description="Who don't want to travel fast? I do! So i created some high speed minecraft rails: Speed 100 blocks/second. There are also many other additions such as teleport rails, intersection rails, direction rails, buffer stops and so on. Furthermore there are track builders that let you build a long railroad track with ease."
 	
 	[[dependencies.usefulrailroads]]
 	    modId="forge"
