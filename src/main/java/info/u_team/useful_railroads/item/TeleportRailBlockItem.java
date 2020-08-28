@@ -82,6 +82,7 @@ public class TeleportRailBlockItem extends BlockItem {
 						if (world instanceof ServerWorld) {
 							final LightningBoltEntity lightningbolt = EntityType.LIGHTNING_BOLT.create(world);
 							lightningbolt.moveForced(itemEntityVector);
+							lightningbolt.setEffectOnly(true);
 							world.addEntity(lightningbolt);
 						}
 					});
