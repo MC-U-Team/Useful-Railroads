@@ -87,6 +87,10 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Teleportation process
 		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getRegistryKey());
 		
+		if (teleportWorld == null) {
+			return;
+		}
+		
 		// Enqueue the teleportation to be executed after the ticks of entites because
 		// else the teleportation will crash
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
