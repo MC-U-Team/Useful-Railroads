@@ -44,7 +44,7 @@ public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> 
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
 		
-		font.drawString(matrixStack, I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + location.getRegistryKey().getRegistryName(), 11, 23, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + location.getRegistryKey().func_240901_a_(), 11, 23, 4210752);
 		font.drawString(matrixStack, I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + pos.getX(), 11, 33, 4210752);
 		font.drawString(matrixStack, I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + pos.getY(), 11, 43, 4210752);
 		font.drawString(matrixStack, I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + pos.getZ(), 11, 53, 4210752);

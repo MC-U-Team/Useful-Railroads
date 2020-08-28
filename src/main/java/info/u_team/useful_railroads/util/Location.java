@@ -39,7 +39,7 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	}
 	
 	public void serialize(PacketBuffer buffer) {
-		buffer.writeResourceLocation(registryKey.getRegistryName());
+		buffer.writeResourceLocation(registryKey.func_240901_a_());
 		buffer.writeBlockPos(pos);
 	}
 	
@@ -54,7 +54,7 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	@Override
 	public CompoundNBT serializeNBT() {
 		final CompoundNBT compound = new CompoundNBT();
-		compound.putString("dimension", registryKey.getRegistryName().toString());
+		compound.putString("dimension", registryKey.func_240901_a_().toString());
 		compound.putInt("x", pos.getX());
 		compound.putInt("y", pos.getY());
 		compound.putInt("z", pos.getZ());
