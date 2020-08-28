@@ -21,6 +21,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.Direction.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.*;
 import net.minecraftforge.items.*;
 
@@ -31,8 +32,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
 	
-	private static List<Pair<Vec3d, Vec3d>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
-		final List<Pair<Vec3d, Vec3d>> list = new ArrayList<>();
+	private static List<Pair<Vector3d, Vector3d>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
+		final List<Pair<Vector3d, Vector3d>> list = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			list.add(VoxelShapeUtil.createVectorPair(bracketStart, 2 + i, 14 - i, bracketEnd, 3 + i, 16 - i));
 		}
@@ -42,7 +43,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	private static Map<Direction, VoxelShape> createVoxelShape() {
-		final List<Pair<Vec3d, Vec3d>> northShape = new ArrayList<>();
+		final List<Pair<Vector3d, Vector3d>> northShape = new ArrayList<>();
 		northShape.addAll(createSideShapeVec(2, 3, 2, 4, 0, 5));
 		northShape.addAll(createSideShapeVec(13, 14, 12, 14, 11, 16));
 		northShape.add(VoxelShapeUtil.createVectorPair(0, 12, 1, 16, 15, 3));
@@ -70,7 +71,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 		
 		if (!powered) {
 			final Direction direction = state.get(FACING);
-			final Vec3d vec = cart.getPositionVector().add(direction.getXOffset() * 1.1, 0, direction.getZOffset() * 1.1);
+			final Vector3d vec = cart.getPositionVec().add(direction.getXOffset() * 1.1, 0, direction.getZOffset() * 1.1);
 			cart.setLocationAndAngles(vec.getX(), vec.getY(), vec.getZ(), cart.rotationYaw, cart.rotationPitch);
 		}
 		
@@ -98,7 +99,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		if (context.getEntity() instanceof AbstractMinecartEntity) {
-			final Vec3d motion = context.getEntity().getMotion();
+			final Vector3d motion = context.getEntity().getMotion();
 			
 			final Direction oppositeDirection = state.get(FACING).getOpposite();
 			final Axis axis = oppositeDirection.getAxis();

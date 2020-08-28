@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.DrawHighlightEvent.HighlightBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,7 +49,7 @@ public class DrawTrackBuilderSelection {
 		
 		final BlockRayTraceResult rayTraceResult = (BlockRayTraceResult) event.getTarget();
 		
-		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vec3d(event.getInfo().getViewVector()), mode, doubleTrack).ifPresent(manager -> {
+		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vector3d(event.getInfo().getViewVector()), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
 			final int blue;
 			if (player.isSneaking()) {
@@ -61,7 +62,7 @@ public class DrawTrackBuilderSelection {
 			
 			final MatrixStack matrixStack = event.getMatrix();
 			
-			final Vec3d projectedView = event.getInfo().getProjectedView();
+			final Vector3d projectedView = event.getInfo().getProjectedView();
 			
 			drawSelectionBox(matrixStack, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);
 			drawSelectionBox(matrixStack, projectedView, manager.getFirstRailPos(), 0, 1, 0, 1);
@@ -69,7 +70,7 @@ public class DrawTrackBuilderSelection {
 		});
 	}
 	
-	public static void drawSelectionBox(MatrixStack stack, Vec3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
+	public static void drawSelectionBox(MatrixStack stack, Vector3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
 		final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 		
 		posList.forEach(pos -> {

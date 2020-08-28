@@ -54,7 +54,7 @@ public class CustomAdvancedTileEntityRailBlock extends AbstractRailBlock impleme
 	}
 	
 	@Override
-	public IProperty<RailShape> getShapeProperty() {
+	public Property<RailShape> getShapeProperty() {
 		return SHAPE;
 	}
 	

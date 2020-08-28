@@ -146,7 +146,7 @@ public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 		addTeleportRailFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
 	}
 	
-	private void addTeleportRailFuel(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+	private void addTeleportRailFuel(ITag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
 		addTeleportRailFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
 	}
 	
@@ -154,7 +154,7 @@ public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
 	}
 	
-	private void addTrackBuilderFuel(Tag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+	private void addTrackBuilderFuel(ITag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
 		addTrackBuilderFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
 	}
 	

@@ -5,8 +5,8 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 import java.util.function.BiConsumer;
 
 import info.u_team.u_team_core.data.*;
+import net.minecraft.loot.LootTable;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTable;
 
 public class UsefulRailroadsLootTableProvider extends CommonLootTablesProvider {
 	

@@ -14,7 +14,7 @@ import com.google.gson.JsonObject;
 import info.u_team.u_team_core.data.*;
 import info.u_team.useful_railroads.block.*;
 import net.minecraft.block.*;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.properties.*;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
@@ -102,7 +102,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 	// Create partial block state with reflection
 	private final Constructor<PartialBlockstate> PARTIAL_BLOCK_STATE_CONSTRUCTOR = ObfuscationReflectionHelper.findConstructor(PartialBlockstate.class, Block.class, Map.class, VariantBlockStateBuilder.class);
 	
-	private PartialBlockstate newPartialBlockState(Block owner, Map<IProperty<?>, Comparable<?>> setStates, VariantBlockStateBuilder outerBuilder) {
+	private PartialBlockstate newPartialBlockState(Block owner, Map<Property<?>, Comparable<?>> setStates, VariantBlockStateBuilder outerBuilder) {
 		try {
 			return PARTIAL_BLOCK_STATE_CONSTRUCTOR.newInstance(owner, setStates, outerBuilder);
 		} catch (Exception ex) {

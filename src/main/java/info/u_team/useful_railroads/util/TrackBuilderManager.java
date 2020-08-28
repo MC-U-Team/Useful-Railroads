@@ -10,8 +10,9 @@ import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.util.Direction;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -35,7 +36,7 @@ public abstract class TrackBuilderManager {
 	protected final Set<BlockPos> tunnelSet = new HashSet<>();
 	protected final Set<BlockPos> torchSet = new HashSet<>();
 	
-	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector, TrackBuilderMode mode) {
+	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode) {
 		this.world = world;
 		direction = Direction.getFacingFromVector(lookVector.x, lookVector.y, lookVector.z);
 		
@@ -65,12 +66,12 @@ public abstract class TrackBuilderManager {
 		
 		final int cost = calculateCost();
 		if (wrapper.getFuel() < cost) {
-			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_fuel", cost).setStyle(new Style().setColor(TextFormatting.RED)));
+			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_fuel", cost).mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
 			return;
 		}
 		
 		if (!hasEnoughItems(wrapper.getRailInventory(), railSet) || !hasEnoughItems(wrapper.getGroundInventory(), groundSet) || !hasEnoughItems(wrapper.getTunnelInventory(), tunnelSet) || !hasEnoughItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet) || !hasEnoughItems(wrapper.getTorchInventory(), torchSet)) {
-			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_blocks").setStyle(new Style().setColor(TextFormatting.RED)));
+			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_blocks").mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
 			return;
 		}
 		
@@ -144,10 +145,10 @@ public abstract class TrackBuilderManager {
 						.map(inventory::addItem) //
 						.filter(Predicates.not(ItemStack::isEmpty)) //
 						.forEach(stack -> Block.spawnAsEntity(world, pos, stack));
-				state.spawnAdditionalDrops(world, player.getPosition(), ItemStack.EMPTY);
-			}
-			if (exp > 0) {
-				state.getBlock().dropXpOnBlockBreak(world, player.getPosition(), exp);
+				state.spawnAdditionalDrops((ServerWorld) world, player.getPosition(), ItemStack.EMPTY);
+				if (exp > 0) {
+					state.getBlock().dropXpOnBlockBreak((ServerWorld) world, player.getPosition(), exp);
+				}
 			}
 		}
 	}
@@ -180,7 +181,7 @@ public abstract class TrackBuilderManager {
 		return pos;
 	}
 	
-	public static Optional<TrackBuilderManager> create(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector, TrackBuilderMode mode, boolean doubleTrack) {
+	public static Optional<TrackBuilderManager> create(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode, boolean doubleTrack) {
 		final TrackBuilderManager manager = doubleTrack ? new DoubleTrackBuilderManager(rayTracePos, rayTraceFace, world, lookVector, mode) : new SingleTrackBuilderManager(rayTracePos, rayTraceFace, world, lookVector, mode);
 		if (manager.direction.getAxis().isHorizontal()) {
 			manager.calculateBlockPosition();
@@ -191,7 +192,7 @@ public abstract class TrackBuilderManager {
 	
 	private static class SingleTrackBuilderManager extends TrackBuilderManager {
 		
-		private SingleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector, TrackBuilderMode mode) {
+		private SingleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode) {
 			super(rayTracePos, rayTraceFace, world, lookVector, mode);
 		}
 		
@@ -250,7 +251,7 @@ public abstract class TrackBuilderManager {
 	
 	private static class DoubleTrackBuilderManager extends TrackBuilderManager {
 		
-		private DoubleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vec3d lookVector, TrackBuilderMode mode) {
+		private DoubleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode) {
 			super(rayTracePos, rayTraceFace, world, lookVector, mode);
 		}
 		

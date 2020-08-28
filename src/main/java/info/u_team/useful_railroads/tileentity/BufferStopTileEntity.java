@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.tileentity;
 import info.u_team.u_team_core.inventory.*;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -32,7 +33,7 @@ public class BufferStopTileEntity extends UTileEntity {
 	}
 	
 	@Override
-	public void readNBT(CompoundNBT compound) {
+	public void readNBT(BlockState state, CompoundNBT compound) {
 		compound.put("inventory", minecartSlots.serializeNBT());
 	}
 	

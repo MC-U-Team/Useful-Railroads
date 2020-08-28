@@ -3,14 +3,16 @@ package info.u_team.useful_railroads.item;
 import info.u_team.u_team_core.util.MathUtil;
 import info.u_team.useful_railroads.block.TeleportRailBlock;
 import info.u_team.useful_railroads.util.Location;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -29,7 +31,7 @@ public class TeleportRailBlockItem extends BlockItem {
 		}
 		final PlayerEntity player = context.getPlayer();
 		if (player != null && player.getEntityWorld().isRemote) {
-			player.sendMessage(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").setStyle(new Style().setColor(TextFormatting.RED)));
+			player.sendMessage(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
 		}
 		return ActionResultType.FAIL;
 	}
@@ -41,7 +43,7 @@ public class TeleportRailBlockItem extends BlockItem {
 			return false;
 		}
 		final World world = itemEntity.getEntityWorld();
-		final Vec3d itemEntityVector = itemEntity.getPositionVector();
+		final Vector3d itemEntityVector = itemEntity.getPositionVec();
 		if (world.isRemote) { // Do client particles
 			if (world.rand.nextInt(10) == 0) {
 				for (int i = 0; i < 5; i++) {
@@ -66,7 +68,7 @@ public class TeleportRailBlockItem extends BlockItem {
 						otherStack.shrink(1);
 						
 						// Set location to the stack
-						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimension().getType(), itemEntity.getPosition()).serializeNBT());
+						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.func_234923_W_(), itemEntity.getPosition()).serializeNBT());
 						
 						final ItemEntity newItemEntity = new ItemEntity(world, itemEntityVector.getX(), itemEntityVector.getY(), itemEntityVector.getZ(), stack);
 						newItemEntity.setDefaultPickupDelay();
@@ -78,7 +80,9 @@ public class TeleportRailBlockItem extends BlockItem {
 						world.addEntity(newItemEntity);
 						
 						if (world instanceof ServerWorld) {
-							((ServerWorld) world).addLightningBolt(new LightningBoltEntity(world, itemEntityVector.getX(), itemEntityVector.getY(), itemEntityVector.getZ(), true));
+							final LightningBoltEntity lightningbolt = EntityType.LIGHTNING_BOLT.create(world);
+							lightningbolt.moveForced(itemEntityVector);
+							world.addEntity(lightningbolt);
 						}
 					});
 		}

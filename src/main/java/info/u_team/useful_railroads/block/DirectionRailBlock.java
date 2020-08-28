@@ -74,8 +74,8 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 						RailState railstate = createForAdjacent(connectedRails.get(i));
 						if (railstate != null) {
 							railstate.checkConnected();
-							if (railstate.func_196905_c(this)) {
-								railstate.func_208510_c(this);
+							if (railstate.canConnect(this)) {
+								railstate.connect(this);
 							}
 						}
 					}

@@ -9,6 +9,7 @@ import info.u_team.useful_railroads.init.*;
 import info.u_team.useful_railroads.inventory.FuelItemHandler;
 import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import info.u_team.useful_railroads.util.Location;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.*;
@@ -18,6 +19,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.*;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.*;
@@ -52,7 +54,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int calculateCost() {
 		int calculatedCost = 0;
 		
-		if (location.getDimensionType() != world.getDimension().getType()) {
+		if (!location.getRegistryKey().equals(world.func_234923_W_())) {
 			calculatedCost += CommonConfig.getInstance().teleportRailDimensionCost.get();
 		}
 		double calculatedDistance = Math.log(pos.distanceSq(location.getPos())) / Math.log(CommonConfig.getInstance().teleportRailLogDivisionCost.get());
@@ -75,7 +77,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Check fuel
 		if (fuel < cost) {
 			if (entity instanceof PlayerEntity) {
-				((PlayerEntity) entity).sendStatusMessage(new TranslationTextComponent("block.usefulrailroads.teleport_rail.not_enough_fuel", cost).setStyle(new Style().setColor(TextFormatting.RED)), true);
+				((PlayerEntity) entity).sendStatusMessage(new TranslationTextComponent("block.usefulrailroads.teleport_rail.not_enough_fuel", cost).mergeStyle(TextFormatting.RED), true);
 			}
 			return;
 		}
@@ -83,12 +85,12 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		markDirty();
 		
 		// Teleportation process
-		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getDimensionType());
+		final ServerWorld teleportWorld = cart.getServer().getWorld(location.getRegistryKey());
 		
 		// Enqueue the teleportation to be executed after the ticks of entites because
 		// else the teleportation will crash
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
-			final Vec3d teleportPos = new Vec3d(location.getPos()).add(0.5, 0, 0.5);
+			final Vector3d teleportPos = Vector3d.copyCentered(location.getPos()).add(0.5, 0, 0.5);
 			
 			// Teleport entity riding if there is one
 			if (entity != null) {
@@ -116,7 +118,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	}
 	
 	@Override
-	public void readNBT(CompoundNBT compound) {
+	public void readNBT(BlockState state, CompoundNBT compound) {
 		location.deserializeNBT(compound.getCompound("location"));
 		fuel = compound.getInt("fuel");
 	}

@@ -1,6 +1,8 @@
 package info.u_team.useful_railroads.screen;
 
-import info.u_team.u_team_core.gui.UContainerScreen;
+import com.mojang.blaze3d.matrix.MatrixStack;
+
+import info.u_team.u_team_core.screen.UContainerScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
@@ -24,17 +26,17 @@ public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> 
 	}
 	
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
-		buttons.forEach(button -> button.renderToolTip(mouseX, mouseY));
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(matrixStack);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		buttons.forEach(button -> button.renderToolTip(matrixStack, mouseX, mouseY));
+		func_230459_a_(matrixStack, mouseX, mouseY);
 	}
 	
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		font.drawString(title.getFormattedText(), 8, 6, 4210752);
-		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 94, 4210752);
+	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+		font.func_243248_b(matrixStack, title, 8, 6, 4210752);
+		font.func_243248_b(matrixStack, playerInventory.getDisplayName(), 8, ySize - 94, 4210752);
 		
 		final TeleportRailTileEntity tileEntity = getContainer().getTileEntity();
 		final Location location = tileEntity.getLocation();
@@ -42,13 +44,13 @@ public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> 
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
 		
-		font.drawString(I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + location.getDimensionType().getRegistryName(), 11, 23, 4210752);
-		font.drawString(I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + pos.getX(), 11, 33, 4210752);
-		font.drawString(I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + pos.getY(), 11, 43, 4210752);
-		font.drawString(I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + pos.getZ(), 11, 53, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + location.getRegistryKey().getRegistryName(), 11, 23, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + pos.getX(), 11, 33, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + pos.getY(), 11, 43, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + pos.getZ(), 11, 53, 4210752);
 		
-		font.drawString(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + tileEntity.getFuel(), 11, 68, 4210752);
-		font.drawString(I18n.format(langKey + "consumption") + ": " + TextFormatting.DARK_RED + tileEntity.getCost(), 11, 78, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + tileEntity.getFuel(), 11, 68, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "consumption") + ": " + TextFormatting.DARK_RED + tileEntity.getCost(), 11, 78, 4210752);
 	}
 	
 }

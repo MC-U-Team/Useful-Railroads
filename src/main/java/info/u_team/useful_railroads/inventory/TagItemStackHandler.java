@@ -1,13 +1,13 @@
 package info.u_team.useful_railroads.inventory;
 
 import net.minecraft.item.*;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 
 public class TagItemStackHandler extends FixedSizeItemStackHandler {
 	
-	private final Tag<Item> tag;
+	private final ITag<Item> tag;
 	
-	public TagItemStackHandler(Tag<Item> tag, int size) {
+	public TagItemStackHandler(ITag<Item> tag, int size) {
 		super(size);
 		this.tag = tag;
 	}
