@@ -10,8 +10,8 @@ import net.minecraftforge.common.Tags;
 
 public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 	
-	public UsefulRailroadsItemTagsProvider(GenerationData data) {
-		super(data);
+	public UsefulRailroadsItemTagsProvider(GenerationData data, CommonBlockTagsProvider blockProvider) {
+		super(data, blockProvider);
 	}
 	
 	@Override
