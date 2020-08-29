@@ -94,7 +94,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		// Enqueue the teleportation to be executed after the ticks of entites because
 		// else the teleportation will crash
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
-			final Vector3d teleportPos = Vector3d.copyCentered(location.getPos()).add(0.5, 0, 0.5);
+			final Vector3d teleportPos = Vector3d.copyCentered(location.getPos());
 			
 			// Teleport entity riding if there is one
 			if (entity != null) {
