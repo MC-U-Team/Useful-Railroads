@@ -99,11 +99,11 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 			// Teleport entity riding if there is one
 			if (entity != null) {
 				entity.detach(); // Detach entity
-				WorldUtil.teleportEntity(entity, teleportWorld, teleportPos);
+				WorldUtil.teleportEntity(entity, teleportWorld, teleportPos.getX(), teleportPos.getY(), teleportPos.getZ(), entity.rotationYaw, entity.rotationPitch, false);
 			}
 			
 			// Teleport minecart
-			WorldUtil.teleportEntity(cart, teleportWorld, teleportPos);
+			WorldUtil.teleportEntity(cart, teleportWorld, teleportPos.getX(), teleportPos.getY(), teleportPos.getZ(), cart.rotationYaw, cart.rotationPitch, false);
 			// Reatach entity
 			if (entity != null) {
 				// Because the entity will be destroyed when changing dimensions we use the uuid
