@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.15.2-1.4.2.29] - 2020-09-02
+### Changed
+ - Fix potential concurrent modification issue
+
 ## [1.15.2-1.4.2.27] - 2020-08-18
 ### Changed
  - Fix build number
