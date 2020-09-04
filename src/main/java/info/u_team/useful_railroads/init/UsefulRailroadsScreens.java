@@ -1,6 +1,6 @@
 package info.u_team.useful_railroads.init;
 
-import info.u_team.u_team_core.util.registry.*;
+import info.u_team.u_team_core.util.registry.ClientRegistry;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.screen.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,7 +14,7 @@ public class UsefulRailroadsScreens {
 	
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
-		MainThreadWorker.run(() -> {
+		event.enqueueWork(() -> {
 			ClientRegistry.registerScreen(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
 			ClientRegistry.registerScreen(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
 		});
