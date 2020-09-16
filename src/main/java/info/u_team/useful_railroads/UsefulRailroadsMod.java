@@ -13,19 +13,19 @@ public class UsefulRailroadsMod {
 	
 	public static final String MODID = "usefulrailroads";
 	
-	public UsefulRailroadsMod() {
-		JarSignVerifier.checkSigned(MODID);
-		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.CONFIG);
-		ModLoadingContext.get().registerConfig(Type.SERVER, ServerConfig.CONFIG);
-		register();
-	}
+//	public UsefulRailroadsMod() {
+//		JarSignVerifier.checkSigned(MODID);
+//		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.CONFIG);
+//		ModLoadingContext.get().registerConfig(Type.SERVER, ServerConfig.CONFIG);
+//		register();
+//	}
 	
-	private void register() {
-		BusRegister.registerMod(UsefulRailroadsBlocks::register);
-		BusRegister.registerMod(UsefulRailroadsContainerTypes::register);
-		BusRegister.registerMod(UsefulRailroadsItems::register);
-		BusRegister.registerMod(UsefulRailroadsRecipeSerializers::register);
-		BusRegister.registerMod(UsefulRailroadsTileEntityTypes::register);
-	}
+//	private void register() {
+//		BusRegister.registerMod(UsefulRailroadsBlocks::register);
+//		BusRegister.registerMod(UsefulRailroadsContainerTypes::register);
+//		BusRegister.registerMod(UsefulRailroadsItems::register);
+//		BusRegister.registerMod(UsefulRailroadsRecipeSerializers::register);
+//		BusRegister.registerMod(UsefulRailroadsTileEntityTypes::register);
+//	}
 	
 }
