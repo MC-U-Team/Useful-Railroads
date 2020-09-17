@@ -101,7 +101,7 @@ public class TrackBuilderContainer extends UContainer {
 		}
 		if (clickType == ClickType.SWAP) {
 			final ItemStack stack = player.inventory.getStackInSlot(dragType);
-			final ItemStack currentItem = PlayerInventory.isHotbar(selectedSlot) ? player.inventory.mainInventory.get(selectedSlot) : ItemStack.EMPTY;
+			final ItemStack currentItem = PlayerInventory.isHotbar(selectedSlot) ? player.inventory.mainInventory.get(selectedSlot) : selectedSlot == -1 ? player.inventory.offHandInventory.get(0) : ItemStack.EMPTY;
 			
 			if (!currentItem.isEmpty() && stack == currentItem) {
 				return ItemStack.EMPTY;
