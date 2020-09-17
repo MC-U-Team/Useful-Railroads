@@ -19,7 +19,7 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.*;
 import net.minecraft.util.*;
 import net.minecraft.util.Direction.*;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.*;
