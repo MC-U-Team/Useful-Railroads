@@ -18,7 +18,7 @@ public class UsefulRailroadsBlocks {
 	
 	public static final BlockRegistryObject<BufferStopBlock, BlockItem> BUFFER_STOP = BLOCKS.register("buffer_stop", BufferStopBlock::new);
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		BLOCKS.register(bus);
 	}
 }

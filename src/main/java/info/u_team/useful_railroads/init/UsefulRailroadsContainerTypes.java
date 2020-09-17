@@ -17,7 +17,7 @@ public class UsefulRailroadsContainerTypes {
 	
 	public static final RegistryObject<ContainerType<TrackBuilderContainer>> TRACK_BUILDER = CONTAINER_TYPES.register("track_builder", () -> new UContainerType<>(TrackBuilderContainer::new));
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		CONTAINER_TYPES.register(bus);
 	}
 	

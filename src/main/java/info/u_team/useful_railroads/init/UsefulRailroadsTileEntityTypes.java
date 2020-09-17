@@ -15,7 +15,7 @@ public class UsefulRailroadsTileEntityTypes {
 	
 	public static final RegistryObject<TileEntityType<BufferStopTileEntity>> BUFFER_STOP = TILE_ENTITY_TYPES.register("buffer_stop", () -> TileEntityType.Builder.create(BufferStopTileEntity::new, UsefulRailroadsBlocks.BUFFER_STOP.get()));
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		TILE_ENTITY_TYPES.register(bus);
 	}
 	

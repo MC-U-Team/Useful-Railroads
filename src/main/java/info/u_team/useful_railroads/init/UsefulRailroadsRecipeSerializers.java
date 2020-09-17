@@ -21,7 +21,7 @@ public class UsefulRailroadsRecipeSerializers {
 	
 	public static final RegistryObject<SpecialRecipeSerializer<TeleportRailSpecialCraftingRecipe>> CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION = RECIPE_SERIALIZERS.register("crafting_special_teleport_rail_remove_location", () -> new SpecialRecipeSerializer<>(TeleportRailSpecialCraftingRecipe::new));
 	
-	public static void register(IEventBus bus) {
+	public static void registerMod(IEventBus bus) {
 		RECIPE_SERIALIZERS.register(bus);
 	}
 	
