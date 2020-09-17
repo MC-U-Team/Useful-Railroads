@@ -10,17 +10,12 @@ import net.minecraft.client.renderer.model.*;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.RailShape;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class UsefulRailroadsModels {
 	
-	@SubscribeEvent
-	public static void register(FMLClientSetupEvent event) {
+	private static void setup(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
 			ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.get().getRegistryName(), (new StateContainer.Builder<Block, BlockState>(HIGHSPEED_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).func_235882_a_(Block::getDefaultState, BlockState::new));
 			ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.get().getRegistryName(), (new StateContainer.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).func_235882_a_(Block::getDefaultState, BlockState::new));
@@ -29,6 +24,10 @@ public class UsefulRailroadsModels {
 			
 			ModelBakery.LOCATIONS_BUILTIN_TEXTURES.add(new RenderMaterial(new ResourceLocation("textures/atlas/blocks.png"), new ResourceLocation(UsefulRailroadsMod.MODID, "item/empty_fuel_slot")));
 		});
+	}
+	
+	public static void registerMod(IEventBus bus) {
+		bus.addListener(UsefulRailroadsModels::setup);
 	}
 	
 }
