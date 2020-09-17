@@ -5,6 +5,7 @@ import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
 import info.u_team.u_team_core.container.UContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.*;
+import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
@@ -108,6 +109,15 @@ public class TrackBuilderContainer extends UContainer {
 			}
 		}
 		return super.slotClick(slotId, dragType, clickType, player);
+	}
+	
+	@Override
+	public boolean canInteractWith(PlayerEntity player) {
+		if (wrapper instanceof TrackBuilderInventoryWrapper.Server) {
+			final ItemStack stack = ((TrackBuilderInventoryWrapper.Server) wrapper).getStack();
+			return !stack.isEmpty() && stack.getItem() instanceof TrackBuilderItem;
+		}
+		return true;
 	}
 	
 	public TrackBuilderInventoryWrapper getWrapper() {

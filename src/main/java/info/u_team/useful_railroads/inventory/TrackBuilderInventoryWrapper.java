@@ -151,5 +151,9 @@ public class TrackBuilderInventoryWrapper {
 				stack.getOrCreateTag().put(childCompoundName, handler.serializeNBT());
 			}
 		}
+		
+		public ItemStack getStack() {
+			return stack;
+		}
 	}
 }
