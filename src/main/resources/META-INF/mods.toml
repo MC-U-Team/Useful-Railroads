@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[33,)"
+loaderVersion="[34,)"
 issueTrackerURL="https://github.com/MC-U-Team/Useful-Railroads/issues"
 displayURL="https://u-team.info/mods/usefulrailroads"
 logoFile="logo.png"
@@ -17,7 +17,7 @@ authors="HyCraftHD"
 	[[dependencies.usefulrailroads]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[33.0.61,)"
+	    versionRange="[34.0.1,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
