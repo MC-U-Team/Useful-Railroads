@@ -10,5 +10,6 @@ public class UsefulRailroadsClientConstruct implements IModConstruct {
 	@Override
 	public void construct() {
 		BusRegister.registerMod(UsefulRailroadsModels::registerMod);
+		BusRegister.registerMod(UsefulRailroadsRenderTypes::registerMod);
 	}
 }
