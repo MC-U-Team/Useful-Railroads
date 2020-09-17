@@ -11,5 +11,6 @@ public class UsefulRailroadsClientConstruct implements IModConstruct {
 	public void construct() {
 		BusRegister.registerMod(UsefulRailroadsModels::registerMod);
 		BusRegister.registerMod(UsefulRailroadsRenderTypes::registerMod);
+		BusRegister.registerMod(UsefulRailroadsScreens::registerMod);
 	}
 }
