@@ -151,6 +151,12 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		return super.getCapability(capability, direction);
 	}
 	
+	@Override
+	public void remove() {
+		super.remove();
+		fuelSlotOptional.invalidate();
+	}
+	
 	public FuelItemHandler<TeleportRailFuelRecipe> getFuelSlot() {
 		return fuelSlot;
 	}
