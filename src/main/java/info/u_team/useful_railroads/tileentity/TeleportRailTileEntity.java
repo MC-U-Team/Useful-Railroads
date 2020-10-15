@@ -2,7 +2,6 @@ package info.u_team.useful_railroads.tileentity;
 
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import info.u_team.u_team_core.util.world.WorldUtil;
 import info.u_team.useful_railroads.config.CommonConfig;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.*;
@@ -10,18 +9,19 @@ import info.u_team.useful_railroads.inventory.FuelItemHandler;
 import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SSetPassengersPacket;
 import net.minecraft.util.Direction;
 import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.*;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.server.*;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -96,21 +96,82 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 		cart.getServer().enqueue(new TickDelayedTask(0, () -> {
 			final Vector3d teleportPos = Vector3d.copyCentered(location.getPos());
 			
+			// Teleport minecart
+			teleportEntity(cart, teleportWorld, teleportPos);
+			
 			// Teleport entity riding if there is one
 			if (entity != null) {
-				WorldUtil.teleportEntity(entity, teleportWorld, teleportPos);
-			}
-			
-			// Teleport minecart
-			WorldUtil.teleportEntity(cart, teleportWorld, teleportPos);
-			
-			// Reatach entity
-			if (entity != null) {
-				// Because the entity will be destroyed when changing dimensions we use the uuid
-				entity.startRiding(teleportWorld.getEntityByUuid(cart.getUniqueID()), true);
+				teleportEntity(entity, teleportWorld, teleportPos);
+				
+				// Reatach entity because the entity will be destroyed when changing dimensions we use the uuid
+				final Entity newCart = teleportWorld.getEntityByUuid(cart.getUniqueID());
+				entity.startRiding(newCart, true);
+				
+				// For some reason the entity tracker does not update the passengers to the client so we send the packet manually.
+				// See MC-U-Team/Useful-Railroads#21
+				teleportWorld.getChunkProvider().sendToTrackingAndSelf(entity, new SSetPassengersPacket(newCart));
 			}
 		}));
 		
+	}
+	
+	public static void teleportEntity(Entity entity, ServerWorld world, Vector3d pos) {
+		teleportEntity(entity, world, pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
+	}
+	
+	public static void teleportEntity(Entity entity, ServerWorld world, double x, double y, double z, float yaw, float pitch) {
+		teleportEntity(entity, world, x, y, z, yaw, pitch, true);
+	}
+	
+	public static void teleportEntity(Entity entity, ServerWorld world, double x, double y, double z, float yaw, float pitch, boolean detach) {
+		if (entity instanceof ServerPlayerEntity) {
+			final ServerPlayerEntity player = (ServerPlayerEntity) entity;
+			world.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, new ChunkPos(new BlockPos(x, y, z)), 1, entity.getEntityId());
+			if (detach) {
+				player.stopRiding();
+			}
+			if (player.isSleeping()) {
+				player.stopSleepInBed(true, true);
+			}
+			if (world == entity.world) {
+				player.connection.setPlayerLocation(x, y, z, yaw, pitch);
+			} else {
+				player.teleport(world, x, y, z, yaw, pitch);
+			}
+			entity.setRotationYawHead(yaw);
+		} else {
+			final float wrapedYaw = MathHelper.wrapDegrees(yaw);
+			final float wrapedPitch = MathHelper.clamp(MathHelper.wrapDegrees(pitch), -90.0F, 90.0F);
+			if (world == entity.world) {
+				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
+				entity.setRotationYawHead(wrapedYaw);
+			} else {
+				if (detach) {
+					entity.detach();
+				}
+				final Entity entityOld = entity;
+				entity = entity.getType().create(world);
+				if (entity == null) {
+					return;
+				}
+				entity.copyDataFromOld(entityOld);
+				// Need to remove the old entity (Why the heck does TeleportCommand don't do
+				// this and it works ?????)
+				entityOld.remove(false);
+				entity.setLocationAndAngles(x, y, z, wrapedYaw, wrapedPitch);
+				entity.setRotationYawHead(wrapedYaw);
+				world.addFromAnotherDimension(entity);
+			}
+		}
+		
+		if (!(entity instanceof LivingEntity) || !((LivingEntity) entity).isElytraFlying()) {
+			entity.setMotion(entity.getMotion().mul(1, 0, 1));
+			entity.setOnGround(true);
+		}
+		
+		if (entity instanceof CreatureEntity) {
+			((CreatureEntity) entity).getNavigator().clearPath();
+		}
 	}
 	
 	@Override
