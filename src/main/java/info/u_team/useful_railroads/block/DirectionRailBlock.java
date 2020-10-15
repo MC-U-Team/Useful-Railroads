@@ -45,10 +45,10 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 			
 			@Override
 			public RailState placeRail(boolean powered, boolean placing, RailShape unused) {
-				boolean hasRailNorth = func_208512_d(pos.north());
-				boolean hasRailSouth = func_208512_d(pos.south());
-				boolean hasRailWest = func_208512_d(pos.west());
-				boolean hasRailEast = func_208512_d(pos.east());
+				boolean hasRailNorth = canConnect(pos.north());
+				boolean hasRailSouth = canConnect(pos.south());
+				boolean hasRailWest = canConnect(pos.west());
+				boolean hasRailEast = canConnect(pos.east());
 				
 				RailShape shape = null;
 				

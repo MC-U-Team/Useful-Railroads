@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 public class Location implements INBTSerializable<CompoundNBT> {
 	
 	public static Location getOrigin() {
-		return new Location(World.field_234918_g_, BlockPos.ZERO);
+		return new Location(World.OVERWORLD, BlockPos.ZERO);
 	}
 	
 	private RegistryKey<World> registryKey;
@@ -39,14 +39,14 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	}
 	
 	public void serialize(PacketBuffer buffer) {
-		buffer.writeResourceLocation(registryKey.func_240901_a_());
+		buffer.writeResourceLocation(registryKey.getLocation());
 		buffer.writeBlockPos(pos);
 	}
 	
 	public void deserialize(PacketBuffer buffer) {
-		registryKey = RegistryKey.func_240903_a_(Registry.WORLD_KEY, buffer.readResourceLocation());
+		registryKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, buffer.readResourceLocation());
 		if (registryKey == null) {
-			registryKey = World.field_234918_g_;
+			registryKey = World.OVERWORLD;
 		}
 		pos = buffer.readBlockPos();
 	}
@@ -54,7 +54,7 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	@Override
 	public CompoundNBT serializeNBT() {
 		final CompoundNBT compound = new CompoundNBT();
-		compound.putString("dimension", registryKey.func_240901_a_().toString());
+		compound.putString("dimension", registryKey.getLocation().toString());
 		compound.putInt("x", pos.getX());
 		compound.putInt("y", pos.getY());
 		compound.putInt("z", pos.getZ());
@@ -65,10 +65,10 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	public void deserializeNBT(CompoundNBT compound) {
 		final ResourceLocation dimensionLocation = ResourceLocation.tryCreate(compound.getString("dimension"));
 		if (dimensionLocation != null) {
-			registryKey = RegistryKey.func_240903_a_(Registry.WORLD_KEY, dimensionLocation);
+			registryKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionLocation);
 		}
 		if (registryKey == null) {
-			registryKey = World.field_234918_g_;
+			registryKey = World.OVERWORLD;
 		}
 		pos = new BlockPos(compound.getInt("x"), compound.getInt("y"), compound.getInt("z"));
 	}

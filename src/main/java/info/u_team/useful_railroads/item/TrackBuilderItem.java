@@ -53,7 +53,7 @@ public class TrackBuilderItem extends UItem {
 			return ActionResultType.PASS;
 		}
 		final PlayerEntity player = context.getPlayer();
-		if (player == null || !context.func_225518_g_() || context.getHand() == Hand.OFF_HAND) { // No player or no sneaking and no offhand
+		if (player == null || !context.hasSecondaryUseForPlayer() || context.getHand() == Hand.OFF_HAND) { // No player or no sneaking and no offhand
 			return ActionResultType.PASS;
 		}
 		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(context.getItem(), () -> player.world);

@@ -68,7 +68,7 @@ public class TeleportRailBlockItem extends BlockItem {
 						otherStack.shrink(1);
 						
 						// Set location to the stack
-						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.func_234923_W_(), itemEntity.getPosition()).serializeNBT());
+						stack.getOrCreateChildTag("BlockEntityTag").put("location", new Location(world.getDimensionKey(), itemEntity.getPosition()).serializeNBT());
 						
 						final ItemEntity newItemEntity = new ItemEntity(world, itemEntityVector.getX(), itemEntityVector.getY(), itemEntityVector.getZ(), stack);
 						newItemEntity.setDefaultPickupDelay();

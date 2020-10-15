@@ -54,7 +54,7 @@ public class TeleportRailTileEntity extends UTileEntity implements IInitSyncedTi
 	private int calculateCost() {
 		int calculatedCost = 0;
 		
-		if (!location.getRegistryKey().equals(world.func_234923_W_())) {
+		if (!location.getRegistryKey().equals(world.getDimensionKey())) {
 			calculatedCost += CommonConfig.getInstance().teleportRailDimensionCost.get();
 		}
 		double calculatedDistance = Math.log(pos.distanceSq(location.getPos())) / Math.log(CommonConfig.getInstance().teleportRailLogDivisionCost.get());

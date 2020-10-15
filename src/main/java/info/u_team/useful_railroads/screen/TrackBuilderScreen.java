@@ -28,13 +28,13 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 	protected void init() {
 		super.init();
 		
-		addButton(new BetterButton(guiLeft + 169, guiTop + 16, 108, 11, 0.7F, ITextComponent.func_244388_a(null), button -> {
+		addButton(new BetterButton(guiLeft + 169, guiTop + 16, 108, 11, 0.7F, ITextComponent.getTextComponentOrEmpty(null), button -> {
 			container.getChangeModeMessage().triggerMessage();
 		}) {
 			
 			@Override
 			public ITextComponent getMessage() {
-				return ITextComponent.func_244388_a(container.getWrapper().getMode().getDisplayString());
+				return ITextComponent.getTextComponentOrEmpty(container.getWrapper().getMode().getDisplayString());
 			}
 		});
 	}
@@ -44,7 +44,7 @@ public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> 
 		renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		buttons.forEach(button -> button.renderToolTip(matrixStack, mouseX, mouseY));
-		func_230459_a_(matrixStack, mouseX, mouseY);
+		renderHoveredTooltip(matrixStack, mouseX, mouseY);
 	}
 	
 	@Override
