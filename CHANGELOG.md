@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
  - Updated to forge RB
  - Updated to latest uteamcore
- - Fix [#21](https://github.com/MC-U-Team/U-Team-Core/issues/21)
+ - Fix [#21](https://github.com/MC-U-Team/Useful-Railroads/issues/21)
 
 ## [1.16.3-1.4.4.31] - 2020-09-17
 ### Added
