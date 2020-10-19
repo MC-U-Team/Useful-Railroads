@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import info.u_team.u_team_core.screen.UContainerScreen;
+import info.u_team.u_team_core.screen.UBasicContainerScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
@@ -15,22 +15,12 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.*;
 
 @OnlyIn(Dist.CLIENT)
-public class TeleportRailScreen extends UContainerScreen<TeleportRailContainer> {
+public class TeleportRailScreen extends UBasicContainerScreen<TeleportRailContainer> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
 	
 	public TeleportRailScreen(TeleportRailContainer container, PlayerInventory playerInventory, ITextComponent title) {
-		super(container, playerInventory, title, BACKGROUND);
-		xSize = 176;
-		ySize = 189;
-	}
-	
-	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrixStack);
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		buttons.forEach(button -> button.renderToolTip(matrixStack, mouseX, mouseY));
-		renderHoveredTooltip(matrixStack, mouseX, mouseY);
+		super(container, playerInventory, title, BACKGROUND, 176, 189);
 	}
 	
 	@Override
