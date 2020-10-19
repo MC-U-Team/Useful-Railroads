@@ -38,14 +38,6 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrixStack);
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		buttons.forEach(button -> button.renderToolTip(matrixStack, mouseX, mouseY));
-		renderHoveredTooltip(matrixStack, mouseX, mouseY);
-	}
-	
-	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		font.func_243248_b(matrixStack, title, 8, 6, 4210752);
 		font.func_243248_b(matrixStack, playerInventory.getDisplayName(), 62, ySize - 94, 4210752);
