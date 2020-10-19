@@ -25,8 +25,7 @@ public class TeleportRailScreen extends UBasicContainerScreen<TeleportRailContai
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		font.func_243248_b(matrixStack, title, 8, 6, 4210752);
-		font.func_243248_b(matrixStack, playerInventory.getDisplayName(), 8, ySize - 94, 4210752);
+		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 		
 		final TeleportRailTileEntity tileEntity = getContainer().getTileEntity();
 		final Location location = tileEntity.getLocation();
