@@ -3,7 +3,7 @@ package info.u_team.useful_railroads.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import info.u_team.u_team_core.gui.elements.BetterButton;
-import info.u_team.u_team_core.screen.UContainerScreen;
+import info.u_team.u_team_core.screen.UBasicContainerScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
 import net.minecraft.client.resources.I18n;
@@ -13,15 +13,13 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.*;
 
 @OnlyIn(Dist.CLIENT)
-public class TrackBuilderScreen extends UContainerScreen<TrackBuilderContainer> {
+public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContainer> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/track_builder.png");
 	
 	public TrackBuilderScreen(TrackBuilderContainer container, PlayerInventory playerInventory, ITextComponent title) {
-		super(container, playerInventory, title, BACKGROUND);
+		super(container, playerInventory, title, BACKGROUND, 284, 296);
 		backgroundWidth = backgroundHeight = 512;
-		xSize = 284;
-		ySize = 296;
 	}
 	
 	@Override
