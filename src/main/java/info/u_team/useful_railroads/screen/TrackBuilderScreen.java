@@ -20,6 +20,7 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 	public TrackBuilderScreen(TrackBuilderContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title, BACKGROUND, 284, 296);
 		backgroundWidth = backgroundHeight = 512;
+		setTextLocation(8, 6, 62, ySize - 94);
 	}
 	
 	@Override
@@ -39,8 +40,7 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		font.func_243248_b(matrixStack, title, 8, 6, 4210752);
-		font.func_243248_b(matrixStack, playerInventory.getDisplayName(), 62, ySize - 94, 4210752);
+		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 		
 		final String langKey = "container.usefulrailroads.track_builder.";
 		
