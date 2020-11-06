@@ -44,7 +44,7 @@ public enum TrackBuilderMode {
 		return this == MODE_NOAIR;
 	}
 	
-	public TranslationTextComponent getDisplayString() {
+	public TranslationTextComponent getTranslationComponent() {
 		return new TranslationTextComponent("container.usefulrailroads.track_builder.mode." + name);
 	}
 	
