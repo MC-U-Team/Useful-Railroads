@@ -80,7 +80,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 		}
 		
 		final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
-		tileEntityOptional.map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)).ifPresent(lazyOptional -> lazyOptional.ifPresent(handler -> {
+		tileEntityOptional.map(BufferStopTileEntity::getMinecartSlots).ifPresent(minecartSlots -> {
 			cart.removePassengers();
 			
 			final Collection<ItemEntity> drops = new ArrayList<>();
@@ -88,12 +88,12 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 			cart.killMinecart(DamageSource.MAGIC);
 			
 			drops.stream().map(ItemEntity::getItem).forEach(stack -> {
-				final ItemStack stackLeft = ItemHandlerHelper.insertItem(handler, stack, false);
+				final ItemStack stackLeft = ItemHandlerHelper.insertItem(minecartSlots, stack, false);
 				if (!stackLeft.isEmpty()) {
 					spawnAsEntity(world, pos, stackLeft);
 				}
 			});
-		}));
+		});
 	}
 	
 	@Override
