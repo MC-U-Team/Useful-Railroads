@@ -24,28 +24,34 @@ public abstract class FuelRecipe implements IRecipe<IInventory> {
 		this.fuel = fuel;
 	}
 	
+	@Override
 	public ResourceLocation getId() {
 		return id;
 	}
 	
+	@Override
 	public String getGroup() {
 		return group;
 	}
 	
+	@Override
 	public ItemStack getRecipeOutput() {
 		return ItemStack.EMPTY;
 	}
 	
+	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		final NonNullList<Ingredient> ingredients = NonNullList.create();
 		ingredients.add(ingredient);
 		return ingredients;
 	}
 	
+	@Override
 	public boolean canFit(int width, int height) {
 		return true;
 	}
 	
+	@Override
 	public ItemStack getCraftingResult(IInventory inv) {
 		return ItemStack.EMPTY;
 	}
