@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.FORGE, value = Dist.CLIENT)
-public class DrawTrackBuilderSelection {
+public class DrawTrackBuilderSelectionEventHandler {
 	
 	@SubscribeEvent
 	public static void onBlockHighlight(HighlightBlock event) {
