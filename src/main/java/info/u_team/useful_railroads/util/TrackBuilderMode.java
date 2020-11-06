@@ -3,9 +3,7 @@ package info.u_team.useful_railroads.util;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.api.distmarker.*;
 
 public enum TrackBuilderMode {
 	
@@ -46,7 +44,6 @@ public enum TrackBuilderMode {
 		return this == MODE_NOAIR;
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public TranslationTextComponent getDisplayString() {
 		return new TranslationTextComponent("container.usefulrailroads.track_builder.mode." + name);
 	}
