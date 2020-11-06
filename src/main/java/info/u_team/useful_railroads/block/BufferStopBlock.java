@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.*;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
