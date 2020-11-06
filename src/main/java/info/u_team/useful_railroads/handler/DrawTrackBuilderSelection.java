@@ -47,7 +47,7 @@ public class DrawTrackBuilderSelection {
 			mode = TrackBuilderMode.MODE_NOAIR;
 		}
 		
-		final BlockRayTraceResult rayTraceResult = (BlockRayTraceResult) event.getTarget();
+		final BlockRayTraceResult rayTraceResult = event.getTarget();
 		
 		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vector3d(event.getInfo().getViewVector()), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
