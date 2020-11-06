@@ -3,7 +3,7 @@ package info.u_team.useful_railroads.util;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 
 public enum TrackBuilderMode {
 	
@@ -17,11 +17,13 @@ public enum TrackBuilderMode {
 	private final String name;
 	private final int distanceSide;
 	private final int distanceUp;
+	private final ITextComponent displayComponent;
 	
 	private TrackBuilderMode(String name, int distanceSide, int distanceUp) {
 		this.name = name;
 		this.distanceSide = distanceSide;
 		this.distanceUp = distanceUp;
+		displayComponent = new TranslationTextComponent("container.usefulrailroads.track_builder.mode." + name);
 	}
 	
 	public String getName() {
@@ -44,8 +46,8 @@ public enum TrackBuilderMode {
 		return this == MODE_NOAIR;
 	}
 	
-	public TranslationTextComponent getTranslationComponent() {
-		return new TranslationTextComponent("container.usefulrailroads.track_builder.mode." + name);
+	public ITextComponent getTranslationComponent() {
+		return displayComponent;
 	}
 	
 	public static TrackBuilderMode byName(String name) {
