@@ -6,11 +6,8 @@ import info.u_team.useful_railroads.recipe.*;
 import net.minecraft.item.crafting.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsRecipeSerializers {
 	
 	public static final CommonDeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = CommonDeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, UsefulRailroadsMod.MODID);
