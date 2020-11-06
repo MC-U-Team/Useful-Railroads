@@ -33,13 +33,13 @@ public class TeleportRailScreen extends UBasicContainerScreen<TeleportRailContai
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
 		
-		font.drawString(matrixStack, I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + location.getRegistryKey().getLocation(), 11, 23, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + pos.getX(), 11, 33, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + pos.getY(), 11, 43, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + pos.getZ(), 11, 53, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + location.getRegistryKey().getLocation(), 11, 23, 0x404040);
+		font.drawString(matrixStack, I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + pos.getX(), 11, 33, 0x404040);
+		font.drawString(matrixStack, I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + pos.getY(), 11, 43, 0x404040);
+		font.drawString(matrixStack, I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + pos.getZ(), 11, 53, 0x404040);
 		
-		font.drawString(matrixStack, I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + tileEntity.getFuel(), 11, 68, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "consumption") + ": " + TextFormatting.DARK_RED + tileEntity.getCost(), 11, 78, 4210752);
+		font.drawString(matrixStack, I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + tileEntity.getFuel(), 11, 68, 0x404040);
+		font.drawString(matrixStack, I18n.format(langKey + "consumption") + ": " + TextFormatting.DARK_RED + tileEntity.getCost(), 11, 78, 0x404040);
 	}
 	
 }
