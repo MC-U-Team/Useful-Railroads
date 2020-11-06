@@ -37,9 +37,9 @@ public abstract class FuelRecipe implements IRecipe<IInventory> {
 	}
 	
 	public NonNullList<Ingredient> getIngredients() {
-		NonNullList<Ingredient> nonnulllist = NonNullList.create();
-		nonnulllist.add(ingredient);
-		return nonnulllist;
+		final NonNullList<Ingredient> ingredients = NonNullList.create();
+		ingredients.add(ingredient);
+		return ingredients;
 	}
 	
 	public boolean canFit(int width, int height) {
