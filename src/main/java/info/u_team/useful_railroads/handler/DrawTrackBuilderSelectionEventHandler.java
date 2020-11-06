@@ -5,7 +5,6 @@ import java.util.Collection;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.*;
 import net.minecraft.client.Minecraft;
@@ -16,17 +15,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.DrawHighlightEvent.HighlightBlock;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.eventbus.api.IEventBus;
 
-@EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class DrawTrackBuilderSelectionEventHandler {
 	
-	@SubscribeEvent
-	public static void onBlockHighlight(HighlightBlock event) {
+	private static void onBlockHighlight(HighlightBlock event) {
 		final PlayerEntity player = Minecraft.getInstance().player;
 		final ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 		
@@ -80,5 +74,9 @@ public class DrawTrackBuilderSelectionEventHandler {
 		posList.forEach(pos -> {
 			WorldRenderer.drawShape(matrixStack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 		});
+	}
+	
+	public static void registerForge(IEventBus bus) {
+		bus.addListener(DrawTrackBuilderSelectionEventHandler::onBlockHighlight);
 	}
 }
