@@ -33,7 +33,7 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 			
 			@Override
 			public ITextComponent getMessage() {
-				return ITextComponent.getTextComponentOrEmpty(container.getWrapper().getMode().getDisplayString());
+				return container.getWrapper().getMode().getDisplayString();
 			}
 		});
 	}
