@@ -46,7 +46,7 @@ public enum TrackBuilderMode {
 		return this == MODE_NOAIR;
 	}
 	
-	public ITextComponent getTranslationComponent() {
+	public ITextComponent getDisplayComponent() {
 		return displayComponent;
 	}
 	
