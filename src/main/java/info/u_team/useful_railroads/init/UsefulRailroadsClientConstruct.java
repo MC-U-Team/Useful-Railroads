@@ -14,6 +14,6 @@ public class UsefulRailroadsClientConstruct implements IModConstruct {
 		BusRegister.registerMod(UsefulRailroadsRenderTypes::registerMod);
 		BusRegister.registerMod(UsefulRailroadsScreens::registerMod);
 		
-		BusRegister.registerMod(DrawTrackBuilderSelectionEventHandler::registerForge);
+		BusRegister.registerForge(DrawTrackBuilderSelectionEventHandler::registerForge);
 	}
 }
