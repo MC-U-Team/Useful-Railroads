@@ -64,20 +64,21 @@ public class DrawTrackBuilderSelection {
 			
 			final Vector3d projectedView = event.getInfo().getProjectedView();
 			
-			drawSelectionBox(matrixStack, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);
-			drawSelectionBox(matrixStack, projectedView, manager.getFirstRailPos(), 0, 1, 0, 1);
+			final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			final IVertexBuilder builder = buffer.getBuffer(RenderType.getLines());
+			
+			drawSelectionBox(matrixStack, builder, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);
+			drawSelectionBox(matrixStack, builder, projectedView, manager.getFirstRailPos(), 0, 1, 0, 1);
+			
+			buffer.finish();
+			
 			event.setCanceled(true);
 		});
 	}
 	
-	public static void drawSelectionBox(MatrixStack stack, Vector3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
-		final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-		
+	public static void drawSelectionBox(MatrixStack matrixStack, IVertexBuilder builder, Vector3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
 		posList.forEach(pos -> {
-			
-			final IVertexBuilder builder = buffer.getBuffer(RenderType.getLines());
-			WorldRenderer.drawShape(stack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
-			buffer.finish();
+			WorldRenderer.drawShape(matrixStack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 		});
 	}
 }
