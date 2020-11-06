@@ -44,13 +44,13 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 		
 		final String langKey = "container.usefulrailroads.track_builder.";
 		
-		font.drawString(matrixStack, I18n.format(langKey + "mode"), 169, 6, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("container.usefulrailroads.track_builder.mode"), 169, 6, 4210752);
 		
-		font.drawString(matrixStack, I18n.format(langKey + "rails"), 8, 20, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "ground_blocks"), 8, 52, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "tunnel_blocks"), 8, 102, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "redstone_torches"), 8, 170, 4210752);
-		font.drawString(matrixStack, I18n.format(langKey + "torches"), 116, 170, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("container.usefulrailroads.track_builder.rails"), 8, 20, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("container.usefulrailroads.track_builder.ground_blocks"), 8, 52, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("container.usefulrailroads.track_builder.tunnel_blocks"), 8, 102, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("container.usefulrailroads.track_builder.redstone_torches"), 8, 170, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("container.usefulrailroads.track_builder.torches"), 116, 170, 4210752);
 		
 		final String fuelString = I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + container.getWrapper().getFuel();
 		
