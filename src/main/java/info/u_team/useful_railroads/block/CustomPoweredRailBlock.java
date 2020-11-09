@@ -42,7 +42,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		final AbstractRailBlock railBlock = (AbstractRailBlock) state.getBlock();
 		final RailShape railDirection = railBlock.getRailDirection(state, cart.world, pos, cart);
 		
-		boolean powered = (railBlock == this) ? state.get(PoweredRailBlock.POWERED) : false;
+		final boolean powered = (railBlock == this) ? state.get(PoweredRailBlock.POWERED) : false;
 		
 		final double currentSpeed = getPlaneSqrtDistance(cart.getMotion());
 		if (currentSpeed < minSpeed) {

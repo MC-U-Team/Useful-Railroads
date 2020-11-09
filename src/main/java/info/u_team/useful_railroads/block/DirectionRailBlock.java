@@ -45,10 +45,10 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 			
 			@Override
 			public RailState placeRail(boolean powered, boolean placing, RailShape unused) {
-				boolean hasRailNorth = canConnect(pos.north());
-				boolean hasRailSouth = canConnect(pos.south());
-				boolean hasRailWest = canConnect(pos.west());
-				boolean hasRailEast = canConnect(pos.east());
+				final boolean hasRailNorth = canConnect(pos.north());
+				final boolean hasRailSouth = canConnect(pos.south());
+				final boolean hasRailWest = canConnect(pos.west());
+				final boolean hasRailEast = canConnect(pos.east());
 				
 				RailShape shape = null;
 				
@@ -71,7 +71,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 					world.setBlockState(pos, newState, 3);
 					
 					for (int i = 0; i < connectedRails.size(); ++i) {
-						RailState railstate = createForAdjacent(connectedRails.get(i));
+						final RailState railstate = createForAdjacent(connectedRails.get(i));
 						if (railstate != null) {
 							railstate.checkConnected();
 							if (railstate.canConnect(this)) {
@@ -87,7 +87,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		Direction direction = context.getPlacementHorizontalFacing();
+		final Direction direction = context.getPlacementHorizontalFacing();
 		return getDefaultState().with(AXIS_DIRECTION, direction.getAxisDirection() == AxisDirection.POSITIVE).with(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST);
 	}
 	

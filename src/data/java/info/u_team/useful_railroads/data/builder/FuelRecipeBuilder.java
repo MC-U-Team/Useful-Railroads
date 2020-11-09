@@ -79,6 +79,7 @@ public class FuelRecipeBuilder {
 			this.advancementId = advancementId;
 		}
 		
+		@Override
 		public void serialize(JsonObject json) {
 			if (!this.group.isEmpty()) {
 				json.addProperty("group", group);
@@ -88,19 +89,23 @@ public class FuelRecipeBuilder {
 			json.addProperty("fuel", fuel);
 		}
 		
+		@Override
 		public IRecipeSerializer<?> getSerializer() {
 			return serializer;
 		}
 		
+		@Override
 		public ResourceLocation getID() {
 			return id;
 		}
 		
+		@Override
 		@Nullable
 		public JsonObject getAdvancementJson() {
 			return advancementBuilder.serialize();
 		}
 		
+		@Override
 		@Nullable
 		public ResourceLocation getAdvancementID() {
 			return advancementId;

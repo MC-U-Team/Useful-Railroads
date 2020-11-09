@@ -37,8 +37,8 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		
 		// Direction rail
 		forAllFlatRailStates(getUncheckedVariantBuilder(DIRECTION_RAIL.get()), state -> {
-			final RailShape shape = state.get(DirectionRailBlock.SHAPE);
-			final boolean powered = state.get(DirectionRailBlock.POWERED);
+			final RailShape shape = state.get(PoweredRailBlock.SHAPE);
+			final boolean powered = state.get(PoweredRailBlock.POWERED);
 			final boolean positiveAxis = state.get(DirectionRailBlock.AXIS_DIRECTION);
 			return ConfiguredModel.builder() //
 					.modelFile(powered ? flatRail("direction_powered_rail") : flatRail("direction_rail")) //
@@ -58,16 +58,16 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 					.modelFile(new ExistingModelFile(modLoc("block/buffer_stop"), models().existingFileHelper)) //
 					.rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360) //
 					.build();
-		}, BufferStopBlock.POWERED, BufferStopBlock.SHAPE);
+		}, BufferStopBlock.POWERED, CustomAdvancedTileEntityRailBlock.SHAPE);
 	}
 	
 	private void customFlatPoweredRail(CustomPoweredRailBlock block, ModelFile normal, ModelFile powered) {
-		customFlatPoweredRail(block, blockState -> blockState.get(CustomPoweredRailBlock.POWERED) ? powered : normal);
+		customFlatPoweredRail(block, blockState -> blockState.get(PoweredRailBlock.POWERED) ? powered : normal);
 	}
 	
 	private void customFlatPoweredRail(CustomPoweredRailBlock block, Function<BlockState, ModelFile> modelFunc) {
 		forAllFlatRailStates(getUncheckedVariantBuilder(block), state -> {
-			final RailShape shape = state.get(CustomPoweredRailBlock.SHAPE);
+			final RailShape shape = state.get(PoweredRailBlock.SHAPE);
 			return ConfiguredModel.builder() //
 					.modelFile(modelFunc.apply(state)) //
 					.rotationY(shape == RailShape.EAST_WEST ? 90 : 0) //
@@ -83,7 +83,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		builder.getOwner().getStateContainer().getValidStates().forEach(fullState -> {
 			final PartialBlockstate partialState = newPartialBlockState(builder.getOwner(), Maps.newLinkedHashMap(fullState.getValues()), builder);
 			if (seen.add(partialState)) {
-				final RailShape shape = fullState.get(CustomPoweredRailBlock.SHAPE);
+				final RailShape shape = fullState.get(PoweredRailBlock.SHAPE);
 				if (shape == RailShape.NORTH_SOUTH || shape == RailShape.EAST_WEST) { // We only generate the NORTH_SOUTH and EAST_WEST shapes
 					builder.setModels(partialState, mapper.apply(fullState));
 				}
@@ -105,7 +105,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 	private PartialBlockstate newPartialBlockState(Block owner, Map<Property<?>, Comparable<?>> setStates, VariantBlockStateBuilder outerBuilder) {
 		try {
 			return PARTIAL_BLOCK_STATE_CONSTRUCTOR.newInstance(owner, setStates, outerBuilder);
-		} catch (Exception ex) {
+		} catch (final Exception ex) {
 			CommonProvider.LOGGER.fatal(marker, "Cannot create new PartialBlockstate with reflection.", ex);
 		}
 		return null;
@@ -117,7 +117,7 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 	private VariantBlockStateBuilder newVariantBlockStateBuilder(Block block) {
 		try {
 			return VARIANT_BLOCK_STATE_BUILDER_CONSTRUCTOR.newInstance(block);
-		} catch (Exception ex) {
+		} catch (final Exception ex) {
 			CommonProvider.LOGGER.fatal(marker, "Cannot create new VariantBlockStateBuilder with reflection.", ex);
 		}
 		return null;
@@ -130,13 +130,13 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 			Preconditions.checkState(old instanceof VariantBlockStateBuilder);
 			return (VariantBlockStateBuilder) old;
 		} else {
-			VariantBlockStateBuilder ret = newVariantBlockStateBuilder(block);
+			final VariantBlockStateBuilder ret = newVariantBlockStateBuilder(block);
 			registeredBlocks.put(block, () -> {
-				JsonObject variants = new JsonObject();
+				final JsonObject variants = new JsonObject();
 				ret.getModels().entrySet().stream() //
 						.sorted(Entry.comparingByKey(PartialBlockstate.comparingByProperties())) //
 						.forEach(entry -> variants.add(entry.getKey().toString(), entry.getValue().toJSON()));
-				JsonObject main = new JsonObject();
+				final JsonObject main = new JsonObject();
 				main.add("variants", variants);
 				return main;
 			});

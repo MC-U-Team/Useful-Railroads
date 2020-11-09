@@ -162,8 +162,8 @@ public abstract class TrackBuilderManager {
 	}
 	
 	private int calculateCost() {
-		int breakCount = (int) allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).count();
-		int placeCount = allPositionSet.size() - airSet.size();
+		final int breakCount = (int) allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).count();
+		final int placeCount = allPositionSet.size() - airSet.size();
 		
 		return breakCount * 2 + placeCount;
 	}
