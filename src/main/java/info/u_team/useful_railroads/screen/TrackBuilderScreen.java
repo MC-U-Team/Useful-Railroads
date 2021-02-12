@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import info.u_team.u_team_core.gui.elements.BetterButton;
+import info.u_team.u_team_core.gui.elements.ScalableButton;
 import info.u_team.u_team_core.screen.UBasicContainerScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
@@ -42,7 +42,7 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 	protected void init() {
 		super.init();
 		
-		addButton(new BetterButton(guiLeft + 169, guiTop + 16, 108, 11, 0.7F, ITextComponent.getTextComponentOrEmpty(null), button -> {
+		addButton(new ScalableButton(guiLeft + 169, guiTop + 16, 108, 11, ITextComponent.getTextComponentOrEmpty(null), 0.7F, button -> {
 			container.getChangeModeMessage().triggerMessage();
 		}) {
 			
