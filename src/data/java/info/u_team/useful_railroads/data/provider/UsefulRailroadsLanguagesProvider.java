@@ -4,11 +4,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItemGroups.GROUP;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
 
-import java.util.function.Supplier;
-
 import info.u_team.u_team_core.data.*;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 
 public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	
@@ -40,11 +36,11 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(teleportRailBlockKey + ".not_enough_fuel", "Not enough fuel. This teleportation costs %s fuel.");
 		
 		addItem(SINGLE_TRACK_BUILDER, "Single Track Builder");
-		addItemTooltip(SINGLE_TRACK_BUILDER, 0, "%s to open settings gui");
-		addItemTooltip(SINGLE_TRACK_BUILDER, 1, "%s to execute build operation");
+		addItemTooltip(SINGLE_TRACK_BUILDER, "", 0, "%s to open settings gui");
+		addItemTooltip(SINGLE_TRACK_BUILDER, "", 1, "%s to execute build operation");
 		addItem(DOUBLE_TRACK_BUILDER, "Double Track Builder");
-		addItemTooltip(DOUBLE_TRACK_BUILDER, 0, "%s to open settings gui");
-		addItemTooltip(DOUBLE_TRACK_BUILDER, 1, "%s to execute build operation");
+		addItemTooltip(DOUBLE_TRACK_BUILDER, "", 0, "%s to open settings gui");
+		addItemTooltip(DOUBLE_TRACK_BUILDER, "", 1, "%s to execute build operation");
 		add(trackBuilderItemKey + ".not_enough_fuel", "Not enough fuel. This operation costs %s fuel.");
 		add(trackBuilderItemKey + ".not_enough_blocks", "Not enough blocks.");
 		
@@ -87,11 +83,11 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", teleportRailBlockKey + ".not_enough_fuel", "Nicht genug Treibstoff. Diese Teleportation kostet %s Treibstoff.");
 		
 		addItem("de_de", SINGLE_TRACK_BUILDER, "Einzelner Gleisbauer");
-		addItemTooltip("de_de", SINGLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
-		addItemTooltip("de_de", SINGLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
+		addItemTooltip("de_de", SINGLE_TRACK_BUILDER, "", 0, "%s zum Öffnen des Einstellungsfensters");
+		addItemTooltip("de_de", SINGLE_TRACK_BUILDER, "", 1, "%s zum Ausführen der Bauoperation");
 		addItem("de_de", DOUBLE_TRACK_BUILDER, "Doppelter Gleisbauer");
-		addItemTooltip("de_de", DOUBLE_TRACK_BUILDER, 0, "%s zum Öffnen des Einstellungsfensters");
-		addItemTooltip("de_de", DOUBLE_TRACK_BUILDER, 1, "%s zum Ausführen der Bauoperation");
+		addItemTooltip("de_de", DOUBLE_TRACK_BUILDER, "", 0, "%s zum Öffnen des Einstellungsfensters");
+		addItemTooltip("de_de", DOUBLE_TRACK_BUILDER, "", 1, "%s zum Ausführen der Bauoperation");
 		add("de_de", trackBuilderItemKey + ".not_enough_fuel", "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.");
 		add("de_de", trackBuilderItemKey + ".not_enough_blocks", "Nicht genügend Blöcke.");
 		
@@ -118,21 +114,4 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", "usefulrailroads.tooltip.right_click", "Rechtsklick");
 		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechtsklick");
 	}
-	
-	protected void addBlockTooltip(Supplier<? extends Block> key, int line, String value) {
-		addItemTooltip(() -> key.get().asItem(), line, value);
-	}
-	
-	protected void addBlockTooltip(String locale, Supplier<? extends Block> key, int line, String value) {
-		addItemTooltip(locale, () -> key.get().asItem(), line, value);
-	}
-	
-	protected void addItemTooltip(Supplier<? extends Item> key, int line, String value) {
-		add(key.get().getTranslationKey() + ".tooltip." + line, value);
-	}
-	
-	protected void addItemTooltip(String locale, Supplier<? extends Item> key, int line, String value) {
-		add(locale, key.get().getTranslationKey() + ".tooltip." + line, value);
-	}
-	
 }
