@@ -64,8 +64,8 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add(trackBuilderContainerKey + ".mode.5x5", "5x5 air tunnel");
 		add(trackBuilderContainerKey + ".mode.tunnel", "Tunnel with blocks & light");
 		
-		add("usefulrailroads.tooltip.right_click", "Right click");
-		add("usefulrailroads.tooltip.shift_right_click", "Shift + Right click");
+		addTooltip("click", "right_click", 0, "Right click");
+		addTooltip("click", "shift_right_click", 0, "Shift + Right click");
 		
 		// German
 		
@@ -111,7 +111,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		add("de_de", trackBuilderContainerKey + ".mode.5x5", "5x5 Lufttunnel");
 		add("de_de", trackBuilderContainerKey + ".mode.tunnel", "Tunnel mit Blöcken & Licht");
 		
-		add("de_de", "usefulrailroads.tooltip.right_click", "Rechtsklick");
-		add("de_de", "usefulrailroads.tooltip.shift_right_click", "Umschalttaste + Rechtsklick");
+		addTooltip("de_de", "click", "right_click", 0, "Rechtsklick");
+		addTooltip("de_de", "click", "shift_right_click", 0, "Umschalttaste + Rechtsklick");
 	}
 }
