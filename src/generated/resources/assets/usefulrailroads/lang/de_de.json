@@ -27,6 +27,8 @@
 	"container.usefulrailroads.track_builder.redstone_torches": "Redstone Fackeln",
 	"container.usefulrailroads.track_builder.torches": "Fackeln (Licht)",
 	"container.usefulrailroads.track_builder.tunnel_blocks": "Tunnelblöcke",
+	"general.usefulrailroads.click.tooltip.right_click.0": "Rechtsklick",
+	"general.usefulrailroads.click.tooltip.shift_right_click.0": "Umschalttaste + Rechtsklick",
 	"item.usefulrailroads.double_track_builder": "Doppelter Gleisbauer",
 	"item.usefulrailroads.double_track_builder.tooltip.0": "%s zum Öffnen des Einstellungsfensters",
 	"item.usefulrailroads.double_track_builder.tooltip.1": "%s zum Ausführen der Bauoperation",
@@ -35,7 +37,5 @@
 	"item.usefulrailroads.single_track_builder.tooltip.1": "%s zum Ausführen der Bauoperation",
 	"item.usefulrailroads.track_builder.not_enough_blocks": "Nicht genügend Blöcke.",
 	"item.usefulrailroads.track_builder.not_enough_fuel": "Nicht genug Treibstoff. Dieser Vorgang kostet %s Treibstoff.",
-	"itemGroup.usefulrailroads.group": "Nützliche Eisenbahn Erweiterungen",
-	"usefulrailroads.tooltip.right_click": "Rechtsklick",
-	"usefulrailroads.tooltip.shift_right_click": "Umschalttaste + Rechtsklick"
+	"itemGroup.usefulrailroads.group": "Nützliche Eisenbahn Erweiterungen"
 }
