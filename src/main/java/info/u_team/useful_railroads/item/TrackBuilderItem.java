@@ -3,6 +3,8 @@ package info.u_team.useful_railroads.item;
 import java.util.List;
 
 import info.u_team.u_team_core.item.UItem;
+import info.u_team.u_team_core.util.TooltipCreator;
+import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.config.ServerConfig;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
@@ -97,8 +99,8 @@ public class TrackBuilderItem extends UItem {
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip.0", new TranslationTextComponent("usefulrailroads.tooltip.right_click").mergeStyle(TextFormatting.ITALIC, TextFormatting.GOLD)).mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip.1", new TranslationTextComponent("usefulrailroads.tooltip.shift_right_click").mergeStyle(TextFormatting.ITALIC, TextFormatting.GOLD)).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(TooltipCreator.create(this, "", 0, TooltipCreator.create(UsefulRailroadsMod.MODID, "click", "right_click", 0).mergeStyle(TextFormatting.ITALIC, TextFormatting.GOLD)).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(TooltipCreator.create(this, "", 1, TooltipCreator.create(UsefulRailroadsMod.MODID, "click", "shift_right_click", 0).mergeStyle(TextFormatting.ITALIC, TextFormatting.GOLD)).mergeStyle(TextFormatting.GRAY));
 	}
 	
 }
