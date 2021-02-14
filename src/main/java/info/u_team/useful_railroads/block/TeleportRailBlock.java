@@ -6,7 +6,6 @@ import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import net.minecraft.block.*;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -80,19 +79,21 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 		final boolean compoundExists = compound != null;
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
+		final ITextComponent seperatorTextComponent = new StringTextComponent(": ");
 		
 		if (compoundExists && compound.contains("location")) {
 			final CompoundNBT locationCompound = compound.getCompound("location");
-			tooltip.add(new StringTextComponent(I18n.format(langKey + "dimension") + ": " + TextFormatting.DARK_GREEN + locationCompound.getString("dimension")));
-			tooltip.add(new StringTextComponent(I18n.format(langKey + "x") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("x")));
-			tooltip.add(new StringTextComponent(I18n.format(langKey + "y") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("y")));
-			tooltip.add(new StringTextComponent(I18n.format(langKey + "z") + ": " + TextFormatting.DARK_GREEN + locationCompound.getInt("z")));
+			
+			tooltip.add(new TranslationTextComponent(langKey + "dimension").append(seperatorTextComponent).append(new StringTextComponent(locationCompound.getString("dimension")).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "x").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(locationCompound.getInt("x"))).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "y").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(locationCompound.getInt("y"))).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "z").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(locationCompound.getInt("z"))).mergeStyle(TextFormatting.DARK_GREEN)));
 		} else {
 			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").mergeStyle(TextFormatting.RED));
 			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.how_to_setup").mergeStyle(TextFormatting.GRAY));
 		}
 		if (compoundExists) {
-			tooltip.add(new StringTextComponent(I18n.format(langKey + "fuel") + ": " + TextFormatting.DARK_AQUA + compound.getInt("fuel")));
+			tooltip.add(new TranslationTextComponent(langKey + "fuel").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(compound.getInt("fuel"))).mergeStyle(TextFormatting.DARK_AQUA)));
 		}
 	}
 }
