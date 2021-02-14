@@ -175,6 +175,12 @@ curseforge {
 	}
 }
 
+tasks.withType(PublishToMavenRepository) {
+	onlyIf {
+		getValue("mavenpass") != null
+	}
+}
+
 publishing {
 	publish.dependsOn build
 	
