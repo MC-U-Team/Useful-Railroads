@@ -84,16 +84,16 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 		if (compoundExists && compound.contains("location")) {
 			final CompoundNBT locationCompound = compound.getCompound("location");
 			
-			tooltip.add(new TranslationTextComponent(langKey + "dimension").append(seperatorTextComponent).append(new StringTextComponent(locationCompound.getString("dimension")).mergeStyle(TextFormatting.DARK_GREEN)));
-			tooltip.add(new TranslationTextComponent(langKey + "x").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(locationCompound.getInt("x"))).mergeStyle(TextFormatting.DARK_GREEN)));
-			tooltip.add(new TranslationTextComponent(langKey + "y").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(locationCompound.getInt("y"))).mergeStyle(TextFormatting.DARK_GREEN)));
-			tooltip.add(new TranslationTextComponent(langKey + "z").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(locationCompound.getInt("z"))).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "dimension").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(locationCompound.getString("dimension")).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "x").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(locationCompound.getInt("x"))).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "y").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(locationCompound.getInt("y"))).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(new TranslationTextComponent(langKey + "z").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(locationCompound.getInt("z"))).mergeStyle(TextFormatting.DARK_GREEN)));
 		} else {
 			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").mergeStyle(TextFormatting.RED));
 			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.how_to_setup").mergeStyle(TextFormatting.GRAY));
 		}
 		if (compoundExists) {
-			tooltip.add(new TranslationTextComponent(langKey + "fuel").append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(compound.getInt("fuel"))).mergeStyle(TextFormatting.DARK_AQUA)));
+			tooltip.add(new TranslationTextComponent(langKey + "fuel").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(compound.getInt("fuel"))).mergeStyle(TextFormatting.DARK_AQUA)));
 		}
 	}
 }

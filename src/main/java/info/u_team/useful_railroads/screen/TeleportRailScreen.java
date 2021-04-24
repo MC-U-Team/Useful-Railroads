@@ -46,13 +46,13 @@ public class TeleportRailScreen extends UBasicContainerScreen<TeleportRailContai
 		final Location location = tileEntity.getLocation();
 		final BlockPos pos = location.getPos();
 		
-		font.func_243248_b(matrixStack, dimensionTextComponent.copyRaw().append(seperatorTextComponent).append(new StringTextComponent(location.getRegistryKey().getLocation().toString()).mergeStyle(TextFormatting.DARK_GREEN)), 11, 23, 0x404040);
-		font.func_243248_b(matrixStack, xTextComponent.copyRaw().append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(pos.getX())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 33, 0x404040);
-		font.func_243248_b(matrixStack, yTextComponent.copyRaw().append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(pos.getY())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 43, 0x404040);
-		font.func_243248_b(matrixStack, zTextComponent.copyRaw().append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(pos.getZ())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 53, 0x404040);
+		font.drawText(matrixStack, dimensionTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(location.getRegistryKey().getLocation().toString()).mergeStyle(TextFormatting.DARK_GREEN)), 11, 23, 0x404040);
+		font.drawText(matrixStack, xTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(pos.getX())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 33, 0x404040);
+		font.drawText(matrixStack, yTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(pos.getY())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 43, 0x404040);
+		font.drawText(matrixStack, zTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(pos.getZ())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 53, 0x404040);
 		
-		font.func_243248_b(matrixStack, fuelTextComponent.copyRaw().append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(tileEntity.getFuel())).mergeStyle(TextFormatting.DARK_AQUA)), 11, 68, 0x404040);
-		font.func_243248_b(matrixStack, consumptionTextComponent.copyRaw().append(seperatorTextComponent).append(new StringTextComponent(Integer.toString(tileEntity.getCost())).mergeStyle(TextFormatting.DARK_RED)), 11, 78, 0x404040);
+		font.drawText(matrixStack, fuelTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(tileEntity.getFuel())).mergeStyle(TextFormatting.DARK_AQUA)), 11, 68, 0x404040);
+		font.drawText(matrixStack, consumptionTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(tileEntity.getCost())).mergeStyle(TextFormatting.DARK_RED)), 11, 78, 0x404040);
 	}
 	
 }

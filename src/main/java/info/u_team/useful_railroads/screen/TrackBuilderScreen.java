@@ -57,17 +57,17 @@ public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContai
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 		
-		font.func_243248_b(matrixStack, modeTextComponent, 169, 6, 0x404040);
+		font.drawText(matrixStack, modeTextComponent, 169, 6, 0x404040);
 		
-		font.func_243248_b(matrixStack, railsTextComponent, 8, 20, 0x404040);
-		font.func_243248_b(matrixStack, groundBlocksTextComponent, 8, 52, 0x404040);
-		font.func_243248_b(matrixStack, tunnelBlocksTextComponent, 8, 102, 0x404040);
-		font.func_243248_b(matrixStack, redstoneTorchesTextComponent, 8, 170, 0x404040);
-		font.func_243248_b(matrixStack, torchesTextComponent, 116, 170, 0x404040);
+		font.drawText(matrixStack, railsTextComponent, 8, 20, 0x404040);
+		font.drawText(matrixStack, groundBlocksTextComponent, 8, 52, 0x404040);
+		font.drawText(matrixStack, tunnelBlocksTextComponent, 8, 102, 0x404040);
+		font.drawText(matrixStack, redstoneTorchesTextComponent, 8, 170, 0x404040);
+		font.drawText(matrixStack, torchesTextComponent, 116, 170, 0x404040);
 		
-		final ITextComponent fuelComponent = fuelTextComponent.copyRaw().appendString(": ").append(new StringTextComponent(Integer.toString(container.getWrapper().getFuel())).mergeStyle(TextFormatting.DARK_AQUA));
+		final ITextComponent fuelComponent = fuelTextComponent.copyRaw().appendString(": ").appendSibling(new StringTextComponent(Integer.toString(container.getWrapper().getFuel())).mergeStyle(TextFormatting.DARK_AQUA));
 		
-		font.func_243248_b(matrixStack, fuelComponent, xSize - font.getStringPropertyWidth(fuelComponent) - 6, 170, 0x404040);
+		font.drawText(matrixStack, fuelComponent, xSize - font.getStringPropertyWidth(fuelComponent) - 6, 170, 0x404040);
 	}
 	
 }
