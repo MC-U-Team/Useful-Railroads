@@ -1,12 +1,20 @@
 package info.u_team.useful_railroads.data.provider;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
-import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsItems.DOUBLE_TRACK_BUILDER;
+import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRACK_BUILDER;
 
-import info.u_team.u_team_core.data.*;
+import info.u_team.u_team_core.data.CommonItemModelsProvider;
+import info.u_team.u_team_core.data.GenerationData;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
-import net.minecraftforge.client.model.generators.ModelFile.*;
+import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 
 public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider {
 	

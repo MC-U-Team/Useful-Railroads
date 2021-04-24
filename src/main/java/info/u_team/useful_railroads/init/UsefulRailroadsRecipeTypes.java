@@ -1,7 +1,8 @@
 package info.u_team.useful_railroads.init;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.recipe.*;
+import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
+import info.u_team.useful_railroads.recipe.TrackBuilderFuelRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 
 public class UsefulRailroadsRecipeTypes {

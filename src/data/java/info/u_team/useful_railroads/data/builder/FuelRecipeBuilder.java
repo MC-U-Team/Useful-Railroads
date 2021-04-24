@@ -8,10 +8,14 @@ import com.google.gson.JsonObject;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import info.u_team.useful_railroads.recipe.FuelRecipe;
-import net.minecraft.advancements.*;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.ICriterionInstance;
+import net.minecraft.advancements.IRequirementsStrategy;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
 public class FuelRecipeBuilder {

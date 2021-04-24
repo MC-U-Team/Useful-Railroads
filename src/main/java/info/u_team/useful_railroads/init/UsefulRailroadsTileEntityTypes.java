@@ -2,7 +2,8 @@ package info.u_team.useful_railroads.init;
 
 import info.u_team.u_team_core.util.registry.TileEntityTypeDeferredRegister;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.tileentity.*;
+import info.u_team.useful_railroads.tileentity.BufferStopTileEntity;
+import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;

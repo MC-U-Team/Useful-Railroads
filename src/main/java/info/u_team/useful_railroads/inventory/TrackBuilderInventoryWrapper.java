@@ -3,12 +3,14 @@ package info.u_team.useful_railroads.inventory;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-import info.u_team.useful_railroads.init.*;
+import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
+import info.u_team.useful_railroads.init.UsefulRailroadsTags;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TrackBuilderInventoryWrapper {
 	

@@ -2,9 +2,11 @@ package info.u_team.useful_railroads.block;
 
 import info.u_team.u_team_core.api.registry.IBlockItemProvider;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
-import net.minecraft.block.*;
+import net.minecraft.block.RailBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 
 public abstract class CustomRailBlock extends RailBlock implements IBlockItemProvider {
 	

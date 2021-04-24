@@ -1,19 +1,30 @@
 package info.u_team.useful_railroads.data.provider;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
-import static info.u_team.useful_railroads.init.UsefulRailroadsItems.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsItems.DOUBLE_TRACK_BUILDER;
+import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRACK_BUILDER;
 
 import java.util.function.Consumer;
 
-import info.u_team.u_team_core.data.*;
+import info.u_team.u_team_core.data.CommonRecipesProvider;
+import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.data.*;
-import net.minecraft.item.*;
+import net.minecraft.data.CustomRecipeBuilder;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.*;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 

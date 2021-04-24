@@ -2,7 +2,13 @@ package info.u_team.useful_railroads.data;
 
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.data.provider.*;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsBlockStatesProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsBlockTagsProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsItemModelsProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsItemTagsProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsLanguagesProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsLootTableProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsRecipesProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;

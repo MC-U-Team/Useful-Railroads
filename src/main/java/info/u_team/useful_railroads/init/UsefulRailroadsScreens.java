@@ -1,7 +1,8 @@
 package info.u_team.useful_railroads.init;
 
 import info.u_team.u_team_core.util.registry.ClientRegistry;
-import info.u_team.useful_railroads.screen.*;
+import info.u_team.useful_railroads.screen.TeleportRailScreen;
+import info.u_team.useful_railroads.screen.TrackBuilderScreen;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 

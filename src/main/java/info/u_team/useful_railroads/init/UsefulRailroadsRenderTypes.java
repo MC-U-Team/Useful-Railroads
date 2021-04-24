@@ -1,8 +1,14 @@
 package info.u_team.useful_railroads.init;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
 
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 

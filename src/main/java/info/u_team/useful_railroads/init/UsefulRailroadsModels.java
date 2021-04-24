@@ -1,13 +1,20 @@
 package info.u_team.useful_railroads.init;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
 
 import info.u_team.u_team_core.util.ModelUtil;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
-import net.minecraft.block.*;
-import net.minecraft.client.renderer.model.*;
-import net.minecraft.state.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.PoweredRailBlock;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.RenderMaterial;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.RailShape;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;

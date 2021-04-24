@@ -1,10 +1,15 @@
 package info.u_team.useful_railroads.data.provider;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
 
 import java.util.function.BiConsumer;
 
-import info.u_team.u_team_core.data.*;
+import info.u_team.u_team_core.data.CommonLootTablesProvider;
+import info.u_team.u_team_core.data.GenerationData;
 import net.minecraft.loot.LootTable;
 import net.minecraft.util.ResourceLocation;
 

@@ -1,23 +1,42 @@
 package info.u_team.useful_railroads.data.provider;
 
-import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.*;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.BUFFER_STOP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.DIRECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
+import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 
-import info.u_team.u_team_core.data.*;
-import info.u_team.useful_railroads.block.*;
-import net.minecraft.block.*;
+import info.u_team.u_team_core.data.CommonBlockStatesProvider;
+import info.u_team.u_team_core.data.CommonProvider;
+import info.u_team.u_team_core.data.GenerationData;
+import info.u_team.useful_railroads.block.BufferStopBlock;
+import info.u_team.useful_railroads.block.CustomAdvancedTileEntityRailBlock;
+import info.u_team.useful_railroads.block.CustomPoweredRailBlock;
+import info.u_team.useful_railroads.block.DirectionRailBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.PoweredRailBlock;
 import net.minecraft.state.Property;
-import net.minecraft.state.properties.*;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.RailShape;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.IGeneratedBlockstate;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 

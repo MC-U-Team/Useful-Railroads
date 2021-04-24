@@ -2,8 +2,12 @@ package info.u_team.useful_railroads.init;
 
 import info.u_team.u_team_core.util.registry.CommonDeferredRegister;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.recipe.*;
-import net.minecraft.item.crafting.*;
+import info.u_team.useful_railroads.recipe.FuelRecipe;
+import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
+import info.u_team.useful_railroads.recipe.TeleportRailSpecialCraftingRecipe;
+import info.u_team.useful_railroads.recipe.TrackBuilderFuelRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;

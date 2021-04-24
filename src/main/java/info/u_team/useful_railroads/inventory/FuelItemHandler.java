@@ -1,10 +1,13 @@
 package info.u_team.useful_railroads.inventory;
 
 import java.util.Optional;
-import java.util.function.*;
+import java.util.function.BooleanSupplier;
+import java.util.function.IntConsumer;
+import java.util.function.Supplier;
 
 import info.u_team.useful_railroads.recipe.FuelRecipe;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.world.World;
