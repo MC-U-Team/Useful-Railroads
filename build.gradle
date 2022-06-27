@@ -44,6 +44,8 @@ java {
 minecraft {
 	mappings channel: config.forge.mapping_channel, version: config.forge.mapping
 	
+	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
+	
 	runs {
 		client = {
 			workingDirectory file("run/client")
