@@ -71,7 +71,7 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 		final ItemStack stack = new ItemStack(this);
 		getBlockEntity(level, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> {
 			final CompoundTag compound = new CompoundTag();
-			tileEntity.writeNBT(compound);
+			tileEntity.saveNBT(compound);
 			if (!compound.isEmpty()) {
 				stack.addTagElement("BlockEntityTag", compound);
 			}
