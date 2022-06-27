@@ -1,18 +1,19 @@
 package info.u_team.useful_railroads.tileentity;
 
+import info.u_team.u_team_core.blockentity.UBlockEntity;
 import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
 import info.u_team.u_team_core.inventory.UItemStackHandler;
-import info.u_team.u_team_core.tileentity.UTileEntity;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class BufferStopTileEntity extends UTileEntity {
+public class BufferStopTileEntity extends UBlockEntity {
 	
 	private final UItemStackHandler minecartSlots = new TileEntityUItemStackHandler(10, this) {
 		
@@ -24,17 +25,17 @@ public class BufferStopTileEntity extends UTileEntity {
 	
 	private final LazyOptional<UItemStackHandler> minecartSlotsOptional = LazyOptional.of(() -> minecartSlots);
 	
-	public BufferStopTileEntity() {
-		super(UsefulRailroadsTileEntityTypes.BUFFER_STOP.get());
+	public BufferStopTileEntity(BlockPos pos, BlockState state) {
+		super(UsefulRailroadsTileEntityTypes.BUFFER_STOP.get(), pos, state);
 	}
 	
 	@Override
-	public void writeNBT(CompoundNBT compound) {
+	public void saveNBT(CompoundTag compound) {
 		minecartSlots.deserializeNBT(compound.getCompound("inventory"));
 	}
 	
 	@Override
-	public void readNBT(BlockState state, CompoundNBT compound) {
+	public void loadNBT(CompoundTag compound) {
 		compound.put("inventory", minecartSlots.serializeNBT());
 	}
 	
@@ -51,8 +52,8 @@ public class BufferStopTileEntity extends UTileEntity {
 	}
 	
 	@Override
-	public void remove() {
-		super.remove();
+	public void setRemoved() {
+		super.setRemoved();
 		minecartSlotsOptional.invalidate();
 	}
 	
