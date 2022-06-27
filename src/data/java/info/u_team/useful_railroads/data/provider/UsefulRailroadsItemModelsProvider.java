@@ -11,10 +11,11 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRAC
 
 import info.u_team.u_team_core.data.CommonItemModelsProvider;
 import info.u_team.u_team_core.data.GenerationData;
-import net.minecraft.util.IItemProvider;
-import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider {
 	
@@ -36,40 +37,40 @@ public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider 
 		simpleRail(TELEPORT_RAIL.get());
 		
 		// Buffer stop
-		getBuilder(BUFFER_STOP.get().getRegistryName().getPath()) //
+		getBuilder(BUFFER_STOP.getItemId().getPath()) //
 				.parent(new ExistingModelFile(modLoc("block/buffer_stop"), existingFileHelper)) //
 				.transforms() //
 				
-				.transform(Perspective.GUI) //
+				.transform(TransformType.GUI) //
 				.rotation(0, -150, 0) //
 				.translation(-0.5F, -0.5F, 0) //
 				.scale(0.75F) //
 				.end() //
 				
-				.transform(Perspective.GROUND) //
+				.transform(TransformType.GROUND) //
 				.translation(0, 2, 0) //
 				.scale(0.25F) //
 				.end() //
 				
-				.transform(Perspective.FIRSTPERSON_RIGHT) //
+				.transform(TransformType.FIRST_PERSON_RIGHT_HAND) //
 				.rotation(0, 120, 0) //
 				.translation(2.5F, 1.5F, 0) //
 				.scale(0.25F) //
 				.end() //
 				
-				.transform(Perspective.THIRDPERSON_RIGHT) //
+				.transform(TransformType.THIRD_PERSON_RIGHT_HAND) //
 				.rotation(70, 0, 0) //
 				.translation(0, 0, 1) //
 				.scale(0.35F) //
 				.end() //
 				
-				.transform(Perspective.FIRSTPERSON_LEFT) //
+				.transform(TransformType.FIRST_PERSON_LEFT_HAND) //
 				.rotation(0, 120, 0) //
 				.translation(2.5F, 1.5F, 0) //
 				.scale(0.25F) //
 				.end() //
 				
-				.transform(Perspective.THIRDPERSON_LEFT) //
+				.transform(TransformType.THIRD_PERSON_LEFT_HAND) //
 				.rotation(70, 0, 0) //
 				.translation(0, 0, 1) //
 				.scale(0.35F) //
@@ -78,8 +79,8 @@ public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider 
 				.end();
 	}
 	
-	private void simpleRail(IItemProvider provider) {
-		final String registryPath = provider.asItem().getRegistryName().getPath();
+	private void simpleRail(ItemLike provider) {
+		final String registryPath = ForgeRegistries.ITEMS.getKey(provider.asItem()).getPath();
 		getBuilder(registryPath).parent(new UncheckedModelFile("item/generated")).texture("layer0", "block/" + registryPath);
 	}
 	

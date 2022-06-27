@@ -10,13 +10,13 @@ import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import info.u_team.useful_railroads.recipe.FuelRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.ICriterionInstance;
-import net.minecraft.advancements.IRequirementsStrategy;
-import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class FuelRecipeBuilder {
 	
@@ -24,7 +24,7 @@ public class FuelRecipeBuilder {
 	
 	private final Ingredient ingredient;
 	private final int fuel;
-	private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
+	private final Advancement.Builder advancementBuilder = Advancement.Builder.advancement();
 	private String group;
 	
 	public static FuelRecipeBuilder teleportRailFuel(Ingredient ingredient, int fuel) {
@@ -41,18 +41,18 @@ public class FuelRecipeBuilder {
 		this.fuel = fuel;
 	}
 	
-	public FuelRecipeBuilder addCriterion(String name, ICriterionInstance criterion) {
-		advancementBuilder.withCriterion(name, criterion);
+	public FuelRecipeBuilder addCriterion(String name, CriterionTriggerInstance criterion) {
+		advancementBuilder.addCriterion(name, criterion);
 		return this;
 	}
 	
-	public void build(Consumer<IFinishedRecipe> consumer, String save) {
-		build(consumer, new ResourceLocation(save));
+	public void save(Consumer<FinishedRecipe> consumer, String save) {
+		save(consumer, new ResourceLocation(save));
 	}
 	
-	public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+	public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
 		validate(id);
-		advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(id)).withRewards(AdvancementRewards.Builder.recipe(id)).withRequirementsStrategy(IRequirementsStrategy.OR);
+		advancementBuilder.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
 		consumer.accept(new FuelRecipeBuilder.Result(serializer, id, group == null ? "" : group, ingredient, fuel, advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath())));
 	}
 	
@@ -62,7 +62,7 @@ public class FuelRecipeBuilder {
 		}
 	}
 	
-	public static class Result implements IFinishedRecipe {
+	public static class Result implements FinishedRecipe {
 		
 		private final FuelRecipe.Serializer<?> serializer;
 		
@@ -84,34 +84,34 @@ public class FuelRecipeBuilder {
 		}
 		
 		@Override
-		public void serialize(JsonObject json) {
+		public void serializeRecipeData(JsonObject json) {
 			if (!this.group.isEmpty()) {
 				json.addProperty("group", group);
 			}
 			
-			json.add("ingredient", ingredient.serialize());
+			json.add("ingredient", ingredient.toJson());
 			json.addProperty("fuel", fuel);
 		}
 		
 		@Override
-		public IRecipeSerializer<?> getSerializer() {
+		public RecipeSerializer<?> getType() {
 			return serializer;
 		}
 		
 		@Override
-		public ResourceLocation getID() {
+		public ResourceLocation getId() {
 			return id;
 		}
 		
 		@Override
 		@Nullable
-		public JsonObject getAdvancementJson() {
-			return advancementBuilder.serialize();
+		public JsonObject serializeAdvancement() {
+			return advancementBuilder.serializeToJson();
 		}
 		
 		@Override
 		@Nullable
-		public ResourceLocation getAdvancementID() {
+		public ResourceLocation getAdvancementId() {
 			return advancementId;
 		}
 	}

@@ -16,16 +16,16 @@ import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.data.CustomRecipeBuilder;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
+import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 
 public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
@@ -35,111 +35,111 @@ public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 	}
 	
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+	protected void registerRecipes(Consumer<FinishedRecipe> consumer) {
 		registerCraftingRecipes(consumer);
 		registerFuelRecipes(consumer);
 	}
 	
-	private void registerCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
-		ShapedRecipeBuilder.shapedRecipe(HIGHSPEED_RAIL.get(), 24) //
-				.patternLine("IDI") //
-				.patternLine("LSL") //
-				.patternLine("IRI") //
-				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('S', Items.STICK) //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
-				.key('L', getIngredientOfTag(Tags.Items.GEMS_LAPIS)) //
-				.addCriterion("has_minecart", hasItem(Items.MINECART)) //
-				.build(consumer);
+	private void registerCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+		ShapedRecipeBuilder.shaped(HIGHSPEED_RAIL.get(), 24) //
+				.pattern("IDI") //
+				.pattern("LSL") //
+				.pattern("IRI") //
+				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('S', Items.STICK) //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.define('L', getIngredientOfTag(Tags.Items.GEMS_LAPIS)) //
+				.unlockedBy("has_minecart", hasItem(Items.MINECART)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(SPEED_CLAMP_RAIL.get(), 24) //
-				.patternLine("IDI") //
-				.patternLine("LSL") //
-				.patternLine("IRI") //
-				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('S', Items.STICK) //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
-				.key('L', getIngredientOfTag(Tags.Items.SLIMEBALLS)) //
-				.addCriterion("has_minecart", hasItem(Items.MINECART)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(SPEED_CLAMP_RAIL.get(), 24) //
+				.pattern("IDI") //
+				.pattern("LSL") //
+				.pattern("IRI") //
+				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('S', Items.STICK) //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.define('L', getIngredientOfTag(Tags.Items.SLIMEBALLS)) //
+				.unlockedBy("has_minecart", hasItem(Items.MINECART)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(DIRECTION_RAIL.get(), 16) //
-				.patternLine("IEI") //
-				.patternLine("IRI") //
-				.patternLine("ISI") //
-				.key('S', Items.STICK) //
-				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('E', Items.REPEATER) //
-				.addCriterion("has_minecart", hasItem(Items.MINECART)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(DIRECTION_RAIL.get(), 16) //
+				.pattern("IEI") //
+				.pattern("IRI") //
+				.pattern("ISI") //
+				.define('S', Items.STICK) //
+				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('E', Items.REPEATER) //
+				.unlockedBy("has_minecart", hasItem(Items.MINECART)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(TELEPORT_RAIL.get(), 1) //
-				.patternLine("IDI") //
-				.patternLine("ESE") //
-				.patternLine("IRI") //
-				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('S', Items.STICK) //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
-				.key('E', Items.ENDER_PEARL) //
-				.addCriterion("has_minecart", hasItem(Items.MINECART)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(TELEPORT_RAIL.get(), 1) //
+				.pattern("IDI") //
+				.pattern("ESE") //
+				.pattern("IRI") //
+				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('S', Items.STICK) //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.define('E', Items.ENDER_PEARL) //
+				.unlockedBy("has_minecart", hasItem(Items.MINECART)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(INTERSECTION_RAIL.get(), 8) //
-				.patternLine("III") //
-				.patternLine("ISI") //
-				.patternLine("III") //
-				.key('S', Items.STICK) //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.addCriterion("has_minecart", hasItem(Items.MINECART)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(INTERSECTION_RAIL.get(), 8) //
+				.pattern("III") //
+				.pattern("ISI") //
+				.pattern("III") //
+				.define('S', Items.STICK) //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.unlockedBy("has_minecart", hasItem(Items.MINECART)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(BUFFER_STOP.get(), 2) //
-				.patternLine("III") //
-				.patternLine(" B ") //
-				.patternLine("I I") //
-				.key('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.addCriterion("has_minecart", hasItem(Items.MINECART)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(BUFFER_STOP.get(), 2) //
+				.pattern("III") //
+				.pattern(" B ") //
+				.pattern("I I") //
+				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.unlockedBy("has_minecart", hasItem(Items.MINECART)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(SINGLE_TRACK_BUILDER.get(), 1) //
-				.patternLine("IBI") //
-				.patternLine("PRC") //
-				.patternLine("IAI") //
-				.key('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.key('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_REDSTONE)) //
-				.key('P', Items.REPEATER) //
-				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('C', Items.COMPARATOR) //
-				.key('A', Items.POWERED_RAIL) //
-				.addCriterion("has_redstone", hasItem(Tags.Items.DUSTS_REDSTONE)) //
-				.addCriterion("has_iron", hasItem(Tags.Items.INGOTS_IRON)) //
-				.addCriterion("has_rail", hasItem(Items.POWERED_RAIL)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(SINGLE_TRACK_BUILDER.get(), 1) //
+				.pattern("IBI") //
+				.pattern("PRC") //
+				.pattern("IAI") //
+				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_REDSTONE)) //
+				.define('P', Items.REPEATER) //
+				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('C', Items.COMPARATOR) //
+				.define('A', Items.POWERED_RAIL) //
+				.unlockedBy("has_redstone", hasItem(Tags.Items.DUSTS_REDSTONE)) //
+				.unlockedBy("has_iron", hasItem(Tags.Items.INGOTS_IRON)) //
+				.unlockedBy("has_rail", hasItem(Items.POWERED_RAIL)) //
+				.save(consumer);
 		
-		ShapedRecipeBuilder.shapedRecipe(DOUBLE_TRACK_BUILDER.get(), 1) //
-				.patternLine("IBI") //
-				.patternLine("PRC") //
-				.patternLine("AIA") //
-				.key('I', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
-				.key('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_REDSTONE)) //
-				.key('P', Items.REPEATER) //
-				.key('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.key('C', Items.COMPARATOR) //
-				.key('A', Items.POWERED_RAIL) //
-				.addCriterion("has_redstone", hasItem(Tags.Items.DUSTS_REDSTONE)) //
-				.addCriterion("has_iron", hasItem(Tags.Items.INGOTS_IRON)) //
-				.addCriterion("has_rail", hasItem(Items.POWERED_RAIL)) //
-				.build(consumer);
+		ShapedRecipeBuilder.shaped(DOUBLE_TRACK_BUILDER.get(), 1) //
+				.pattern("IBI") //
+				.pattern("PRC") //
+				.pattern("AIA") //
+				.define('I', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
+				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_REDSTONE)) //
+				.define('P', Items.REPEATER) //
+				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('C', Items.COMPARATOR) //
+				.define('A', Items.POWERED_RAIL) //
+				.unlockedBy("has_redstone", hasItem(Tags.Items.DUSTS_REDSTONE)) //
+				.unlockedBy("has_iron", hasItem(Tags.Items.INGOTS_IRON)) //
+				.unlockedBy("has_rail", hasItem(Items.POWERED_RAIL)) //
+				.save(consumer);
 		
-		CustomRecipeBuilder.customRecipe(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION.get()).build(consumer, UsefulRailroadsMod.MODID + ":teleport_rail_remove_location");
+		SpecialRecipeBuilder.special(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION.get()).save(consumer, UsefulRailroadsMod.MODID + ":teleport_rail_remove_location");
 	}
 	
-	private void registerFuelRecipes(Consumer<IFinishedRecipe> consumer) {
+	private void registerFuelRecipes(Consumer<FinishedRecipe> consumer) {
 		addTeleportRailFuel(Items.ENDER_PEARL, 100, consumer, "ender_pearl");
 		addTeleportRailFuel(Items.ENDER_EYE, 150, consumer, "ender_eye");
 		addTeleportRailFuel(Items.CHORUS_FLOWER, 250, consumer, "chorus_flower");
@@ -153,23 +153,23 @@ public class UsefulRailroadsRecipesProvider extends CommonRecipesProvider {
 		addTrackBuilderFuel(Tags.Items.STORAGE_BLOCKS_COAL, 900, consumer, "coal_blocks");
 	}
 	
-	private void addTeleportRailFuel(Item item, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-		addTeleportRailFuel(Ingredient.fromItems(item), hasItem(item), fuel, consumer, name);
+	private void addTeleportRailFuel(Item item, int fuel, Consumer<FinishedRecipe> consumer, String name) {
+		addTeleportRailFuel(Ingredient.of(item), hasItem(item), fuel, consumer, name);
 	}
 	
-	private void addTeleportRailFuel(ITag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+	private void addTeleportRailFuel(TagKey<Item> tag, int fuel, Consumer<FinishedRecipe> consumer, String name) {
 		addTeleportRailFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
 	}
 	
-	private void addTeleportRailFuel(Ingredient ingredient, InventoryChangeTrigger.Instance trigger, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
+	private void addTeleportRailFuel(Ingredient ingredient, CriterionTriggerInstance trigger, int fuel, Consumer<FinishedRecipe> consumer, String name) {
+		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).save(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
 	}
 	
-	private void addTrackBuilderFuel(ITag<Item> tag, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
+	private void addTrackBuilderFuel(TagKey<Item> tag, int fuel, Consumer<FinishedRecipe> consumer, String name) {
 		addTrackBuilderFuel(getIngredientOfTag(tag), hasItem(tag), fuel, consumer, name);
 	}
 	
-	private void addTrackBuilderFuel(Ingredient ingredient, InventoryChangeTrigger.Instance trigger, int fuel, Consumer<IFinishedRecipe> consumer, String name) {
-		FuelRecipeBuilder.trackBuilderFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).build(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/track_builder/" + name));
+	private void addTrackBuilderFuel(Ingredient ingredient, CriterionTriggerInstance trigger, int fuel, Consumer<FinishedRecipe> consumer, String name) {
+		FuelRecipeBuilder.trackBuilderFuel(ingredient, fuel).addCriterion("has_ingredient", trigger).save(consumer, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/track_builder/" + name));
 	}
 }

@@ -10,8 +10,8 @@ import java.util.function.BiConsumer;
 
 import info.u_team.u_team_core.data.CommonLootTablesProvider;
 import info.u_team.u_team_core.data.GenerationData;
-import net.minecraft.loot.LootTable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 public class UsefulRailroadsLootTableProvider extends CommonLootTablesProvider {
 	

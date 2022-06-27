@@ -25,12 +25,12 @@ import info.u_team.useful_railroads.block.BufferStopBlock;
 import info.u_team.useful_railroads.block.CustomAdvancedTileEntityRailBlock;
 import info.u_team.useful_railroads.block.CustomPoweredRailBlock;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PoweredRailBlock;
-import net.minecraft.state.Property;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.RailShape;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PoweredRailBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.IGeneratedBlockstate;
@@ -38,7 +38,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvider {
 	
@@ -56,9 +56,9 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		
 		// Direction rail
 		forAllFlatRailStates(getUncheckedVariantBuilder(DIRECTION_RAIL.get()), state -> {
-			final RailShape shape = state.get(PoweredRailBlock.SHAPE);
-			final boolean powered = state.get(PoweredRailBlock.POWERED);
-			final boolean positiveAxis = state.get(DirectionRailBlock.AXIS_DIRECTION);
+			final RailShape shape = state.getValue(PoweredRailBlock.SHAPE);
+			final boolean powered = state.getValue(PoweredRailBlock.POWERED);
+			final boolean positiveAxis = state.getValue(DirectionRailBlock.AXIS_DIRECTION);
 			return ConfiguredModel.builder() //
 					.modelFile(powered ? flatRail("direction_powered_rail") : flatRail("direction_rail")) //
 					.rotationY((shape == RailShape.EAST_WEST ? -90 : 0) + (positiveAxis ? 180 : 0)) //
@@ -75,18 +75,18 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		getVariantBuilder(BUFFER_STOP.get()).forAllStatesExcept(state -> { //
 			return ConfiguredModel.builder() //
 					.modelFile(new ExistingModelFile(modLoc("block/buffer_stop"), models().existingFileHelper)) //
-					.rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360) //
+					.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) //
 					.build();
 		}, BufferStopBlock.POWERED, CustomAdvancedTileEntityRailBlock.SHAPE);
 	}
 	
 	private void customFlatPoweredRail(CustomPoweredRailBlock block, ModelFile normal, ModelFile powered) {
-		customFlatPoweredRail(block, blockState -> blockState.get(PoweredRailBlock.POWERED) ? powered : normal);
+		customFlatPoweredRail(block, blockState -> blockState.getValue(PoweredRailBlock.POWERED) ? powered : normal);
 	}
 	
 	private void customFlatPoweredRail(CustomPoweredRailBlock block, Function<BlockState, ModelFile> modelFunc) {
 		forAllFlatRailStates(getUncheckedVariantBuilder(block), state -> {
-			final RailShape shape = state.get(PoweredRailBlock.SHAPE);
+			final RailShape shape = state.getValue(PoweredRailBlock.SHAPE);
 			return ConfiguredModel.builder() //
 					.modelFile(modelFunc.apply(state)) //
 					.rotationY(shape == RailShape.EAST_WEST ? 90 : 0) //
@@ -99,10 +99,10 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		if (!(builder.getOwner() instanceof CustomPoweredRailBlock)) {
 			throw new IllegalArgumentException("This method only allow custom powered rail blocks");
 		}
-		builder.getOwner().getStateContainer().getValidStates().forEach(fullState -> {
+		builder.getOwner().getStateDefinition().getPossibleStates().forEach(fullState -> {
 			final PartialBlockstate partialState = newPartialBlockState(builder.getOwner(), Maps.newLinkedHashMap(fullState.getValues()), builder);
 			if (seen.add(partialState)) {
-				final RailShape shape = fullState.get(PoweredRailBlock.SHAPE);
+				final RailShape shape = fullState.getValue(PoweredRailBlock.SHAPE);
 				if (shape == RailShape.NORTH_SOUTH || shape == RailShape.EAST_WEST) { // We only generate the NORTH_SOUTH and EAST_WEST shapes
 					builder.setModels(partialState, mapper.apply(fullState));
 				}
