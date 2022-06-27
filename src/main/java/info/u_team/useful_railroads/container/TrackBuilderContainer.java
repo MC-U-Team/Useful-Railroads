@@ -1,21 +1,21 @@
 package info.u_team.useful_railroads.container;
 
-import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
+import info.u_team.u_team_core.api.sync.DataHolder;
 import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
-import info.u_team.u_team_core.container.UContainer;
+import info.u_team.u_team_core.menu.UContainerMenu;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class TrackBuilderContainer extends UContainer {
+public class TrackBuilderContainer extends UContainerMenu {
 	
 	private final TrackBuilderInventoryWrapper wrapper;
 	
@@ -24,57 +24,57 @@ public class TrackBuilderContainer extends UContainer {
 	private final int selectedSlot;
 	
 	// Client
-	public TrackBuilderContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		this(id, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnumValue(TrackBuilderMode.class), () -> playerInventory.player.world), buffer.readVarInt());
+	public TrackBuilderContainer(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
+		this(containerId, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnum(TrackBuilderMode.class), () -> playerInventory.player.level), buffer.readVarInt());
 	}
 	
 	// Server
-	public TrackBuilderContainer(int id, PlayerInventory playerInventory, TrackBuilderInventoryWrapper wrapper, int selectedSlot) {
-		super(UsefulRailroadsContainerTypes.TRACK_BUILDER.get(), id);
+	public TrackBuilderContainer(int containerId, Inventory playerInventory, TrackBuilderInventoryWrapper wrapper, int selectedSlot) {
+		super(UsefulRailroadsContainerTypes.TRACK_BUILDER.get(), containerId);
 		this.wrapper = wrapper;
 		this.selectedSlot = selectedSlot;
-		appendInventory(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
-		appendInventory(wrapper.getRailInventory(), 1, 15, 8, 32);
-		appendInventory(wrapper.getGroundInventory(), 2, 15, 8, 64);
-		appendInventory(wrapper.getTunnelInventory(), 3, 15, 8, 114);
-		appendInventory(wrapper.getRedstoneTorchInventory(), 1, 5, 8, 182);
-		appendInventory(wrapper.getTorchInventory(), 1, 4, 116, 182);
-		appendPlayerInventory(playerInventory, 62, 214);
-		addServerToClientTracker(BufferReferenceHolder.createIntHolder(wrapper::getFuel, wrapper::setFuel));
-		addServerToClientTracker(BufferReferenceHolder.createByteHolder(() -> (byte) wrapper.getMode().ordinal(), value -> wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[value])));
-		changeModeMessage = addClientToServerTracker(new EmptyMessageHolder(() -> {
+		addSlots(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
+		addSlots(wrapper.getRailInventory(), 1, 15, 8, 32);
+		addSlots(wrapper.getGroundInventory(), 2, 15, 8, 64);
+		addSlots(wrapper.getTunnelInventory(), 3, 15, 8, 114);
+		addSlots(wrapper.getRedstoneTorchInventory(), 1, 5, 8, 182);
+		addSlots(wrapper.getTorchInventory(), 1, 4, 116, 182);
+		addPlayerInventory(playerInventory, 62, 214);
+		addDataHolderToClient(DataHolder.createIntHolder(wrapper::getFuel, wrapper::setFuel));
+		addDataHolderToClient(DataHolder.createByteHolder(() -> (byte) wrapper.getMode().ordinal(), value -> wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[value])));
+		changeModeMessage = addDataHolderToServer(new EmptyMessageHolder(() -> {
 			wrapper.setMode(TrackBuilderMode.cycle(wrapper.getMode()));
 			wrapper.writeItemStack();
 		}));
 	}
 	
 	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
+	public void broadcastChanges() {
+		super.broadcastChanges();
 		wrapper.writeItemStack();
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack remainingStack = ItemStack.EMPTY;
-		final Slot slot = inventorySlots.get(index);
+		final Slot slot = slots.get(index);
 		
-		if (slot != null && slot.getHasStack()) {
-			final ItemStack stack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			final ItemStack stack = slot.getItem();
 			remainingStack = stack.copy();
 			
 			if (index < 97) {
-				if (!mergeItemStack(stack, 97, inventorySlots.size(), true)) {
+				if (!moveItemStackTo(stack, 97, slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
 				if (index >= 124) {
-					if (!mergeItemStack(stack, 0, 124, false)) {
+					if (!moveItemStackTo(stack, 0, 124, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else {
-					if (!mergeItemStack(stack, 0, 97, false)) {
-						if (!mergeItemStack(stack, 124, 133, false)) {
+					if (!moveItemStackTo(stack, 0, 97, false)) {
+						if (!moveItemStackTo(stack, 124, 133, false)) {
 							return ItemStack.EMPTY;
 						}
 					}
@@ -82,40 +82,42 @@ public class TrackBuilderContainer extends UContainer {
 			}
 			
 			if (stack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return remainingStack;
 	}
 	
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickType, PlayerEntity player) {
+	public void clicked(int slotId, int dragType, ClickType clickType, Player player) {
 		Slot tmpSlot;
-		if (slotId >= 0 && slotId < inventorySlots.size()) {
-			tmpSlot = inventorySlots.get(slotId);
+		if (slotId >= 0 && slotId < slots.size()) {
+			tmpSlot = slots.get(slotId);
 		} else {
 			tmpSlot = null;
 		}
 		if (tmpSlot != null) {
-			if (tmpSlot.inventory == player.inventory && tmpSlot.getSlotIndex() == selectedSlot) {
-				return tmpSlot.getStack();
+			if (tmpSlot.container == player.getInventory() && tmpSlot.getSlotIndex() == selectedSlot) {
+				// return tmpSlot.getItem(); // TODO just return??
+				return;
 			}
 		}
 		if (clickType == ClickType.SWAP) {
-			final ItemStack stack = player.inventory.getStackInSlot(dragType);
-			final ItemStack currentItem = PlayerInventory.isHotbar(selectedSlot) ? player.inventory.mainInventory.get(selectedSlot) : selectedSlot == -1 ? player.inventory.offHandInventory.get(0) : ItemStack.EMPTY;
+			final ItemStack stack = player.getInventory().getItem(dragType);
+			final ItemStack currentItem = Inventory.isHotbarSlot(selectedSlot) ? player.getInventory().items.get(selectedSlot) : selectedSlot == -1 ? player.getInventory().offhand.get(0) : ItemStack.EMPTY;
 			
 			if (!currentItem.isEmpty() && stack == currentItem) {
-				return ItemStack.EMPTY;
+				// return ItemStack.EMPTY; // TODO just return??
+				return;
 			}
 		}
-		return super.slotClick(slotId, dragType, clickType, player);
+		super.clicked(slotId, dragType, clickType, player);
 	}
 	
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		if (wrapper instanceof TrackBuilderInventoryWrapper.Server) {
 			final ItemStack stack = ((TrackBuilderInventoryWrapper.Server) wrapper).getStack();
 			return !stack.isEmpty() && stack.getItem() instanceof TrackBuilderItem;

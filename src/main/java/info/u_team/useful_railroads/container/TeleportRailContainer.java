@@ -1,64 +1,65 @@
 package info.u_team.useful_railroads.container;
 
-import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
-import info.u_team.u_team_core.container.UTileEntityContainer;
+import info.u_team.u_team_core.api.sync.DataHolder;
+import info.u_team.u_team_core.menu.UBlockEntityContainerMenu;
 import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
 import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.LogicalSide;
 
-public class TeleportRailContainer extends UTileEntityContainer<TeleportRailTileEntity> {
+public class TeleportRailContainer extends UBlockEntityContainerMenu<TeleportRailTileEntity> {
 	
 	// Client
-	public TeleportRailContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), id, playerInventory, buffer);
+	public TeleportRailContainer(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
+		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), containerId, playerInventory, buffer);
 	}
 	
 	// Server
-	public TeleportRailContainer(int id, PlayerInventory playerInventory, TeleportRailTileEntity tileEntity) {
-		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), id, playerInventory, tileEntity);
+	public TeleportRailContainer(int containerId, Inventory playerInventory, TeleportRailTileEntity blockEntity) {
+		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), containerId, playerInventory, blockEntity);
 	}
 	
 	@Override
-	protected void init(boolean server) {
-		appendInventory(tileEntity.getFuelSlot(), FuelItemSlotHandler::new, 1, 1, 152, 75);
-		appendPlayerInventory(playerInventory, 8, 107);
-		addServerToClientTracker(BufferReferenceHolder.createIntHolder(getTileEntity()::getFuel, getTileEntity()::setFuel));
+	protected void init(LogicalSide side) {
+		addSlots(blockEntity.getFuelSlot(), FuelItemSlotHandler::new, 1, 1, 152, 75);
+		addPlayerInventory(playerInventory, 8, 107);
+		addDataHolderToClient(DataHolder.createIntHolder(getBlockEntity()::getFuel, getBlockEntity()::setFuel));
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack remainingStack = ItemStack.EMPTY;
-		final Slot slot = inventorySlots.get(index);
+		final Slot slot = slots.get(index);
 		
-		if (slot != null && slot.getHasStack()) {
-			final ItemStack stack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			final ItemStack stack = slot.getItem();
 			remainingStack = stack.copy();
 			
 			if (index >= 1) {
-				if (mergeItemStack(stack, 0, 1, false)) {
+				if (moveItemStackTo(stack, 0, 1, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			
 			if (index >= 1 && index <= 27) {
-				if (!mergeItemStack(stack, 28, 37, false)) {
+				if (!moveItemStackTo(stack, 28, 37, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index >= 28 && index <= 36) {
-				if (!mergeItemStack(stack, 1, 28, false)) {
+				if (!moveItemStackTo(stack, 1, 28, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			
 			if (stack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return remainingStack;
