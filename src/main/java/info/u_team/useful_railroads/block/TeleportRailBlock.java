@@ -43,10 +43,7 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
 	@Override
 	public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-		if (level.isClientSide) {
-			return;
-		}
-		if (!state.getValue(PoweredRailBlock.POWERED)) {
+		if (level.isClientSide || !state.getValue(PoweredRailBlock.POWERED)) {
 			return;
 		}
 		getBlockEntity(level, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(pos, cart));

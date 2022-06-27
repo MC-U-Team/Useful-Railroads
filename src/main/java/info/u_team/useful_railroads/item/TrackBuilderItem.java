@@ -38,7 +38,7 @@ public class TrackBuilderItem extends UItem {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		final ItemStack stack = player.getItemInHand(hand);
-		if (!level.isClientSide && !player.isShiftKeyDown() && player instanceof ServerPlayer serverPlayer) { // Server & Player not sneaking
+		if (!level.isClientSide && !player.isShiftKeyDown() && player instanceof final ServerPlayer serverPlayer) { // Server & Player not sneaking
 			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.level);
 			final int selectedSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : -1;
 			

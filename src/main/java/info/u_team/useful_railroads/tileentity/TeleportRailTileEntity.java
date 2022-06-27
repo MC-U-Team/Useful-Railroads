@@ -80,7 +80,7 @@ public class TeleportRailTileEntity extends UBlockEntity implements MenuSyncedBl
 		
 		// Check fuel
 		if (fuel < cost) {
-			if (entity instanceof Player player) {
+			if (entity instanceof final Player player) {
 				player.displayClientMessage(Component.translatable("block.usefulrailroads.teleport_rail.not_enough_fuel", cost).withStyle(ChatFormatting.RED), true);
 			}
 			return;

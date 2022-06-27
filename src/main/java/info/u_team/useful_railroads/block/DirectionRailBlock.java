@@ -76,8 +76,8 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 				if (placing || level.getBlockState(pos) != state) {
 					level.setBlock(pos, state, 3);
 					
-					for (int i = 0; i < connections.size(); ++i) {
-						final RailState railstate = getRail(connections.get(i));
+					for (final BlockPos connection : connections) {
+						final RailState railstate = getRail(connection);
 						if (railstate != null) {
 							railstate.removeSoftConnections();
 							if (railstate.canConnectTo(this)) {

@@ -117,7 +117,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof AbstractMinecart cart) {
+		if (context instanceof final EntityCollisionContext entityContext && entityContext.getEntity() instanceof final AbstractMinecart cart) {
 			final Vec3 motion = cart.getDeltaMovement();
 			
 			final Direction oppositeDirection = state.getValue(FACING).getOpposite();
