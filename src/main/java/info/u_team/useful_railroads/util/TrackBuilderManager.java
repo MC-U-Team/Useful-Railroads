@@ -9,7 +9,6 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 import com.google.common.base.Predicates;
-import com.mojang.math.Vector3d;
 
 import info.u_team.useful_railroads.inventory.BlockTagItemStackHandler;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
@@ -30,6 +29,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class TrackBuilderManager {
 	
@@ -50,7 +50,7 @@ public abstract class TrackBuilderManager {
 	protected final Set<BlockPos> tunnelSet = new HashSet<>();
 	protected final Set<BlockPos> torchSet = new HashSet<>();
 	
-	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode) {
+	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vec3 lookVector, TrackBuilderMode mode) {
 		this.level = level;
 		direction = Direction.getNearest(lookVector.x, lookVector.y, lookVector.z);
 		
@@ -195,7 +195,7 @@ public abstract class TrackBuilderManager {
 		return pos;
 	}
 	
-	public static Optional<TrackBuilderManager> create(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode, boolean doubleTrack) {
+	public static Optional<TrackBuilderManager> create(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vec3 lookVector, TrackBuilderMode mode, boolean doubleTrack) {
 		final TrackBuilderManager manager = doubleTrack ? new DoubleTrackBuilderManager(rayTracePos, rayTraceFace, level, lookVector, mode) : new SingleTrackBuilderManager(rayTracePos, rayTraceFace, level, lookVector, mode);
 		if (manager.direction.getAxis().isHorizontal()) {
 			manager.calculateBlockPosition();
@@ -206,7 +206,7 @@ public abstract class TrackBuilderManager {
 	
 	private static class SingleTrackBuilderManager extends TrackBuilderManager {
 		
-		private SingleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode) {
+		private SingleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vec3 lookVector, TrackBuilderMode mode) {
 			super(rayTracePos, rayTraceFace, level, lookVector, mode);
 		}
 		
@@ -265,7 +265,7 @@ public abstract class TrackBuilderManager {
 	
 	private static class DoubleTrackBuilderManager extends TrackBuilderManager {
 		
-		private DoubleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode) {
+		private DoubleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vec3 lookVector, TrackBuilderMode mode) {
 			super(rayTracePos, rayTraceFace, level, lookVector, mode);
 		}
 		

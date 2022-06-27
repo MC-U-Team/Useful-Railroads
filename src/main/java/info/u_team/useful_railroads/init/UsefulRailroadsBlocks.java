@@ -9,7 +9,7 @@ import info.u_team.useful_railroads.block.HighSpeedRailBlock;
 import info.u_team.useful_railroads.block.IntersectionRailBlock;
 import info.u_team.useful_railroads.block.SpeedClampRailBlock;
 import info.u_team.useful_railroads.block.TeleportRailBlock;
-import net.minecraft.item.BlockItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class UsefulRailroadsBlocks {

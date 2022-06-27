@@ -8,15 +8,14 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_R
 import info.u_team.u_team_core.util.ModelUtil;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PoweredRailBlock;
-import net.minecraft.client.renderer.model.ModelBakery;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PoweredRailBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.RailShape;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -24,12 +23,12 @@ public class UsefulRailroadsModels {
 	
 	private static void setup(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.get().getRegistryName(), (new StateContainer.Builder<Block, BlockState>(HIGHSPEED_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
-			ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.get().getRegistryName(), (new StateContainer.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
-			ModelUtil.addCustomStateContainer(DIRECTION_RAIL.get().getRegistryName(), (new StateContainer.Builder<Block, BlockState>(DIRECTION_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(Block::defaultBlockState, BlockState::new));
-			ModelUtil.addCustomStateContainer(TELEPORT_RAIL.get().getRegistryName(), (new StateContainer.Builder<Block, BlockState>(TELEPORT_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(HIGHSPEED_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(DIRECTION_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(TELEPORT_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(TELEPORT_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
 			
-			ModelBakery.UNREFERENCED_TEXTURES.add(new RenderMaterial(new ResourceLocation("textures/atlas/blocks.png"), new ResourceLocation(UsefulRailroadsMod.MODID, "item/empty_fuel_slot")));
+			ModelUtil.addTexture(ForgeHooksClient.getBlockMaterial(new ResourceLocation(UsefulRailroadsMod.MODID, "item/empty_fuel_slot")));
 		});
 	}
 	
