@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.inventory;
 
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.ContainerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class FixedSizeItemStackHandler extends ItemStackHandler {
@@ -16,15 +16,15 @@ public class FixedSizeItemStackHandler extends ItemStackHandler {
 	}
 	
 	@Override
-	public CompoundNBT serializeNBT() {
-		final CompoundNBT compound = new CompoundNBT();
-		ItemStackHelper.saveAllItems(compound, stacks, false);
+	public CompoundTag serializeNBT() {
+		final CompoundTag compound = new CompoundTag();
+		ContainerHelper.saveAllItems(compound, stacks, false);
 		return compound;
 	}
 	
 	@Override
-	public void deserializeNBT(CompoundNBT compound) {
-		ItemStackHelper.loadAllItems(compound, stacks);
+	public void deserializeNBT(CompoundTag compound) {
+		ContainerHelper.loadAllItems(compound, stacks);
 		onLoad();
 	}
 }

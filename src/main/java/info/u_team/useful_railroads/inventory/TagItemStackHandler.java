@@ -1,14 +1,14 @@
 package info.u_team.useful_railroads.inventory;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class TagItemStackHandler extends FixedSizeItemStackHandler {
 	
-	private final ITag<Item> tag;
+	private final TagKey<Item> tag;
 	
-	public TagItemStackHandler(ITag<Item> tag, int size) {
+	public TagItemStackHandler(TagKey<Item> tag, int size) {
 		super(size);
 		this.tag = tag;
 	}
@@ -19,6 +19,6 @@ public class TagItemStackHandler extends FixedSizeItemStackHandler {
 	}
 	
 	public boolean getCondition(ItemStack stack) {
-		return stack.getItem().isIn(tag);
+		return stack.is(tag);
 	}
 }

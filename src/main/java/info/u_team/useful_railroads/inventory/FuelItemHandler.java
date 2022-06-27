@@ -6,18 +6,17 @@ import java.util.function.IntConsumer;
 import java.util.function.Supplier;
 
 import info.u_team.useful_railroads.recipe.FuelRecipe;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.world.World;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifiable {
 	
-	private final IRecipeType<T> recipeType;
+	private final RecipeType<T> recipeType;
 	
-	private final Supplier<World> worldSupplier;
+	private final Supplier<Level> levelSupplier;
 	
 	private final BooleanSupplier canAddFuel;
 	private final IntConsumer fuelAdder;
@@ -25,20 +24,20 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 	private T currentRecipe;
 	private ItemStack failedMatch = ItemStack.EMPTY;
 	
-	public FuelItemHandler(IRecipeType<T> recipeType, Supplier<World> worldSupplier, IntConsumer fuelAdder) {
-		this(recipeType, worldSupplier, () -> true, fuelAdder);
+	public FuelItemHandler(RecipeType<T> recipeType, Supplier<Level> levelSupplier, IntConsumer fuelAdder) {
+		this(recipeType, levelSupplier, () -> true, fuelAdder);
 	}
 	
-	public FuelItemHandler(IRecipeType<T> recipeType, Supplier<World> worldSupplier, BooleanSupplier canAddFuel, IntConsumer fuelAdder) {
+	public FuelItemHandler(RecipeType<T> recipeType, Supplier<Level> levelSupplier, BooleanSupplier canAddFuel, IntConsumer fuelAdder) {
 		this.recipeType = recipeType;
-		this.worldSupplier = worldSupplier;
+		this.levelSupplier = levelSupplier;
 		this.canAddFuel = canAddFuel;
 		this.fuelAdder = fuelAdder;
 	}
 	
 	@Override
 	public boolean isItemValid(int slot, ItemStack stack) {
-		return canAddFuel.getAsBoolean() && getRecipe(stack, worldSupplier.get()).isPresent();
+		return canAddFuel.getAsBoolean() && getRecipe(stack, levelSupplier.get()).isPresent();
 	}
 	
 	@Override
@@ -78,20 +77,20 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 	
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		final World world = worldSupplier.get();
-		if (!world.isRemote) {
+		final Level world = levelSupplier.get();
+		if (!world.isClientSide) {
 			getRecipe(stack, world).ifPresent(recipe -> fuelAdder.accept(stack.getCount() * recipe.getFuel()));
 		}
 	}
 	
-	private Optional<T> getRecipe(ItemStack stack, World world) {
-		final IInventory inventory = new Inventory(stack);
+	private Optional<T> getRecipe(ItemStack stack, Level world) {
+		final SimpleContainer inventory = new SimpleContainer(stack);
 		if (stack.isEmpty() || stack == failedMatch)
 			return Optional.empty();
 		if (currentRecipe != null && currentRecipe.matches(inventory, world)) {
 			return Optional.of(currentRecipe);
 		} else {
-			final T recipe = world.getRecipeManager().getRecipe(recipeType, inventory, world).orElse(null);
+			final T recipe = world.getRecipeManager().getRecipeFor(recipeType, inventory, world).orElse(null);
 			if (recipe == null) {
 				failedMatch = stack;
 			} else {

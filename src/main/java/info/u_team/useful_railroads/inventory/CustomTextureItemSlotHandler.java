@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.inventory;
 
-import info.u_team.u_team_core.container.ItemSlot;
-import net.minecraft.util.ResourceLocation;
+import info.u_team.u_team_core.menu.ItemSlot;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 
 public class CustomTextureItemSlotHandler extends ItemSlot {

@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.inventory;
 
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 
 public class FuelItemSlotHandler extends CustomTextureItemSlotHandler {

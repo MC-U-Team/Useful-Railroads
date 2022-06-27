@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
 import info.u_team.useful_railroads.init.UsefulRailroadsTags;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -25,8 +25,8 @@ public class TrackBuilderInventoryWrapper {
 	
 	protected TrackBuilderMode mode = TrackBuilderMode.MODE_NOAIR;
 	
-	private TrackBuilderInventoryWrapper(Supplier<World> worldSupplier) {
-		fuelInventory = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL, worldSupplier, fuelAdder -> fuel += fuelAdder);
+	private TrackBuilderInventoryWrapper(Supplier<Level> levelSupplier) {
+		fuelInventory = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL.get(), levelSupplier, fuelAdder -> fuel += fuelAdder);
 	}
 	
 	public BlockTagItemStackHandler getRailInventory() {
@@ -77,8 +77,8 @@ public class TrackBuilderInventoryWrapper {
 	
 	public static class Client extends TrackBuilderInventoryWrapper {
 		
-		public Client(int fuel, TrackBuilderMode mode, Supplier<World> worldSupplier) {
-			super(worldSupplier);
+		public Client(int fuel, TrackBuilderMode mode, Supplier<Level> levelSupplier) {
+			super(levelSupplier);
 			this.fuel = fuel;
 			this.mode = mode;
 		}
@@ -89,8 +89,8 @@ public class TrackBuilderInventoryWrapper {
 		
 		private final ItemStack stack;
 		
-		public Server(ItemStack stack, Supplier<World> worldSupplier) {
-			super(worldSupplier);
+		public Server(ItemStack stack, Supplier<Level> levelSupplier) {
+			super(levelSupplier);
 			this.stack = stack;
 			readItemStack();
 		}
@@ -103,7 +103,7 @@ public class TrackBuilderInventoryWrapper {
 			readItemHandler(redstoneTorchInventory, "redstone_torch");
 			readItemHandler(torchInventory, "torch");
 			
-			final CompoundNBT compound = stack.getTag();
+			final CompoundTag compound = stack.getTag();
 			if (compound != null) {
 				fuel = compound.getInt("fuel");
 				mode = TrackBuilderMode.byName(compound.getString("mode"));
@@ -119,20 +119,20 @@ public class TrackBuilderInventoryWrapper {
 			writeItemHandler(torchInventory, "torch");
 			
 			if (fuel > 0) {
-				final CompoundNBT compound = stack.getOrCreateTag();
+				final CompoundTag compound = stack.getOrCreateTag();
 				compound.putInt("fuel", fuel);
 			} else {
-				final CompoundNBT compound = stack.getTag();
+				final CompoundTag compound = stack.getTag();
 				if (compound != null) {
 					compound.remove("fuel");
 				}
 			}
 			
 			if (mode != TrackBuilderMode.MODE_NOAIR) {
-				final CompoundNBT compound = stack.getOrCreateTag();
+				final CompoundTag compound = stack.getOrCreateTag();
 				compound.putString("mode", mode.getName());
 			} else {
-				final CompoundNBT compound = stack.getTag();
+				final CompoundTag compound = stack.getTag();
 				if (compound != null) {
 					compound.remove("mode");
 				}
@@ -140,7 +140,7 @@ public class TrackBuilderInventoryWrapper {
 		}
 		
 		private void readItemHandler(ItemStackHandler handler, String childCompoundName) {
-			final CompoundNBT childCompound = stack.getChildTag(childCompoundName);
+			final CompoundTag childCompound = stack.getTagElement(childCompoundName);
 			if (childCompound != null) {
 				handler.deserializeNBT(childCompound);
 			}
@@ -148,7 +148,7 @@ public class TrackBuilderInventoryWrapper {
 		
 		private void writeItemHandler(ItemStackHandler handler, String childCompoundName) {
 			if (IntStream.range(0, handler.getSlots()).mapToObj(handler::getStackInSlot).allMatch(ItemStack::isEmpty)) {
-				stack.removeChildTag(childCompoundName);
+				stack.removeTagKey(childCompoundName);
 			} else {
 				stack.getOrCreateTag().put(childCompoundName, handler.serializeNBT());
 			}

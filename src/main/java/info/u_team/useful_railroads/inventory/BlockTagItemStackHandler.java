@@ -1,13 +1,13 @@
 package info.u_team.useful_railroads.inventory;
 
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class BlockTagItemStackHandler extends TagItemStackHandler {
 	
-	public BlockTagItemStackHandler(ITag<Item> tag, int size) {
+	public BlockTagItemStackHandler(TagKey<Item> tag, int size) {
 		super(tag, size);
 	}
 	
