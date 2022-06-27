@@ -2,33 +2,34 @@ package info.u_team.useful_railroads.handler;
 
 import java.util.Collection;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.client.event.DrawHighlightEvent.HighlightBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraftforge.client.event.DrawSelectionEvent.HighlightBlock;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class DrawTrackBuilderSelectionEventHandler {
 	
 	private static void onBlockHighlight(HighlightBlock event) {
-		final PlayerEntity player = Minecraft.getInstance().player;
-		final ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
+		final Player player = Minecraft.getInstance().player;
+		final ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 		
 		if (!(stack.getItem() instanceof TrackBuilderItem)) {
 			return;
@@ -36,7 +37,7 @@ public class DrawTrackBuilderSelectionEventHandler {
 		
 		final boolean doubleTrack = ((TrackBuilderItem) stack.getItem()).isDoubleTrack();
 		
-		if (event.getTarget().getType() != RayTraceResult.Type.BLOCK) {
+		if (event.getTarget().getType() != HitResult.Type.BLOCK) {
 			return;
 		}
 		
@@ -47,12 +48,12 @@ public class DrawTrackBuilderSelectionEventHandler {
 			mode = TrackBuilderMode.MODE_NOAIR;
 		}
 		
-		final BlockRayTraceResult rayTraceResult = event.getTarget();
+		final BlockHitResult rayTraceResult = event.getTarget();
 		
-		TrackBuilderManager.create(rayTraceResult.getPos(), rayTraceResult.getFace(), player.world, new Vector3d(event.getInfo().getViewVector()), mode, doubleTrack).ifPresent(manager -> {
+		TrackBuilderManager.create(rayTraceResult.getBlockPos(), rayTraceResult.getDirection(), player.level, new Vec3(event.getCamera().getLookVector()), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
 			final int blue;
-			if (player.isSneaking()) {
+			if (player.isShiftKeyDown()) {
 				red = 1;
 				blue = 0;
 			} else {
@@ -60,25 +61,25 @@ public class DrawTrackBuilderSelectionEventHandler {
 				blue = 1;
 			}
 			
-			final MatrixStack matrixStack = event.getMatrix();
+			final PoseStack poseStack = event.getPoseStack();
 			
-			final Vector3d projectedView = event.getInfo().getProjectedView();
+			final Vec3 projectedView = event.getCamera().getPosition();
 			
-			final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-			final IVertexBuilder builder = buffer.getBuffer(RenderType.getLines());
+			final BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+			final VertexConsumer builder = buffer.getBuffer(RenderType.lines());
 			
-			drawSelectionBox(matrixStack, builder, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);
-			drawSelectionBox(matrixStack, builder, projectedView, manager.getFirstRailPos(), 0, 1, 0, 1);
+			drawSelectionBox(poseStack, builder, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);
+			drawSelectionBox(poseStack, builder, projectedView, manager.getFirstRailPos(), 0, 1, 0, 1);
 			
-			buffer.finish();
+			buffer.endBatch();
 			
 			event.setCanceled(true);
 		});
 	}
 	
-	public static void drawSelectionBox(MatrixStack matrixStack, IVertexBuilder builder, Vector3d projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
+	public static void drawSelectionBox(PoseStack matrixStack, VertexConsumer builder, Vec3 projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
 		posList.forEach(pos -> {
-			WorldRenderer.drawShape(matrixStack, builder, VoxelShapes.fullCube(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
+			LevelRenderer.renderShape(matrixStack, builder, Shapes.block(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 		});
 	}
 	
