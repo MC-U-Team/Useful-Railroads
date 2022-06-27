@@ -1,76 +1,74 @@
 package info.u_team.useful_railroads.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import info.u_team.u_team_core.gui.elements.ScalableButton;
-import info.u_team.u_team_core.screen.UBasicContainerScreen;
+import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TrackBuilderContainer;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
-public class TrackBuilderScreen extends UBasicContainerScreen<TrackBuilderContainer> {
+public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderContainer> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/track_builder.png");
 	
-	private final ITextComponent modeTextComponent;
-	private final ITextComponent railsTextComponent;
-	private final ITextComponent groundBlocksTextComponent;
-	private final ITextComponent tunnelBlocksTextComponent;
-	private final ITextComponent redstoneTorchesTextComponent;
-	private final ITextComponent torchesTextComponent;
-	private final ITextComponent fuelTextComponent;
+	private final Component modeTextComponent;
+	private final Component railsTextComponent;
+	private final Component groundBlocksTextComponent;
+	private final Component tunnelBlocksTextComponent;
+	private final Component redstoneTorchesTextComponent;
+	private final Component torchesTextComponent;
+	private final Component fuelTextComponent;
 	
-	public TrackBuilderScreen(TrackBuilderContainer container, PlayerInventory playerInventory, ITextComponent title) {
+	public TrackBuilderScreen(TrackBuilderContainer container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title, BACKGROUND, 284, 296);
 		backgroundWidth = backgroundHeight = 512;
-		setTextLocation(8, 6, 62, ySize - 94);
+		setTextLocation(8, 6, 62, imageHeight - 94);
 		
 		final String langKey = "container.usefulrailroads.track_builder.";
 		
-		modeTextComponent = new TranslationTextComponent(langKey + "mode");
-		railsTextComponent = new TranslationTextComponent(langKey + "rails");
-		groundBlocksTextComponent = new TranslationTextComponent(langKey + "ground_blocks");
-		tunnelBlocksTextComponent = new TranslationTextComponent(langKey + "tunnel_blocks");
-		redstoneTorchesTextComponent = new TranslationTextComponent(langKey + "redstone_torches");
-		torchesTextComponent = new TranslationTextComponent(langKey + "torches");
-		fuelTextComponent = new TranslationTextComponent(langKey + "fuel");
+		modeTextComponent = Component.translatable(langKey + "mode");
+		railsTextComponent = Component.translatable(langKey + "rails");
+		groundBlocksTextComponent = Component.translatable(langKey + "ground_blocks");
+		tunnelBlocksTextComponent = Component.translatable(langKey + "tunnel_blocks");
+		redstoneTorchesTextComponent = Component.translatable(langKey + "redstone_torches");
+		torchesTextComponent = Component.translatable(langKey + "torches");
+		fuelTextComponent = Component.translatable(langKey + "fuel");
 	}
 	
 	@Override
 	protected void init() {
 		super.init();
 		
-		addButton(new ScalableButton(guiLeft + 169, guiTop + 16, 108, 11, ITextComponent.getTextComponentOrEmpty(null), 0.7F, button -> {
-			container.getChangeModeMessage().triggerMessage();
+		addRenderableWidget(new ScalableButton(leftPos + 169, topPos + 16, 108, 11, Component.nullToEmpty(null), 0.7F, button -> {
+			menu.getChangeModeMessage().triggerMessage();
 		}) {
 			
 			@Override
-			public ITextComponent getMessage() {
-				return container.getWrapper().getMode().getDisplayComponent();
+			public Component getMessage() {
+				return menu.getWrapper().getMode().getDisplayComponent();
 			}
 		});
 	}
 	
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
+	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+		super.renderLabels(matrixStack, mouseX, mouseY);
 		
-		font.drawText(matrixStack, modeTextComponent, 169, 6, 0x404040);
+		font.draw(matrixStack, modeTextComponent, 169, 6, 0x404040);
 		
-		font.drawText(matrixStack, railsTextComponent, 8, 20, 0x404040);
-		font.drawText(matrixStack, groundBlocksTextComponent, 8, 52, 0x404040);
-		font.drawText(matrixStack, tunnelBlocksTextComponent, 8, 102, 0x404040);
-		font.drawText(matrixStack, redstoneTorchesTextComponent, 8, 170, 0x404040);
-		font.drawText(matrixStack, torchesTextComponent, 116, 170, 0x404040);
+		font.draw(matrixStack, railsTextComponent, 8, 20, 0x404040);
+		font.draw(matrixStack, groundBlocksTextComponent, 8, 52, 0x404040);
+		font.draw(matrixStack, tunnelBlocksTextComponent, 8, 102, 0x404040);
+		font.draw(matrixStack, redstoneTorchesTextComponent, 8, 170, 0x404040);
+		font.draw(matrixStack, torchesTextComponent, 116, 170, 0x404040);
 		
-		final ITextComponent fuelComponent = fuelTextComponent.copyRaw().appendString(": ").appendSibling(new StringTextComponent(Integer.toString(container.getWrapper().getFuel())).mergeStyle(TextFormatting.DARK_AQUA));
+		final Component fuelComponent = fuelTextComponent.plainCopy().append(": ").append(Component.literal(Integer.toString(menu.getWrapper().getFuel())).withStyle(ChatFormatting.DARK_AQUA));
 		
-		font.drawText(matrixStack, fuelComponent, xSize - font.getStringPropertyWidth(fuelComponent) - 6, 170, 0x404040);
+		font.draw(matrixStack, fuelComponent, imageWidth - font.width(fuelComponent) - 6, 170, 0x404040);
 	}
 	
 }

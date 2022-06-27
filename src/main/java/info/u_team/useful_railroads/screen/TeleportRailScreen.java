@@ -1,61 +1,59 @@
 package info.u_team.useful_railroads.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import info.u_team.u_team_core.screen.UBasicContainerScreen;
+import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import info.u_team.useful_railroads.util.Location;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
-public class TeleportRailScreen extends UBasicContainerScreen<TeleportRailContainer> {
+public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailContainer> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
 	
-	private final ITextComponent dimensionTextComponent;
-	private final ITextComponent xTextComponent;
-	private final ITextComponent yTextComponent;
-	private final ITextComponent zTextComponent;
-	private final ITextComponent fuelTextComponent;
-	private final ITextComponent consumptionTextComponent;
-	private final ITextComponent seperatorTextComponent;
+	private final Component dimensionTextComponent;
+	private final Component xTextComponent;
+	private final Component yTextComponent;
+	private final Component zTextComponent;
+	private final Component fuelTextComponent;
+	private final Component consumptionTextComponent;
+	private final Component seperatorTextComponent;
 	
-	public TeleportRailScreen(TeleportRailContainer container, PlayerInventory playerInventory, ITextComponent title) {
+	public TeleportRailScreen(TeleportRailContainer container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title, BACKGROUND, 176, 189);
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
 		
-		dimensionTextComponent = new TranslationTextComponent(langKey + "dimension");
-		xTextComponent = new TranslationTextComponent(langKey + "x");
-		yTextComponent = new TranslationTextComponent(langKey + "y");
-		zTextComponent = new TranslationTextComponent(langKey + "z");
-		fuelTextComponent = new TranslationTextComponent(langKey + "fuel");
-		consumptionTextComponent = new TranslationTextComponent(langKey + "consumption");
-		seperatorTextComponent = new StringTextComponent(": ");
+		dimensionTextComponent = Component.translatable(langKey + "dimension");
+		xTextComponent = Component.translatable(langKey + "x");
+		yTextComponent = Component.translatable(langKey + "y");
+		zTextComponent = Component.translatable(langKey + "z");
+		fuelTextComponent = Component.translatable(langKey + "fuel");
+		consumptionTextComponent = Component.translatable(langKey + "consumption");
+		seperatorTextComponent = Component.literal(": ");
 	}
 	
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
+	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+		super.renderLabels(poseStack, mouseX, mouseY);
 		
-		final TeleportRailTileEntity tileEntity = getContainer().getTileEntity();
+		final TeleportRailTileEntity tileEntity = getMenu().getBlockEntity();
 		final Location location = tileEntity.getLocation();
 		final BlockPos pos = location.getPos();
 		
-		font.drawText(matrixStack, dimensionTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(location.getRegistryKey().getLocation().toString()).mergeStyle(TextFormatting.DARK_GREEN)), 11, 23, 0x404040);
-		font.drawText(matrixStack, xTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(pos.getX())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 33, 0x404040);
-		font.drawText(matrixStack, yTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(pos.getY())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 43, 0x404040);
-		font.drawText(matrixStack, zTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(pos.getZ())).mergeStyle(TextFormatting.DARK_GREEN)), 11, 53, 0x404040);
+		font.draw(poseStack, dimensionTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(location.getResourceKey().location().toString()).withStyle(ChatFormatting.DARK_GREEN)), 11, 23, 0x404040);
+		font.draw(poseStack, xTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getX())).withStyle(ChatFormatting.DARK_GREEN)), 11, 33, 0x404040);
+		font.draw(poseStack, yTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getY())).withStyle(ChatFormatting.DARK_GREEN)), 11, 43, 0x404040);
+		font.draw(poseStack, zTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getZ())).withStyle(ChatFormatting.DARK_GREEN)), 11, 53, 0x404040);
 		
-		font.drawText(matrixStack, fuelTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(tileEntity.getFuel())).mergeStyle(TextFormatting.DARK_AQUA)), 11, 68, 0x404040);
-		font.drawText(matrixStack, consumptionTextComponent.copyRaw().appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(tileEntity.getCost())).mergeStyle(TextFormatting.DARK_RED)), 11, 78, 0x404040);
+		font.draw(poseStack, fuelTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(tileEntity.getFuel())).withStyle(ChatFormatting.DARK_AQUA)), 11, 68, 0x404040);
+		font.draw(poseStack, consumptionTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(tileEntity.getCost())).withStyle(ChatFormatting.DARK_RED)), 11, 78, 0x404040);
 	}
 	
 }
