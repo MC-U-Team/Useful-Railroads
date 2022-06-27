@@ -8,32 +8,32 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import info.u_team.u_team_core.util.Predicates;
+import com.google.common.base.Predicates;
+import com.mojang.math.Vector3d;
+
 import info.u_team.useful_railroads.inventory.BlockTagItemStackHandler;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class TrackBuilderManager {
 	
-	protected final World world;
+	protected final Level level;
 	protected final Direction direction;
 	protected final BlockPos startPos;
 	
@@ -50,42 +50,42 @@ public abstract class TrackBuilderManager {
 	protected final Set<BlockPos> tunnelSet = new HashSet<>();
 	protected final Set<BlockPos> torchSet = new HashSet<>();
 	
-	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode) {
-		this.world = world;
-		direction = Direction.getFacingFromVector(lookVector.x, lookVector.y, lookVector.z);
+	private TrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode) {
+		this.level = level;
+		direction = Direction.getNearest(lookVector.x, lookVector.y, lookVector.z);
 		
 		if (rayTraceFace.getAxis().isHorizontal()) {
-			rayTracePos = rayTracePos.offset(direction.getOpposite());
+			rayTracePos = rayTracePos.relative(direction.getOpposite());
 		}
-		if (!world.getBlockState(rayTracePos).isSolid()) {
-			rayTracePos = rayTracePos.down();
+		if (!level.getBlockState(rayTracePos).canOcclude()) {
+			rayTracePos = rayTracePos.below();
 		}
-		startPos = rayTracePos.toImmutable();
+		startPos = rayTracePos.immutable();
 		this.mode = mode;
 	}
 	
 	public void calculateBlockPosition() {
-		final Direction directionLeft = direction.rotateYCCW();
-		final Direction directionRight = direction.rotateY();
+		final Direction directionLeft = direction.getCounterClockWise();
+		final Direction directionRight = direction.getClockWise();
 		calculate(directionLeft, directionRight);
 		Stream.of(railSet, groundSet, tunnelSet, redstoneTorchSet, torchSet, cobbleSet, airSet).flatMap(Set::stream).forEach(allPositionSet::add);
 	}
 	
 	protected abstract void calculate(Direction directionLeft, Direction directionRight);
 	
-	public void execute(PlayerEntity player, TrackBuilderInventoryWrapper wrapper) {
-		if (world.isRemote || !(world instanceof ServerWorld)) {
+	public void execute(Player player, TrackBuilderInventoryWrapper wrapper) {
+		if (level.isClientSide || !(level instanceof ServerLevel)) {
 			return;
 		}
 		
 		final int cost = calculateCost();
 		if (wrapper.getFuel() < cost) {
-			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_fuel", cost).mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
+			player.sendSystemMessage(Component.translatable("item.usefulrailroads.track_builder.not_enough_fuel", cost).withStyle(ChatFormatting.RED));
 			return;
 		}
 		
 		if (!hasEnoughItems(wrapper.getRailInventory(), railSet) || !hasEnoughItems(wrapper.getGroundInventory(), groundSet) || !hasEnoughItems(wrapper.getTunnelInventory(), tunnelSet) || !hasEnoughItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet) || !hasEnoughItems(wrapper.getTorchInventory(), torchSet)) {
-			player.sendMessage(new TranslationTextComponent("item.usefulrailroads.track_builder.not_enough_blocks").mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
+			player.sendSystemMessage(Component.translatable("item.usefulrailroads.track_builder.not_enough_blocks").withStyle(ChatFormatting.RED));
 			return;
 		}
 		
@@ -97,11 +97,11 @@ public abstract class TrackBuilderManager {
 		final List<ItemStack> redstoneTorchStacks = extractItems(wrapper.getRedstoneTorchInventory(), redstoneTorchSet);
 		final List<ItemStack> torchStacks = extractItems(wrapper.getTorchInventory(), torchSet);
 		
-		final Inventory dropInventory = new Inventory(50);
-		allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).forEach(pos -> destroyBlock(player, pos, dropInventory));
-		InventoryHelper.dropInventoryItems(world, player, dropInventory);
+		final SimpleContainer dropInventory = new SimpleContainer(50);
+		allPositionSet.stream().filter(Predicates.not(level::isEmptyBlock)).forEach(pos -> destroyBlock(player, pos, dropInventory));
+		Containers.dropContents(level, player, dropInventory);
 		
-		cobbleSet.forEach(pos -> placeBlock(pos, Blocks.COBBLESTONE.getDefaultState()));
+		cobbleSet.forEach(pos -> placeBlock(pos, Blocks.COBBLESTONE.defaultBlockState()));
 		redstoneTorchSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(redstoneTorchStacks)));
 		groundSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(groundStacks)));
 		railSet.forEach(pos -> placeItemBlock(pos, ItemHandlerUtil.getOneItemAndRemove(railStacks)));
@@ -113,19 +113,19 @@ public abstract class TrackBuilderManager {
 				final Block torchGround = redstoneTorch ? Blocks.REDSTONE_TORCH : Blocks.TORCH;
 				
 				return Stream.of(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST) //
-						.map(direction -> torchWall.getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, direction)) //
-						.filter(state -> state.isValidPosition(world, pos)) //
+						.map(direction -> torchWall.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, direction)) //
+						.filter(state -> state.canSurvive(level, pos)) //
 						.findAny() //
-						.orElseGet(torchGround::getDefaultState);
+						.orElseGet(torchGround::defaultBlockState);
 			}
-			return block.getDefaultState();
+			return block.defaultBlockState();
 		}));
 		
 		wrapper.writeItemStack();
 	}
 	
 	private void placeItemBlock(BlockPos pos, ItemStack stack) {
-		placeItemBlock(pos, stack, (item, block) -> block.getDefaultState()); // Use default state normally
+		placeItemBlock(pos, stack, (item, block) -> block.defaultBlockState()); // Use default state normally
 	}
 	
 	private void placeItemBlock(BlockPos pos, ItemStack stack, BiFunction<Item, Block, BlockState> function) {
@@ -134,7 +134,7 @@ public abstract class TrackBuilderManager {
 		}
 		final Block block = ((BlockItem) stack.getItem()).getBlock();
 		placeBlock(pos, function.apply(stack.getItem(), block));
-		BlockItem.setTileEntityNBT(world, null, pos, stack);
+		BlockItem.updateCustomBlockEntityTag(level, null, pos, stack);
 	}
 	
 	private boolean placeBlock(BlockPos pos, BlockState state) {
@@ -142,26 +142,26 @@ public abstract class TrackBuilderManager {
 	}
 	
 	private boolean placeBlock(BlockPos pos, BlockState state, int flag) {
-		final boolean blockSnapshotValue = world.captureBlockSnapshots;
-		world.captureBlockSnapshots = false; // Disable capture block snapshots here because else the client will not receive updates
-		final boolean placed = world.setBlockState(pos, state, flag);
-		world.captureBlockSnapshots = blockSnapshotValue;
+		final boolean blockSnapshotValue = level.captureBlockSnapshots;
+		level.captureBlockSnapshots = false; // Disable capture block snapshots here because else the client will not receive updates
+		final boolean placed = level.setBlock(pos, state, flag);
+		level.captureBlockSnapshots = blockSnapshotValue;
 		return placed;
 	}
 	
-	private void destroyBlock(PlayerEntity player, BlockPos pos, Inventory inventory) {
-		final BlockState state = world.getBlockState(pos);
-		final int exp = state.getExpDrop(world, pos, 0, 0);
+	private void destroyBlock(Player player, BlockPos pos, SimpleContainer inventory) {
+		final BlockState state = level.getBlockState(pos);
+		final int exp = state.getExpDrop(level, player.getRandom(), pos, 0, 0);
 		
-		if (placeBlock(pos, Blocks.AIR.getDefaultState())) { // Normally we place the fluid state but we don't want fluids here
-			if (world instanceof ServerWorld) {
-				Block.getDrops(state, (ServerWorld) world, pos, world.getTileEntity(pos)).stream() //
+		if (placeBlock(pos, Blocks.AIR.defaultBlockState())) { // Normally we place the fluid state but we don't want fluids here
+			if (level instanceof ServerLevel) {
+				Block.getDrops(state, (ServerLevel) level, pos, level.getBlockEntity(pos)).stream() //
 						.map(inventory::addItem) //
 						.filter(Predicates.not(ItemStack::isEmpty)) //
-						.forEach(stack -> Block.spawnAsEntity(world, pos, stack));
-				state.spawnAdditionalDrops((ServerWorld) world, player.getPosition(), ItemStack.EMPTY);
+						.forEach(stack -> Block.popResource(level, pos, stack));
+				state.spawnAfterBreak((ServerLevel) level, player.blockPosition(), ItemStack.EMPTY, true /* TODO TRUE?? */);
 				if (exp > 0) {
-					state.getBlock().dropXpOnBlockBreak((ServerWorld) world, player.getPosition(), exp);
+					state.getBlock().popExperience((ServerLevel) level, player.blockPosition(), exp);
 				}
 			}
 		}
@@ -176,7 +176,7 @@ public abstract class TrackBuilderManager {
 	}
 	
 	private int calculateCost() {
-		final int breakCount = (int) allPositionSet.stream().filter(Predicates.not(world::isAirBlock)).count();
+		final int breakCount = (int) allPositionSet.stream().filter(Predicates.not(level::isEmptyBlock)).count();
 		final int placeCount = allPositionSet.size() - airSet.size();
 		
 		return breakCount * 2 + placeCount;
@@ -195,8 +195,8 @@ public abstract class TrackBuilderManager {
 		return pos;
 	}
 	
-	public static Optional<TrackBuilderManager> create(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode, boolean doubleTrack) {
-		final TrackBuilderManager manager = doubleTrack ? new DoubleTrackBuilderManager(rayTracePos, rayTraceFace, world, lookVector, mode) : new SingleTrackBuilderManager(rayTracePos, rayTraceFace, world, lookVector, mode);
+	public static Optional<TrackBuilderManager> create(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode, boolean doubleTrack) {
+		final TrackBuilderManager manager = doubleTrack ? new DoubleTrackBuilderManager(rayTracePos, rayTraceFace, level, lookVector, mode) : new SingleTrackBuilderManager(rayTracePos, rayTraceFace, level, lookVector, mode);
 		if (manager.direction.getAxis().isHorizontal()) {
 			manager.calculateBlockPosition();
 			return Optional.of(manager);
@@ -206,48 +206,48 @@ public abstract class TrackBuilderManager {
 	
 	private static class SingleTrackBuilderManager extends TrackBuilderManager {
 		
-		private SingleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode) {
-			super(rayTracePos, rayTraceFace, world, lookVector, mode);
+		private SingleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode) {
+			super(rayTracePos, rayTraceFace, level, lookVector, mode);
 		}
 		
 		@Override
 		protected void calculate(Direction directionLeft, Direction directionRight) {
 			// Rails
-			BlockPos.getAllInBox(addFirstRail(startPos.offset(direction).up()), startPos.offset(direction, 17).up()) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(addFirstRail(startPos.relative(direction).above()), startPos.relative(direction, 17).above()) //
+					.map(BlockPos::immutable) //
 					.forEach(railSet::add);
 			
 			// Redstone torch
-			redstoneTorchSet.add(startPos.offset(direction, 9).down().toImmutable());
+			redstoneTorchSet.add(startPos.relative(direction, 9).below().immutable());
 			
 			// Ground blocks
-			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft), startPos.offset(direction, 17).offset(directionRight)) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft), startPos.relative(direction, 17).relative(directionRight)) //
+					.map(BlockPos::immutable) //
 					.forEach(groundSet::add);
 			
 			// Cobblestone ground
-			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft).down(), startPos.offset(direction, 17).offset(directionRight).down(2)) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft).below(), startPos.relative(direction, 17).relative(directionRight).below(2)) //
+					.map(BlockPos::immutable) //
 					.filter(Predicates.not(redstoneTorchSet::contains)) //
 					.forEach(cobbleSet::add);
 			
 			if (mode.isFullTunnel()) {
 				// Air blocks (without removed blocks still)
-				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 1).up(), startPos.offset(direction, 17).offset(directionRight, 1).up(4)) //
-						.map(BlockPos::toImmutable) //
+				BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, 1).above(), startPos.relative(direction, 17).relative(directionRight, 1).above(4)) //
+						.map(BlockPos::immutable) //
 						.forEach(airSet::add);
 				
 				// Tunnel blocks
-				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2).up(), startPos.offset(direction, 17).offset(directionRight, 2).up(5)) //
-						.map(BlockPos::toImmutable) //
+				BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, 2).above(), startPos.relative(direction, 17).relative(directionRight, 2).above(5)) //
+						.map(BlockPos::immutable) //
 						.filter(Predicates.not(airSet::contains)) //
 						.forEach(tunnelSet::add);
 				
 				// Torch blocks
-				torchSet.add(startPos.offset(direction, 9 - 4).up(3).offset(directionLeft, 1).toImmutable());
-				torchSet.add(startPos.offset(direction, 9 + 4).up(3).offset(directionLeft, 1).toImmutable());
-				torchSet.add(startPos.offset(direction, 9 - 4).up(3).offset(directionRight, 1).toImmutable());
-				torchSet.add(startPos.offset(direction, 9 + 4).up(3).offset(directionRight, 1).toImmutable());
+				torchSet.add(startPos.relative(direction, 9 - 4).above(3).relative(directionLeft, 1).immutable());
+				torchSet.add(startPos.relative(direction, 9 + 4).above(3).relative(directionLeft, 1).immutable());
+				torchSet.add(startPos.relative(direction, 9 - 4).above(3).relative(directionRight, 1).immutable());
+				torchSet.add(startPos.relative(direction, 9 + 4).above(3).relative(directionRight, 1).immutable());
 				
 				// Remove replaced blocks from air blocks
 				airSet.removeAll(torchSet);
@@ -255,8 +255,8 @@ public abstract class TrackBuilderManager {
 				
 			} else if (!mode.isNoTunnel()) {
 				// Air blocks
-				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, mode.getDistanceSide()).up(), startPos.offset(direction, 17).offset(directionRight, mode.getDistanceSide()).up(mode.getDistanceUp())) //
-						.map(BlockPos::toImmutable) //
+				BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, mode.getDistanceSide()).above(), startPos.relative(direction, 17).relative(directionRight, mode.getDistanceSide()).above(mode.getDistanceUp())) //
+						.map(BlockPos::immutable) //
 						.filter(Predicates.not(railSet::contains)) //
 						.forEach(airSet::add);
 			}
@@ -265,61 +265,61 @@ public abstract class TrackBuilderManager {
 	
 	private static class DoubleTrackBuilderManager extends TrackBuilderManager {
 		
-		private DoubleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, World world, Vector3d lookVector, TrackBuilderMode mode) {
-			super(rayTracePos, rayTraceFace, world, lookVector, mode);
+		private DoubleTrackBuilderManager(BlockPos rayTracePos, Direction rayTraceFace, Level level, Vector3d lookVector, TrackBuilderMode mode) {
+			super(rayTracePos, rayTraceFace, level, lookVector, mode);
 		}
 		
 		@Override
 		protected void calculate(Direction directionLeft, Direction directionRight) {
 			// Left rails
-			BlockPos.getAllInBox(addFirstRail(startPos.offset(direction).offset(directionLeft).up()), startPos.offset(direction, 17).offset(directionLeft).up()) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(addFirstRail(startPos.relative(direction).relative(directionLeft).above()), startPos.relative(direction, 17).relative(directionLeft).above()) //
+					.map(BlockPos::immutable) //
 					.forEach(railSet::add);
 			
 			// Left redstone torch
-			redstoneTorchSet.add(startPos.offset(direction, 9).offset(directionLeft).down().toImmutable());
+			redstoneTorchSet.add(startPos.relative(direction, 9).relative(directionLeft).below().immutable());
 			
 			// Right rails
-			BlockPos.getAllInBox(addFirstRail(startPos.offset(direction).offset(directionRight).up()), startPos.offset(direction, 17).offset(directionRight).up()) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(addFirstRail(startPos.relative(direction).relative(directionRight).above()), startPos.relative(direction, 17).relative(directionRight).above()) //
+					.map(BlockPos::immutable) //
 					.forEach(railSet::add);
 			
 			// Right redstone torch
-			redstoneTorchSet.add(startPos.offset(direction, 9).offset(directionRight).down().toImmutable());
+			redstoneTorchSet.add(startPos.relative(direction, 9).relative(directionRight).below().immutable());
 			
 			// Ground blocks
-			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2), startPos.offset(direction, 17).offset(directionRight, 2)) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, 2), startPos.relative(direction, 17).relative(directionRight, 2)) //
+					.map(BlockPos::immutable) //
 					.forEach(groundSet::add);
 			
 			// Cobblestone ground
-			BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2).down(), startPos.offset(direction, 17).offset(directionRight, 2).down(2)) //
-					.map(BlockPos::toImmutable) //
+			BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, 2).below(), startPos.relative(direction, 17).relative(directionRight, 2).below(2)) //
+					.map(BlockPos::immutable) //
 					.filter(Predicates.not(redstoneTorchSet::contains)) //
 					.forEach(cobbleSet::add);
 			
 			if (mode.isFullTunnel()) {
 				// Air blocks (without removed blocks still)
-				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 2).up(), startPos.offset(direction, 17).offset(directionRight, 2).up(4)) //
-						.map(BlockPos::toImmutable) //
+				BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, 2).above(), startPos.relative(direction, 17).relative(directionRight, 2).above(4)) //
+						.map(BlockPos::immutable) //
 						.forEach(airSet::add);
 				
 				// Tunnel blocks
-				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, 3).up(), startPos.offset(direction, 17).offset(directionRight, 3).up(5)) //
-						.map(BlockPos::toImmutable) //
+				BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, 3).above(), startPos.relative(direction, 17).relative(directionRight, 3).above(5)) //
+						.map(BlockPos::immutable) //
 						.filter(Predicates.not(airSet::contains)) //
 						.forEach(tunnelSet::add);
 				
 				// Torch blocks
-				torchSet.add(startPos.offset(direction, 3).up(3).offset(directionLeft, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 7).up(3).offset(directionLeft, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 11).up(3).offset(directionLeft, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 15).up(3).offset(directionLeft, 2).toImmutable());
+				torchSet.add(startPos.relative(direction, 3).above(3).relative(directionLeft, 2).immutable());
+				torchSet.add(startPos.relative(direction, 7).above(3).relative(directionLeft, 2).immutable());
+				torchSet.add(startPos.relative(direction, 11).above(3).relative(directionLeft, 2).immutable());
+				torchSet.add(startPos.relative(direction, 15).above(3).relative(directionLeft, 2).immutable());
 				
-				torchSet.add(startPos.offset(direction, 3).up(3).offset(directionRight, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 7).up(3).offset(directionRight, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 11).up(3).offset(directionRight, 2).toImmutable());
-				torchSet.add(startPos.offset(direction, 15).up(3).offset(directionRight, 2).toImmutable());
+				torchSet.add(startPos.relative(direction, 3).above(3).relative(directionRight, 2).immutable());
+				torchSet.add(startPos.relative(direction, 7).above(3).relative(directionRight, 2).immutable());
+				torchSet.add(startPos.relative(direction, 11).above(3).relative(directionRight, 2).immutable());
+				torchSet.add(startPos.relative(direction, 15).above(3).relative(directionRight, 2).immutable());
 				
 				// Remove replaced blocks from air blocks
 				airSet.removeAll(torchSet);
@@ -327,8 +327,8 @@ public abstract class TrackBuilderManager {
 				
 			} else if (!mode.isNoTunnel()) {
 				// Air blocks
-				BlockPos.getAllInBox(startPos.offset(direction).offset(directionLeft, mode.getDistanceSide() + 1).up(), startPos.offset(direction, 17).offset(directionRight, mode.getDistanceSide() + 1).up(mode.getDistanceUp())) //
-						.map(BlockPos::toImmutable) //
+				BlockPos.betweenClosedStream(startPos.relative(direction).relative(directionLeft, mode.getDistanceSide() + 1).above(), startPos.relative(direction, 17).relative(directionRight, mode.getDistanceSide() + 1).above(mode.getDistanceUp())) //
+						.map(BlockPos::immutable) //
 						.filter(Predicates.not(railSet::contains)) //
 						.forEach(airSet::add);
 			}

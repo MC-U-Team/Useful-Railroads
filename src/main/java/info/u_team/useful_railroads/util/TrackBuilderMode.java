@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
 
 public enum TrackBuilderMode {
 	
@@ -19,13 +18,13 @@ public enum TrackBuilderMode {
 	private final String name;
 	private final int distanceSide;
 	private final int distanceUp;
-	private final ITextComponent displayComponent;
+	private final Component displayComponent;
 	
 	private TrackBuilderMode(String name, int distanceSide, int distanceUp) {
 		this.name = name;
 		this.distanceSide = distanceSide;
 		this.distanceUp = distanceUp;
-		displayComponent = new TranslationTextComponent("container.usefulrailroads.track_builder.mode." + name);
+		displayComponent = Component.translatable("container.usefulrailroads.track_builder.mode." + name);
 	}
 	
 	public String getName() {
@@ -48,7 +47,7 @@ public enum TrackBuilderMode {
 		return this == MODE_NOAIR;
 	}
 	
-	public ITextComponent getDisplayComponent() {
+	public Component getDisplayComponent() {
 		return displayComponent;
 	}
 	

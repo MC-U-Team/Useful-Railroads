@@ -1,34 +1,34 @@
 package info.u_team.useful_railroads.util;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class Location implements INBTSerializable<CompoundNBT> {
+public class Location implements INBTSerializable<CompoundTag> {
 	
 	public static Location getOrigin() {
-		return new Location(World.OVERWORLD, BlockPos.ZERO);
+		return new Location(Level.OVERWORLD, BlockPos.ZERO);
 	}
 	
-	private RegistryKey<World> registryKey;
+	private ResourceKey<Level> resourceKey;
 	private BlockPos pos;
 	
-	public Location(RegistryKey<World> dimensionType, BlockPos pos) {
-		this.registryKey = dimensionType;
+	public Location(ResourceKey<Level> dimensionType, BlockPos pos) {
+		this.resourceKey = dimensionType;
 		this.pos = pos;
 	}
 	
-	public RegistryKey<World> getRegistryKey() {
-		return registryKey;
+	public ResourceKey<Level> getResourceKey() {
+		return resourceKey;
 	}
 	
-	public void setRegistryKey(RegistryKey<World> dimensionType) {
-		this.registryKey = dimensionType;
+	public void setResourceKey(ResourceKey<Level> dimensionType) {
+		this.resourceKey = dimensionType;
 	}
 	
 	public BlockPos getPos() {
@@ -39,23 +39,23 @@ public class Location implements INBTSerializable<CompoundNBT> {
 		this.pos = pos;
 	}
 	
-	public void serialize(PacketBuffer buffer) {
-		buffer.writeResourceLocation(registryKey.getLocation());
+	public void serialize(FriendlyByteBuf buffer) {
+		buffer.writeResourceLocation(resourceKey.location());
 		buffer.writeBlockPos(pos);
 	}
 	
-	public void deserialize(PacketBuffer buffer) {
-		registryKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, buffer.readResourceLocation());
-		if (registryKey == null) {
-			registryKey = World.OVERWORLD;
+	public void deserialize(FriendlyByteBuf buffer) {
+		resourceKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, buffer.readResourceLocation());
+		if (resourceKey == null) {
+			resourceKey = Level.OVERWORLD;
 		}
 		pos = buffer.readBlockPos();
 	}
 	
 	@Override
-	public CompoundNBT serializeNBT() {
-		final CompoundNBT compound = new CompoundNBT();
-		compound.putString("dimension", registryKey.getLocation().toString());
+	public CompoundTag serializeNBT() {
+		final CompoundTag compound = new CompoundTag();
+		compound.putString("dimension", resourceKey.location().toString());
 		compound.putInt("x", pos.getX());
 		compound.putInt("y", pos.getY());
 		compound.putInt("z", pos.getZ());
@@ -63,13 +63,13 @@ public class Location implements INBTSerializable<CompoundNBT> {
 	}
 	
 	@Override
-	public void deserializeNBT(CompoundNBT compound) {
-		final ResourceLocation dimensionLocation = ResourceLocation.tryCreate(compound.getString("dimension"));
+	public void deserializeNBT(CompoundTag compound) {
+		final ResourceLocation dimensionLocation = ResourceLocation.tryParse(compound.getString("dimension"));
 		if (dimensionLocation != null) {
-			registryKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, dimensionLocation);
+			resourceKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, dimensionLocation);
 		}
-		if (registryKey == null) {
-			registryKey = World.OVERWORLD;
+		if (resourceKey == null) {
+			resourceKey = Level.OVERWORLD;
 		}
 		pos = new BlockPos(compound.getInt("x"), compound.getInt("y"), compound.getInt("z"));
 	}
