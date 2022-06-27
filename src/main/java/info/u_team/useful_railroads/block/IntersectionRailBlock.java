@@ -1,34 +1,34 @@
 package info.u_team.useful_railroads.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.RailShape;
+import net.minecraft.world.phys.Vec3;
 
 public class IntersectionRailBlock extends CustomRailBlock {
 	
 	@Override
-	public RailShape getRailDirection(BlockState state, IBlockReader world, BlockPos pos, AbstractMinecartEntity cart) {
+	public RailShape getRailDirection(BlockState state, BlockGetter level, BlockPos pos, AbstractMinecart cart) {
 		if (cart != null) {
-			final Vector3d motion = cart.getMotion();
-			if (Math.abs(motion.getX()) > Math.abs(motion.getZ())) {
+			final Vec3 motion = cart.getDeltaMovement();
+			if (Math.abs(motion.x()) > Math.abs(motion.z())) {
 				return RailShape.EAST_WEST;
 			} else {
 				return RailShape.NORTH_SOUTH;
 			}
 		}
-		return super.getRailDirection(state, world, pos, cart);
+		return super.getRailDirection(state, level, pos, cart);
 	}
 	
 	@Override
-	public boolean canMakeSlopes(BlockState state, IBlockReader world, BlockPos pos) {
+	public boolean canMakeSlopes(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
 	}
 	
 	@Override
-	public boolean isFlexibleRail(BlockState state, IBlockReader world, BlockPos pos) {
+	public boolean isFlexibleRail(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
 	}
 }

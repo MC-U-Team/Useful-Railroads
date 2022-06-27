@@ -1,20 +1,20 @@
 package info.u_team.useful_railroads.block;
 
-import info.u_team.u_team_core.api.registry.IBlockItemProvider;
+import info.u_team.u_team_core.api.block.BlockItemProvider;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
-import net.minecraft.block.RailBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.RailBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
 
-public abstract class CustomRailBlock extends RailBlock implements IBlockItemProvider {
+public abstract class CustomRailBlock extends RailBlock implements BlockItemProvider {
 	
 	protected final BlockItem blockItem;
 	
 	public CustomRailBlock() {
-		super(Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.7F).sound(SoundType.METAL));
-		blockItem = createBlockItem(new Item.Properties().group(UsefulRailroadsItemGroups.GROUP));
+		super(Properties.of(Material.DECORATION).noCollission().strength(0.7F).sound(SoundType.METAL));
+		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsItemGroups.GROUP));
 	}
 	
 	protected BlockItem createBlockItem(Item.Properties blockItemProperties) {
@@ -22,7 +22,7 @@ public abstract class CustomRailBlock extends RailBlock implements IBlockItemPro
 	}
 	
 	@Override
-	public BlockItem getBlockItem() {
+	public BlockItem blockItem() {
 		return blockItem;
 	}
 }

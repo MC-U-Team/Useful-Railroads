@@ -5,29 +5,25 @@ import java.util.List;
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
 import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PoweredRailBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.PoweredRailBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
@@ -41,70 +37,69 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		return openContainer(world, pos, player, true);
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		return openMenu(level, pos, player, true);
 	}
 	
 	@Override
-	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
-		if (world.isRemote) {
+	public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
+		if (level.isClientSide) {
 			return;
 		}
-		if (!state.get(PoweredRailBlock.POWERED)) {
+		if (!state.getValue(PoweredRailBlock.POWERED)) {
 			return;
 		}
-		isTileEntityFromType(world, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(pos, cart));
+		getBlockEntity(level, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(pos, cart));
 	}
 	
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!world.isRemote && !player.isCreative()) {
-			final ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), getItemStack(world, pos));
-			itemEntity.setDefaultPickupDelay();
-			world.addEntity(itemEntity);
+	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+		if (!level.isClientSide && !player.isCreative()) {
+			final ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), getItemStack(level, pos));
+			itemEntity.setDefaultPickUpDelay();
+			level.addFreshEntity(itemEntity);
 		}
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(level, pos, state, player);
 	}
 	
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		return getItemStack(world, pos);
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+		return getItemStack(level, pos);
 	}
 	
-	private ItemStack getItemStack(IBlockReader world, BlockPos pos) {
+	private ItemStack getItemStack(BlockGetter level, BlockPos pos) {
 		final ItemStack stack = new ItemStack(this);
-		isTileEntityFromType(world, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> {
-			final CompoundNBT compound = new CompoundNBT();
+		getBlockEntity(level, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> {
+			final CompoundTag compound = new CompoundTag();
 			tileEntity.writeNBT(compound);
 			if (!compound.isEmpty()) {
-				stack.setTagInfo("BlockEntityTag", compound);
+				stack.addTagElement("BlockEntityTag", compound);
 			}
 		});
 		return stack;
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		final CompoundNBT compound = stack.getChildTag("BlockEntityTag");
+	public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+		final CompoundTag compound = stack.getTagElement("BlockEntityTag");
 		final boolean compoundExists = compound != null;
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
-		final ITextComponent seperatorTextComponent = new StringTextComponent(": ");
+		final Component seperatorTextComponent = Component.literal(": ");
 		
 		if (compoundExists && compound.contains("location")) {
-			final CompoundNBT locationCompound = compound.getCompound("location");
+			final CompoundTag locationCompound = compound.getCompound("location");
 			
-			tooltip.add(new TranslationTextComponent(langKey + "dimension").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(locationCompound.getString("dimension")).mergeStyle(TextFormatting.DARK_GREEN)));
-			tooltip.add(new TranslationTextComponent(langKey + "x").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(locationCompound.getInt("x"))).mergeStyle(TextFormatting.DARK_GREEN)));
-			tooltip.add(new TranslationTextComponent(langKey + "y").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(locationCompound.getInt("y"))).mergeStyle(TextFormatting.DARK_GREEN)));
-			tooltip.add(new TranslationTextComponent(langKey + "z").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(locationCompound.getInt("z"))).mergeStyle(TextFormatting.DARK_GREEN)));
+			tooltip.add(Component.translatable(langKey + "dimension").append(seperatorTextComponent).append(Component.literal(locationCompound.getString("dimension")).withStyle(ChatFormatting.DARK_GREEN)));
+			tooltip.add(Component.translatable(langKey + "x").append(seperatorTextComponent).append(Component.literal(Integer.toString(locationCompound.getInt("x"))).withStyle(ChatFormatting.DARK_GREEN)));
+			tooltip.add(Component.translatable(langKey + "y").append(seperatorTextComponent).append(Component.literal(Integer.toString(locationCompound.getInt("y"))).withStyle(ChatFormatting.DARK_GREEN)));
+			tooltip.add(Component.translatable(langKey + "z").append(seperatorTextComponent).append(Component.literal(Integer.toString(locationCompound.getInt("z"))).withStyle(ChatFormatting.DARK_GREEN)));
 		} else {
-			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.missing_setup").mergeStyle(TextFormatting.RED));
-			tooltip.add(new TranslationTextComponent("block.usefulrailroads.teleport_rail.how_to_setup").mergeStyle(TextFormatting.GRAY));
+			tooltip.add(Component.translatable("block.usefulrailroads.teleport_rail.missing_setup").withStyle(ChatFormatting.RED));
+			tooltip.add(Component.translatable("block.usefulrailroads.teleport_rail.how_to_setup").withStyle(ChatFormatting.GRAY));
 		}
 		if (compoundExists) {
-			tooltip.add(new TranslationTextComponent(langKey + "fuel").appendSibling(seperatorTextComponent).appendSibling(new StringTextComponent(Integer.toString(compound.getInt("fuel"))).mergeStyle(TextFormatting.DARK_AQUA)));
+			tooltip.add(Component.translatable(langKey + "fuel").append(seperatorTextComponent).append(Component.literal(Integer.toString(compound.getInt("fuel"))).withStyle(ChatFormatting.DARK_AQUA)));
 		}
 	}
 }

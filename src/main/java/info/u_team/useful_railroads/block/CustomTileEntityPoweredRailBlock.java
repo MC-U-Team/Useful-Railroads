@@ -2,34 +2,22 @@ package info.u_team.useful_railroads.block;
 
 import java.util.function.Supplier;
 
-import info.u_team.u_team_core.api.ITileEntityBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import info.u_team.u_team_core.api.block.EntityBlockProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class CustomTileEntityPoweredRailBlock extends CustomPoweredRailBlock implements ITileEntityBlock {
+public class CustomTileEntityPoweredRailBlock extends CustomPoweredRailBlock implements EntityBlockProvider {
 	
-	protected final Supplier<? extends TileEntityType<?>> tileEntityType;
+	protected final Supplier<? extends BlockEntityType<?>> blockEntityType;
 	
-	public CustomTileEntityPoweredRailBlock(Supplier<? extends TileEntityType<?>> tileEntityType) {
-		this.tileEntityType = tileEntityType;
+	public CustomTileEntityPoweredRailBlock(Supplier<? extends BlockEntityType<?>> tileEntityType) {
+		this.blockEntityType = tileEntityType;
 	}
 	
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-	
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return tileEntityType.get().create();
-	}
-	
-	@Override
-	public TileEntityType<?> getTileEntityType(IBlockReader world, BlockPos pos) {
-		return tileEntityType.get();
+	public BlockEntityType<?> blockEntityType(BlockPos pos, BlockState state) {
+		return blockEntityType.get();
 	}
 	
 }

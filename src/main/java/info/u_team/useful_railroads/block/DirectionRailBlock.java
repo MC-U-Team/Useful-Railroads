@@ -1,60 +1,60 @@
 package info.u_team.useful_railroads.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PoweredRailBlock;
-import net.minecraft.block.RailState;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PoweredRailBlock;
+import net.minecraft.world.level.block.RailState;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.RailShape;
 
 public class DirectionRailBlock extends CustomPoweredRailBlock {
 	
 	public static final BooleanProperty AXIS_DIRECTION = BooleanProperty.create("positive_axis");
 	
 	public DirectionRailBlock() {
-		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH).with(POWERED, false).with(AXIS_DIRECTION, false));
+		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(POWERED, false).setValue(AXIS_DIRECTION, false));
 	}
 	
 	@Override
-	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
-		if (!state.get(PoweredRailBlock.POWERED)) {
+	public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
+		if (!state.getValue(PoweredRailBlock.POWERED)) {
 			return;
 		}
 		
-		final RailShape shape = getRailDirection(state, world, pos, cart);
-		final boolean positiveAxis = state.get(AXIS_DIRECTION);
+		final RailShape shape = getRailDirection(state, level, pos, cart);
+		final boolean positiveAxis = state.getValue(AXIS_DIRECTION);
 		
 		if (shape == RailShape.EAST_WEST) {
-			cart.setMotion(positiveAxis ? 0.6 : -0.6, cart.getMotion().getY(), cart.getMotion().getZ());
+			cart.setDeltaMovement(positiveAxis ? 0.6 : -0.6, cart.getDeltaMovement().y(), cart.getDeltaMovement().z());
 		} else if (shape == RailShape.NORTH_SOUTH) {
-			cart.setMotion(cart.getMotion().getX(), cart.getMotion().getY(), positiveAxis ? 0.6 : -0.6);
+			cart.setDeltaMovement(cart.getDeltaMovement().x(), cart.getDeltaMovement().y(), positiveAxis ? 0.6 : -0.6);
 		}
 	}
 	
 	@Override
-	public boolean canMakeSlopes(BlockState state, IBlockReader world, BlockPos pos) {
+	public boolean canMakeSlopes(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
 	}
 	
 	@Override
-	protected BlockState getUpdatedState(World world, BlockPos pos, BlockState state, boolean placing) {
-		return world.isRemote ? state : (new RailState(world, pos, state) {
+	protected BlockState updateDir(Level level, BlockPos pos, BlockState updateState, boolean placing) {
+		return level.isClientSide ? updateState : (new RailState(level, pos, updateState) {
 			
 			@Override
-			public RailState placeRail(boolean powered, boolean placing, RailShape unused) {
-				final boolean hasRailNorth = canConnect(pos.north());
-				final boolean hasRailSouth = canConnect(pos.south());
-				final boolean hasRailWest = canConnect(pos.west());
-				final boolean hasRailEast = canConnect(pos.east());
+			public RailState place(boolean powered, boolean placing, RailShape unused) {
+				final boolean hasRailNorth = hasNeighborRail(pos.north());
+				final boolean hasRailSouth = hasNeighborRail(pos.south());
+				final boolean hasRailWest = hasNeighborRail(pos.west());
+				final boolean hasRailEast = hasNeighborRail(pos.east());
 				
 				RailShape shape = null;
 				
@@ -67,38 +67,38 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 				}
 				
 				if (shape == null) {
-					shape = newState.get(SHAPE);
+					shape = state.getValue(SHAPE);
 				}
 				
-				reset(shape);
-				newState = newState.with(SHAPE, shape);
+				updateConnections(shape);
+				state = state.setValue(SHAPE, shape);
 				
-				if (placing || world.getBlockState(pos) != newState) {
-					world.setBlockState(pos, newState, 3);
+				if (placing || level.getBlockState(pos) != state) {
+					level.setBlock(pos, state, 3);
 					
-					for (int i = 0; i < connectedRails.size(); ++i) {
-						final RailState railstate = createForAdjacent(connectedRails.get(i));
+					for (int i = 0; i < connections.size(); ++i) {
+						final RailState railstate = getRail(connections.get(i));
 						if (railstate != null) {
-							railstate.checkConnected();
-							if (railstate.canConnect(this)) {
-								railstate.connect(this);
+							railstate.removeSoftConnections();
+							if (railstate.canConnectTo(this)) {
+								railstate.connectTo(this);
 							}
 						}
 					}
 				}
 				return this;
 			}
-		}).placeRail(world.isBlockPowered(pos), placing, null).getNewState();
+		}).place(level.hasNeighborSignal(pos), placing, null).getState();
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		final Direction direction = context.getPlacementHorizontalFacing();
-		return getDefaultState().with(AXIS_DIRECTION, direction.getAxisDirection() == AxisDirection.POSITIVE).with(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST);
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		final Direction direction = context.getHorizontalDirection();
+		return defaultBlockState().setValue(AXIS_DIRECTION, direction.getAxisDirection() == AxisDirection.POSITIVE).setValue(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST);
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(SHAPE, POWERED, AXIS_DIRECTION);
 	}
 }

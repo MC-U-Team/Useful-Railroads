@@ -2,36 +2,34 @@ package info.u_team.useful_railroads.block;
 
 import java.util.function.Supplier;
 
-import info.u_team.u_team_core.api.ITileEntityBlock;
-import info.u_team.u_team_core.api.registry.IBlockItemProvider;
+import info.u_team.u_team_core.api.block.BlockItemProvider;
+import info.u_team.u_team_core.api.block.EntityBlockProvider;
 import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.Property;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.BaseRailBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.properties.RailShape;
 
-public class CustomAdvancedTileEntityRailBlock extends AbstractRailBlock implements IBlockItemProvider, ITileEntityBlock {
+public class CustomAdvancedTileEntityRailBlock extends BaseRailBlock implements BlockItemProvider, EntityBlockProvider {
 	
 	public static final EnumProperty<RailShape> SHAPE = EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST);
 	
 	protected final BlockItem blockItem;
 	
-	protected final Supplier<? extends TileEntityType<?>> tileEntityType;
+	protected final Supplier<? extends BlockEntityType<?>> blockEntityType;
 	
-	public CustomAdvancedTileEntityRailBlock(Properties properties, Supplier<? extends TileEntityType<?>> tileEntityType) {
+	public CustomAdvancedTileEntityRailBlock(Properties properties, Supplier<? extends BlockEntityType<?>> blockEntityType) {
 		super(false, properties);
-		blockItem = createBlockItem(new Item.Properties().group(UsefulRailroadsItemGroups.GROUP));
-		this.tileEntityType = tileEntityType;
-		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH));
+		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsItemGroups.GROUP));
+		this.blockEntityType = blockEntityType;
+		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH));
 	}
 	
 	protected BlockItem createBlockItem(Item.Properties blockItemProperties) {
@@ -39,23 +37,13 @@ public class CustomAdvancedTileEntityRailBlock extends AbstractRailBlock impleme
 	}
 	
 	@Override
-	public BlockItem getBlockItem() {
+	public BlockItem blockItem() {
 		return blockItem;
 	}
 	
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-	
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return tileEntityType.get().create();
-	}
-	
-	@Override
-	public TileEntityType<?> getTileEntityType(IBlockReader world, BlockPos pos) {
-		return tileEntityType.get();
+	public BlockEntityType<?> blockEntityType(BlockPos pos, BlockState state) {
+		return blockEntityType.get();
 	}
 	
 	@Override
@@ -64,7 +52,7 @@ public class CustomAdvancedTileEntityRailBlock extends AbstractRailBlock impleme
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(SHAPE);
 	}
 	

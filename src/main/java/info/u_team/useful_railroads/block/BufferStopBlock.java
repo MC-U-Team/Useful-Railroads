@@ -14,33 +14,34 @@ import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.tileentity.BufferStopTileEntity;
 import info.u_team.useful_railroads.util.ItemHandlerUtil;
 import info.u_team.useful_railroads.util.VoxelShapeUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.RailShape;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
@@ -50,8 +51,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
 	
-	private static List<Pair<Vector3d, Vector3d>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
-		final List<Pair<Vector3d, Vector3d>> list = new ArrayList<>();
+	private static List<Pair<Vec3, Vec3>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
+		final List<Pair<Vec3, Vec3>> list = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			list.add(VoxelShapeUtil.createVectorPair(bracketStart, 2 + i, 14 - i, bracketEnd, 3 + i, 16 - i));
 		}
@@ -61,73 +62,74 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	private static Map<Direction, VoxelShape> createVoxelShape() {
-		final List<Pair<Vector3d, Vector3d>> northShape = new ArrayList<>();
+		final List<Pair<Vec3, Vec3>> northShape = new ArrayList<>();
 		northShape.addAll(createSideShapeVec(2, 3, 2, 4, 0, 5));
 		northShape.addAll(createSideShapeVec(13, 14, 12, 14, 11, 16));
 		northShape.add(VoxelShapeUtil.createVectorPair(0, 12, 1, 16, 15, 3));
 		
 		return VoxelShapeUtil.getHorizontalRotations(northShape).entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, valueEntry -> {
-			return VoxelShapes.or(FLAT_AABB, VoxelShapeUtil.createVoxelShapeFromVector(valueEntry.getValue()).stream().toArray(VoxelShape[]::new));
+			return Shapes.or(FLAT_AABB, VoxelShapeUtil.createVoxelShapeFromVector(valueEntry.getValue()).stream().toArray(VoxelShape[]::new));
 		}));
 	}
 	
 	public BufferStopBlock() {
-		super(Properties.create(Material.IRON).doesNotBlockMovement().hardnessAndResistance(1.5F).sound(SoundType.METAL), UsefulRailroadsTileEntityTypes.BUFFER_STOP);
-		setDefaultState(getDefaultState().with(SHAPE, RailShape.NORTH_SOUTH).with(FACING, Direction.NORTH).with(POWERED, false));
+		super(Properties.of(Material.METAL).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsTileEntityTypes.BUFFER_STOP);
+		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(FACING, Direction.NORTH).setValue(POWERED, false));
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		return VOXEL_SHAPES.getOrDefault(state.get(FACING), VOXEL_SHAPES.get(Direction.NORTH));
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return VOXEL_SHAPES.getOrDefault(state.getValue(FACING), VOXEL_SHAPES.get(Direction.NORTH));
 	}
 	
 	@Override
-	public void onMinecartPass(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
-		cart.setMotion(0, 0, 0);
+	public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
+		cart.setDeltaMovement(0, 0, 0);
 		
-		final boolean powered = state.get(POWERED);
+		final boolean powered = state.getValue(POWERED);
 		
 		if (!powered) {
-			final Direction direction = state.get(FACING);
-			final Vector3d vec = cart.getPositionVec().add(direction.getXOffset() * 1.1, 0, direction.getZOffset() * 1.1);
-			cart.setLocationAndAngles(vec.getX(), vec.getY(), vec.getZ(), cart.rotationYaw, cart.rotationPitch);
+			final Direction direction = state.getValue(FACING);
+			final Vec3 vec = cart.position().add(direction.getStepX() * 1.1, 0, direction.getStepZ() * 1.1);
+			cart.moveTo(vec.x(), vec.y(), vec.z(), cart.getYRot(), cart.getXRot());
 		}
 		
-		if (world.isRemote || !powered) {
+		if (level.isClientSide || !powered) {
 			return;
 		}
 		
-		final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
+		final Optional<BufferStopTileEntity> tileEntityOptional = getBlockEntity(level, pos);
 		tileEntityOptional.map(BufferStopTileEntity::getMinecartSlots).ifPresent(minecartSlots -> {
-			cart.removePassengers();
+			cart.ejectPassengers();
 			
 			final Collection<ItemEntity> drops = new ArrayList<>();
 			cart.captureDrops(drops);
-			cart.killMinecart(DamageSource.MAGIC);
+			cart.destroy(DamageSource.MAGIC);
 			
 			drops.stream().map(ItemEntity::getItem).forEach(stack -> {
 				final ItemStack stackLeft = ItemHandlerHelper.insertItem(minecartSlots, stack, false);
 				if (!stackLeft.isEmpty()) {
-					spawnAsEntity(world, pos, stackLeft);
+					popResource(level, pos, stackLeft);
 				}
 			});
 		});
 	}
 	
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		if (context.getEntity() instanceof AbstractMinecartEntity) {
-			final Vector3d motion = context.getEntity().getMotion();
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof AbstractMinecart cart) {
+			final Vec3 motion = cart.getDeltaMovement();
 			
-			final Direction oppositeDirection = state.get(FACING).getOpposite();
+			final Direction oppositeDirection = state.getValue(FACING).getOpposite();
 			final Axis axis = oppositeDirection.getAxis();
 			final AxisDirection axisDirection = oppositeDirection.getAxisDirection();
 			
-			if (isRightCollision(axis, Axis.X, axisDirection, motion.getX()) || isRightCollision(axis, Axis.Z, axisDirection, motion.getZ())) {
-				return VoxelShapes.empty();
+			if (isRightCollision(axis, Axis.X, axisDirection, motion.x()) || isRightCollision(axis, Axis.Z, axisDirection, motion.z())) {
+				return Shapes.empty();
 			}
 		}
-		return state.getShape(world, pos);
+		return state.getShape(level, pos);
+		
 	}
 	
 	private final boolean isRightCollision(Axis axis, Axis axisToCheck, AxisDirection axisDirection, double motion) {
@@ -135,93 +137,93 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		final Direction direction = context.getPlacementHorizontalFacing().getOpposite();
-		return getDefaultState().with(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST).with(FACING, direction);
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		final Direction direction = context.getHorizontalDirection().getOpposite();
+		return defaultBlockState().setValue(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST).setValue(FACING, direction);
 	}
 	
 	@Override
-	protected BlockState getUpdatedState(World worldIn, BlockPos pos, BlockState state, boolean placing) {
+	protected BlockState updateDir(Level level, BlockPos pos, BlockState state, boolean placing) {
 		return state;
 	}
 	
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() == newState.getBlock()) {
-			final RailShape newShape = newState.get(SHAPE);
-			final Direction newDirection = newState.get(FACING);
-			if (newShape != state.get(SHAPE)) {
+			final RailShape newShape = newState.getValue(SHAPE);
+			final Direction newDirection = newState.getValue(FACING);
+			if (newShape != state.getValue(SHAPE)) {
 				if (newDirection.getAxis() == Axis.Z && newShape != RailShape.NORTH_SOUTH) {
-					world.setBlockState(pos, newState.with(SHAPE, RailShape.NORTH_SOUTH));
+					level.setBlockAndUpdate(pos, newState.setValue(SHAPE, RailShape.NORTH_SOUTH));
 				} else if (newDirection.getAxis() == Axis.X && newShape != RailShape.EAST_WEST) {
-					world.setBlockState(pos, newState.with(SHAPE, RailShape.EAST_WEST));
+					level.setBlockAndUpdate(pos, newState.setValue(SHAPE, RailShape.EAST_WEST));
 				}
 			}
 		} else {
-			final Optional<BufferStopTileEntity> tileEntityOptional = isTileEntityFromType(world, pos);
+			final Optional<BufferStopTileEntity> tileEntityOptional = getBlockEntity(level, pos);
 			tileEntityOptional.map(BufferStopTileEntity::getMinecartSlots).ifPresent(minecartSlots -> {
-				ItemHandlerUtil.getStackStream(minecartSlots).forEach(stack -> spawnAsEntity(world, pos, stack));
+				ItemHandlerUtil.getStackStream(minecartSlots).forEach(stack -> popResource(level, pos, stack));
 			});
-			world.updateComparatorOutputLevel(pos, this);
+			level.updateNeighbourForOutputSignal(pos, this);
 		}
-		super.onReplaced(state, world, pos, newState, isMoving);
+		super.onRemove(state, level, pos, newState, isMoving);
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		updatePower(world, state, pos);
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		updatePower(level, state, pos);
 	}
 	
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-		updatePower(world, state, pos);
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+		super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+		updatePower(level, state, pos);
 	}
 	
-	private void updatePower(World world, BlockState state, BlockPos pos) {
-		final boolean powered = isPowered(world, pos);
-		if (powered != state.get(POWERED)) {
-			world.setBlockState(pos, state.with(POWERED, powered));
+	private void updatePower(Level level, BlockState state, BlockPos pos) {
+		final boolean powered = isPowered(level, pos);
+		if (powered != state.getValue(POWERED)) {
+			level.setBlockAndUpdate(pos, state.setValue(POWERED, powered));
 		}
 	}
 	
-	private boolean isPowered(World world, BlockPos pos) {
-		return Stream.of(Direction.values()).anyMatch(direction -> isPowered(world, pos, direction));
+	private boolean isPowered(Level level, BlockPos pos) {
+		return Stream.of(Direction.values()).anyMatch(direction -> isPowered(level, pos, direction));
 	}
 	
-	private boolean isPowered(World world, BlockPos pos, Direction direction) {
-		final BlockPos relativePos = pos.offset(direction);
-		final int value = world.getRedstonePower(relativePos, direction);
+	private boolean isPowered(Level level, BlockPos pos, Direction direction) {
+		final BlockPos relativePos = pos.relative(direction);
+		final int value = level.getSignal(relativePos, direction);
 		if (value >= 15) {
 			return true;
 		} else {
-			final BlockState relativeState = world.getBlockState(relativePos);
-			return Math.max(value, relativeState.getBlock() == Blocks.REDSTONE_WIRE ? relativeState.get(RedstoneWireBlock.POWER) : 0) > 0;
+			final BlockState relativeState = level.getBlockState(relativePos);
+			return Math.max(value, relativeState.getBlock() == Blocks.REDSTONE_WIRE ? relativeState.getValue(RedStoneWireBlock.POWER) : 0) > 0;
 		}
 	}
 	
 	@Override
-	public boolean canProvidePower(BlockState state) {
+	public boolean isSignalSource(BlockState state) {
 		return true;
 	}
 	
 	@Override
-	public float getRailMaxSpeed(BlockState state, World world, BlockPos pos, AbstractMinecartEntity cart) {
+	public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
 		return 0;
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(SHAPE, FACING, POWERED);
 	}
 	
 	@Override
-	public boolean canMakeSlopes(BlockState state, IBlockReader world, BlockPos pos) {
+	public boolean canMakeSlopes(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
 	}
 	
 	@Override
-	public boolean isFlexibleRail(BlockState state, IBlockReader world, BlockPos pos) {
+	public boolean isFlexibleRail(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
 	}
 	
