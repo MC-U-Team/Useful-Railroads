@@ -2,10 +2,10 @@ package info.u_team.useful_railroads.recipe;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public class TrackBuilderFuelRecipe extends FuelRecipe {
 	
@@ -14,13 +14,13 @@ public class TrackBuilderFuelRecipe extends FuelRecipe {
 	}
 	
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return UsefulRailroadsRecipeSerializers.TRACK_BUILDER_FUEL.get();
 	}
 	
 	@Override
-	public IRecipeType<?> getType() {
-		return UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL;
+	public RecipeType<?> getType() {
+		return UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL.get();
 	}
 	
 }

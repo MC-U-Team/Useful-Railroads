@@ -2,18 +2,18 @@ package info.u_team.useful_railroads.recipe;
 
 import com.google.gson.JsonObject;
 
-import info.u_team.u_team_core.recipeserializer.URecipeSerializer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 
-public abstract class FuelRecipe implements IRecipe<IInventory> {
+public abstract class FuelRecipe implements Recipe<Container> {
 	
 	protected final Ingredient ingredient;
 	protected final int fuel;
@@ -38,7 +38,7 @@ public abstract class FuelRecipe implements IRecipe<IInventory> {
 	}
 	
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 	
@@ -50,25 +50,25 @@ public abstract class FuelRecipe implements IRecipe<IInventory> {
 	}
 	
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return true;
 	}
 	
 	@Override
-	public ItemStack getCraftingResult(IInventory inv) {
+	public ItemStack assemble(Container inv) {
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
-	public boolean matches(IInventory inv, World world) {
-		return ingredient.test(inv.getStackInSlot(0));
+	public boolean matches(Container inv, Level level) {
+		return ingredient.test(inv.getItem(0));
 	}
 	
 	public int getFuel() {
 		return fuel;
 	}
 	
-	public static class Serializer<T extends FuelRecipe> extends URecipeSerializer<T> {
+	public static class Serializer<T extends FuelRecipe> implements RecipeSerializer<T> {
 		
 		private final IFactory<T> factory;
 		
@@ -77,30 +77,30 @@ public abstract class FuelRecipe implements IRecipe<IInventory> {
 		}
 		
 		@Override
-		public T read(ResourceLocation id, JsonObject json) {
-			final String group = JSONUtils.getString(json, "group", "");
+		public T fromJson(ResourceLocation id, JsonObject json) {
+			final String group = GsonHelper.getAsString(json, "group", "");
 			final Ingredient ingredient;
-			if (JSONUtils.isJsonArray(json, "ingredient")) {
-				ingredient = Ingredient.deserialize(JSONUtils.getJsonArray(json, "ingredient"));
+			if (GsonHelper.isArrayNode(json, "ingredient")) {
+				ingredient = Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "ingredient"));
 			} else {
-				ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "ingredient"));
+				ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
 			}
-			final int fuel = JSONUtils.getInt(json, "fuel");
+			final int fuel = GsonHelper.getAsInt(json, "fuel");
 			return factory.create(id, group, ingredient, fuel);
 		}
 		
 		@Override
-		public T read(ResourceLocation id, PacketBuffer buffer) {
-			final String group = buffer.readString(32767);
-			final Ingredient ingredient = Ingredient.read(buffer);
+		public T fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+			final String group = buffer.readUtf(32767);
+			final Ingredient ingredient = Ingredient.fromNetwork(buffer);
 			final int fuel = buffer.readInt();
 			return factory.create(id, group, ingredient, fuel);
 		}
 		
 		@Override
-		public void write(PacketBuffer buffer, T recipe) {
-			buffer.writeString(recipe.group);
-			recipe.ingredient.write(buffer);
+		public void toNetwork(FriendlyByteBuf buffer, T recipe) {
+			buffer.writeUtf(recipe.group);
+			recipe.ingredient.toNetwork(buffer);
 			buffer.writeInt(recipe.fuel);
 		}
 		
