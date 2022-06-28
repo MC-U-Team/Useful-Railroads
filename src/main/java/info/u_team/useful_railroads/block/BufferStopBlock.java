@@ -49,38 +49,38 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	
-	private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
-	
-	private static List<Pair<Vec3, Vec3>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
-		final List<Pair<Vec3, Vec3>> list = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-			list.add(VoxelShapeUtil.createVectorPair(bracketStart, 2 + i, 14 - i, bracketEnd, 3 + i, 16 - i));
-		}
-		list.add(VoxelShapeUtil.createVectorPair(stopperStart, 11, 0, stopperEnd, 16, 1));
-		list.add(VoxelShapeUtil.createVectorPair(supportStart, 2, 2, supportEnd, 14, 6));
-		return list;
-	}
-	
-	private static Map<Direction, VoxelShape> createVoxelShape() {
-		final List<Pair<Vec3, Vec3>> northShape = new ArrayList<>();
-		northShape.addAll(createSideShapeVec(2, 3, 2, 4, 0, 5));
-		northShape.addAll(createSideShapeVec(13, 14, 12, 14, 11, 16));
-		northShape.add(VoxelShapeUtil.createVectorPair(0, 12, 1, 16, 15, 3));
-		
-		return VoxelShapeUtil.getHorizontalRotations(northShape).entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, valueEntry -> {
-			return Shapes.or(FLAT_AABB, VoxelShapeUtil.createVoxelShapeFromVector(valueEntry.getValue()).stream().toArray(VoxelShape[]::new));
-		}));
-	}
+//	private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
+//	
+//	private static List<Pair<Vec3, Vec3>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
+//		final List<Pair<Vec3, Vec3>> list = new ArrayList<>();
+//		for (int i = 0; i < 10; i++) {
+//			list.add(VoxelShapeUtil.createVectorPair(bracketStart, 2 + i, 14 - i, bracketEnd, 3 + i, 16 - i));
+//		}
+//		list.add(VoxelShapeUtil.createVectorPair(stopperStart, 11, 0, stopperEnd, 16, 1));
+//		list.add(VoxelShapeUtil.createVectorPair(supportStart, 2, 2, supportEnd, 14, 6));
+//		return list;
+//	}
+//	
+//	private static Map<Direction, VoxelShape> createVoxelShape() {
+//		final List<Pair<Vec3, Vec3>> northShape = new ArrayList<>();
+//		northShape.addAll(createSideShapeVec(2, 3, 2, 4, 0, 5));
+//		northShape.addAll(createSideShapeVec(13, 14, 12, 14, 11, 16));
+//		northShape.add(VoxelShapeUtil.createVectorPair(0, 12, 1, 16, 15, 3));
+//		
+//		return VoxelShapeUtil.getHorizontalRotations(northShape).entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, valueEntry -> {
+//			return Shapes.or(FLAT_AABB, VoxelShapeUtil.createVoxelShapeFromVector(valueEntry.getValue()).stream().toArray(VoxelShape[]::new));
+//		}));
+//	}
 	
 	public BufferStopBlock() {
 		super(Properties.of(Material.METAL).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsTileEntityTypes.BUFFER_STOP);
-		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(FACING, Direction.NORTH).setValue(POWERED, false));
+		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(POWERED, false));
 	}
 	
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return VOXEL_SHAPES.getOrDefault(state.getValue(FACING), VOXEL_SHAPES.get(Direction.NORTH));
-	}
+//	@Override
+//	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+//		return VOXEL_SHAPES.getOrDefault(state.getValue(FACING), VOXEL_SHAPES.get(Direction.NORTH));
+//	}
 	
 	@Override
 	public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
@@ -214,7 +214,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		builder.add(SHAPE, FACING, POWERED);
+		super.createBlockStateDefinition(builder);
+		builder.add(FACING, POWERED);
 	}
 	
 	@Override

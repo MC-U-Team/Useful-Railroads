@@ -21,6 +21,7 @@ public class UsefulRailroadsCommonConstruct implements ModConstruct {
 		BusRegister.registerMod(UsefulRailroadsContainerTypes::registerMod);
 		BusRegister.registerMod(UsefulRailroadsItems::registerMod);
 		BusRegister.registerMod(UsefulRailroadsRecipeSerializers::registerMod);
+		BusRegister.registerMod(UsefulRailroadsRecipeTypes::registerMod);
 		BusRegister.registerMod(UsefulRailroadsTileEntityTypes::registerMod);
 	}
 }

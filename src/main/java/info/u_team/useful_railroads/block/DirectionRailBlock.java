@@ -21,7 +21,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 	public static final BooleanProperty AXIS_DIRECTION = BooleanProperty.create("positive_axis");
 	
 	public DirectionRailBlock() {
-		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(POWERED, false).setValue(AXIS_DIRECTION, false));
+		registerDefaultState(defaultBlockState().setValue(AXIS_DIRECTION, false));
 	}
 	
 	@Override
@@ -99,6 +99,7 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 	
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		builder.add(SHAPE, POWERED, AXIS_DIRECTION);
+		super.createBlockStateDefinition(builder);
+		builder.add(AXIS_DIRECTION);
 	}
 }

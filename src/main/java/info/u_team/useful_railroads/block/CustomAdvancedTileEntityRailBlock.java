@@ -29,7 +29,7 @@ public class CustomAdvancedTileEntityRailBlock extends BaseRailBlock implements 
 		super(false, properties);
 		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsItemGroups.GROUP));
 		this.blockEntityType = blockEntityType;
-		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH));
+		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(WATERLOGGED, false));
 	}
 	
 	protected BlockItem createBlockItem(Item.Properties blockItemProperties) {
@@ -53,7 +53,8 @@ public class CustomAdvancedTileEntityRailBlock extends BaseRailBlock implements 
 	
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		builder.add(SHAPE);
+		super.createBlockStateDefinition(builder);
+		builder.add(SHAPE, WATERLOGGED);
 	}
 	
 }
