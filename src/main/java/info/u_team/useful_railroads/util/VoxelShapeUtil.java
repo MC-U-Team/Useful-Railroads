@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import info.u_team.u_team_core.util.MathUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -19,7 +20,9 @@ public class VoxelShapeUtil {
 		return list.stream().map(pair -> {
 			final Vec3 vec1 = pair.getLeft();
 			final Vec3 vec2 = pair.getRight();
-			return Block.box(vec1.x(), vec1.y(), vec1.z(), vec2.x(), vec2.y(), vec2.z());
+			final AABB aabb = new AABB(vec1, vec2);
+			
+			return Block.box(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ);
 		}).collect(Collectors.toList());
 	}
 	
