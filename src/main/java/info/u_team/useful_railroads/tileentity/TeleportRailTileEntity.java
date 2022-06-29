@@ -101,14 +101,12 @@ public class TeleportRailTileEntity extends UBlockEntity implements MenuSyncedBl
 			final Vec3 teleportPos = Vec3.atCenterOf(location.getPos());
 			
 			// Teleport minecart
-			LevelUtil.teleportEntity(cart, teleportLevel, teleportPos);
+			final Entity newCart = LevelUtil.teleportEntity(cart, teleportLevel, teleportPos);
 			
 			// Teleport entity riding if there is one
 			if (entity != null) {
 				LevelUtil.teleportEntity(entity, teleportLevel, teleportPos);
 				
-				// Reatach entity because the entity will be destroyed when changing dimensions we use the uuid
-				final Entity newCart = teleportLevel.getEntity(cart.getUUID());
 				entity.startRiding(newCart, true);
 				
 				// For some reason the entity tracker does not update the passengers to the client so we send the packet manually.
