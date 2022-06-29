@@ -2,18 +2,12 @@ package info.u_team.useful_railroads.block;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
 import info.u_team.useful_railroads.tileentity.BufferStopTileEntity;
 import info.u_team.useful_railroads.util.ItemHandlerUtil;
-import info.u_team.useful_railroads.util.VoxelShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -36,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.RailShape;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -49,38 +44,42 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	
-//	private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
-//	
-//	private static List<Pair<Vec3, Vec3>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int supportEnd, int stopperStart, int stopperEnd) {
-//		final List<Pair<Vec3, Vec3>> list = new ArrayList<>();
-//		for (int i = 0; i < 10; i++) {
-//			list.add(VoxelShapeUtil.createVectorPair(bracketStart, 2 + i, 14 - i, bracketEnd, 3 + i, 16 - i));
-//		}
-//		list.add(VoxelShapeUtil.createVectorPair(stopperStart, 11, 0, stopperEnd, 16, 1));
-//		list.add(VoxelShapeUtil.createVectorPair(supportStart, 2, 2, supportEnd, 14, 6));
-//		return list;
-//	}
-//	
-//	private static Map<Direction, VoxelShape> createVoxelShape() {
-//		final List<Pair<Vec3, Vec3>> northShape = new ArrayList<>();
-//		northShape.addAll(createSideShapeVec(2, 3, 2, 4, 0, 5));
-//		northShape.addAll(createSideShapeVec(13, 14, 12, 14, 11, 16));
-//		northShape.add(VoxelShapeUtil.createVectorPair(0, 12, 1, 16, 15, 3));
-//		
-//		return VoxelShapeUtil.getHorizontalRotations(northShape).entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, valueEntry -> {
-//			return Shapes.or(FLAT_AABB, VoxelShapeUtil.createVoxelShapeFromVector(valueEntry.getValue()).stream().toArray(VoxelShape[]::new));
-//		}));
-//	}
+	// private static final Map<Direction, VoxelShape> VOXEL_SHAPES = createVoxelShape();
+	//
+	// private static List<Pair<Vec3, Vec3>> createSideShapeVec(int bracketStart, int bracketEnd, int supportStart, int
+	// supportEnd, int stopperStart, int stopperEnd) {
+	// final List<Pair<Vec3, Vec3>> list = new ArrayList<>();
+	// for (int i = 0; i < 10; i++) {
+	// list.add(VoxelShapeUtil.createVectorPair(bracketStart, 2 + i, 14 - i, bracketEnd, 3 + i, 16 - i));
+	// }
+	// list.add(VoxelShapeUtil.createVectorPair(stopperStart, 11, 0, stopperEnd, 16, 1));
+	// list.add(VoxelShapeUtil.createVectorPair(supportStart, 2, 2, supportEnd, 14, 6));
+	// return list;
+	// }
+	//
+	// private static Map<Direction, VoxelShape> createVoxelShape() {
+	// final List<Pair<Vec3, Vec3>> northShape = new ArrayList<>();
+	// northShape.addAll(createSideShapeVec(2, 3, 2, 4, 0, 5));
+	// northShape.addAll(createSideShapeVec(13, 14, 12, 14, 11, 16));
+	// northShape.add(VoxelShapeUtil.createVectorPair(0, 12, 1, 16, 15, 3));
+	//
+	// return
+	// VoxelShapeUtil.getHorizontalRotations(northShape).entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,
+	// valueEntry -> {
+	// return Shapes.or(FLAT_AABB,
+	// VoxelShapeUtil.createVoxelShapeFromVector(valueEntry.getValue()).stream().toArray(VoxelShape[]::new));
+	// }));
+	// }
 	
 	public BufferStopBlock() {
 		super(Properties.of(Material.METAL).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsTileEntityTypes.BUFFER_STOP);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(POWERED, false));
 	}
 	
-//	@Override
-//	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-//		return VOXEL_SHAPES.getOrDefault(state.getValue(FACING), VOXEL_SHAPES.get(Direction.NORTH));
-//	}
+	// @Override
+	// public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+	// return VOXEL_SHAPES.getOrDefault(state.getValue(FACING), VOXEL_SHAPES.get(Direction.NORTH));
+	// }
 	
 	@Override
 	public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
@@ -139,7 +138,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		final Direction direction = context.getHorizontalDirection().getOpposite();
-		return defaultBlockState().setValue(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST).setValue(FACING, direction);
+		final boolean isWater = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
+		return defaultBlockState().setValue(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST).setValue(FACING, direction).setValue(WATERLOGGED, isWater);
 	}
 	
 	@Override

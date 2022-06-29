@@ -9,6 +9,7 @@ import info.u_team.u_team_core.util.ModelUtil;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.BaseRailBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PoweredRailBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,10 +24,10 @@ public class UsefulRailroadsModels {
 	
 	private static void setup(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(HIGHSPEED_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
-			ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
-			ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(DIRECTION_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(Block::defaultBlockState, BlockState::new));
-			ModelUtil.addCustomStateContainer(TELEPORT_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(TELEPORT_RAIL.get())).add(PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(HIGHSPEED_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(DIRECTION_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(Block::defaultBlockState, BlockState::new));
+			ModelUtil.addCustomStateContainer(TELEPORT_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(TELEPORT_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
 			
 			ModelUtil.addTexture(ForgeHooksClient.getBlockMaterial(new ResourceLocation(UsefulRailroadsMod.MODID, "item/empty_fuel_slot")));
 		});

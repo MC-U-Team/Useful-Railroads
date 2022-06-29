@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.RailShape;
+import net.minecraft.world.level.material.Fluids;
 
 public class DirectionRailBlock extends CustomPoweredRailBlock {
 	
@@ -94,7 +95,8 @@ public class DirectionRailBlock extends CustomPoweredRailBlock {
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		final Direction direction = context.getHorizontalDirection();
-		return defaultBlockState().setValue(AXIS_DIRECTION, direction.getAxisDirection() == AxisDirection.POSITIVE).setValue(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST);
+		final boolean isWater = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
+		return defaultBlockState().setValue(AXIS_DIRECTION, direction.getAxisDirection() == AxisDirection.POSITIVE).setValue(SHAPE, direction.getAxis() == Axis.Z ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST).setValue(WATERLOGGED, isWater);
 	}
 	
 	@Override
