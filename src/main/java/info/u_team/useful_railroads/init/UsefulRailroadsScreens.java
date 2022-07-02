@@ -7,13 +7,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class UsefulRailroadsScreens {
 	
-	private static void setup(RegisterMenuScreensEvent event) {
+	private static void register(RegisterMenuScreensEvent event) {
 		event.registerScreen(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
 		event.registerScreen(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
 	}
 	
 	public static void registerMod(IEventBus bus) {
-		bus.addListener(UsefulRailroadsScreens::setup);
+		bus.addListener(UsefulRailroadsScreens::register);
 	}
 	
 }
