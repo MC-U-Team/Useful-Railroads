@@ -1,27 +1,27 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"IDI",
-		"ESE",
-		"IRI"
-	],
 	"key": {
-		"R": {
-			"tag": "forge:dusts/redstone"
-		},
-		"S": {
-			"item": "minecraft:stick"
-		},
-		"I": {
-			"tag": "forge:ingots/iron"
-		},
 		"D": {
 			"tag": "forge:gems/diamond"
 		},
 		"E": {
 			"item": "minecraft:ender_pearl"
+		},
+		"I": {
+			"tag": "forge:ingots/iron"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
 		}
 	},
+	"pattern": [
+		"IDI",
+		"ESE",
+		"IRI"
+	],
 	"result": {
 		"item": "usefulrailroads:teleport_rail"
 	}

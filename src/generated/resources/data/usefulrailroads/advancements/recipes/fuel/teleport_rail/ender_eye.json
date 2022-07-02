@@ -1,26 +1,23 @@
 {
 	"parent": "minecraft:recipes/root",
-	"rewards": {
-		"recipes": [
-			"usefulrailroads:fuel/teleport_rail/ender_eye"
-		]
-	},
 	"criteria": {
 		"has_ingredient": {
-			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
-						"item": "minecraft:ender_eye"
+						"items": [
+							"minecraft:ender_eye"
+						]
 					}
 				]
-			}
+			},
+			"trigger": "minecraft:inventory_changed"
 		},
 		"has_the_recipe": {
-			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
 				"recipe": "usefulrailroads:fuel/teleport_rail/ender_eye"
-			}
+			},
+			"trigger": "minecraft:recipe_unlocked"
 		}
 	},
 	"requirements": [
@@ -28,5 +25,10 @@
 			"has_ingredient",
 			"has_the_recipe"
 		]
-	]
+	],
+	"rewards": {
+		"recipes": [
+			"usefulrailroads:fuel/teleport_rail/ender_eye"
+		]
+	}
 }

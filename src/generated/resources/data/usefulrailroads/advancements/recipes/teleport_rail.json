@@ -1,26 +1,23 @@
 {
 	"parent": "minecraft:recipes/root",
-	"rewards": {
-		"recipes": [
-			"usefulrailroads:teleport_rail"
-		]
-	},
 	"criteria": {
 		"has_minecart": {
-			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
-						"item": "minecraft:minecart"
+						"items": [
+							"minecraft:minecart"
+						]
 					}
 				]
-			}
+			},
+			"trigger": "minecraft:inventory_changed"
 		},
 		"has_the_recipe": {
-			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
 				"recipe": "usefulrailroads:teleport_rail"
-			}
+			},
+			"trigger": "minecraft:recipe_unlocked"
 		}
 	},
 	"requirements": [
@@ -28,5 +25,10 @@
 			"has_minecart",
 			"has_the_recipe"
 		]
-	]
+	],
+	"rewards": {
+		"recipes": [
+			"usefulrailroads:teleport_rail"
+		]
+	}
 }

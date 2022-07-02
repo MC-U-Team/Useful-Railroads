@@ -1,26 +1,26 @@
 {
 	"type": "minecraft:crafting_shaped",
+	"key": {
+		"E": {
+			"item": "minecraft:repeater"
+		},
+		"I": {
+			"tag": "forge:ingots/iron"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		}
+	},
 	"pattern": [
 		"IEI",
 		"IRI",
 		"ISI"
 	],
-	"key": {
-		"S": {
-			"item": "minecraft:stick"
-		},
-		"R": {
-			"tag": "forge:dusts/redstone"
-		},
-		"I": {
-			"tag": "forge:ingots/iron"
-		},
-		"E": {
-			"item": "minecraft:repeater"
-		}
-	},
 	"result": {
-		"item": "usefulrailroads:direction_rail",
-		"count": 16
+		"count": 16,
+		"item": "usefulrailroads:direction_rail"
 	}
 }

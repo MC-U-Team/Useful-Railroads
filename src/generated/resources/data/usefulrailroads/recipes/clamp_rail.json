@@ -1,29 +1,29 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"IDI",
-		"LSL",
-		"IRI"
-	],
 	"key": {
+		"D": {
+			"tag": "forge:gems/diamond"
+		},
+		"I": {
+			"tag": "forge:ingots/iron"
+		},
+		"L": {
+			"tag": "forge:slimeballs"
+		},
 		"R": {
 			"tag": "forge:dusts/redstone"
 		},
 		"S": {
 			"item": "minecraft:stick"
-		},
-		"I": {
-			"tag": "forge:ingots/iron"
-		},
-		"D": {
-			"tag": "forge:gems/diamond"
-		},
-		"L": {
-			"tag": "forge:slimeballs"
 		}
 	},
+	"pattern": [
+		"IDI",
+		"LSL",
+		"IRI"
+	],
 	"result": {
-		"item": "usefulrailroads:clamp_rail",
-		"count": 24
+		"count": 24,
+		"item": "usefulrailroads:clamp_rail"
 	}
 }

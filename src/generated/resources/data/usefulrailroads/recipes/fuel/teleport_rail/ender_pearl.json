@@ -1,7 +1,7 @@
 {
 	"type": "usefulrailroads:teleport_rail_fuel",
+	"fuel": 100,
 	"ingredient": {
 		"item": "minecraft:ender_pearl"
-	},
-	"fuel": 100
+	}
 }

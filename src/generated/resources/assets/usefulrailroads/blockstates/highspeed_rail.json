@@ -1,18 +1,32 @@
 {
 	"variants": {
-		"powered=false,shape=north_south": {
-			"model": "usefulrailroads:block/highspeed_rail"
-		},
-		"powered=true,shape=north_south": {
-			"model": "usefulrailroads:block/highspeed_powered_rail"
-		},
-		"powered=false,shape=east_west": {
+		"powered=false,shape=east_west,waterlogged=false": {
 			"model": "usefulrailroads:block/highspeed_rail",
 			"y": 90
 		},
-		"powered=true,shape=east_west": {
+		"powered=false,shape=east_west,waterlogged=true": {
+			"model": "usefulrailroads:block/highspeed_rail",
+			"y": 90
+		},
+		"powered=false,shape=north_south,waterlogged=false": {
+			"model": "usefulrailroads:block/highspeed_rail"
+		},
+		"powered=false,shape=north_south,waterlogged=true": {
+			"model": "usefulrailroads:block/highspeed_rail"
+		},
+		"powered=true,shape=east_west,waterlogged=false": {
 			"model": "usefulrailroads:block/highspeed_powered_rail",
 			"y": 90
+		},
+		"powered=true,shape=east_west,waterlogged=true": {
+			"model": "usefulrailroads:block/highspeed_powered_rail",
+			"y": 90
+		},
+		"powered=true,shape=north_south,waterlogged=false": {
+			"model": "usefulrailroads:block/highspeed_powered_rail"
+		},
+		"powered=true,shape=north_south,waterlogged=true": {
+			"model": "usefulrailroads:block/highspeed_powered_rail"
 		}
 	}
 }

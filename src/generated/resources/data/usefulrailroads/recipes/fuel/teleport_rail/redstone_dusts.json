@@ -1,7 +1,7 @@
 {
 	"type": "usefulrailroads:teleport_rail_fuel",
+	"fuel": 5,
 	"ingredient": {
 		"tag": "forge:dusts/redstone"
-	},
-	"fuel": 5
+	}
 }

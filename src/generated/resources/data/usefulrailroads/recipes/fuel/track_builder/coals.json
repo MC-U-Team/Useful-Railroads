@@ -1,7 +1,7 @@
 {
 	"type": "usefulrailroads:track_builder_fuel",
+	"fuel": 100,
 	"ingredient": {
 		"tag": "minecraft:coals"
-	},
-	"fuel": 100
+	}
 }

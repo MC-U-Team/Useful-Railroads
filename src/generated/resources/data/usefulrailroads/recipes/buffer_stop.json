@@ -1,10 +1,5 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"III",
-		" B ",
-		"I I"
-	],
 	"key": {
 		"B": {
 			"tag": "forge:storage_blocks/iron"
@@ -13,8 +8,13 @@
 			"tag": "forge:ingots/iron"
 		}
 	},
+	"pattern": [
+		"III",
+		" B ",
+		"I I"
+	],
 	"result": {
-		"item": "usefulrailroads:buffer_stop",
-		"count": 2
+		"count": 2,
+		"item": "usefulrailroads:buffer_stop"
 	}
 }
