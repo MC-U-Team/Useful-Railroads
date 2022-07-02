@@ -1,7 +1,5 @@
 package info.u_team.useful_railroads.item;
 
-import java.util.Random;
-
 import info.u_team.u_team_core.util.MathUtil;
 import info.u_team.useful_railroads.block.TeleportRailBlock;
 import info.u_team.useful_railroads.util.Location;
@@ -26,9 +24,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class TeleportRailBlockItem extends BlockItem {
-	
-	@Deprecated // TODO remove when uteamcore updates the random methods
-	private static Random random = new Random();
 	
 	public TeleportRailBlockItem(TeleportRailBlock block, Properties builder) {
 		super(block, builder.stacksTo(1).rarity(Rarity.EPIC));
@@ -62,7 +57,7 @@ public class TeleportRailBlockItem extends BlockItem {
 					// world.addParticle(ParticleTypes.ENCHANT, true, itemEntityVector.x(), itemEntityVector.y() + 0.5,
 					// itemEntityVector.z(), MathUtil.randomNumberInRange(world.random, -0.2, 0.2),
 					// MathUtil.randomNumberInRange(world.random, 0.1, 1.5), MathUtil.randomNumberInRange(world.random, -0.2, 0.2));
-					world.addParticle(ParticleTypes.ENCHANT, true, itemEntityVector.x(), itemEntityVector.y() + 0.5, itemEntityVector.z(), MathUtil.randomNumberInRange(random, -0.2, 0.2), MathUtil.randomNumberInRange(random, 0.1, 1.5), MathUtil.randomNumberInRange(random, -0.2, 0.2));
+					world.addParticle(ParticleTypes.ENCHANT, true, itemEntityVector.x(), itemEntityVector.y() + 0.5, itemEntityVector.z(), MathUtil.randomNumberInRange(world.getRandom(), -0.2, 0.2), MathUtil.randomNumberInRange(world.getRandom(), 0.1, 1.5), MathUtil.randomNumberInRange(world.getRandom(), -0.2, 0.2));
 				}
 			}
 		} else { // Do server stuff
