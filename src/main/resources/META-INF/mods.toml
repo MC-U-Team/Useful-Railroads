@@ -12,7 +12,7 @@ license="Apache-2.0 License"
 	logoFile="logo.png"
 	credits="Team U-Team"
 	authors="HyCraftHD"
-	description="Who don't want to travel fast? I do! So i created some high speed minecraft rails: Speed 100 blocks/second. There are also many other additions such as teleport rails, intersection rails, direction rails, buffer stops and so on. Furthermore there are track builders that let you build a long railroad track with ease."
+	description="Join our discord server here: https://discord.hycrafthd.net\n\nWho don't want to travel fast? I do! So i created some high speed minecraft rails: Speed 100 blocks/second. There are also many other additions such as teleport rails, intersection rails, direction rails, buffer stops and so on. Furthermore there are track builders that let you build a long railroad track with ease."
 	
 	[[dependencies.usefulrailroads]]
 	    modId="forge"
