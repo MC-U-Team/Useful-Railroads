@@ -8,19 +8,19 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAM
 
 import java.util.function.BiConsumer;
 
-import info.u_team.u_team_core.data.CommonLootTablesProvider;
+import info.u_team.u_team_core.data.CommonLootTableProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-public class UsefulRailroadsLootTableProvider extends CommonLootTablesProvider {
+public class UsefulRailroadsLootTableProvider extends CommonLootTableProvider {
 	
-	public UsefulRailroadsLootTableProvider(GenerationData data) {
-		super(data);
+	public UsefulRailroadsLootTableProvider(GenerationData generationData) {
+		super(generationData);
 	}
 	
 	@Override
-	protected void registerLootTables(BiConsumer<ResourceLocation, LootTable> consumer) {
+	public void register(BiConsumer<ResourceLocation, LootTable> consumer) {
 		registerBlock(HIGHSPEED_RAIL, addBasicBlockLootTable(HIGHSPEED_RAIL.get()), consumer);
 		registerBlock(SPEED_CLAMP_RAIL, addBasicBlockLootTable(SPEED_CLAMP_RAIL.get()), consumer);
 		registerBlock(DIRECTION_RAIL, addBasicBlockLootTable(DIRECTION_RAIL.get()), consumer);

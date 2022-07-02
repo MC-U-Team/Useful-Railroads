@@ -9,7 +9,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_R
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.DOUBLE_TRACK_BUILDER;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRACK_BUILDER;
 
-import info.u_team.u_team_core.data.CommonItemModelsProvider;
+import info.u_team.u_team_core.data.CommonItemModelProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.world.level.ItemLike;
@@ -17,14 +17,14 @@ import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class UsefulRailroadsItemModelsProvider extends CommonItemModelsProvider {
+public class UsefulRailroadsItemModelsProvider extends CommonItemModelProvider {
 	
-	public UsefulRailroadsItemModelsProvider(GenerationData data) {
-		super(data);
+	public UsefulRailroadsItemModelsProvider(GenerationData generationData) {
+		super(generationData);
 	}
 	
 	@Override
-	protected void registerModels() {
+	public void register() {
 		// Items
 		simpleGenerated(SINGLE_TRACK_BUILDER.get());
 		simpleGenerated(DOUBLE_TRACK_BUILDER.get());

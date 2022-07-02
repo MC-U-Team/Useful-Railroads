@@ -3,7 +3,9 @@ package info.u_team.useful_railroads.data;
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsBlockStatesProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsBlockTagsProvider;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsItemModelsProvider;
+import info.u_team.useful_railroads.data.provider.UsefulRailroadsItemTagsProvider;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsLanguagesProvider;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsLootTableProvider;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsRecipesProvider;
@@ -18,16 +20,12 @@ public class UsefulRailroadsDataGenerator {
 	@SubscribeEvent
 	public static void data(GatherDataEvent event) {
 		final GenerationData data = new GenerationData(UsefulRailroadsMod.MODID, event);
-		if (event.includeServer()) {
-			// data.addProvider(UsefulRailroadsBlockTagsProvider::new);
-			// data.addProvider(UsefulRailroadsItemTagsProvider::new);
-			data.addProvider(UsefulRailroadsLootTableProvider::new);
-			data.addProvider(UsefulRailroadsRecipesProvider::new);
-		}
-		if (event.includeClient()) {
-			data.addProvider(UsefulRailroadsItemModelsProvider::new);
-			data.addProvider(UsefulRailroadsBlockStatesProvider::new);
-			data.addProvider(UsefulRailroadsLanguagesProvider::new);
-		}
+		data.addProvider(event.includeServer(), UsefulRailroadsBlockTagsProvider::new, UsefulRailroadsItemTagsProvider::new);
+		data.addProvider(event.includeServer(), UsefulRailroadsLootTableProvider::new);
+		data.addProvider(event.includeServer(), UsefulRailroadsRecipesProvider::new);
+		
+		data.addProvider(event.includeClient(), UsefulRailroadsItemModelsProvider::new);
+		data.addProvider(event.includeClient(), UsefulRailroadsBlockStatesProvider::new);
+		data.addProvider(event.includeClient(), UsefulRailroadsLanguagesProvider::new);
 	}
 }

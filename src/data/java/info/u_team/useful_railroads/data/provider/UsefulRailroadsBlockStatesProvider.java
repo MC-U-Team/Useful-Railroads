@@ -18,8 +18,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 
-import info.u_team.u_team_core.data.CommonBlockStatesProvider;
-import info.u_team.u_team_core.data.CommonProvider;
+import info.u_team.u_team_core.data.CommonBlockStateProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.block.BufferStopBlock;
 import info.u_team.useful_railroads.block.CustomAdvancedTileEntityRailBlock;
@@ -40,14 +39,14 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
-public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvider {
+public class UsefulRailroadsBlockStatesProvider extends CommonBlockStateProvider {
 	
-	public UsefulRailroadsBlockStatesProvider(GenerationData data) {
-		super(data);
+	public UsefulRailroadsBlockStatesProvider(GenerationData generationData) {
+		super(generationData);
 	}
 	
 	@Override
-	protected void registerStatesAndModels() {
+	public void register() {
 		// Highspeed rail
 		customFlatPoweredRail(HIGHSPEED_RAIL.get(), flatRail("highspeed_rail"), flatRail("highspeed_powered_rail"));
 		
@@ -125,9 +124,8 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		try {
 			return PARTIAL_BLOCK_STATE_CONSTRUCTOR.newInstance(owner, setStates, outerBuilder);
 		} catch (final Exception ex) {
-			CommonProvider.LOGGER.fatal(marker, "Cannot create new PartialBlockstate with reflection.", ex);
+			throw new RuntimeException("Cannot create new PartialBlockstate with reflection.", ex);
 		}
-		return null;
 	}
 	
 	// Create variant block state builder with reflection
@@ -137,9 +135,8 @@ public class UsefulRailroadsBlockStatesProvider extends CommonBlockStatesProvide
 		try {
 			return VARIANT_BLOCK_STATE_BUILDER_CONSTRUCTOR.newInstance(block);
 		} catch (final Exception ex) {
-			CommonProvider.LOGGER.fatal(marker, "Cannot create new VariantBlockStateBuilder with reflection.", ex);
+			throw new RuntimeException("Cannot create new VariantBlockStateBuilder with reflection.", ex);
 		}
-		return null;
 	}
 	
 	// Create a variant block state builder that don't check if all shapes are covered

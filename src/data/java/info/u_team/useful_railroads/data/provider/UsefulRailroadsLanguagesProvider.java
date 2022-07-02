@@ -15,12 +15,12 @@ import info.u_team.u_team_core.data.GenerationData;
 
 public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	
-	public UsefulRailroadsLanguagesProvider(GenerationData data) {
-		super(data);
+	public UsefulRailroadsLanguagesProvider(GenerationData generationData) {
+		super(generationData);
 	}
 	
 	@Override
-	public void addTranslations() {
+	public void register() {
 		final String teleportRailBlockKey = "block.usefulrailroads.teleport_rail";
 		final String trackBuilderItemKey = "item.usefulrailroads.track_builder";
 		
