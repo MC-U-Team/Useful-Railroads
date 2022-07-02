@@ -39,9 +39,9 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
-public class UsefulRailroadsBlockStatesProvider extends CommonBlockStateProvider {
+public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider {
 	
-	public UsefulRailroadsBlockStatesProvider(GenerationData generationData) {
+	public UsefulRailroadsBlockStateProvider(GenerationData generationData) {
 		super(generationData);
 	}
 	

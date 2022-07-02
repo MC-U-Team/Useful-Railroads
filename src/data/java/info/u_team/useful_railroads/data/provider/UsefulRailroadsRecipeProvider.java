@@ -28,9 +28,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 
-public class UsefulRailroadsRecipesProvider extends CommonRecipeProvider {
+public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 	
-	public UsefulRailroadsRecipesProvider(GenerationData generationData) {
+	public UsefulRailroadsRecipeProvider(GenerationData generationData) {
 		super(generationData);
 	}
 	

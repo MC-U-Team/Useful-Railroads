@@ -17,9 +17,9 @@ import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class UsefulRailroadsItemModelsProvider extends CommonItemModelProvider {
+public class UsefulRailroadsItemModelProvider extends CommonItemModelProvider {
 	
-	public UsefulRailroadsItemModelsProvider(GenerationData generationData) {
+	public UsefulRailroadsItemModelProvider(GenerationData generationData) {
 		super(generationData);
 	}
 	
