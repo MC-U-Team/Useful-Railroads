@@ -24,6 +24,7 @@ import info.u_team.useful_railroads.block.BufferStopBlock;
 import info.u_team.useful_railroads.block.CustomAdvancedTileEntityRailBlock;
 import info.u_team.useful_railroads.block.CustomPoweredRailBlock;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
+import net.minecraft.world.level.block.BaseRailBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PoweredRailBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -99,7 +100,9 @@ public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider 
 			throw new IllegalArgumentException("This method only allow custom powered rail blocks");
 		}
 		builder.getOwner().getStateDefinition().getPossibleStates().forEach(fullState -> {
-			final PartialBlockstate partialState = newPartialBlockState(builder.getOwner(), Maps.newLinkedHashMap(fullState.getValues()), builder);
+			final Map<Property<?>, Comparable<?>> propertyValues = Maps.newLinkedHashMap(fullState.getValues());
+			propertyValues.remove(BaseRailBlock.WATERLOGGED); // Remove water logging in state generation as we do not differentiate models based on that
+			final PartialBlockstate partialState = newPartialBlockState(builder.getOwner(), propertyValues, builder);
 			if (seen.add(partialState)) {
 				final RailShape shape = fullState.getValue(PoweredRailBlock.SHAPE);
 				if (shape == RailShape.NORTH_SOUTH || shape == RailShape.EAST_WEST) { // We only generate the NORTH_SOUTH and EAST_WEST shapes

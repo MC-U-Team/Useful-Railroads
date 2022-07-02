@@ -1,31 +1,17 @@
 {
 	"variants": {
-		"powered=false,shape=east_west,waterlogged=false": {
+		"powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/teleport_rail",
 			"y": 90
 		},
-		"powered=false,shape=east_west,waterlogged=true": {
-			"model": "usefulrailroads:block/teleport_rail",
-			"y": 90
-		},
-		"powered=false,shape=north_south,waterlogged=false": {
+		"powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/teleport_rail"
 		},
-		"powered=false,shape=north_south,waterlogged=true": {
-			"model": "usefulrailroads:block/teleport_rail"
-		},
-		"powered=true,shape=east_west,waterlogged=false": {
+		"powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/teleport_powered_rail",
 			"y": 90
 		},
-		"powered=true,shape=east_west,waterlogged=true": {
-			"model": "usefulrailroads:block/teleport_powered_rail",
-			"y": 90
-		},
-		"powered=true,shape=north_south,waterlogged=false": {
-			"model": "usefulrailroads:block/teleport_powered_rail"
-		},
-		"powered=true,shape=north_south,waterlogged=true": {
+		"powered=true,shape=north_south": {
 			"model": "usefulrailroads:block/teleport_powered_rail"
 		}
 	}
