@@ -77,9 +77,9 @@ public class DrawTrackBuilderSelectionEventHandler {
 		});
 	}
 	
-	public static void drawSelectionBox(PoseStack matrixStack, VertexConsumer builder, Vec3 projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
+	public static void drawSelectionBox(PoseStack poseStack, VertexConsumer builder, Vec3 projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
 		posList.forEach(pos -> {
-			LevelRenderer.renderShape(matrixStack, builder, Shapes.block(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
+			LevelRenderer.renderShape(poseStack, builder, Shapes.block(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 		});
 	}
 	
