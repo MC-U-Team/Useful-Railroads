@@ -60,7 +60,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
 				.define('S', Items.STICK) //
 				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.define('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.define('D', getIngredientOfTag(Tags.Items.GEMS_EMERALD)) //
 				.define('L', getIngredientOfTag(Tags.Items.SLIMEBALLS)) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);

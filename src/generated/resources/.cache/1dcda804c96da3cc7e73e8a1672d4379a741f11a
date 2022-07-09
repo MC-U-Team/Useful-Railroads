@@ -1,4 +1,4 @@
-// 1.19	2022-07-02T17:08:49.4330612	Recipe
+// 1.19	2022-07-09T16:58:36.6874702	Recipe
 62131b63d68dff43b0bccd19b23f37b97c549dea data/usefulrailroads/advancements/recipes/buffer_stop.json
 8f1f60a8984486f21446ccf2e5a9df248a8f7fcc data/usefulrailroads/advancements/recipes/clamp_rail.json
 71295f19fe2441fa5bcedc94997aa793e801c102 data/usefulrailroads/advancements/recipes/direction_rail.json
@@ -18,7 +18,7 @@ a26d82209e0e04efbaa530403df7bcd9ec276428 data/usefulrailroads/advancements/recip
 84ac94d76d967cb41b39bc806dec143d21e832d2 data/usefulrailroads/advancements/recipes/single_track_builder.json
 1d14fd6e0d1a03afc628a3fb5e47042a65ca8aa9 data/usefulrailroads/advancements/recipes/teleport_rail.json
 73d0cadcd044d1e7ac5f14c048da05a420de9022 data/usefulrailroads/recipes/buffer_stop.json
-637f4c683fcef140b3ffe56eeb05bb8998822d10 data/usefulrailroads/recipes/clamp_rail.json
+fa084e3970fb4666af59e1971681628b7ac06b40 data/usefulrailroads/recipes/clamp_rail.json
 97adc024c580d38aab87cd271a6f30caa3c04454 data/usefulrailroads/recipes/direction_rail.json
 39f3d3714c5832dd6a67de62f1d8111374d1b40f data/usefulrailroads/recipes/double_track_builder.json
 54df3397a4f35a7c99debce490b38a082076c61a data/usefulrailroads/recipes/fuel/teleport_rail/chorus_flower.json
