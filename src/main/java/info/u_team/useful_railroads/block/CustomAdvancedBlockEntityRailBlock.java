@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import info.u_team.u_team_core.api.block.BlockItemProvider;
 import info.u_team.u_team_core.api.block.EntityBlockProvider;
-import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
+import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.RailShape;
 
-public class CustomAdvancedTileEntityRailBlock extends BaseRailBlock implements BlockItemProvider, EntityBlockProvider {
+public class CustomAdvancedBlockEntityRailBlock extends BaseRailBlock implements BlockItemProvider, EntityBlockProvider {
 	
 	public static final EnumProperty<RailShape> SHAPE = EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST);
 	
@@ -25,9 +25,9 @@ public class CustomAdvancedTileEntityRailBlock extends BaseRailBlock implements 
 	
 	protected final Supplier<? extends BlockEntityType<?>> blockEntityType;
 	
-	public CustomAdvancedTileEntityRailBlock(Properties properties, Supplier<? extends BlockEntityType<?>> blockEntityType) {
+	public CustomAdvancedBlockEntityRailBlock(Properties properties, Supplier<? extends BlockEntityType<?>> blockEntityType) {
 		super(false, properties);
-		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsItemGroups.GROUP));
+		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsCreativeTabs.GROUP));
 		this.blockEntityType = blockEntityType;
 		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(WATERLOGGED, false));
 	}

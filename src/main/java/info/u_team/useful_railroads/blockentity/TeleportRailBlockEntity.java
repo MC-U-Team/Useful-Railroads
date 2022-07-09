@@ -1,13 +1,13 @@
-package info.u_team.useful_railroads.tileentity;
+package info.u_team.useful_railroads.blockentity;
 
 import info.u_team.u_team_core.api.block.MenuSyncedBlockEntity;
 import info.u_team.u_team_core.blockentity.UBlockEntity;
 import info.u_team.u_team_core.util.LevelUtil;
 import info.u_team.useful_railroads.config.CommonConfig;
-import info.u_team.useful_railroads.container.TeleportRailContainer;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
-import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
+import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.inventory.FuelItemHandler;
+import info.u_team.useful_railroads.menu.TeleportRailMenu;
 import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
@@ -31,7 +31,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TeleportRailTileEntity extends UBlockEntity implements MenuSyncedBlockEntity {
+public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedBlockEntity {
 	
 	private final Location location = Location.getOrigin();
 	
@@ -45,8 +45,8 @@ public class TeleportRailTileEntity extends UBlockEntity implements MenuSyncedBl
 	
 	private final LazyOptional<FuelItemHandler<TeleportRailFuelRecipe>> fuelSlotOptional = LazyOptional.of(() -> fuelSlot);
 	
-	public TeleportRailTileEntity(BlockPos pos, BlockState state) {
-		super(UsefulRailroadsTileEntityTypes.TELEPORT_RAIL.get(), pos, state);
+	public TeleportRailBlockEntity(BlockPos pos, BlockState state) {
+		super(UsefulRailroadsBlockEntityTypes.TELEPORT_RAIL.get(), pos, state);
 	}
 	
 	private void checkCost() {
@@ -166,7 +166,7 @@ public class TeleportRailTileEntity extends UBlockEntity implements MenuSyncedBl
 	
 	@Override
 	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-		return new TeleportRailContainer(containerId, playerInventory, this);
+		return new TeleportRailMenu(containerId, playerInventory, this);
 	}
 	
 	@Override

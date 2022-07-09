@@ -6,7 +6,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
-import static info.u_team.useful_railroads.init.UsefulRailroadsItemGroups.GROUP;
+import static info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs.GROUP;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.DOUBLE_TRACK_BUILDER;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRACK_BUILDER;
 

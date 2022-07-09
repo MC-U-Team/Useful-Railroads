@@ -1,10 +1,10 @@
-package info.u_team.useful_railroads.container;
+package info.u_team.useful_railroads.menu;
 
 import info.u_team.u_team_core.api.sync.DataHolder;
 import info.u_team.u_team_core.menu.UBlockEntityContainerMenu;
-import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
+import info.u_team.useful_railroads.blockentity.TeleportRailBlockEntity;
+import info.u_team.useful_railroads.init.UsefulRailroadsMenuTypes;
 import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
-import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,16 +12,16 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.LogicalSide;
 
-public class TeleportRailContainer extends UBlockEntityContainerMenu<TeleportRailTileEntity> {
+public class TeleportRailMenu extends UBlockEntityContainerMenu<TeleportRailBlockEntity> {
 	
 	// Client
-	public TeleportRailContainer(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), containerId, playerInventory, buffer);
+	public TeleportRailMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
+		super(UsefulRailroadsMenuTypes.TELEPORT_RAIL.get(), containerId, playerInventory, buffer);
 	}
 	
 	// Server
-	public TeleportRailContainer(int containerId, Inventory playerInventory, TeleportRailTileEntity blockEntity) {
-		super(UsefulRailroadsContainerTypes.TELEPORT_RAIL.get(), containerId, playerInventory, blockEntity);
+	public TeleportRailMenu(int containerId, Inventory playerInventory, TeleportRailBlockEntity blockEntity) {
+		super(UsefulRailroadsMenuTypes.TELEPORT_RAIL.get(), containerId, playerInventory, blockEntity);
 	}
 	
 	@Override

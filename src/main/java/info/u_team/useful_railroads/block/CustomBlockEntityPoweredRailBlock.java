@@ -7,12 +7,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CustomTileEntityPoweredRailBlock extends CustomPoweredRailBlock implements EntityBlockProvider {
+public class CustomBlockEntityPoweredRailBlock extends CustomPoweredRailBlock implements EntityBlockProvider {
 	
 	protected final Supplier<? extends BlockEntityType<?>> blockEntityType;
 	
-	public CustomTileEntityPoweredRailBlock(Supplier<? extends BlockEntityType<?>> tileEntityType) {
-		this.blockEntityType = tileEntityType;
+	public CustomBlockEntityPoweredRailBlock(Supplier<? extends BlockEntityType<?>> blockEntityType) {
+		this.blockEntityType = blockEntityType;
 	}
 	
 	@Override

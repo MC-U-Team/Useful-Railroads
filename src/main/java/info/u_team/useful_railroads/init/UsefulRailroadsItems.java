@@ -13,7 +13,6 @@ public class UsefulRailroadsItems {
 	public static final CommonDeferredRegister<Item> ITEMS = CommonDeferredRegister.create(ForgeRegistries.ITEMS, UsefulRailroadsMod.MODID);
 	
 	public static final RegistryObject<TrackBuilderItem> SINGLE_TRACK_BUILDER = ITEMS.register("single_track_builder", () -> new TrackBuilderItem(false));
-	
 	public static final RegistryObject<TrackBuilderItem> DOUBLE_TRACK_BUILDER = ITEMS.register("double_track_builder", () -> new TrackBuilderItem(true));
 	
 	public static void registerMod(IEventBus bus) {

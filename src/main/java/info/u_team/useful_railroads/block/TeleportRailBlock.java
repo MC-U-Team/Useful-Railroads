@@ -2,9 +2,9 @@ package info.u_team.useful_railroads.block;
 
 import java.util.List;
 
-import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
+import info.u_team.useful_railroads.blockentity.TeleportRailBlockEntity;
+import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
-import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -25,10 +25,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
+public class TeleportRailBlock extends CustomBlockEntityPoweredRailBlock {
 	
 	public TeleportRailBlock() {
-		super(UsefulRailroadsTileEntityTypes.TELEPORT_RAIL);
+		super(UsefulRailroadsBlockEntityTypes.TELEPORT_RAIL);
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 		if (level.isClientSide || !state.getValue(PoweredRailBlock.POWERED)) {
 			return;
 		}
-		getBlockEntity(level, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(pos, cart));
+		getBlockEntity(level, pos).map(TeleportRailBlockEntity.class::cast).ifPresent(tileEntity -> tileEntity.teleport(pos, cart));
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public class TeleportRailBlock extends CustomTileEntityPoweredRailBlock {
 	
 	private ItemStack getItemStack(BlockGetter level, BlockPos pos) {
 		final ItemStack stack = new ItemStack(this);
-		getBlockEntity(level, pos).map(TeleportRailTileEntity.class::cast).ifPresent(tileEntity -> {
+		getBlockEntity(level, pos).map(TeleportRailBlockEntity.class::cast).ifPresent(tileEntity -> {
 			final CompoundTag compound = new CompoundTag();
 			tileEntity.saveNBT(compound);
 			if (!compound.isEmpty()) {

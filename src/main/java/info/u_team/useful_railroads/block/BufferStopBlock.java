@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import info.u_team.useful_railroads.init.UsefulRailroadsTileEntityTypes;
-import info.u_team.useful_railroads.tileentity.BufferStopTileEntity;
+import info.u_team.useful_railroads.blockentity.BufferStopBlockEntity;
+import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.util.ItemHandlerUtil;
 import info.u_team.useful_railroads.util.VoxelShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -45,7 +45,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
+public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -74,7 +74,7 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 	}
 	
 	public BufferStopBlock() {
-		super(Properties.of(Material.METAL).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsTileEntityTypes.BUFFER_STOP);
+		super(Properties.of(Material.METAL).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsBlockEntityTypes.BUFFER_STOP);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(POWERED, false));
 	}
 	
@@ -99,8 +99,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 			return;
 		}
 		
-		final Optional<BufferStopTileEntity> tileEntityOptional = getBlockEntity(level, pos);
-		tileEntityOptional.map(BufferStopTileEntity::getMinecartSlots).ifPresent(minecartSlots -> {
+		final Optional<BufferStopBlockEntity> tileEntityOptional = getBlockEntity(level, pos);
+		tileEntityOptional.map(BufferStopBlockEntity::getMinecartSlots).ifPresent(minecartSlots -> {
 			cart.ejectPassengers();
 			
 			final Collection<ItemEntity> drops = new ArrayList<>();
@@ -162,8 +162,8 @@ public class BufferStopBlock extends CustomAdvancedTileEntityRailBlock {
 				}
 			}
 		} else {
-			final Optional<BufferStopTileEntity> tileEntityOptional = getBlockEntity(level, pos);
-			tileEntityOptional.map(BufferStopTileEntity::getMinecartSlots).ifPresent(minecartSlots -> {
+			final Optional<BufferStopBlockEntity> tileEntityOptional = getBlockEntity(level, pos);
+			tileEntityOptional.map(BufferStopBlockEntity::getMinecartSlots).ifPresent(minecartSlots -> {
 				ItemHandlerUtil.getStackStream(minecartSlots).forEach(stack -> popResource(level, pos, stack));
 			});
 			level.updateNeighbourForOutputSignal(pos, this);

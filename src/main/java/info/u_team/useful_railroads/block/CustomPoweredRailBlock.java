@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.block;
 
 import info.u_team.u_team_core.api.block.BlockItemProvider;
-import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
+import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +27,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	
 	public CustomPoweredRailBlock() {
 		super(Properties.of(Material.DECORATION).noCollission().strength(0.7F).sound(SoundType.METAL), true);
-		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsItemGroups.GROUP));
+		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsCreativeTabs.GROUP));
 	}
 	
 	protected BlockItem createBlockItem(Item.Properties blockItemProperties) {

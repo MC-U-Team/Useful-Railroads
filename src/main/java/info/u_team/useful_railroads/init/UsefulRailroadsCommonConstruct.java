@@ -18,10 +18,10 @@ public class UsefulRailroadsCommonConstruct implements ModConstruct {
 		ModLoadingContext.get().registerConfig(Type.SERVER, ServerConfig.CONFIG);
 		
 		BusRegister.registerMod(UsefulRailroadsBlocks::registerMod);
-		BusRegister.registerMod(UsefulRailroadsContainerTypes::registerMod);
+		BusRegister.registerMod(UsefulRailroadsMenuTypes::registerMod);
 		BusRegister.registerMod(UsefulRailroadsItems::registerMod);
 		BusRegister.registerMod(UsefulRailroadsRecipeSerializers::registerMod);
 		BusRegister.registerMod(UsefulRailroadsRecipeTypes::registerMod);
-		BusRegister.registerMod(UsefulRailroadsTileEntityTypes::registerMod);
+		BusRegister.registerMod(UsefulRailroadsBlockEntityTypes::registerMod);
 	}
 }

@@ -5,13 +5,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import info.u_team.u_team_core.gui.elements.ScalableButton;
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.container.TrackBuilderContainer;
+import info.u_team.useful_railroads.menu.TrackBuilderMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderContainer> {
+public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderMenu> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/track_builder.png");
 	
@@ -23,8 +23,8 @@ public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderContain
 	private final Component torchesTextComponent;
 	private final Component fuelTextComponent;
 	
-	public TrackBuilderScreen(TrackBuilderContainer container, Inventory playerInventory, Component title) {
-		super(container, playerInventory, title, BACKGROUND, 284, 296);
+	public TrackBuilderScreen(TrackBuilderMenu menu, Inventory playerInventory, Component title) {
+		super(menu, playerInventory, title, BACKGROUND, 284, 296);
 		backgroundWidth = backgroundHeight = 512;
 		setTextLocation(8, 6, 62, imageHeight - 94);
 		

@@ -1,9 +1,9 @@
-package info.u_team.useful_railroads.container;
+package info.u_team.useful_railroads.menu;
 
 import info.u_team.u_team_core.api.sync.DataHolder;
 import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
 import info.u_team.u_team_core.menu.UContainerMenu;
-import info.u_team.useful_railroads.init.UsefulRailroadsContainerTypes;
+import info.u_team.useful_railroads.init.UsefulRailroadsMenuTypes;
 import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class TrackBuilderContainer extends UContainerMenu {
+public class TrackBuilderMenu extends UContainerMenu {
 	
 	private final TrackBuilderInventoryWrapper wrapper;
 	
@@ -24,13 +24,13 @@ public class TrackBuilderContainer extends UContainerMenu {
 	private final int selectedSlot;
 	
 	// Client
-	public TrackBuilderContainer(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
+	public TrackBuilderMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
 		this(containerId, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnum(TrackBuilderMode.class), () -> playerInventory.player.level), buffer.readVarInt());
 	}
 	
 	// Server
-	public TrackBuilderContainer(int containerId, Inventory playerInventory, TrackBuilderInventoryWrapper wrapper, int selectedSlot) {
-		super(UsefulRailroadsContainerTypes.TRACK_BUILDER.get(), containerId);
+	public TrackBuilderMenu(int containerId, Inventory playerInventory, TrackBuilderInventoryWrapper wrapper, int selectedSlot) {
+		super(UsefulRailroadsMenuTypes.TRACK_BUILDER.get(), containerId);
 		this.wrapper = wrapper;
 		this.selectedSlot = selectedSlot;
 		addSlots(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);

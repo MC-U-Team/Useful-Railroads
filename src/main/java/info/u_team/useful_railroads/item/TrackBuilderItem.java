@@ -6,9 +6,9 @@ import info.u_team.u_team_core.item.UItem;
 import info.u_team.u_team_core.util.TooltipCreator;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.config.ServerConfig;
-import info.u_team.useful_railroads.container.TrackBuilderContainer;
-import info.u_team.useful_railroads.init.UsefulRailroadsItemGroups;
+import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
+import info.u_team.useful_railroads.menu.TrackBuilderMenu;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +31,7 @@ public class TrackBuilderItem extends UItem {
 	private final boolean doubleTrack;
 	
 	public TrackBuilderItem(boolean doubleTrack) {
-		super(UsefulRailroadsItemGroups.GROUP, new Properties().stacksTo(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
+		super(UsefulRailroadsCreativeTabs.GROUP, new Properties().stacksTo(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
 		this.doubleTrack = doubleTrack;
 	}
 	
@@ -43,7 +43,7 @@ public class TrackBuilderItem extends UItem {
 			final int selectedSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : -1;
 			
 			NetworkHooks.openGui(serverPlayer, new SimpleMenuProvider((id, playerInventory, openPlayer) -> {
-				return new TrackBuilderContainer(id, playerInventory, wrapper, selectedSlot);
+				return new TrackBuilderMenu(id, playerInventory, wrapper, selectedSlot);
 			}, Component.translatable("container.usefulrailroads.track_builder")), buffer -> {
 				buffer.writeVarInt(wrapper.getFuel());
 				buffer.writeEnum(wrapper.getMode());
@@ -94,7 +94,7 @@ public class TrackBuilderItem extends UItem {
 	
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-		return !(player.containerMenu instanceof TrackBuilderContainer);
+		return !(player.containerMenu instanceof TrackBuilderMenu);
 	}
 	
 	public boolean isDoubleTrack() {

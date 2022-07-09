@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.container.TeleportRailContainer;
-import info.u_team.useful_railroads.tileentity.TeleportRailTileEntity;
+import info.u_team.useful_railroads.blockentity.TeleportRailBlockEntity;
+import info.u_team.useful_railroads.menu.TeleportRailMenu;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailContainer> {
+public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailMenu> {
 	
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
 	
@@ -25,8 +25,8 @@ public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailContain
 	private final Component consumptionTextComponent;
 	private final Component seperatorTextComponent;
 	
-	public TeleportRailScreen(TeleportRailContainer container, Inventory playerInventory, Component title) {
-		super(container, playerInventory, title, BACKGROUND, 176, 189);
+	public TeleportRailScreen(TeleportRailMenu menu, Inventory playerInventory, Component title) {
+		super(menu, playerInventory, title, BACKGROUND, 176, 189);
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
 		
@@ -43,7 +43,7 @@ public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailContain
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		super.renderLabels(poseStack, mouseX, mouseY);
 		
-		final TeleportRailTileEntity tileEntity = getMenu().getBlockEntity();
+		final TeleportRailBlockEntity tileEntity = getMenu().getBlockEntity();
 		final Location location = tileEntity.getLocation();
 		final BlockPos pos = location.getPos();
 		

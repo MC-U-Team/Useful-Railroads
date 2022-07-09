@@ -8,8 +8,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class UsefulRailroadsScreens {
 	
 	private static void register(RegisterMenuScreensEvent event) {
-		event.registerScreen(UsefulRailroadsContainerTypes.TELEPORT_RAIL, TeleportRailScreen::new);
-		event.registerScreen(UsefulRailroadsContainerTypes.TRACK_BUILDER, TrackBuilderScreen::new);
+		event.registerScreen(UsefulRailroadsMenuTypes.TELEPORT_RAIL, TeleportRailScreen::new);
+		event.registerScreen(UsefulRailroadsMenuTypes.TRACK_BUILDER, TrackBuilderScreen::new);
 	}
 	
 	public static void registerMod(IEventBus bus) {

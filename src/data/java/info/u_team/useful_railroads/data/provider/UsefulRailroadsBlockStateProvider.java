@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import info.u_team.u_team_core.data.CommonBlockStateProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.block.BufferStopBlock;
-import info.u_team.useful_railroads.block.CustomAdvancedTileEntityRailBlock;
+import info.u_team.useful_railroads.block.CustomAdvancedBlockEntityRailBlock;
 import info.u_team.useful_railroads.block.CustomPoweredRailBlock;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
 import net.minecraft.world.level.block.BaseRailBlock;
@@ -77,7 +77,7 @@ public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider 
 					.modelFile(new ExistingModelFile(modLoc("block/buffer_stop"), models().existingFileHelper)) //
 					.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) //
 					.build();
-		}, BufferStopBlock.POWERED, CustomAdvancedTileEntityRailBlock.SHAPE);
+		}, BufferStopBlock.POWERED, CustomAdvancedBlockEntityRailBlock.SHAPE);
 	}
 	
 	private void customFlatPoweredRail(CustomPoweredRailBlock block, ModelFile normal, ModelFile powered) {
