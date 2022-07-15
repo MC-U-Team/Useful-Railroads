@@ -1,5 +1,6 @@
 {
 	"ambientocclusion": false,
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"rail": "block/rail",
 		"texture": "usefulrailroads:block/buffer_stop",
@@ -5915,9 +5916,7 @@
 			}
 		}
 	],
-	"display": {
-		
-	},
+	"display": {},
 	"groups": [
 		0,
 		{

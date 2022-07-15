@@ -115,7 +115,7 @@ public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider 
 	
 	private BlockModelBuilder flatRail(String name) {
 		return models().withExistingParent(name, "block/rail_flat") //
-				.texture("rail", modLoc("block/" + name));
+				.texture("rail", modLoc("block/" + name)).renderType("cutout");
 	}
 	
 	// Utility methods

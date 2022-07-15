@@ -18,12 +18,12 @@ public class UsefulRailroadsRenderTypes {
 		// Cutout
 		final RenderType cutout = RenderType.cutout();
 		
-		ItemBlockRenderTypes.setRenderLayer(HIGHSPEED_RAIL.get(), cutout);
-		ItemBlockRenderTypes.setRenderLayer(SPEED_CLAMP_RAIL.get(), cutout);
-		ItemBlockRenderTypes.setRenderLayer(DIRECTION_RAIL.get(), cutout);
-		ItemBlockRenderTypes.setRenderLayer(INTERSECTION_RAIL.get(), cutout);
-		ItemBlockRenderTypes.setRenderLayer(TELEPORT_RAIL.get(), cutout);
-		ItemBlockRenderTypes.setRenderLayer(BUFFER_STOP.get(), cutout);
+//		ItemBlockRenderTypes.setRenderLayer(HIGHSPEED_RAIL.get(), cutout);
+//		ItemBlockRenderTypes.setRenderLayer(SPEED_CLAMP_RAIL.get(), cutout);
+//		ItemBlockRenderTypes.setRenderLayer(DIRECTION_RAIL.get(), cutout);
+//		ItemBlockRenderTypes.setRenderLayer(INTERSECTION_RAIL.get(), cutout);
+//		ItemBlockRenderTypes.setRenderLayer(TELEPORT_RAIL.get(), cutout);
+//		ItemBlockRenderTypes.setRenderLayer(BUFFER_STOP.get(), cutout);
 	}
 	
 	public static void registerMod(IEventBus bus) {
