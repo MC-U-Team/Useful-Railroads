@@ -42,7 +42,7 @@ public class TrackBuilderItem extends UItem {
 			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.level);
 			final int selectedSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : -1;
 			
-			NetworkHooks.openGui(serverPlayer, new SimpleMenuProvider((id, playerInventory, openPlayer) -> {
+			NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, playerInventory, openPlayer) -> {
 				return new TrackBuilderMenu(id, playerInventory, wrapper, selectedSlot);
 			}, Component.translatable("container.usefulrailroads.track_builder")), buffer -> {
 				buffer.writeVarInt(wrapper.getFuel());

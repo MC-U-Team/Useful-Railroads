@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.IGeneratedBlockstate;
+import net.minecraftforge.client.model.generators.IGeneratedBlockState;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
@@ -145,7 +145,7 @@ public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider 
 	// Create a variant block state builder that don't check if all shapes are covered
 	private VariantBlockStateBuilder getUncheckedVariantBuilder(Block block) {
 		if (registeredBlocks.containsKey(block)) {
-			final IGeneratedBlockstate old = registeredBlocks.get(block);
+			final IGeneratedBlockState old = registeredBlocks.get(block);
 			Preconditions.checkState(old instanceof VariantBlockStateBuilder);
 			return (VariantBlockStateBuilder) old;
 		} else {

@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class UsefulRailroadsMenuTypes {
 	
-	public static final CommonDeferredRegister<MenuType<?>> CONTAINER_TYPES = CommonDeferredRegister.create(ForgeRegistries.CONTAINERS, UsefulRailroadsMod.MODID);
+	public static final CommonDeferredRegister<MenuType<?>> CONTAINER_TYPES = CommonDeferredRegister.create(ForgeRegistries.MENU_TYPES, UsefulRailroadsMod.MODID);
 	
 	public static final RegistryObject<MenuType<TeleportRailMenu>> TELEPORT_RAIL = CONTAINER_TYPES.register("teleport_rail", () -> new UMenuType<>(TeleportRailMenu::new));
 	public static final RegistryObject<MenuType<TrackBuilderMenu>> TRACK_BUILDER = CONTAINER_TYPES.register("track_builder", () -> new UMenuType<>(TrackBuilderMenu::new));

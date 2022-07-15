@@ -9,10 +9,10 @@ import info.u_team.useful_railroads.data.provider.UsefulRailroadsItemTagsProvide
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsLanguagesProvider;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsLootTableProvider;
 import info.u_team.useful_railroads.data.provider.UsefulRailroadsRecipeProvider;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 @EventBusSubscriber(modid = UsefulRailroadsMod.MODID, bus = Bus.MOD)
 public class UsefulRailroadsDataGenerator {

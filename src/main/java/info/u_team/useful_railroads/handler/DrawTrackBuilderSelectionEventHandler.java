@@ -22,12 +22,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraftforge.client.event.DrawSelectionEvent.HighlightBlock;
+import net.minecraftforge.client.event.RenderHighlightEvent.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class DrawTrackBuilderSelectionEventHandler {
 	
-	private static void onBlockHighlight(HighlightBlock event) {
+	private static void onBlockHighlight(Block event) {
 		final Player player = Minecraft.getInstance().player;
 		final ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 		
