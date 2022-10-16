@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.19.2-1.5.1.45] - 2022-10-16
+### Changed
+ - Update forge version to 43.1.43
+ - Fix uteamcore changes
+
 ## [1.19.2-1.5.1.44] - 2022-09-17
 ### Changed
  - Update forge version to 43.1.25
