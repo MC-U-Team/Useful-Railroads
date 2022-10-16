@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.blockentity;
 
 import info.u_team.u_team_core.blockentity.UBlockEntity;
-import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
+import info.u_team.u_team_core.inventory.BlockEntityUItemStackHandler;
 import info.u_team.u_team_core.inventory.UItemStackHandler;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BufferStopBlockEntity extends UBlockEntity {
 	
-	private final UItemStackHandler minecartSlots = new TileEntityUItemStackHandler(10, this) {
+	private final UItemStackHandler minecartSlots = new BlockEntityUItemStackHandler(10, this) {
 		
 		@Override
 		protected int getStackLimit(int slot, ItemStack stack) {
