@@ -10,8 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BufferStopBlockEntity extends UBlockEntity {
 	
@@ -41,7 +41,7 @@ public class BufferStopBlockEntity extends UBlockEntity {
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (direction == Direction.DOWN || direction == null)) {
+		if (capability == ForgeCapabilities.ITEM_HANDLER && (direction == Direction.DOWN || direction == null)) {
 			return minecartSlotsOptional.cast();
 		}
 		return super.getCapability(capability, direction);

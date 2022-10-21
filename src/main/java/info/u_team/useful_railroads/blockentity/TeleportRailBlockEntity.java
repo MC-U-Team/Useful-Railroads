@@ -28,8 +28,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedBlockEntity {
 	
@@ -148,7 +148,7 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && direction != Direction.UP) {
+		if (capability == ForgeCapabilities.ITEM_HANDLER && direction != Direction.UP) {
 			return fuelSlotOptional.cast();
 		}
 		return super.getCapability(capability, direction);
