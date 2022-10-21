@@ -53,8 +53,14 @@ public class BufferStopBlockEntity extends UBlockEntity {
 	
 	@Override
 	public void setRemoved() {
-		super.setRemoved();
 		minecartSlotsOptional.invalidate();
+		super.setRemoved();
+	}
+	
+	@Override
+	public void onChunkUnloaded() {
+		minecartSlotsOptional.invalidate();
+		super.onChunkUnloaded();
 	}
 	
 }

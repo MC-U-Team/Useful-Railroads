@@ -156,8 +156,14 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 	
 	@Override
 	public void setRemoved() {
-		super.setRemoved();
 		fuelSlotOptional.invalidate();
+		super.setRemoved();
+	}
+	
+	@Override
+	public void onChunkUnloaded() {
+		fuelSlotOptional.invalidate();
+		super.onChunkUnloaded();
 	}
 	
 	public FuelItemHandler<TeleportRailFuelRecipe> getFuelSlot() {
