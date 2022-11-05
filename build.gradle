@@ -68,7 +68,7 @@ minecraft {
 			args "--output", file("src/generated/resources")
 			args "--validate"
 			args "--existing", file("src/main/resources")
-						
+			
 			mods {
 				"${config.mod.modid}" {
 					source sourceSets.main
@@ -118,7 +118,6 @@ dependencies {
 	
 	implementation fg.deobf("info.u-team:u_team_core-1.16.5:3.2.1.229")
 	
-	compileOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}:${config.jei.version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}:${config.jei.version}")
 }
 
