@@ -85,7 +85,7 @@ public class FuelRecipeBuilder {
 		
 		@Override
 		public void serializeRecipeData(JsonObject json) {
-			if (!this.group.isEmpty()) {
+			if (!group.isEmpty()) {
 				json.addProperty("group", group);
 			}
 			

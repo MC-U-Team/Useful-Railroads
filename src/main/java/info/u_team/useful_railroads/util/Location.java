@@ -19,7 +19,7 @@ public class Location implements INBTSerializable<CompoundTag> {
 	private BlockPos pos;
 	
 	public Location(ResourceKey<Level> dimensionType, BlockPos pos) {
-		this.resourceKey = dimensionType;
+		resourceKey = dimensionType;
 		this.pos = pos;
 	}
 	
@@ -28,7 +28,7 @@ public class Location implements INBTSerializable<CompoundTag> {
 	}
 	
 	public void setResourceKey(ResourceKey<Level> dimensionType) {
-		this.resourceKey = dimensionType;
+		resourceKey = dimensionType;
 	}
 	
 	public BlockPos getPos() {
