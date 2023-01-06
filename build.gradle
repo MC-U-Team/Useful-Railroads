@@ -126,7 +126,7 @@ dependencies {
 	
 	implementation fg.deobf("info.u-team:u_team_core-1.19.3:4.5.0.237")
 	
-	runtimeOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}-forge:${config.jei.version}")
+	//runtimeOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}-forge:${config.jei.version}")
 }
 
 curseforge {
