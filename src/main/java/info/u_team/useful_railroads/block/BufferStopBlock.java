@@ -100,7 +100,7 @@ public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 		}
 		
 		final Optional<BufferStopBlockEntity> tileEntityOptional = getBlockEntity(level, pos);
-		tileEntityOptional.map(BufferStopBlockEntity::getMinecartSlots).ifPresent(minecartSlots -> {
+		tileEntityOptional.ifPresent(bufferStop -> {
 			cart.ejectPassengers();
 			
 			final Collection<ItemEntity> drops = new ArrayList<>();
@@ -108,10 +108,11 @@ public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 			cart.destroy(DamageSource.MAGIC);
 			
 			drops.stream().map(ItemEntity::getItem).forEach(stack -> {
-				final ItemStack stackLeft = ItemHandlerHelper.insertItem(minecartSlots, stack, false);
+				final ItemStack stackLeft = ItemHandlerHelper.insertItem(bufferStop.getMinecartSlots(), stack, false);
 				if (!stackLeft.isEmpty()) {
 					popResource(level, pos, stackLeft);
 				}
+				bufferStop.setChanged();
 			});
 		});
 	}
