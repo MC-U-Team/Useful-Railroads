@@ -5,6 +5,7 @@ import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -22,7 +23,7 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 		int count = 0;
 		for (int i = 0; i < inventory.getContainerSize(); i++) {
 			final ItemStack stack = inventory.getItem(i);
-			final CompoundTag compound = stack.getTagElement("BlockEntityTag");
+			final CompoundTag compound = stack.getTagElement(BlockItem.BLOCK_ENTITY_TAG);
 			if (stack.getItem() == UsefulRailroadsBlocks.TELEPORT_RAIL.getItem().asItem() && compound != null && compound.contains("location")) {
 				count++;
 			} else if (!stack.isEmpty()) {
@@ -38,10 +39,10 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 			final ItemStack stack = inventory.getItem(i);
 			if (!stack.isEmpty()) {
 				final ItemStack copy = stack.copy();
-				final CompoundTag compound = copy.getTagElement("BlockEntityTag");
+				final CompoundTag compound = copy.getTagElement(BlockItem.BLOCK_ENTITY_TAG);
 				compound.remove("location");
 				if (compound.isEmpty()) {
-					copy.removeTagKey("BlockEntityTag");
+					copy.removeTagKey(BlockItem.BLOCK_ENTITY_TAG);
 				}
 				return copy;
 			}
