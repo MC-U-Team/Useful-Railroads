@@ -1,3 +1,4 @@
 {
-	"type": "usefulrailroads:crafting_special_teleport_rail_remove_location"
+	"type": "usefulrailroads:crafting_special_teleport_rail_remove_location",
+	"category": "misc"
 }
