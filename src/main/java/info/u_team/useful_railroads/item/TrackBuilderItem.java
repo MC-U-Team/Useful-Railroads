@@ -6,7 +6,6 @@ import info.u_team.u_team_core.item.UItem;
 import info.u_team.u_team_core.util.TooltipCreator;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.config.ServerConfig;
-import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.menu.TrackBuilderMenu;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
@@ -31,7 +30,7 @@ public class TrackBuilderItem extends UItem {
 	private final boolean doubleTrack;
 	
 	public TrackBuilderItem(boolean doubleTrack) {
-		super(UsefulRailroadsCreativeTabs.GROUP, new Properties().stacksTo(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
+		super(new Properties().stacksTo(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
 		this.doubleTrack = doubleTrack;
 	}
 	

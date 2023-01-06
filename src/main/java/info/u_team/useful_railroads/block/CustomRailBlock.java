@@ -1,7 +1,6 @@
 package info.u_team.useful_railroads.block;
 
 import info.u_team.u_team_core.api.block.BlockItemProvider;
-import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.RailBlock;
@@ -14,7 +13,7 @@ public abstract class CustomRailBlock extends RailBlock implements BlockItemProv
 	
 	public CustomRailBlock() {
 		super(Properties.of(Material.DECORATION).noCollission().strength(0.7F).sound(SoundType.METAL));
-		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsCreativeTabs.GROUP));
+		blockItem = createBlockItem(new Item.Properties());
 	}
 	
 	protected BlockItem createBlockItem(Item.Properties blockItemProperties) {

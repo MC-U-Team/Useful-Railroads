@@ -6,9 +6,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAM
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
 
 import info.u_team.u_team_core.util.ModelUtil;
-import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.BaseRailBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PoweredRailBlock;
@@ -16,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.RailShape;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -28,8 +25,6 @@ public class UsefulRailroadsModels {
 			ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
 			ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(DIRECTION_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(DirectionRailBlock.AXIS_DIRECTION).create(Block::defaultBlockState, BlockState::new));
 			ModelUtil.addCustomStateContainer(TELEPORT_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(TELEPORT_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
-			
-			ModelUtil.addTexture(ForgeHooksClient.getBlockMaterial(new ResourceLocation(UsefulRailroadsMod.MODID, "item/empty_fuel_slot")));
 		});
 	}
 	

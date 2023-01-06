@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import info.u_team.u_team_core.api.block.BlockItemProvider;
 import info.u_team.u_team_core.api.block.EntityBlockProvider;
-import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -27,7 +26,7 @@ public class CustomAdvancedBlockEntityRailBlock extends BaseRailBlock implements
 	
 	public CustomAdvancedBlockEntityRailBlock(Properties properties, Supplier<? extends BlockEntityType<?>> blockEntityType) {
 		super(false, properties);
-		blockItem = createBlockItem(new Item.Properties().tab(UsefulRailroadsCreativeTabs.GROUP));
+		blockItem = createBlockItem(new Item.Properties());
 		this.blockEntityType = blockEntityType;
 		registerDefaultState(defaultBlockState().setValue(SHAPE, RailShape.NORTH_SOUTH).setValue(WATERLOGGED, false));
 	}

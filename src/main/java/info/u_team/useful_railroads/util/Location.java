@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.util;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -45,7 +45,7 @@ public class Location implements INBTSerializable<CompoundTag> {
 	}
 	
 	public void deserialize(FriendlyByteBuf buffer) {
-		resourceKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, buffer.readResourceLocation());
+		resourceKey = ResourceKey.create(Registries.DIMENSION, buffer.readResourceLocation());
 		if (resourceKey == null) {
 			resourceKey = Level.OVERWORLD;
 		}
@@ -66,7 +66,7 @@ public class Location implements INBTSerializable<CompoundTag> {
 	public void deserializeNBT(CompoundTag compound) {
 		final ResourceLocation dimensionLocation = ResourceLocation.tryParse(compound.getString("dimension"));
 		if (dimensionLocation != null) {
-			resourceKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, dimensionLocation);
+			resourceKey = ResourceKey.create(Registries.DIMENSION, dimensionLocation);
 		}
 		if (resourceKey == null) {
 			resourceKey = Level.OVERWORLD;
