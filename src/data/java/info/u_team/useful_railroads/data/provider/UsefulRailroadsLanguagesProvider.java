@@ -6,12 +6,12 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.HIGHSPEED_
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.INTERSECTION_RAIL;
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.SPEED_CLAMP_RAIL;
 import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_RAIL;
-import static info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs.GROUP;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.DOUBLE_TRACK_BUILDER;
 import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRACK_BUILDER;
 
 import info.u_team.u_team_core.data.CommonLanguagesProvider;
 import info.u_team.u_team_core.data.GenerationData;
+import info.u_team.useful_railroads.init.UsefulRailroadsCreativeTabs;
 
 public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 	
@@ -29,7 +29,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		// English
 		
-		add(GROUP, "Useful Railroads");
+		add(UsefulRailroadsCreativeTabs.TAB, "Useful Railroads");
 		
 		addBlock(HIGHSPEED_RAIL, "High Speed Rail (5 Blocks/Tick)");
 		addBlock(SPEED_CLAMP_RAIL, "Speed Clamp Rail (0.25 Blocks/Tick)");
@@ -76,7 +76,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		// German
 		
-		add("de_de", GROUP, "Nützliche Eisenbahn Erweiterungen");
+		add("de_de", UsefulRailroadsCreativeTabs.TAB, "Nützliche Eisenbahn Erweiterungen");
 		
 		addBlock("de_de", HIGHSPEED_RAIL, "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)");
 		addBlock("de_de", SPEED_CLAMP_RAIL, "Bremsschiene (0.25 Blöcke/Tick)");

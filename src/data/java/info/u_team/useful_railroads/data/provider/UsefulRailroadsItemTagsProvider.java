@@ -10,6 +10,7 @@ import info.u_team.u_team_core.data.CommonBlockTagsProvider;
 import info.u_team.u_team_core.data.CommonItemTagsProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlocks;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -22,7 +23,7 @@ public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 	}
 	
 	@Override
-	public void register() {
+	public void register(HolderLookup.Provider provider) {
 		copy(BlockTags.RAILS, ItemTags.RAILS);
 		tag(TRACK_BUILDER_RAILS).add(Items.POWERED_RAIL, UsefulRailroadsBlocks.HIGHSPEED_RAIL.get().asItem(), UsefulRailroadsBlocks.SPEED_CLAMP_RAIL.get().asItem());
 		tag(TRACK_BUILDER_GROUND_BLOCKS).add(Items.GRAVEL);

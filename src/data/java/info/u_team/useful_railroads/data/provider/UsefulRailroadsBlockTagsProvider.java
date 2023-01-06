@@ -9,6 +9,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsBlocks.TELEPORT_R
 
 import info.u_team.u_team_core.data.CommonBlockTagsProvider;
 import info.u_team.u_team_core.data.GenerationData;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 
 public class UsefulRailroadsBlockTagsProvider extends CommonBlockTagsProvider {
@@ -18,7 +19,7 @@ public class UsefulRailroadsBlockTagsProvider extends CommonBlockTagsProvider {
 	}
 	
 	@Override
-	public void register() {
+	public void register(HolderLookup.Provider provider) {
 		tag(BlockTags.RAILS).add(HIGHSPEED_RAIL.get(), SPEED_CLAMP_RAIL.get(), DIRECTION_RAIL.get(), INTERSECTION_RAIL.get(), TELEPORT_RAIL.get(), BUFFER_STOP.get());
 	}
 	

@@ -18,6 +18,7 @@ import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +42,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 	}
 	
 	private void registerCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-		ShapedRecipeBuilder.shaped(HIGHSPEED_RAIL.get(), 24) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HIGHSPEED_RAIL.get(), 24) //
 				.pattern("IDI") //
 				.pattern("LSL") //
 				.pattern("IRI") //
@@ -53,7 +54,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(SPEED_CLAMP_RAIL.get(), 24) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, SPEED_CLAMP_RAIL.get(), 24) //
 				.pattern("IDI") //
 				.pattern("LSL") //
 				.pattern("IRI") //
@@ -65,7 +66,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(DIRECTION_RAIL.get(), 16) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, DIRECTION_RAIL.get(), 16) //
 				.pattern("IEI") //
 				.pattern("IRI") //
 				.pattern("ISI") //
@@ -76,7 +77,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(TELEPORT_RAIL.get(), 1) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, TELEPORT_RAIL.get(), 1) //
 				.pattern("IDI") //
 				.pattern("ESE") //
 				.pattern("IRI") //
@@ -88,7 +89,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(INTERSECTION_RAIL.get(), 8) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, INTERSECTION_RAIL.get(), 8) //
 				.pattern("III") //
 				.pattern("ISI") //
 				.pattern("III") //
@@ -97,7 +98,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(BUFFER_STOP.get(), 2) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, BUFFER_STOP.get(), 2) //
 				.pattern("III") //
 				.pattern(" B ") //
 				.pattern("I I") //
@@ -106,7 +107,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(SINGLE_TRACK_BUILDER.get(), 1) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, SINGLE_TRACK_BUILDER.get(), 1) //
 				.pattern("IBI") //
 				.pattern("PRC") //
 				.pattern("IAI") //
@@ -121,7 +122,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_rail", has(Items.POWERED_RAIL)) //
 				.save(consumer);
 		
-		ShapedRecipeBuilder.shaped(DOUBLE_TRACK_BUILDER.get(), 1) //
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DOUBLE_TRACK_BUILDER.get(), 1) //
 				.pattern("IBI") //
 				.pattern("PRC") //
 				.pattern("AIA") //
