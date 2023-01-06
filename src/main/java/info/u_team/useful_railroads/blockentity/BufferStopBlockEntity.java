@@ -31,12 +31,12 @@ public class BufferStopBlockEntity extends UBlockEntity {
 	
 	@Override
 	public void saveNBT(CompoundTag compound) {
-		minecartSlots.deserializeNBT(compound.getCompound("inventory"));
+		compound.put("inventory", minecartSlots.serializeNBT());
 	}
 	
 	@Override
 	public void loadNBT(CompoundTag compound) {
-		compound.put("inventory", minecartSlots.serializeNBT());
+		minecartSlots.deserializeNBT(compound.getCompound("inventory"));
 	}
 	
 	@Override
