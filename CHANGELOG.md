@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.19.2-1.5.1.47] - 2023-01-06
+### Changed
+ - Update forge version to 43.2.0
+
 ## [1.19.2-1.5.1.46] - 2022-10-21
 ### Changed
  - Invalidate exposed capabilities in block entites when a chunk unloads
