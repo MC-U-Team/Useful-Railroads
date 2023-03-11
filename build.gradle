@@ -117,7 +117,7 @@ sourceSets {
 
 repositories {
 	maven {
-		url = "https://dvs1.progwml6.com/files/maven"
+		url = "https://maven.blamejared.com"
 	}
 }
 
