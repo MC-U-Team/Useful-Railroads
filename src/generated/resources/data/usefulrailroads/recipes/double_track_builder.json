@@ -28,5 +28,6 @@
 	],
 	"result": {
 		"item": "usefulrailroads:double_track_builder"
-	}
+	},
+	"show_notification": true
 }

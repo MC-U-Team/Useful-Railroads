@@ -26,5 +26,6 @@
 	"result": {
 		"count": 24,
 		"item": "usefulrailroads:highspeed_rail"
-	}
+	},
+	"show_notification": true
 }

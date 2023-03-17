@@ -25,5 +25,6 @@
 	],
 	"result": {
 		"item": "usefulrailroads:teleport_rail"
-	}
+	},
+	"show_notification": true
 }

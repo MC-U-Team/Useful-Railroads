@@ -17,5 +17,6 @@
 	"result": {
 		"count": 2,
 		"item": "usefulrailroads:buffer_stop"
-	}
+	},
+	"show_notification": true
 }

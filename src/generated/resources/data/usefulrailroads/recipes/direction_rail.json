@@ -23,5 +23,6 @@
 	"result": {
 		"count": 16,
 		"item": "usefulrailroads:direction_rail"
-	}
+	},
+	"show_notification": true
 }
