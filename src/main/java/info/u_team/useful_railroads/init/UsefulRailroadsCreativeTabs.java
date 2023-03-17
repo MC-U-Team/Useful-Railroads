@@ -17,7 +17,7 @@ public class UsefulRailroadsCreativeTabs {
 		TAB = event.registerCreativeModeTab(new ResourceLocation(UsefulRailroadsMod.MODID, "tab"), builder -> {
 			builder.icon(() -> new ItemStack(UsefulRailroadsBlocks.HIGHSPEED_RAIL.get()));
 			builder.title(Component.translatable("creativetabs.usefulrailroads.tab"));
-			builder.displayItems((enabledFeatures, output, displayOperatorCreativeTab) -> {
+			builder.displayItems((parameters, output) -> {
 				UsefulRailroadsBlocks.BLOCKS.itemIterable().forEach(item -> {
 					output.accept(item);
 				});

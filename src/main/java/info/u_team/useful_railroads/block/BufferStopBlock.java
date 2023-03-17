@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -105,7 +104,7 @@ public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 			
 			final Collection<ItemEntity> drops = new ArrayList<>();
 			cart.captureDrops(drops);
-			cart.destroy(DamageSource.MAGIC);
+			cart.destroy(cart.damageSources().magic());
 			
 			drops.stream().map(ItemEntity::getItem).forEach(stack -> {
 				final ItemStack stackLeft = ItemHandlerHelper.insertItem(bufferStop.getMinecartSlots(), stack, false);

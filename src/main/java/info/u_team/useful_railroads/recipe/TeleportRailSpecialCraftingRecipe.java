@@ -2,6 +2,7 @@ package info.u_team.useful_railroads.recipe;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsBlocks;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -34,7 +35,7 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 	}
 	
 	@Override
-	public ItemStack assemble(CraftingContainer inventory) {
+	public ItemStack assemble(CraftingContainer inventory, RegistryAccess registryAccess) {
 		for (int i = 0; i < inventory.getContainerSize(); i++) {
 			final ItemStack stack = inventory.getItem(i);
 			if (!stack.isEmpty()) {

@@ -11,7 +11,7 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRAC
 
 import info.u_team.u_team_core.data.CommonItemModelProvider;
 import info.u_team.u_team_core.data.GenerationData;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
@@ -41,36 +41,36 @@ public class UsefulRailroadsItemModelProvider extends CommonItemModelProvider {
 				.parent(new ExistingModelFile(modLoc("block/buffer_stop"), existingFileHelper)) //
 				.transforms() //
 				
-				.transform(TransformType.GUI) //
+				.transform(ItemDisplayContext.GUI) //
 				.rotation(0, -150, 0) //
 				.translation(-0.5F, -0.5F, 0) //
 				.scale(0.75F) //
 				.end() //
 				
-				.transform(TransformType.GROUND) //
+				.transform(ItemDisplayContext.GROUND) //
 				.translation(0, 2, 0) //
 				.scale(0.25F) //
 				.end() //
 				
-				.transform(TransformType.FIRST_PERSON_RIGHT_HAND) //
+				.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) //
 				.rotation(0, 120, 0) //
 				.translation(2.5F, 1.5F, 0) //
 				.scale(0.25F) //
 				.end() //
 				
-				.transform(TransformType.THIRD_PERSON_RIGHT_HAND) //
+				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) //
 				.rotation(70, 0, 0) //
 				.translation(0, 0, 1) //
 				.scale(0.35F) //
 				.end() //
 				
-				.transform(TransformType.FIRST_PERSON_LEFT_HAND) //
+				.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) //
 				.rotation(0, 120, 0) //
 				.translation(2.5F, 1.5F, 0) //
 				.scale(0.25F) //
 				.end() //
 				
-				.transform(TransformType.THIRD_PERSON_LEFT_HAND) //
+				.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND) //
 				.rotation(70, 0, 0) //
 				.translation(0, 0, 1) //
 				.scale(0.35F) //

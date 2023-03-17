@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.recipe;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -38,7 +39,7 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	}
 	
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return ItemStack.EMPTY;
 	}
 	
@@ -55,7 +56,7 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	}
 	
 	@Override
-	public ItemStack assemble(Container inv) {
+	public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
 		return ItemStack.EMPTY;
 	}
 	
