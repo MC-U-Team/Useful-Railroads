@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import info.u_team.u_team_core.gui.elements.ScalableButton;
+import info.u_team.u_team_core.gui.elements.UButton;
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.menu.TrackBuilderMenu;
@@ -43,15 +43,15 @@ public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderMenu> {
 	protected void init() {
 		super.init();
 		
-		addRenderableWidget(new ScalableButton(leftPos + 169, topPos + 16, 108, 11, Component.nullToEmpty(null), 0.7F, button -> {
-			menu.getChangeModeMessage().triggerMessage();
-		}) {
+		final UButton button = addRenderableWidget(new UButton(leftPos + 169, topPos + 16, 108, 11, Component.empty()) {
 			
 			@Override
 			public Component getMessage() {
 				return menu.getWrapper().getMode().getDisplayComponent();
 			}
 		});
+		button.setPressable(() -> menu.getChangeModeMessage().triggerMessage());
+		button.setScale(0.7F);
 	}
 	
 	@Override
