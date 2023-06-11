@@ -38,7 +38,7 @@ public class TrackBuilderItem extends UItem {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		final ItemStack stack = player.getItemInHand(hand);
 		if (!level.isClientSide && !player.isShiftKeyDown() && player instanceof final ServerPlayer serverPlayer) { // Server & Player not sneaking
-			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, () -> player.level);
+			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, player::level);
 			final int selectedSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : -1;
 			
 			NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, playerInventory, openPlayer) -> {
@@ -62,7 +62,7 @@ public class TrackBuilderItem extends UItem {
 		if (player == null || !context.isSecondaryUseActive() || context.getHand() == InteractionHand.OFF_HAND) { // No player or no sneaking and no offhand
 			return InteractionResult.PASS;
 		}
-		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(context.getItemInHand(), () -> player.level);
+		final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(context.getItemInHand(), player::level);
 		
 		TrackBuilderManager.create(context.getClickedPos(), context.getClickedFace(), level, player.getLookAngle(), wrapper.getMode(), doubleTrack).ifPresent(manager -> {
 			manager.execute(player, wrapper);
@@ -72,7 +72,7 @@ public class TrackBuilderItem extends UItem {
 	
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-		return !ItemStack.isSame(oldStack, newStack);
+		return !ItemStack.isSameItem(oldStack, newStack);
 	}
 	
 	@Override

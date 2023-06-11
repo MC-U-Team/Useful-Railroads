@@ -48,7 +48,6 @@ public class TeleportRailBlockItem extends BlockItem {
 		if (compound != null && compound.contains("location")) { // Prevent overwriting already installed rails
 			return false;
 		}
-		itemEntity.getLevel();
 		final Level world = itemEntity.getCommandSenderWorld();
 		final Vec3 itemEntityVector = itemEntity.position();
 		if (world.isClientSide) { // Do client particles

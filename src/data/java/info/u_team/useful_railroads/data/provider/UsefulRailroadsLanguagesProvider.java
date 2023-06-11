@@ -29,7 +29,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		// English
 		
-		add(UsefulRailroadsCreativeTabs.TAB, "Useful Railroads");
+		add(UsefulRailroadsCreativeTabs.TAB.get(), "Useful Railroads");
 		
 		addBlock(HIGHSPEED_RAIL, "High Speed Rail (5 Blocks/Tick)");
 		addBlock(SPEED_CLAMP_RAIL, "Speed Clamp Rail (0.25 Blocks/Tick)");
@@ -76,7 +76,7 @@ public class UsefulRailroadsLanguagesProvider extends CommonLanguagesProvider {
 		
 		// German
 		
-		add("de_de", UsefulRailroadsCreativeTabs.TAB, "Nützliche Eisenbahn Erweiterungen");
+		add("de_de", UsefulRailroadsCreativeTabs.TAB.get(), "Nützliche Eisenbahn Erweiterungen");
 		
 		addBlock("de_de", HIGHSPEED_RAIL, "Hochgeschwindigkeitsschiene (5 Blöcke/Tick)");
 		addBlock("de_de", SPEED_CLAMP_RAIL, "Bremsschiene (0.25 Blöcke/Tick)");

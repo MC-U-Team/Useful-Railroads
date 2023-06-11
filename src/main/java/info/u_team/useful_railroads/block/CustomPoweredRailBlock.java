@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.PoweredRailBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.RailShape;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements BlockItemProvider {
@@ -25,7 +24,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	protected final double minSpeed = 0.01D;
 	
 	public CustomPoweredRailBlock() {
-		super(Properties.of(Material.DECORATION).noCollission().strength(0.7F).sound(SoundType.METAL), true);
+		super(Properties.of().noCollission().strength(0.7F).sound(SoundType.METAL), true);
 		blockItem = createBlockItem(new Item.Properties());
 	}
 	
@@ -45,7 +44,7 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 	
 	protected void moveAlongTrack(BlockPos pos, BlockState state, AbstractMinecart cart) {
 		final BaseRailBlock railBlock = (BaseRailBlock) state.getBlock();
-		final RailShape railDirection = railBlock.getRailDirection(state, cart.level, pos, cart);
+		final RailShape railDirection = railBlock.getRailDirection(state, cart.level(), pos, cart);
 		
 		final boolean powered = (railBlock == this) ? state.getValue(PoweredRailBlock.POWERED) : false;
 		
@@ -93,15 +92,15 @@ public abstract class CustomPoweredRailBlock extends PoweredRailBlock implements
 		double xCartMotion = cartMotion.x;
 		double zCartMotion = cartMotion.z;
 		if (railDirection == RailShape.EAST_WEST) {
-			if (isNormalCube(cart.level, pos.west())) {
+			if (isNormalCube(cart.level(), pos.west())) {
 				xCartMotion = minSpeed;
-			} else if (isNormalCube(cart.level, pos.east())) {
+			} else if (isNormalCube(cart.level(), pos.east())) {
 				xCartMotion = -minSpeed;
 			}
 		} else if (railDirection == RailShape.NORTH_SOUTH) {
-			if (isNormalCube(cart.level, pos.north())) {
+			if (isNormalCube(cart.level(), pos.north())) {
 				zCartMotion = minSpeed;
-			} else if (isNormalCube(cart.level, pos.south())) {
+			} else if (isNormalCube(cart.level(), pos.south())) {
 				zCartMotion = -minSpeed;
 			}
 		} else {

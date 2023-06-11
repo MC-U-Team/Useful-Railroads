@@ -50,7 +50,7 @@ public class DrawTrackBuilderSelectionEventHandler {
 		
 		final BlockHitResult rayTraceResult = event.getTarget();
 		
-		TrackBuilderManager.create(rayTraceResult.getBlockPos(), rayTraceResult.getDirection(), player.level, new Vec3(event.getCamera().getLookVector()), mode, doubleTrack).ifPresent(manager -> {
+		TrackBuilderManager.create(rayTraceResult.getBlockPos(), rayTraceResult.getDirection(), player.level(), new Vec3(event.getCamera().getLookVector()), mode, doubleTrack).ifPresent(manager -> {
 			final int red;
 			final int blue;
 			if (player.isShiftKeyDown()) {

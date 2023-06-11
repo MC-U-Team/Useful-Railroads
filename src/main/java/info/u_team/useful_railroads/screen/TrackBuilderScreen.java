@@ -1,12 +1,11 @@
 package info.u_team.useful_railroads.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import info.u_team.u_team_core.gui.elements.UButton;
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.menu.TrackBuilderMenu;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -55,20 +54,20 @@ public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderMenu> {
 	}
 	
 	@Override
-	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		super.renderLabels(poseStack, mouseX, mouseY);
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+		super.renderLabels(guiGraphics, mouseX, mouseY);
 		
-		font.draw(poseStack, modeTextComponent, 169, 6, 0x404040);
+		guiGraphics.drawString(font, modeTextComponent, 169, 6, 0x404040);
 		
-		font.draw(poseStack, railsTextComponent, 8, 20, 0x404040);
-		font.draw(poseStack, groundBlocksTextComponent, 8, 52, 0x404040);
-		font.draw(poseStack, tunnelBlocksTextComponent, 8, 102, 0x404040);
-		font.draw(poseStack, redstoneTorchesTextComponent, 8, 170, 0x404040);
-		font.draw(poseStack, torchesTextComponent, 116, 170, 0x404040);
+		guiGraphics.drawString(font, railsTextComponent, 8, 20, 0x404040);
+		guiGraphics.drawString(font, groundBlocksTextComponent, 8, 52, 0x404040);
+		guiGraphics.drawString(font, tunnelBlocksTextComponent, 8, 102, 0x404040);
+		guiGraphics.drawString(font, redstoneTorchesTextComponent, 8, 170, 0x404040);
+		guiGraphics.drawString(font, torchesTextComponent, 116, 170, 0x404040);
 		
 		final Component fuelComponent = fuelTextComponent.plainCopy().append(": ").append(Component.literal(Integer.toString(menu.getWrapper().getFuel())).withStyle(ChatFormatting.DARK_AQUA));
 		
-		font.draw(poseStack, fuelComponent, imageWidth - font.width(fuelComponent) - 6, 170, 0x404040);
+		guiGraphics.drawString(font, fuelComponent, imageWidth - font.width(fuelComponent) - 6, 170, 0x404040);
 	}
 	
 }

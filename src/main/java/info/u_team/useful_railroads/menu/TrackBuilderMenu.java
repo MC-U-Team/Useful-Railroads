@@ -2,6 +2,7 @@ package info.u_team.useful_railroads.menu;
 
 import info.u_team.u_team_core.api.sync.DataHolder;
 import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
+import info.u_team.u_team_core.menu.ItemHandlerSlotCreator;
 import info.u_team.u_team_core.menu.UContainerMenu;
 import info.u_team.useful_railroads.init.UsefulRailroadsMenuTypes;
 import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
@@ -25,7 +26,7 @@ public class TrackBuilderMenu extends UContainerMenu {
 	
 	// Client
 	public TrackBuilderMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-		this(containerId, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnum(TrackBuilderMode.class), () -> playerInventory.player.level), buffer.readVarInt());
+		this(containerId, playerInventory, new TrackBuilderInventoryWrapper.Client(buffer.readVarInt(), buffer.readEnum(TrackBuilderMode.class), playerInventory.player::level), buffer.readVarInt());
 	}
 	
 	// Server
@@ -33,12 +34,12 @@ public class TrackBuilderMenu extends UContainerMenu {
 		super(UsefulRailroadsMenuTypes.TRACK_BUILDER.get(), containerId);
 		this.wrapper = wrapper;
 		this.selectedSlot = selectedSlot;
-		addSlots(wrapper.getFuelInventory(), FuelItemSlotHandler::new, 1, 1, 260, 182);
-		addSlots(wrapper.getRailInventory(), 1, 15, 8, 32);
-		addSlots(wrapper.getGroundInventory(), 2, 15, 8, 64);
-		addSlots(wrapper.getTunnelInventory(), 3, 15, 8, 114);
-		addSlots(wrapper.getRedstoneTorchInventory(), 1, 5, 8, 182);
-		addSlots(wrapper.getTorchInventory(), 1, 4, 116, 182);
+		addSlots((index, xPosition, yPosition) -> new FuelItemSlotHandler(wrapper.getFuelInventory(), index, xPosition, yPosition), 1, 1, 260, 182);
+		addSlots(ItemHandlerSlotCreator.of(wrapper.getRailInventory()), 1, 15, 8, 32);
+		addSlots(ItemHandlerSlotCreator.of(wrapper.getGroundInventory()), 2, 15, 8, 64);
+		addSlots(ItemHandlerSlotCreator.of(wrapper.getTunnelInventory()), 3, 15, 8, 114);
+		addSlots(ItemHandlerSlotCreator.of(wrapper.getRedstoneTorchInventory()), 1, 5, 8, 182);
+		addSlots(ItemHandlerSlotCreator.of(wrapper.getTorchInventory()), 1, 4, 116, 182);
 		addPlayerInventory(playerInventory, 62, 214);
 		addDataHolderToClient(DataHolder.createIntHolder(wrapper::getFuel, wrapper::setFuel));
 		addDataHolderToClient(DataHolder.createByteHolder(() -> (byte) wrapper.getMode().ordinal(), value -> wrapper.setMode(TrackBuilderMode.class.getEnumConstants()[value])));

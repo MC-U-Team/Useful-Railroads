@@ -13,7 +13,7 @@ public class UsefulRailroadsClientConstruct implements ModConstruct {
 	public void construct() {
 		BusRegister.registerMod(UsefulRailroadsModels::registerMod);
 		BusRegister.registerMod(UsefulRailroadsRecipeBookCategories::registerMod);
-		BusRegister.registerMod(UsefulRailroadsScreens::registerMod);
+		UsefulRailroadsScreens.register();
 		
 		BusRegister.registerForge(DrawTrackBuilderSelectionEventHandler::registerForge);
 	}

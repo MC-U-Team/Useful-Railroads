@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
@@ -73,7 +73,7 @@ public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 	}
 	
 	public BufferStopBlock() {
-		super(Properties.of(Material.METAL).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsBlockEntityTypes.BUFFER_STOP);
+		super(Properties.of().mapColor(MapColor.COLOR_YELLOW).noCollission().strength(1.5F).sound(SoundType.METAL), UsefulRailroadsBlockEntityTypes.BUFFER_STOP);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(POWERED, false));
 	}
 	
