@@ -1,37 +1,20 @@
-buildscript {
-	repositories {
-		maven {
-			url = "https://maven.minecraftforge.net"
-		}
-		maven {
-			url = "https://maven.parchmentmc.org"
-		}
-		maven {
-			url = "https://repo.u-team.info"
-		}
-		mavenCentral()
-	}
-	dependencies {
-		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
-		classpath group: "org.parchmentmc", name: "librarian", version: "1.+", changing: true
-		classpath group: "info.u-team.gradle_files", name: "gradle_files", version: "1.2.2"
-		classpath group: "info.u-team.curse_gradle_uploader", name: "curse_gradle_uploader", version: "1.5.1"
-	}
+plugins {
+	id "net.minecraftforge.gradle"
+	id "org.parchmentmc.librarian.forgegradle"
+	id "org.spongepowered.mixin"
+	id "info.u_team.gradle_files"
+	id "info.u_team.curse_gradle_uploader"
+	id "maven-publish"
 }
 
-apply plugin: "net.minecraftforge.gradle"
-apply plugin: "org.parchmentmc.librarian.forgegradle"
-apply plugin: "info.u_team.gradle_files"
-apply plugin: "info.u_team.curse_gradle_uploader"
-apply plugin: "maven-publish"
+gradlefiles {
+	vendor "Team UTeam"
+	gradlefiles.loaderSuffix = "forge"
+}
 
 group = "info.u-team"
 archivesBaseName = gradlefiles.archivesBaseName()
 version = gradlefiles.version()
-
-gradlefiles {
-	vendor "Team UTeam"
-}
 
 java {
 	toolchain {
@@ -47,7 +30,7 @@ minecraft {
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 	
 	runs {
-		client = {
+		client {
 			workingDirectory file("run/client")
 			
 			mods {
@@ -56,7 +39,7 @@ minecraft {
 				}
 			}
 		}
-		server = {
+		server {
 			workingDirectory file("run/server")
 			
 			mods {
@@ -65,7 +48,7 @@ minecraft {
 				}
 			}
 		}
-		data = {
+		data {
 			workingDirectory file("run/data")
 			
 			args "--mod", config.mod.modid
@@ -86,11 +69,11 @@ minecraft {
 	}
 }
 
-tasks.withType(Jar) { task ->
+tasks.withType(Jar).configureEach { task ->
 	gradlefiles.defaultJar(task)
 }
 
-tasks.withType(Javadoc) { task ->
+tasks.withType(Javadoc).configureEach { task ->
 	task.options.addStringOption("Xdoclint:none", "-quiet")
 }
 
@@ -119,14 +102,17 @@ repositories {
 	maven {
 		url = "https://maven.blamejared.com"
 	}
+	maven {
+		url = "https://maven.theillusivec4.top"
+	}
 }
 
 dependencies {
 	minecraft gradlefiles.forgeDependency()
 	
-	implementation fg.deobf("info.u-team:u_team_core-1.19.4:4.6.1.243")
+	implementation fg.deobf("info.u-team:u_team_core-forge-1.20:5.1.2.253")
 	
-	//runtimeOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}-forge:${config.jei.version}")
+	runtimeOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}-forge:${config.jei.version}")
 }
 
 curseforge {
@@ -146,7 +132,7 @@ curseforge {
 		}
 		
 		mainArtifact(tasks.getByName("jar")) {
-			displayName = "${config.curse.display}-${config.minecraft.version}-${project.version}"
+			displayName = "${config.curse.display}-Forge-${config.minecraft.version}-${project.version}"
 			changelogType = "html"
 			changelog = "<a href=\"${gradlefiles.changelogUrl()}\">Changelog of ${project.version}</a>"
 		}
