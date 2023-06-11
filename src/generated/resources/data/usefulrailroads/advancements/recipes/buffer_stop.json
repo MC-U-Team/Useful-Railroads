@@ -30,5 +30,6 @@
 		"recipes": [
 			"usefulrailroads:buffer_stop"
 		]
-	}
+	},
+	"sends_telemetry_event": false
 }

@@ -52,5 +52,6 @@
 		"recipes": [
 			"usefulrailroads:double_track_builder"
 		]
-	}
+	},
+	"sends_telemetry_event": false
 }

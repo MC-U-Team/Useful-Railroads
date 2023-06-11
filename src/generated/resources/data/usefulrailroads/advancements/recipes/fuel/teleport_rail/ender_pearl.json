@@ -30,5 +30,6 @@
 		"recipes": [
 			"usefulrailroads:fuel/teleport_rail/ender_pearl"
 		]
-	}
+	},
+	"sends_telemetry_event": true
 }

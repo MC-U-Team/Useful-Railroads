@@ -30,5 +30,6 @@
 		"recipes": [
 			"usefulrailroads:clamp_rail"
 		]
-	}
+	},
+	"sends_telemetry_event": false
 }

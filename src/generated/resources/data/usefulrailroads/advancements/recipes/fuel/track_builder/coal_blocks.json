@@ -28,5 +28,6 @@
 		"recipes": [
 			"usefulrailroads:fuel/track_builder/coal_blocks"
 		]
-	}
+	},
+	"sends_telemetry_event": true
 }

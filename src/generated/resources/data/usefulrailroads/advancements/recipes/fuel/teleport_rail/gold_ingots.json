@@ -28,5 +28,6 @@
 		"recipes": [
 			"usefulrailroads:fuel/teleport_rail/gold_ingots"
 		]
-	}
+	},
+	"sends_telemetry_event": true
 }

@@ -30,5 +30,6 @@
 		"recipes": [
 			"usefulrailroads:intersection_rail"
 		]
-	}
+	},
+	"sends_telemetry_event": false
 }

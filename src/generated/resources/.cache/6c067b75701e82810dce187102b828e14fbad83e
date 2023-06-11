@@ -1,6 +1,6 @@
-// 1.19.4	2023-03-17T01:11:22.4653996	Loot-Table
-cfd03c50084baa06f348d3e486e0629f0d7a91c1 data/usefulrailroads/loot_tables/blocks/buffer_stop.json
-706ae3383bc9fad5117f058cd64307fd5db38f7f data/usefulrailroads/loot_tables/blocks/clamp_rail.json
-48c1c960ff938a82e32f5dc9a2756b2967f86c1e data/usefulrailroads/loot_tables/blocks/direction_rail.json
-ba357e52427aa9c99a8f140bc449a9bb8eafc6f7 data/usefulrailroads/loot_tables/blocks/highspeed_rail.json
-b8f93c27527330b13d56d3089c998127b729aa35 data/usefulrailroads/loot_tables/blocks/intersection_rail.json
+// 1.20	2023-06-11T14:43:54.5684906	Loot-Table
+cf483d1bcbbace4a7e82ab75fd3ab2935149edc3 data/usefulrailroads/loot_tables/blocks/buffer_stop.json
+26e5286256a794d92aec1060efb210e9b96902f6 data/usefulrailroads/loot_tables/blocks/clamp_rail.json
+9c94442bd17dd4d8eb71b822c97dda98bd1c166a data/usefulrailroads/loot_tables/blocks/direction_rail.json
+9894c7cc45db19e30e4f3ec5510d40e6a4e135ca data/usefulrailroads/loot_tables/blocks/highspeed_rail.json
+09f85ffdb28d39d47bdc8f5a299d0a696849af32 data/usefulrailroads/loot_tables/blocks/intersection_rail.json

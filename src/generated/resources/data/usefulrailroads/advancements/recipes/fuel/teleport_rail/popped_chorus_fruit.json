@@ -30,5 +30,6 @@
 		"recipes": [
 			"usefulrailroads:fuel/teleport_rail/popped_chorus_fruit"
 		]
-	}
+	},
+	"sends_telemetry_event": true
 }

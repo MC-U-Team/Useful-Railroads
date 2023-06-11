@@ -28,5 +28,6 @@
 		"recipes": [
 			"usefulrailroads:fuel/teleport_rail/redstone_dusts"
 		]
-	}
+	},
+	"sends_telemetry_event": true
 }
