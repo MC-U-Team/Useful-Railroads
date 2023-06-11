@@ -76,7 +76,7 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 		// Reset motion
 		cart.setDeltaMovement(0, 0, 0);
 		
-		final Entity entity = cart.getPassengers().isEmpty() ? null : (Entity) cart.getPassengers().get(0);
+		final Entity entity = cart.getFirstPassenger();
 		
 		// Check fuel
 		if (fuel < cost) {
@@ -100,21 +100,26 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 		cart.getServer().tell(new TickTask(0, () -> {
 			final Vec3 teleportPos = Vec3.atCenterOf(location.getPos());
 			
-			// Teleport minecart
-			final Entity newCart = LevelUtil.teleportEntity(cart, teleportLevel, teleportPos);
+			final Entity newEntity;
 			
 			// Teleport entity riding if there is one
 			if (entity != null) {
-				LevelUtil.teleportEntity(entity, teleportLevel, teleportPos);
-				
-				entity.startRiding(newCart, true);
+				newEntity = LevelUtil.teleportEntity(entity, teleportLevel, teleportPos);
+			} else {
+				newEntity = null;
+			}
+			
+			// Teleport minecart
+			final Entity newCart = LevelUtil.teleportEntity(cart, teleportLevel, teleportPos);
+			
+			if (newEntity != null) {
+				newEntity.startRiding(newCart, true);
 				
 				// For some reason the entity tracker does not update the passengers to the client so we send the packet manually.
 				// See MC-U-Team/Useful-Railroads#21
-				teleportLevel.getChunkSource().broadcastAndSend(entity, new ClientboundSetPassengersPacket(newCart));
+				teleportLevel.getChunkSource().broadcastAndSend(newEntity, new ClientboundSetPassengersPacket(newCart));
 			}
 		}));
-		
 	}
 	
 	@Override
