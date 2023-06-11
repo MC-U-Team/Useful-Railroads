@@ -46,13 +46,13 @@ public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailMenu> {
 		final Location location = tileEntity.getLocation();
 		final BlockPos pos = location.getPos();
 		
-		guiGraphics.drawString(font, dimensionTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(location.getResourceKey().location().toString()).withStyle(ChatFormatting.DARK_GREEN)), 11, 23, 0x404040);
-		guiGraphics.drawString(font, xTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getX())).withStyle(ChatFormatting.DARK_GREEN)), 11, 33, 0x404040);
-		guiGraphics.drawString(font, yTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getY())).withStyle(ChatFormatting.DARK_GREEN)), 11, 43, 0x404040);
-		guiGraphics.drawString(font, zTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getZ())).withStyle(ChatFormatting.DARK_GREEN)), 11, 53, 0x404040);
+		guiGraphics.drawString(font, dimensionTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(location.getResourceKey().location().toString()).withStyle(ChatFormatting.DARK_GREEN)), 11, 23, 0x404040, false);
+		guiGraphics.drawString(font, xTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getX())).withStyle(ChatFormatting.DARK_GREEN)), 11, 33, 0x404040, false);
+		guiGraphics.drawString(font, yTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getY())).withStyle(ChatFormatting.DARK_GREEN)), 11, 43, 0x404040, false);
+		guiGraphics.drawString(font, zTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(pos.getZ())).withStyle(ChatFormatting.DARK_GREEN)), 11, 53, 0x404040, false);
 		
-		guiGraphics.drawString(font, fuelTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(tileEntity.getFuel())).withStyle(ChatFormatting.DARK_AQUA)), 11, 68, 0x404040);
-		guiGraphics.drawString(font, consumptionTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(tileEntity.getCost())).withStyle(ChatFormatting.DARK_RED)), 11, 78, 0x404040);
+		guiGraphics.drawString(font, fuelTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(tileEntity.getFuel())).withStyle(ChatFormatting.DARK_AQUA)), 11, 68, 0x404040, false);
+		guiGraphics.drawString(font, consumptionTextComponent.plainCopy().append(seperatorTextComponent).append(Component.literal(Integer.toString(tileEntity.getCost())).withStyle(ChatFormatting.DARK_RED)), 11, 78, 0x404040, false);
 	}
 	
 }

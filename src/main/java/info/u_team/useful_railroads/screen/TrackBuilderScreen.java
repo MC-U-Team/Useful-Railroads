@@ -57,17 +57,17 @@ public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderMenu> {
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
 		super.renderLabels(guiGraphics, mouseX, mouseY);
 		
-		guiGraphics.drawString(font, modeTextComponent, 169, 6, 0x404040);
+		guiGraphics.drawString(font, modeTextComponent, 169, 6, 0x404040, false);
 		
-		guiGraphics.drawString(font, railsTextComponent, 8, 20, 0x404040);
-		guiGraphics.drawString(font, groundBlocksTextComponent, 8, 52, 0x404040);
-		guiGraphics.drawString(font, tunnelBlocksTextComponent, 8, 102, 0x404040);
-		guiGraphics.drawString(font, redstoneTorchesTextComponent, 8, 170, 0x404040);
-		guiGraphics.drawString(font, torchesTextComponent, 116, 170, 0x404040);
+		guiGraphics.drawString(font, railsTextComponent, 8, 20, 0x404040, false);
+		guiGraphics.drawString(font, groundBlocksTextComponent, 8, 52, 0x404040, false);
+		guiGraphics.drawString(font, tunnelBlocksTextComponent, 8, 102, 0x404040, false);
+		guiGraphics.drawString(font, redstoneTorchesTextComponent, 8, 170, 0x404040, false);
+		guiGraphics.drawString(font, torchesTextComponent, 116, 170, 0x404040, false);
 		
 		final Component fuelComponent = fuelTextComponent.plainCopy().append(": ").append(Component.literal(Integer.toString(menu.getWrapper().getFuel())).withStyle(ChatFormatting.DARK_AQUA));
 		
-		guiGraphics.drawString(font, fuelComponent, imageWidth - font.width(fuelComponent) - 6, 170, 0x404040);
+		guiGraphics.drawString(font, fuelComponent, imageWidth - font.width(fuelComponent) - 6, 170, 0x404040, false);
 	}
 	
 }
