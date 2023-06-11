@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[45,)"
+loaderVersion="[46,)"
 issueTrackerURL="https://github.com/MC-U-Team/Useful-Railroads/issues"
 license="Apache-2.0 License"
 
@@ -17,20 +17,20 @@ license="Apache-2.0 License"
 	[[dependencies.usefulrailroads]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[45.0.8,)"
+	    versionRange="[46.0.1,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
 	[[dependencies.usefulrailroads]]
 	    modId="minecraft"
 	    mandatory=true
-	    versionRange="[1.19.4]"
+	    versionRange="[1.20]"
 	    ordering="NONE"
 	    side="BOTH"
 	    
 	[[dependencies.usefulrailroads]]
 	    modId="uteamcore"
 	    mandatory=true
-	    versionRange="[4.6.0.242,)"
+	    versionRange="[5.0.2.253,)"
 	    ordering="NONE"
 	    side="BOTH"
