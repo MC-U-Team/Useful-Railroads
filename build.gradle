@@ -102,9 +102,6 @@ repositories {
 	maven {
 		url = "https://maven.blamejared.com"
 	}
-	maven {
-		url = "https://maven.theillusivec4.top"
-	}
 }
 
 dependencies {
