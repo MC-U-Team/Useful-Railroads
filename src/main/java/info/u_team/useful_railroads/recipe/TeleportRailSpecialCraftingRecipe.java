@@ -4,7 +4,6 @@ import info.u_team.useful_railroads.init.UsefulRailroadsBlocks;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -15,8 +14,8 @@ import net.minecraft.world.level.Level;
 
 public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 	
-	public TeleportRailSpecialCraftingRecipe(ResourceLocation id, CraftingBookCategory category) {
-		super(id, category);
+	public TeleportRailSpecialCraftingRecipe(CraftingBookCategory category) {
+		super(category);
 	}
 	
 	@Override

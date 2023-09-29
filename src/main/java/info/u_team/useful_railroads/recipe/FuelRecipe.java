@@ -1,12 +1,12 @@
 package info.u_team.useful_railroads.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,19 +18,12 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	
 	protected final Ingredient ingredient;
 	protected final int fuel;
-	protected final ResourceLocation id;
 	protected final String group;
 	
-	public FuelRecipe(ResourceLocation id, String group, Ingredient ingredient, int fuel) {
-		this.id = id;
+	public FuelRecipe(String group, Ingredient ingredient, int fuel) {
 		this.group = group;
 		this.ingredient = ingredient;
 		this.fuel = fuel;
-	}
-	
-	@Override
-	public ResourceLocation getId() {
-		return id;
 	}
 	
 	@Override
@@ -71,31 +64,33 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	
 	public static class Serializer<T extends FuelRecipe> implements RecipeSerializer<T> {
 		
-		private final IFactory<T> factory;
+		private final Factory<T> factory;
+		private final Codec<T> codec;
 		
-		public Serializer(IFactory<T> factory) {
+		public Serializer(Factory<T> factory) {
 			this.factory = factory;
+			codec = RecordCodecBuilder.create(instance -> {
+				return instance.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> {
+					return recipe.group;
+				}), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> {
+					return recipe.ingredient;
+				}), Codec.INT.fieldOf("fuel").orElse(0).forGetter(recipe -> {
+					return recipe.fuel;
+				})).apply(instance, factory::create);
+			});
 		}
 		
 		@Override
-		public T fromJson(ResourceLocation id, JsonObject json) {
-			final String group = GsonHelper.getAsString(json, "group", "");
-			final Ingredient ingredient;
-			if (GsonHelper.isArrayNode(json, "ingredient")) {
-				ingredient = Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "ingredient"));
-			} else {
-				ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
-			}
-			final int fuel = GsonHelper.getAsInt(json, "fuel");
-			return factory.create(id, group, ingredient, fuel);
+		public Codec<T> codec() {
+			return codec;
 		}
 		
 		@Override
-		public T fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-			final String group = buffer.readUtf(32767);
+		public T fromNetwork(FriendlyByteBuf buffer) {
+			final String group = buffer.readUtf();
 			final Ingredient ingredient = Ingredient.fromNetwork(buffer);
 			final int fuel = buffer.readInt();
-			return factory.create(id, group, ingredient, fuel);
+			return factory.create(group, ingredient, fuel);
 		}
 		
 		@Override
@@ -105,9 +100,9 @@ public abstract class FuelRecipe implements Recipe<Container> {
 			buffer.writeInt(recipe.fuel);
 		}
 		
-		public static interface IFactory<T extends FuelRecipe> {
+		public static interface Factory<T extends FuelRecipe> {
 			
-			T create(ResourceLocation id, String group, Ingredient ingredient, int fuel);
+			T create(String group, Ingredient ingredient, int fuel);
 		}
 	}
 }

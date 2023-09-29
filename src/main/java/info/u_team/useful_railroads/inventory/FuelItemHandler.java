@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import info.u_team.useful_railroads.recipe.FuelRecipe;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -90,7 +91,7 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 		if (currentRecipe != null && currentRecipe.matches(inventory, world)) {
 			return Optional.of(currentRecipe);
 		} else {
-			final T recipe = world.getRecipeManager().getRecipeFor(recipeType, inventory, world).orElse(null);
+			final T recipe = world.getRecipeManager().getRecipeFor(recipeType, inventory, world).map(RecipeHolder::value).orElse(null);
 			if (recipe == null) {
 				failedMatch = stack;
 			} else {
