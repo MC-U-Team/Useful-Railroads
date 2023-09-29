@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.item;
 import java.util.List;
 
 import info.u_team.u_team_core.item.UItem;
+import info.u_team.u_team_core.util.MenuUtil;
 import info.u_team.u_team_core.util.TooltipCreator;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.config.ServerConfig;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 
 public class TrackBuilderItem extends UItem {
 	
@@ -41,13 +41,13 @@ public class TrackBuilderItem extends UItem {
 			final TrackBuilderInventoryWrapper wrapper = new TrackBuilderInventoryWrapper.Server(stack, player::level);
 			final int selectedSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : -1;
 			
-			NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, playerInventory, openPlayer) -> {
+			MenuUtil.openMenu(serverPlayer, new SimpleMenuProvider((id, playerInventory, openPlayer) -> {
 				return new TrackBuilderMenu(id, playerInventory, wrapper, selectedSlot);
 			}, Component.translatable("container.usefulrailroads.track_builder")), buffer -> {
 				buffer.writeVarInt(wrapper.getFuel());
 				buffer.writeEnum(wrapper.getMode());
 				buffer.writeVarInt(selectedSlot);
-			});
+			}, false);
 		}
 		return InteractionResultHolder.success(stack);
 	}
