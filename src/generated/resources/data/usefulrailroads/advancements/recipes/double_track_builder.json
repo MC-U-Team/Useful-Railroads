@@ -42,10 +42,10 @@
 	},
 	"requirements": [
 		[
+			"has_the_recipe",
 			"has_redstone",
 			"has_iron",
-			"has_rail",
-			"has_the_recipe"
+			"has_rail"
 		]
 	],
 	"rewards": {

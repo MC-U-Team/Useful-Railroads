@@ -20,8 +20,8 @@
 	},
 	"requirements": [
 		[
-			"has_ingredient",
-			"has_the_recipe"
+			"has_the_recipe",
+			"has_ingredient"
 		]
 	],
 	"rewards": {
@@ -29,5 +29,5 @@
 			"usefulrailroads:fuel/teleport_rail/diamond_gems"
 		]
 	},
-	"sends_telemetry_event": true
+	"sends_telemetry_event": false
 }
