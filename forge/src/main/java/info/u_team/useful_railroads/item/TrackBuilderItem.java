@@ -6,12 +6,12 @@ import info.u_team.u_team_core.item.UItem;
 import info.u_team.u_team_core.util.MenuUtil;
 import info.u_team.u_team_core.util.TooltipCreator;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
-import info.u_team.useful_railroads.config.ServerConfig;
+import info.u_team.useful_railroads.component.TrackBuilderComponent;
+import info.u_team.useful_railroads.init.UsefulRailroadsDataComponentTypes;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.menu.TrackBuilderMenu;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -30,7 +30,7 @@ public class TrackBuilderItem extends UItem {
 	private final boolean doubleTrack;
 	
 	public TrackBuilderItem(boolean doubleTrack) {
-		super(new Properties().stacksTo(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE));
+		super(new Properties().stacksTo(1).rarity(doubleTrack ? Rarity.EPIC : Rarity.RARE).component(UsefulRailroadsDataComponentTypes.TRACK_BUILDER.get(), TrackBuilderComponent.EMPTY));
 		this.doubleTrack = doubleTrack;
 	}
 	
@@ -76,22 +76,6 @@ public class TrackBuilderItem extends UItem {
 	}
 	
 	@Override
-	public CompoundTag getShareTag(ItemStack stack) {
-		if (ServerConfig.getInstance().shareAllNBTData.get()) {
-			return super.getShareTag(stack);
-		}
-		if (!stack.hasTag()) {
-			return null;
-		}
-		final CompoundTag compound = stack.getTag().copy();
-		compound.remove("Items");
-		if (compound.isEmpty()) {
-			return null;
-		}
-		return compound;
-	}
-	
-	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
 		return !(player.containerMenu instanceof TrackBuilderMenu);
 	}
@@ -101,7 +85,7 @@ public class TrackBuilderItem extends UItem {
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(TooltipCreator.create(this, "", 0, TooltipCreator.create(UsefulRailroadsMod.MODID, "click", "right_click", 0).withStyle(ChatFormatting.ITALIC, ChatFormatting.GOLD)).withStyle(ChatFormatting.GRAY));
 		tooltip.add(TooltipCreator.create(this, "", 1, TooltipCreator.create(UsefulRailroadsMod.MODID, "click", "shift_right_click", 0).withStyle(ChatFormatting.ITALIC, ChatFormatting.GOLD)).withStyle(ChatFormatting.GRAY));
 	}

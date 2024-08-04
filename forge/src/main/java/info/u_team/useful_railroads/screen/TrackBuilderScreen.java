@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderMenu> {
 	
-	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/track_builder.png");
+	private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(UsefulRailroadsMod.MODID, "textures/gui/track_builder.png");
 	
 	private final Component modeTextComponent;
 	private final Component railsTextComponent;

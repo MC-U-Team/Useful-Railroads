@@ -1,7 +1,10 @@
 package info.u_team.useful_railroads.inventory;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class FixedSizeItemStackHandler extends ItemStackHandler {
@@ -16,15 +19,19 @@ public class FixedSizeItemStackHandler extends ItemStackHandler {
 	}
 	
 	@Override
-	public CompoundTag serializeNBT() {
+	public CompoundTag serializeNBT(HolderLookup.Provider registries) {
 		final CompoundTag compound = new CompoundTag();
-		ContainerHelper.saveAllItems(compound, stacks, false);
+		ContainerHelper.saveAllItems(compound, stacks, false, registries);
 		return compound;
 	}
 	
 	@Override
-	public void deserializeNBT(CompoundTag compound) {
-		ContainerHelper.loadAllItems(compound, stacks);
+	public void deserializeNBT(HolderLookup.Provider registries, CompoundTag compound) {
+		ContainerHelper.loadAllItems(compound, stacks, registries);
 		onLoad();
+	}
+	
+	public NonNullList<ItemStack> getItems() {
+		return stacks;
 	}
 }

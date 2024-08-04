@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.RailShape;
 
-public class CustomAdvancedBlockEntityRailBlock extends BaseRailBlock implements BlockItemProvider, EntityBlockProvider {
+public abstract class CustomAdvancedBlockEntityRailBlock extends BaseRailBlock implements BlockItemProvider, EntityBlockProvider {
 	
 	public static final EnumProperty<RailShape> SHAPE = EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST);
 	

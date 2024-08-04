@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailMenu> {
 	
-	private static final ResourceLocation BACKGROUND = new ResourceLocation(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
+	private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
 	
 	private final Component dimensionTextComponent;
 	private final Component xTextComponent;

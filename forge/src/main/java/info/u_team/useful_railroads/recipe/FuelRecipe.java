@@ -1,20 +1,22 @@
 package info.u_team.useful_railroads.recipe;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
-public abstract class FuelRecipe implements Recipe<Container> {
+public abstract class FuelRecipe implements Recipe<SingleRecipeInput> {
 	
 	protected final Ingredient ingredient;
 	protected final int fuel;
@@ -32,7 +34,7 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	}
 	
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(HolderLookup.Provider registries) {
 		return ItemStack.EMPTY;
 	}
 	
@@ -49,13 +51,13 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	}
 	
 	@Override
-	public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
+	public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) {
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
-	public boolean matches(Container inv, Level level) {
-		return ingredient.test(inv.getItem(0));
+	public boolean matches(SingleRecipeInput input, Level level) {
+		return ingredient.test(input.getItem(0));
 	}
 	
 	public int getFuel() {
@@ -64,13 +66,12 @@ public abstract class FuelRecipe implements Recipe<Container> {
 	
 	public static class Serializer<T extends FuelRecipe> implements RecipeSerializer<T> {
 		
-		private final Factory<T> factory;
-		private final Codec<T> codec;
+		private final MapCodec<T> codec;
+		private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 		
 		public Serializer(Factory<T> factory) {
-			this.factory = factory;
-			codec = RecordCodecBuilder.create(instance -> {
-				return instance.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> {
+			codec = RecordCodecBuilder.mapCodec(instance -> {
+				return instance.group(Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> {
 					return recipe.group;
 				}), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> {
 					return recipe.ingredient;
@@ -78,26 +79,21 @@ public abstract class FuelRecipe implements Recipe<Container> {
 					return recipe.fuel;
 				})).apply(instance, factory::create);
 			});
+			streamCodec = StreamCodec.composite( //
+					ByteBufCodecs.STRING_UTF8, recipe -> recipe.group, //
+					Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.ingredient, //
+					ByteBufCodecs.VAR_INT, recipe -> recipe.fuel, //
+					factory::create);
 		}
 		
 		@Override
-		public Codec<T> codec() {
+		public MapCodec<T> codec() {
 			return codec;
 		}
 		
 		@Override
-		public T fromNetwork(FriendlyByteBuf buffer) {
-			final String group = buffer.readUtf();
-			final Ingredient ingredient = Ingredient.fromNetwork(buffer);
-			final int fuel = buffer.readInt();
-			return factory.create(group, ingredient, fuel);
-		}
-		
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, T recipe) {
-			buffer.writeUtf(recipe.group);
-			recipe.ingredient.toNetwork(buffer);
-			buffer.writeInt(recipe.fuel);
+		public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
+			return streamCodec;
 		}
 		
 		public static interface Factory<T extends FuelRecipe> {

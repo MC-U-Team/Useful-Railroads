@@ -2,10 +2,12 @@ package info.u_team.useful_railroads.handler;
 
 import java.util.Collection;
 
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import info.u_team.useful_railroads.component.TrackBuilderComponent;
+import info.u_team.useful_railroads.init.UsefulRailroadsDataComponentTypes;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
@@ -41,9 +43,10 @@ public class DrawTrackBuilderSelectionEventHandler {
 			return;
 		}
 		
+		final TrackBuilderComponent component = stack.get(UsefulRailroadsDataComponentTypes.TRACK_BUILDER.get());
 		final TrackBuilderMode mode;
-		if (stack.hasTag()) {
-			mode = TrackBuilderMode.byName(stack.getTag().getString("mode"));
+		if (component != null) {
+			mode = component.getMode();
 		} else {
 			mode = TrackBuilderMode.MODE_NOAIR;
 		}
@@ -65,7 +68,7 @@ public class DrawTrackBuilderSelectionEventHandler {
 			
 			final Vec3 projectedView = event.getCamera().getPosition();
 			
-			final BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+			final BufferSource buffer = MultiBufferSource.immediate(new ByteBufferBuilder(1536));
 			final VertexConsumer builder = buffer.getBuffer(RenderType.lines());
 			
 			drawSelectionBox(poseStack, builder, projectedView, manager.getAllPositionsSet(), red, 0, blue, 1);

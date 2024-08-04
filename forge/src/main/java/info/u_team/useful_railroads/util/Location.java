@@ -7,9 +7,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.INBTSerializable;
 
-public class Location implements INBTSerializable<CompoundTag> {
+public class Location {
 	
 	public static Location getOrigin() {
 		return new Location(Level.OVERWORLD, BlockPos.ZERO);
@@ -52,7 +51,6 @@ public class Location implements INBTSerializable<CompoundTag> {
 		pos = buffer.readBlockPos();
 	}
 	
-	@Override
 	public CompoundTag serializeNBT() {
 		final CompoundTag compound = new CompoundTag();
 		compound.putString("dimension", resourceKey.location().toString());
@@ -62,7 +60,6 @@ public class Location implements INBTSerializable<CompoundTag> {
 		return compound;
 	}
 	
-	@Override
 	public void deserializeNBT(CompoundTag compound) {
 		final ResourceLocation dimensionLocation = ResourceLocation.tryParse(compound.getString("dimension"));
 		if (dimensionLocation != null) {

@@ -6,6 +6,7 @@ import info.u_team.u_team_core.inventory.UItemStackHandler;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,13 +31,13 @@ public class BufferStopBlockEntity extends UBlockEntity {
 	}
 	
 	@Override
-	public void saveNBT(CompoundTag compound) {
-		compound.put("inventory", minecartSlots.serializeNBT());
+	public void saveNBT(CompoundTag compound, HolderLookup.Provider registries) {
+		compound.put("inventory", minecartSlots.serializeNBT(registries));
 	}
 	
 	@Override
-	public void loadNBT(CompoundTag compound) {
-		minecartSlots.deserializeNBT(compound.getCompound("inventory"));
+	public void loadNBT(CompoundTag compound, HolderLookup.Provider registries) {
+		minecartSlots.deserializeNBT(registries, compound.getCompound("inventory"));
 	}
 	
 	@Override

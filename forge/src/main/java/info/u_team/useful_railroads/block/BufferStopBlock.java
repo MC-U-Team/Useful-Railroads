@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.mojang.serialization.MapCodec;
+
 import info.u_team.useful_railroads.blockentity.BufferStopBlockEntity;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.util.ItemHandlerUtil;
@@ -25,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseRailBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RedStoneWireBlock;
@@ -45,6 +48,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
+	
+	public static final MapCodec<BufferStopBlock> CODEC = simpleCodec(__ -> new BufferStopBlock());
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -228,6 +233,11 @@ public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 	@Override
 	public boolean isFlexibleRail(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
+	}
+	
+	@Override
+	protected MapCodec<? extends BaseRailBlock> codec() {
+		return CODEC;
 	}
 	
 }

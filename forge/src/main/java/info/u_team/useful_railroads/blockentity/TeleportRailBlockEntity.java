@@ -13,6 +13,7 @@ import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -123,7 +124,7 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 	}
 	
 	@Override
-	public void saveNBT(CompoundTag compound) {
+	public void saveNBT(CompoundTag compound, HolderLookup.Provider registries) {
 		compound.put("location", location.serializeNBT());
 		if (fuel != 0) { // Don't save fuel if it's 0
 			compound.putInt("fuel", fuel);
@@ -131,7 +132,7 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 	}
 	
 	@Override
-	public void loadNBT(CompoundTag compound) {
+	public void loadNBT(CompoundTag compound, HolderLookup.Provider registries) {
 		location.deserializeNBT(compound.getCompound("location"));
 		fuel = compound.getInt("fuel");
 	}

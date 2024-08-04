@@ -4,6 +4,7 @@ import info.u_team.u_team_core.util.MathUtil;
 import info.u_team.useful_railroads.block.TeleportRailBlock;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -31,7 +33,8 @@ public class TeleportRailBlockItem extends BlockItem {
 	
 	@Override
 	public InteractionResult place(BlockPlaceContext context) {
-		final CompoundTag compound = context.getItemInHand().getTagElement("BlockEntityTag");
+		final CustomData component = context.getItemInHand().get(DataComponents.BLOCK_ENTITY_DATA);
+		final CompoundTag compound = component == null ? null : component.copyTag();
 		if (compound != null && compound.contains("location")) {
 			return super.place(context);
 		}
@@ -44,7 +47,8 @@ public class TeleportRailBlockItem extends BlockItem {
 	
 	@Override
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity itemEntity) {
-		final CompoundTag compound = stack.getTagElement("BlockEntityTag");
+		final CustomData component = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+		final CompoundTag compound = component == null ? null : component.copyTag();
 		if (compound != null && compound.contains("location")) { // Prevent overwriting already installed rails
 			return false;
 		}
@@ -77,7 +81,11 @@ public class TeleportRailBlockItem extends BlockItem {
 						otherStack.shrink(1);
 						
 						// Set location to the stack
-						stack.getOrCreateTagElement("BlockEntityTag").put("location", new Location(world.dimension(), itemEntity.blockPosition()).serializeNBT());
+						stack.update(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY, old -> {
+							final CompoundTag oldCompound = old.copyTag();
+							oldCompound.put("location", new Location(world.dimension(), itemEntity.blockPosition()).serializeNBT());
+							return CustomData.of(oldCompound);
+						});
 						
 						final ItemEntity newItemEntity = new ItemEntity(world, itemEntityVector.x(), itemEntityVector.y(), itemEntityVector.z(), stack);
 						newItemEntity.setDefaultPickUpDelay();

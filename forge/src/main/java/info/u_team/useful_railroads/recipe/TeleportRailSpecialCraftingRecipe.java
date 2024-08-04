@@ -2,12 +2,13 @@ package info.u_team.useful_railroads.recipe;
 
 import info.u_team.useful_railroads.init.UsefulRailroadsBlocks;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -19,11 +20,13 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 	}
 	
 	@Override
-	public boolean matches(CraftingContainer inventory, Level level) {
+	public boolean matches(CraftingInput input, Level level) {
 		int count = 0;
-		for (int i = 0; i < inventory.getContainerSize(); i++) {
-			final ItemStack stack = inventory.getItem(i);
-			final CompoundTag compound = stack.getTagElement(BlockItem.BLOCK_ENTITY_TAG);
+		for (int i = 0; i < input.size(); i++) {
+			final ItemStack stack = input.getItem(i);
+			// TODO: maybe REWORK WITH CUSTOM COMPONENT
+			final CustomData component = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+			final CompoundTag compound = component == null ? null : component.copyTag();
 			if (stack.getItem() == UsefulRailroadsBlocks.TELEPORT_RAIL.getItem().asItem() && compound != null && compound.contains("location")) {
 				count++;
 			} else if (!stack.isEmpty()) {
@@ -34,15 +37,16 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 	}
 	
 	@Override
-	public ItemStack assemble(CraftingContainer inventory, RegistryAccess registryAccess) {
-		for (int i = 0; i < inventory.getContainerSize(); i++) {
-			final ItemStack stack = inventory.getItem(i);
+	public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
+		for (int i = 0; i < input.size(); i++) {
+			final ItemStack stack = input.getItem(i);
 			if (!stack.isEmpty()) {
 				final ItemStack copy = stack.copy();
-				final CompoundTag compound = copy.getTagElement(BlockItem.BLOCK_ENTITY_TAG);
+				final CustomData component = copy.get(DataComponents.BLOCK_ENTITY_DATA);
+				final CompoundTag compound = component == null ? null : component.copyTag();
 				compound.remove("location");
 				if (compound.isEmpty()) {
-					copy.removeTagKey(BlockItem.BLOCK_ENTITY_TAG);
+					copy.remove(DataComponents.BLOCK_ENTITY_DATA);
 				}
 				return copy;
 			}

@@ -7,19 +7,22 @@ import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.item.TeleportRailBlockItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.PoweredRailBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -37,7 +40,7 @@ public class TeleportRailBlock extends CustomBlockEntityPoweredRailBlock {
 	}
 	
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		return openMenu(level, pos, player, true);
 	}
 	
@@ -50,17 +53,17 @@ public class TeleportRailBlock extends CustomBlockEntityPoweredRailBlock {
 	}
 	
 	@Override
-	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (!level.isClientSide && !player.isCreative()) {
 			final ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), getItemStack(level, pos));
 			itemEntity.setDefaultPickUpDelay();
 			level.addFreshEntity(itemEntity);
 		}
-		super.playerWillDestroy(level, pos, state, player);
+		return super.playerWillDestroy(level, pos, state, player);
 	}
 	
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
 		return getItemStack(level, pos);
 	}
 	
@@ -68,17 +71,19 @@ public class TeleportRailBlock extends CustomBlockEntityPoweredRailBlock {
 		final ItemStack stack = new ItemStack(this);
 		getBlockEntity(level, pos).map(TeleportRailBlockEntity.class::cast).ifPresent(tileEntity -> {
 			final CompoundTag compound = new CompoundTag();
-			tileEntity.saveNBT(compound);
+			tileEntity.saveNBT(compound, tileEntity.getLevel().registryAccess());
 			if (!compound.isEmpty()) {
-				stack.addTagElement("BlockEntityTag", compound);
+				stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(compound));
 			}
 		});
 		return stack;
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-		final CompoundTag compound = stack.getTagElement("BlockEntityTag");
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+		final CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+		
+		final CompoundTag compound = data == null ? null : data.copyTag();
 		final boolean compoundExists = compound != null;
 		
 		final String langKey = "container.usefulrailroads.teleport_rail.";
