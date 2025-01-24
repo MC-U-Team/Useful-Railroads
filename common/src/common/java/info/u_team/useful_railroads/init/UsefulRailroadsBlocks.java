@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.init;
 
 import info.u_team.u_team_core.api.registry.BlockRegister;
 import info.u_team.u_team_core.api.registry.BlockRegistryEntry;
-import info.u_team.useful_railroads.UsefulRailroadsMod;
+import info.u_team.useful_railroads.UsefulRailroadsReference;
 import info.u_team.useful_railroads.block.BufferStopBlock;
 import info.u_team.useful_railroads.block.DirectionRailBlock;
 import info.u_team.useful_railroads.block.HighSpeedRailBlock;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.BlockItem;
 
 public class UsefulRailroadsBlocks {
 	
-	public static final BlockRegister BLOCKS = BlockRegister.create(UsefulRailroadsMod.MODID);
+	public static final BlockRegister BLOCKS = BlockRegister.create(UsefulRailroadsReference.MODID);
 	
 	public static final BlockRegistryEntry<HighSpeedRailBlock, BlockItem> HIGHSPEED_RAIL = BLOCKS.register("highspeed_rail", HighSpeedRailBlock::new);
 	public static final BlockRegistryEntry<SpeedClampRailBlock, BlockItem> SPEED_CLAMP_RAIL = BLOCKS.register("clamp_rail", SpeedClampRailBlock::new);

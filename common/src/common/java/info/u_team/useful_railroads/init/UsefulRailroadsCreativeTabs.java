@@ -2,14 +2,14 @@ package info.u_team.useful_railroads.init;
 
 import info.u_team.u_team_core.api.registry.CreativeModeTabRegister;
 import info.u_team.u_team_core.api.registry.RegistryEntry;
-import info.u_team.useful_railroads.UsefulRailroadsMod;
+import info.u_team.useful_railroads.UsefulRailroadsReference;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class UsefulRailroadsCreativeTabs {
 	
-	public static final CreativeModeTabRegister CREATIVE_TABS = CreativeModeTabRegister.create(UsefulRailroadsMod.MODID);
+	public static final CreativeModeTabRegister CREATIVE_TABS = CreativeModeTabRegister.create(UsefulRailroadsReference.MODID);
 	
 	public static final RegistryEntry<CreativeModeTab> TAB = CREATIVE_TABS.register("tab", builder -> {
 		builder.icon(() -> new ItemStack(UsefulRailroadsBlocks.HIGHSPEED_RAIL.get()));
