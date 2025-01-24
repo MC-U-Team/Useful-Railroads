@@ -25,7 +25,7 @@ public class TrackBuilderInventoryWrapper {
 	protected TrackBuilderMode mode = TrackBuilderMode.MODE_NOAIR;
 	
 	private TrackBuilderInventoryWrapper(Supplier<Level> levelSupplier) {
-		fuelInventory = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL.get(), levelSupplier, fuelAdder -> fuel += fuelAdder);
+		fuelInventory = new FuelItemContainer<>(UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL.get(), levelSupplier, fuelAdder -> fuel += fuelAdder);
 	}
 	
 	public BlockTagItemStackHandler getRailInventory() {

@@ -6,14 +6,15 @@ import java.util.function.IntConsumer;
 import java.util.function.Supplier;
 
 import info.u_team.useful_railroads.recipe.FuelRecipe;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandlerModifiable;
 
-public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifiable {
+public class FuelItemContainer<T extends FuelRecipe> implements Container {
 	
 	private final RecipeType<T> recipeType;
 	
@@ -25,11 +26,11 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 	private T currentRecipe;
 	private ItemStack failedMatch = ItemStack.EMPTY;
 	
-	public FuelItemHandler(RecipeType<T> recipeType, Supplier<Level> levelSupplier, IntConsumer fuelAdder) {
+	public FuelItemContainer(RecipeType<T> recipeType, Supplier<Level> levelSupplier, IntConsumer fuelAdder) {
 		this(recipeType, levelSupplier, () -> true, fuelAdder);
 	}
 	
-	public FuelItemHandler(RecipeType<T> recipeType, Supplier<Level> levelSupplier, BooleanSupplier canAddFuel, IntConsumer fuelAdder) {
+	public FuelItemContainer(RecipeType<T> recipeType, Supplier<Level> levelSupplier, BooleanSupplier canAddFuel, IntConsumer fuelAdder) {
 		this.recipeType = recipeType;
 		this.levelSupplier = levelSupplier;
 		this.canAddFuel = canAddFuel;
@@ -37,51 +38,21 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 	}
 	
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean canPlaceItem(int slot, ItemStack stack) {
 		return canAddFuel.getAsBoolean() && getRecipe(stack, levelSupplier.get()).isPresent();
 	}
 	
 	@Override
-	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-		if (stack.isEmpty()) {
-			return ItemStack.EMPTY;
-		}
-		
-		if (!isItemValid(slot, stack)) {
-			return stack;
-		}
-		if (!simulate) {
-			setStackInSlot(slot, stack);
-		}
-		return ItemStack.EMPTY;
-	}
-	
-	@Override
-	public ItemStack getStackInSlot(int slot) {
-		return ItemStack.EMPTY;
-	}
-	
-	@Override
-	public int getSlots() {
-		return 1;
-	}
-	
-	@Override
-	public int getSlotLimit(int slot) {
-		return 64;
-	}
-	
-	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		return ItemStack.EMPTY;
-	}
-	
-	@Override
-	public void setStackInSlot(int slot, ItemStack stack) {
+	public void setItem(int slot, ItemStack stack) {
 		final Level world = levelSupplier.get();
 		if (!world.isClientSide) {
 			getRecipe(stack, world).ifPresent(recipe -> fuelAdder.accept(stack.getCount() * recipe.getFuel()));
 		}
+	}
+	
+	@Override
+	public int getMaxStackSize(ItemStack stack) {
+		return getMaxStackSize();
 	}
 	
 	private Optional<T> getRecipe(ItemStack stack, Level world) {
@@ -99,5 +70,48 @@ public class FuelItemHandler<T extends FuelRecipe> implements IItemHandlerModifi
 			}
 			return Optional.ofNullable(currentRecipe = recipe);
 		}
+	}
+	
+	@Override
+	public int getContainerSize() {
+		return 1;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return true;
+	}
+	
+	@Override
+	public ItemStack getItem(int slot) {
+		return ItemStack.EMPTY;
+	}
+	
+	@Override
+	public ItemStack removeItem(int slot, int amount) {
+		return ItemStack.EMPTY;
+	}
+	
+	@Override
+	public ItemStack removeItemNoUpdate(int slot) {
+		return ItemStack.EMPTY;
+	}
+	
+	@Override
+	public boolean canTakeItem(Container target, int slot, ItemStack stack) {
+		return false;
+	}
+	
+	@Override
+	public boolean stillValid(Player player) {
+		return true;
+	}
+	
+	@Override
+	public void clearContent() {
+	}
+	
+	@Override
+	public void setChanged() {
 	}
 }

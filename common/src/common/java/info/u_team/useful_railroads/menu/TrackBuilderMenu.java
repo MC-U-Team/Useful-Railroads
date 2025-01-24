@@ -5,7 +5,7 @@ import info.u_team.u_team_core.api.sync.MessageHolder.EmptyMessageHolder;
 import info.u_team.u_team_core.menu.ItemHandlerSlotCreator;
 import info.u_team.u_team_core.menu.UContainerMenu;
 import info.u_team.useful_railroads.init.UsefulRailroadsMenuTypes;
-import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
+import info.u_team.useful_railroads.inventory.FuelItemSlot;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
@@ -34,7 +34,7 @@ public class TrackBuilderMenu extends UContainerMenu {
 		super(UsefulRailroadsMenuTypes.TRACK_BUILDER.get(), containerId);
 		this.wrapper = wrapper;
 		this.selectedSlot = selectedSlot;
-		addSlots((index, xPosition, yPosition) -> new FuelItemSlotHandler(wrapper.getFuelInventory(), index, xPosition, yPosition), 1, 1, 260, 182);
+		addSlots((index, xPosition, yPosition) -> new FuelItemSlot(wrapper.getFuelInventory(), index, xPosition, yPosition), 1, 1, 260, 182);
 		addSlots(ItemHandlerSlotCreator.of(wrapper.getRailInventory()), 1, 15, 8, 32);
 		addSlots(ItemHandlerSlotCreator.of(wrapper.getGroundInventory()), 2, 15, 8, 64);
 		addSlots(ItemHandlerSlotCreator.of(wrapper.getTunnelInventory()), 3, 15, 8, 114);

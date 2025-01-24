@@ -1,12 +1,15 @@
 package info.u_team.useful_railroads.blockentity;
 
 import info.u_team.u_team_core.api.block.MenuSyncedBlockEntity;
+import info.u_team.u_team_core.api.menu.ItemSlotCreator;
 import info.u_team.u_team_core.blockentity.UBlockEntity;
+import info.u_team.u_team_core.menu.ItemContainerSlotCreator;
 import info.u_team.u_team_core.util.LevelUtil;
 import info.u_team.useful_railroads.config.CommonConfig;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
-import info.u_team.useful_railroads.inventory.FuelItemHandler;
+import info.u_team.useful_railroads.inventory.FuelItemContainer;
+import info.u_team.useful_railroads.inventory.FuelItemSlot;
 import info.u_team.useful_railroads.menu.TeleportRailMenu;
 import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import info.u_team.useful_railroads.util.Location;
@@ -39,12 +42,10 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 	private int fuel;
 	private int cost;
 	
-	private final FuelItemHandler<TeleportRailFuelRecipe> fuelSlot = new FuelItemHandler<>(UsefulRailroadsRecipeTypes.TELEPORT_RAIL_FUEL.get(), this::getLevel, () -> fuel < 10000, fuelAdder -> {
+	private final FuelItemContainer<TeleportRailFuelRecipe> fuelSlot = new FuelItemContainer<>(UsefulRailroadsRecipeTypes.TELEPORT_RAIL_FUEL.get(), this::getLevel, () -> fuel < 10000, fuelAdder -> {
 		fuel += fuelAdder;
 		setChanged();
 	});
-	
-	private final LazyOptional<FuelItemHandler<TeleportRailFuelRecipe>> fuelSlotOptional = LazyOptional.of(() -> fuelSlot);
 	
 	public TeleportRailBlockEntity(BlockPos pos, BlockState state) {
 		super(UsefulRailroadsBlockEntityTypes.TELEPORT_RAIL.get(), pos, state);
@@ -152,28 +153,12 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 		cost = buffer.readInt();
 	}
 	
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-		if (capability == ForgeCapabilities.ITEM_HANDLER && direction != Direction.UP) {
-			return fuelSlotOptional.cast();
-		}
-		return super.getCapability(capability, direction);
-	}
-	
-	@Override
-	public void setRemoved() {
-		fuelSlotOptional.invalidate();
-		super.setRemoved();
-	}
-	
-	@Override
-	public void onChunkUnloaded() {
-		fuelSlotOptional.invalidate();
-		super.onChunkUnloaded();
-	}
-	
-	public FuelItemHandler<TeleportRailFuelRecipe> getFuelSlot() {
+	public FuelItemContainer<TeleportRailFuelRecipe> getFuelSlot() {
 		return fuelSlot;
+	}
+	
+	public ItemSlotCreator getSlotCreator() {
+		return (index, x, y) -> new FuelItemSlot(fuelSlot, index, x, y);
 	}
 	
 	@Override

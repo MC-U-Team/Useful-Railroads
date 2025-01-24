@@ -5,7 +5,6 @@ import info.u_team.u_team_core.api.sync.DataHolder;
 import info.u_team.u_team_core.menu.UBlockEntityContainerMenu;
 import info.u_team.useful_railroads.blockentity.TeleportRailBlockEntity;
 import info.u_team.useful_railroads.init.UsefulRailroadsMenuTypes;
-import info.u_team.useful_railroads.inventory.FuelItemSlotHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +25,7 @@ public class TeleportRailMenu extends UBlockEntityContainerMenu<TeleportRailBloc
 	
 	@Override
 	protected void init(NetworkEnvironment environment) {
-		addSlots((index, xPosition, yPosition) -> new FuelItemSlotHandler(blockEntity.getFuelSlot(), index, xPosition, yPosition), 1, 1, 152, 75);
+		addSlots(blockEntity.getSlotCreator(), 1, 1, 152, 75);
 		addPlayerInventory(playerInventory, 8, 107);
 		addDataHolderToClient(DataHolder.createIntHolder(getBlockEntity()::getFuel, getBlockEntity()::setFuel));
 	}
