@@ -1,7 +1,7 @@
 package info.u_team.useful_railroads.screen;
 
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
-import info.u_team.useful_railroads.UsefulRailroadsMod;
+import info.u_team.useful_railroads.UsefulRailroadsReference;
 import info.u_team.useful_railroads.blockentity.TeleportRailBlockEntity;
 import info.u_team.useful_railroads.menu.TeleportRailMenu;
 import info.u_team.useful_railroads.util.Location;
@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class TeleportRailScreen extends UContainerMenuScreen<TeleportRailMenu> {
 	
-	private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(UsefulRailroadsMod.MODID, "textures/gui/teleport_rail.png");
+	private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(UsefulRailroadsReference.MODID, "textures/gui/teleport_rail.png");
 	
 	private final Component dimensionTextComponent;
 	private final Component xTextComponent;

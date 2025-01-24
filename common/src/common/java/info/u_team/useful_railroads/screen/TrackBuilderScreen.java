@@ -2,7 +2,7 @@ package info.u_team.useful_railroads.screen;
 
 import info.u_team.u_team_core.gui.elements.UButton;
 import info.u_team.u_team_core.screen.UContainerMenuScreen;
-import info.u_team.useful_railroads.UsefulRailroadsMod;
+import info.u_team.useful_railroads.UsefulRailroadsReference;
 import info.u_team.useful_railroads.menu.TrackBuilderMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class TrackBuilderScreen extends UContainerMenuScreen<TrackBuilderMenu> {
 	
-	private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(UsefulRailroadsMod.MODID, "textures/gui/track_builder.png");
+	private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(UsefulRailroadsReference.MODID, "textures/gui/track_builder.png");
 	
 	private final Component modeTextComponent;
 	private final Component railsTextComponent;

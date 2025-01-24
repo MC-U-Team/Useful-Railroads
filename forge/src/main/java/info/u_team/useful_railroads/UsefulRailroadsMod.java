@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod(UsefulRailroadsMod.MODID)
 public class UsefulRailroadsMod {
 	
-	public static final String MODID = "usefulrailroads";
+	public static final String MODID = UsefulRailroadsReference.MODID;
 	
 	public UsefulRailroadsMod() {
 		AnnotationManager.callAnnotations(MODID);
