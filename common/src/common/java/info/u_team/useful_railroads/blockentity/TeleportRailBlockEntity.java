@@ -3,7 +3,6 @@ package info.u_team.useful_railroads.blockentity;
 import info.u_team.u_team_core.api.block.MenuSyncedBlockEntity;
 import info.u_team.u_team_core.api.menu.ItemSlotCreator;
 import info.u_team.u_team_core.blockentity.UBlockEntity;
-import info.u_team.u_team_core.menu.ItemContainerSlotCreator;
 import info.u_team.u_team_core.util.LevelUtil;
 import info.u_team.useful_railroads.config.CommonConfig;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
@@ -15,7 +14,6 @@ import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -31,9 +29,6 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
 
 public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedBlockEntity {
 	
@@ -61,9 +56,9 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 		int calculatedCost = 0;
 		
 		if (!location.getResourceKey().equals(level.dimension())) {
-			calculatedCost += CommonConfig.getInstance().teleportRailDimensionCost.get();
+			calculatedCost += CommonConfig.getInstance().teleportRailDimensionCost().get();
 		}
-		double calculatedDistance = Math.log(worldPosition.distSqr(location.getPos())) / Math.log(CommonConfig.getInstance().teleportRailLogDivisionCost.get());
+		double calculatedDistance = Math.log(worldPosition.distSqr(location.getPos())) / Math.log(CommonConfig.getInstance().teleportRailLogDivisionCost().get());
 		calculatedDistance = calculatedDistance * calculatedDistance;
 		calculatedCost += Mth.floor(calculatedDistance);
 		if (calculatedCost == 0) {
