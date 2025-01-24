@@ -16,6 +16,8 @@ sourceSets {
 		resources {
 			srcDirs += "src/common_generated/resources"
 		}
+		compileClasspath = main.compileClasspath
+		runtimeClasspath = main.runtimeClasspath
 	}
 	main {
 		java {
@@ -73,7 +75,7 @@ dependencies {
 	modImplementation gradlefiles.fabricLoaderDependency()
 	modRuntimeOnly gradlefiles.fabricApiDependency()
 	
-	modImplementation "info.u-team:u_team_core-common-1.21:5.6.0.317"
+	modImplementation "info.u-team:u_team_core-common-1.21.1:5.6.1.351"
 }
 
 publishing {
