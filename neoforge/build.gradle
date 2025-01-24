@@ -35,6 +35,12 @@ java {
 	withJavadocJar()
 }
 
+minecraft {
+	accessTransformers {
+		file("src/main/resources/META-INF/accesstransformer.cfg")
+	}
+}
+
 subsystems {
 	parchment {
 		minecraftVersion = config.neoforge.parchment.minecraft_version
