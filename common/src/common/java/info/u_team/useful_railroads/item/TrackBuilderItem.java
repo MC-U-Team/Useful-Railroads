@@ -5,7 +5,7 @@ import java.util.List;
 import info.u_team.u_team_core.item.UItem;
 import info.u_team.u_team_core.util.MenuUtil;
 import info.u_team.u_team_core.util.TooltipCreator;
-import info.u_team.useful_railroads.UsefulRailroadsMod;
+import info.u_team.useful_railroads.UsefulRailroadsReference;
 import info.u_team.useful_railroads.component.TrackBuilderComponent;
 import info.u_team.useful_railroads.init.UsefulRailroadsDataComponentTypes;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
@@ -71,12 +71,12 @@ public class TrackBuilderItem extends UItem {
 	}
 	
 	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	public boolean shouldPlayUpdateAnimation(ItemStack oldStack, ItemStack newStack) {
 		return !ItemStack.isSameItem(oldStack, newStack);
 	}
 	
 	@Override
-	public boolean onDroppedByPlayer(ItemStack item, Player player) {
+	public boolean canBeDropped(ItemStack stack, Player player) {
 		return !(player.containerMenu instanceof TrackBuilderMenu);
 	}
 	
@@ -86,8 +86,8 @@ public class TrackBuilderItem extends UItem {
 	
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(TooltipCreator.create(this, "", 0, TooltipCreator.create(UsefulRailroadsMod.MODID, "click", "right_click", 0).withStyle(ChatFormatting.ITALIC, ChatFormatting.GOLD)).withStyle(ChatFormatting.GRAY));
-		tooltip.add(TooltipCreator.create(this, "", 1, TooltipCreator.create(UsefulRailroadsMod.MODID, "click", "shift_right_click", 0).withStyle(ChatFormatting.ITALIC, ChatFormatting.GOLD)).withStyle(ChatFormatting.GRAY));
+		tooltip.add(TooltipCreator.create(this, "", 0, TooltipCreator.create(UsefulRailroadsReference.MODID, "click", "right_click", 0).withStyle(ChatFormatting.ITALIC, ChatFormatting.GOLD)).withStyle(ChatFormatting.GRAY));
+		tooltip.add(TooltipCreator.create(this, "", 1, TooltipCreator.create(UsefulRailroadsReference.MODID, "click", "shift_right_click", 0).withStyle(ChatFormatting.ITALIC, ChatFormatting.GOLD)).withStyle(ChatFormatting.GRAY));
 	}
 	
 }
