@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import com.google.common.base.Predicates;
 
-import info.u_team.useful_railroads.inventory.BlockTagItemStackHandler;
+import info.u_team.useful_railroads.inventory.BlockTagItemContainer;
 import info.u_team.useful_railroads.inventory.TrackBuilderInventoryWrapper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -142,16 +142,11 @@ public abstract class TrackBuilderManager {
 	}
 	
 	private boolean placeBlock(BlockPos pos, BlockState state, int flag) {
-		final boolean blockSnapshotValue = level.captureBlockSnapshots;
-		level.captureBlockSnapshots = false; // Disable capture block snapshots here because else the client will not receive updates
-		final boolean placed = level.setBlock(pos, state, flag);
-		level.captureBlockSnapshots = blockSnapshotValue;
-		return placed;
+		return level.setBlock(pos, state, flag); // TODO maybe broken for forge with block snapshots?
 	}
 	
 	private void destroyBlock(Player player, BlockPos pos, SimpleContainer inventory) {
 		final BlockState state = level.getBlockState(pos);
-		final int exp = state.getExpDrop(level, player.getRandom(), pos, 0, 0);
 		
 		if (placeBlock(pos, Blocks.AIR.defaultBlockState())) { // Normally we place the fluid state but we don't want fluids here
 			if (level instanceof ServerLevel) {
@@ -159,19 +154,16 @@ public abstract class TrackBuilderManager {
 						.map(inventory::addItem) //
 						.filter(Predicates.not(ItemStack::isEmpty)) //
 						.forEach(stack -> Block.popResource(level, pos, stack));
-				state.spawnAfterBreak((ServerLevel) level, player.blockPosition(), ItemStack.EMPTY, true /* TODO TRUE?? */);
-				if (exp > 0) {
-					state.getBlock().popExperience((ServerLevel) level, player.blockPosition(), exp);
-				}
+				state.spawnAfterBreak((ServerLevel) level, pos, ItemStack.EMPTY, true);
 			}
 		}
 	}
 	
-	private List<ItemStack> extractItems(BlockTagItemStackHandler handler, Set<BlockPos> set) {
+	private List<ItemStack> extractItems(BlockTagItemContainer handler, Set<BlockPos> set) {
 		return ItemHandlerUtil.extractItems(handler, handler::getCondition, set.size());
 	}
 	
-	private boolean hasEnoughItems(BlockTagItemStackHandler handler, Set<BlockPos> set) {
+	private boolean hasEnoughItems(BlockTagItemContainer handler, Set<BlockPos> set) {
 		return ItemHandlerUtil.getItemCount(handler, handler::getCondition) >= set.size();
 	}
 	

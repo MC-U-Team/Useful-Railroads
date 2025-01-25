@@ -6,19 +6,20 @@ import info.u_team.useful_railroads.component.TrackBuilderComponent;
 import info.u_team.useful_railroads.init.UsefulRailroadsDataComponentTypes;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
 import info.u_team.useful_railroads.init.UsefulRailroadsTags;
+import info.u_team.useful_railroads.recipe.TrackBuilderFuelRecipe;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
 
 public class TrackBuilderInventoryWrapper {
 	
-	protected final BlockTagItemStackHandler railInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 15);
-	protected final BlockTagItemStackHandler groundInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 30);
-	protected final BlockTagItemStackHandler tunnelInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_TUNNEL_BLOCKS, 45);
-	protected final BlockTagItemStackHandler redstoneTorchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 5);
-	protected final BlockTagItemStackHandler torchInventory = new BlockTagItemStackHandler(UsefulRailroadsTags.Items.TRACK_BUILDER_TORCHES, 4);
-	protected final IItemHandler fuelInventory;
+	protected final BlockTagItemContainer railInventory = new BlockTagItemContainer(UsefulRailroadsTags.Items.TRACK_BUILDER_RAILS, 15);
+	protected final BlockTagItemContainer groundInventory = new BlockTagItemContainer(UsefulRailroadsTags.Items.TRACK_BUILDER_GROUND_BLOCKS, 30);
+	protected final BlockTagItemContainer tunnelInventory = new BlockTagItemContainer(UsefulRailroadsTags.Items.TRACK_BUILDER_TUNNEL_BLOCKS, 45);
+	protected final BlockTagItemContainer redstoneTorchInventory = new BlockTagItemContainer(UsefulRailroadsTags.Items.TRACK_BUILDER_REDSTONE_TORCHES, 5);
+	protected final BlockTagItemContainer torchInventory = new BlockTagItemContainer(UsefulRailroadsTags.Items.TRACK_BUILDER_TORCHES, 4);
+	protected final FuelItemContainer<TrackBuilderFuelRecipe> fuelInventory;
 	
 	protected int fuel = 0;
 	
@@ -28,27 +29,27 @@ public class TrackBuilderInventoryWrapper {
 		fuelInventory = new FuelItemContainer<>(UsefulRailroadsRecipeTypes.TRACK_BUILDER_FUEL.get(), levelSupplier, fuelAdder -> fuel += fuelAdder);
 	}
 	
-	public BlockTagItemStackHandler getRailInventory() {
+	public BlockTagItemContainer getRailInventory() {
 		return railInventory;
 	}
 	
-	public BlockTagItemStackHandler getGroundInventory() {
+	public BlockTagItemContainer getGroundInventory() {
 		return groundInventory;
 	}
 	
-	public BlockTagItemStackHandler getTunnelInventory() {
+	public BlockTagItemContainer getTunnelInventory() {
 		return tunnelInventory;
 	}
 	
-	public BlockTagItemStackHandler getRedstoneTorchInventory() {
+	public BlockTagItemContainer getRedstoneTorchInventory() {
 		return redstoneTorchInventory;
 	}
 	
-	public BlockTagItemStackHandler getTorchInventory() {
+	public BlockTagItemContainer getTorchInventory() {
 		return torchInventory;
 	}
 	
-	public IItemHandler getFuelInventory() {
+	public Container getFuelInventory() {
 		return fuelInventory;
 	}
 	

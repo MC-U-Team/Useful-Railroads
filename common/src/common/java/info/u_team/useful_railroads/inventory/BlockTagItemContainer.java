@@ -5,9 +5,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class BlockTagItemStackHandler extends TagItemStackHandler {
+public class BlockTagItemContainer extends TagItemContainer {
 	
-	public BlockTagItemStackHandler(TagKey<Item> tag, int size) {
+	public BlockTagItemContainer(TagKey<Item> tag, int size) {
 		super(tag, size);
 	}
 	
