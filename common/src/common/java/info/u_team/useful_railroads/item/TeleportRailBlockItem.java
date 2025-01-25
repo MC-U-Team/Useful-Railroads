@@ -1,5 +1,6 @@
 package info.u_team.useful_railroads.item;
 
+import info.u_team.u_team_core.api.item.UItemExtension;
 import info.u_team.u_team_core.util.MathUtil;
 import info.u_team.useful_railroads.block.TeleportRailBlock;
 import info.u_team.useful_railroads.util.Location;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-public class TeleportRailBlockItem extends BlockItem {
+public class TeleportRailBlockItem extends BlockItem implements UItemExtension {
 	
 	public TeleportRailBlockItem(TeleportRailBlock block, Properties builder) {
 		super(block, builder.stacksTo(1).rarity(Rarity.EPIC));
@@ -46,7 +47,7 @@ public class TeleportRailBlockItem extends BlockItem {
 	}
 	
 	@Override
-	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity itemEntity) {
+	public boolean updateItemEntity(ItemStack stack, ItemEntity itemEntity) {
 		final CustomData component = stack.get(DataComponents.BLOCK_ENTITY_DATA);
 		final CompoundTag compound = component == null ? null : component.copyTag();
 		if (compound != null && compound.contains("location")) { // Prevent overwriting already installed rails
