@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[2,)"
+issueTrackerURL="https://github.com/MC-U-Team/Useful-Railroads/issues"
+license="Apache-2.0 License"
+
+[[mods]]
+	modId="usefulrailroads"
+	version="${file.jarVersion}"
+	displayName="Useful Railroads"
+	displayURL="https://u-team.info/mods/usefulrailroads"
+	updateJSONURL="https://api.u-team.info/update/usefulrailroads_neoforge.json"
+	logoFile="logo.png"
+	credits="Team U-Team"
+	authors="HyCraftHD"
+	description="Join our discord server here: https://discord.hycrafthd.net\n\nWho don't want to travel fast? I do! So i created some high speed minecraft rails: Speed 100 blocks/second. There are also many other additions such as teleport rails, intersection rails, direction rails, buffer stops and so on. Furthermore there are track builders that let you build a long railroad track with ease."
+	
+	[[dependencies.usefulrailroads]]
+	    modId="neoforge"
+	    type="required"
+	    versionRange="[21.1.93,)"
+	    ordering="NONE"
+	    side="BOTH"
+	
+	[[dependencies.usefulrailroads]]
+	    modId="minecraft"
+	    type="required"
+	    versionRange="[1.21.1]"
+	    ordering="NONE"
+	    side="BOTH"
+	    
+	[[dependencies.usefulrailroads]]
+	    modId="uteamcore"
+	    type="required"
+	    versionRange="[5.6.1.351,)"
+	    ordering="NONE"
+	    side="BOTH"
