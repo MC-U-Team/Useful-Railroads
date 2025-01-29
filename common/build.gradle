@@ -37,6 +37,10 @@ java {
 	withJavadocJar()
 }
 
+loom {
+	accessWidenerPath = project.file("src/main/resources/usefulrailroads.accesswidener")
+}
+
 tasks.withType(Jar).configureEach { task ->
 	gradlefiles.defaultJar(task)
 	
