@@ -3,6 +3,7 @@ package info.u_team.useful_railroads.blockentity;
 import info.u_team.u_team_core.blockentity.UBlockEntity;
 import info.u_team.u_team_core.inventory.BlockEntityUItemStackContainer;
 import info.u_team.u_team_core.inventory.UItemStackContainer;
+import info.u_team.u_team_core.util.ServiceUtil;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -19,7 +20,7 @@ public class BufferStopBlockEntity extends UBlockEntity {
 		};
 	};
 	
-	public BufferStopBlockEntity(BlockPos pos, BlockState state) {
+	protected BufferStopBlockEntity(BlockPos pos, BlockState state) {
 		super(UsefulRailroadsBlockEntityTypes.BUFFER_STOP.get(), pos, state);
 	}
 	
@@ -35,6 +36,13 @@ public class BufferStopBlockEntity extends UBlockEntity {
 	
 	public UItemStackContainer getMinecartSlots() {
 		return minecartSlots;
+	}
+	
+	public interface Factory {
+		
+		Factory INSTANCE = ServiceUtil.loadOne(Factory.class);
+		
+		BufferStopBlockEntity create(BlockPos pos, BlockState state);
 	}
 	
 }

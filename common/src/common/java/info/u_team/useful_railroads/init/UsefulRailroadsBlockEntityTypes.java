@@ -11,8 +11,8 @@ public class UsefulRailroadsBlockEntityTypes {
 	
 	public static final BlockEntityTypeRegister BLOCK_ENTITY_TYPES = BlockEntityTypeRegister.create(UsefulRailroadsReference.MODID);
 	
-	public static final RegistryEntry<BlockEntityType<TeleportRailBlockEntity>> TELEPORT_RAIL = BLOCK_ENTITY_TYPES.register("teleport_rail", () -> BlockEntityType.Builder.of(TeleportRailBlockEntity::new, UsefulRailroadsBlocks.TELEPORT_RAIL.get()));
-	public static final RegistryEntry<BlockEntityType<BufferStopBlockEntity>> BUFFER_STOP = BLOCK_ENTITY_TYPES.register("buffer_stop", () -> BlockEntityType.Builder.of(BufferStopBlockEntity::new, UsefulRailroadsBlocks.BUFFER_STOP.get()));
+	public static final RegistryEntry<BlockEntityType<TeleportRailBlockEntity>> TELEPORT_RAIL = BLOCK_ENTITY_TYPES.register("teleport_rail", () -> BlockEntityType.Builder.of(TeleportRailBlockEntity.Factory.INSTANCE::create, UsefulRailroadsBlocks.TELEPORT_RAIL.get()));
+	public static final RegistryEntry<BlockEntityType<BufferStopBlockEntity>> BUFFER_STOP = BLOCK_ENTITY_TYPES.register("buffer_stop", () -> BlockEntityType.Builder.of(BufferStopBlockEntity.Factory.INSTANCE::create, UsefulRailroadsBlocks.BUFFER_STOP.get()));
 	
 	static void register() {
 		BLOCK_ENTITY_TYPES.register();

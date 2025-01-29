@@ -4,6 +4,7 @@ import info.u_team.u_team_core.api.block.MenuSyncedBlockEntity;
 import info.u_team.u_team_core.api.menu.ItemSlotCreator;
 import info.u_team.u_team_core.blockentity.UBlockEntity;
 import info.u_team.u_team_core.util.LevelUtil;
+import info.u_team.u_team_core.util.ServiceUtil;
 import info.u_team.useful_railroads.config.CommonConfig;
 import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.init.UsefulRailroadsRecipeTypes;
@@ -42,7 +43,7 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 		setChanged();
 	});
 	
-	public TeleportRailBlockEntity(BlockPos pos, BlockState state) {
+	protected TeleportRailBlockEntity(BlockPos pos, BlockState state) {
 		super(UsefulRailroadsBlockEntityTypes.TELEPORT_RAIL.get(), pos, state);
 	}
 	
@@ -180,5 +181,12 @@ public class TeleportRailBlockEntity extends UBlockEntity implements MenuSyncedB
 	
 	public int getCost() {
 		return cost;
+	}
+	
+	public interface Factory {
+		
+		Factory INSTANCE = ServiceUtil.loadOne(Factory.class);
+		
+		TeleportRailBlockEntity create(BlockPos pos, BlockState state);
 	}
 }
