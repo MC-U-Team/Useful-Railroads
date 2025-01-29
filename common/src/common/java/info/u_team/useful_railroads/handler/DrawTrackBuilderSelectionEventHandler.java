@@ -6,11 +6,14 @@ import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import info.u_team.u_team_core.api.event.ClientEvents;
 import info.u_team.useful_railroads.component.TrackBuilderComponent;
 import info.u_team.useful_railroads.init.UsefulRailroadsDataComponentTypes;
 import info.u_team.useful_railroads.item.TrackBuilderItem;
 import info.u_team.useful_railroads.util.TrackBuilderManager;
 import info.u_team.useful_railroads.util.TrackBuilderMode;
+import net.minecraft.client.Camera;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,27 +24,20 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraftforge.client.event.RenderHighlightEvent.Block;
-import net.minecraftforge.eventbus.api.IEventBus;
 
 public class DrawTrackBuilderSelectionEventHandler {
 	
-	private static void onBlockHighlight(Block event) {
+	private static boolean onRenderBlockOutline(LevelRenderer levelRenderer, Camera camera, BlockHitResult target, DeltaTracker deltaTracker, PoseStack poseStack, MultiBufferSource bufferSource) {
 		final Player player = Minecraft.getInstance().player;
 		final ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 		
-		if (!(stack.getItem() instanceof TrackBuilderItem)) {
-			return;
+		if (!(stack.getItem() instanceof TrackBuilderItem item)) {
+			return true;
 		}
 		
-		final boolean doubleTrack = ((TrackBuilderItem) stack.getItem()).isDoubleTrack();
-		
-		if (event.getTarget().getType() != HitResult.Type.BLOCK) {
-			return;
-		}
+		final boolean doubleTrack = item.isDoubleTrack();
 		
 		final TrackBuilderComponent component = stack.get(UsefulRailroadsDataComponentTypes.TRACK_BUILDER.get());
 		final TrackBuilderMode mode;
@@ -51,9 +47,7 @@ public class DrawTrackBuilderSelectionEventHandler {
 			mode = TrackBuilderMode.MODE_NOAIR;
 		}
 		
-		final BlockHitResult rayTraceResult = event.getTarget();
-		
-		TrackBuilderManager.create(rayTraceResult.getBlockPos(), rayTraceResult.getDirection(), player.level(), new Vec3(event.getCamera().getLookVector()), mode, doubleTrack).ifPresent(manager -> {
+		return TrackBuilderManager.create(target.getBlockPos(), target.getDirection(), player.level(), new Vec3(camera.getLookVector()), mode, doubleTrack).map(manager -> {
 			final int red;
 			final int blue;
 			if (player.isShiftKeyDown()) {
@@ -64,9 +58,7 @@ public class DrawTrackBuilderSelectionEventHandler {
 				blue = 1;
 			}
 			
-			final PoseStack poseStack = event.getPoseStack();
-			
-			final Vec3 projectedView = event.getCamera().getPosition();
+			final Vec3 projectedView = camera.getPosition();
 			
 			final BufferSource buffer = MultiBufferSource.immediate(new ByteBufferBuilder(1536));
 			final VertexConsumer builder = buffer.getBuffer(RenderType.lines());
@@ -76,17 +68,17 @@ public class DrawTrackBuilderSelectionEventHandler {
 			
 			buffer.endBatch();
 			
-			event.setCanceled(true);
-		});
+			return false;
+		}).orElse(true);
 	}
 	
-	public static void drawSelectionBox(PoseStack poseStack, VertexConsumer builder, Vec3 projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
+	private static void drawSelectionBox(PoseStack poseStack, VertexConsumer builder, Vec3 projectedView, Collection<BlockPos> posList, float red, float green, float blue, float alpha) {
 		posList.forEach(pos -> {
 			LevelRenderer.renderShape(poseStack, builder, Shapes.block(), pos.getX() - projectedView.x, pos.getY() - projectedView.y, pos.getZ() - projectedView.z, red, green, blue, alpha);
 		});
 	}
 	
-	public static void registerForge(IEventBus bus) {
-		bus.addListener(DrawTrackBuilderSelectionEventHandler::onBlockHighlight);
+	static void register() {
+		ClientEvents.registerRenderBlockOutline(DrawTrackBuilderSelectionEventHandler::onRenderBlockOutline);
 	}
 }
