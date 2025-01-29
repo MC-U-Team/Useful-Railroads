@@ -11,13 +11,13 @@ import net.minecraft.world.inventory.MenuType;
 
 public class UsefulRailroadsMenuTypes {
 	
-	public static final CommonRegister<MenuType<?>> CONTAINER_TYPES = CommonRegister.create(Registries.MENU, UsefulRailroadsReference.MODID);
+	public static final CommonRegister<MenuType<?>> MENU_TYPES = CommonRegister.create(Registries.MENU, UsefulRailroadsReference.MODID);
 	
-	public static final RegistryEntry<MenuType<TeleportRailMenu>> TELEPORT_RAIL = CONTAINER_TYPES.register("teleport_rail", () -> new UMenuType<>(TeleportRailMenu::new));
-	public static final RegistryEntry<MenuType<TrackBuilderMenu>> TRACK_BUILDER = CONTAINER_TYPES.register("track_builder", () -> new UMenuType<>(TrackBuilderMenu::new));
+	public static final RegistryEntry<MenuType<TeleportRailMenu>> TELEPORT_RAIL = MENU_TYPES.register("teleport_rail", () -> new UMenuType<>(TeleportRailMenu::new));
+	public static final RegistryEntry<MenuType<TrackBuilderMenu>> TRACK_BUILDER = MENU_TYPES.register("track_builder", () -> new UMenuType<>(TrackBuilderMenu::new));
 	
 	static void register() {
-		CONTAINER_TYPES.register();
+		MENU_TYPES.register();
 	}
 	
 }

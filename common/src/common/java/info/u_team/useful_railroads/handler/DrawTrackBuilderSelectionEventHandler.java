@@ -78,7 +78,7 @@ public class DrawTrackBuilderSelectionEventHandler {
 		});
 	}
 	
-	static void register() {
+	public static void register() {
 		ClientEvents.registerRenderBlockOutline(DrawTrackBuilderSelectionEventHandler::onRenderBlockOutline);
 	}
 }
