@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Fluids;
 
 public class DirectionRailBlock extends CustomPoweredRailBlock {
 	
-	public static final BooleanProperty AXIS_DIRECTION = BooleanProperty.create("positive_axis");
+	public static final BooleanProperty AXIS_DIRECTION = RailBlockCustomProperty.AXIS_DIRECTION;
 	
 	public DirectionRailBlock() {
 		registerDefaultState(defaultBlockState().setValue(AXIS_DIRECTION, false));

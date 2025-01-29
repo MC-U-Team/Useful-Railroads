@@ -2,7 +2,6 @@ package info.u_team.useful_railroads.item;
 
 import info.u_team.u_team_core.api.item.UItemExtension;
 import info.u_team.u_team_core.util.MathUtil;
-import info.u_team.useful_railroads.block.TeleportRailBlock;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -23,12 +22,13 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class TeleportRailBlockItem extends BlockItem implements UItemExtension {
 	
-	public TeleportRailBlockItem(TeleportRailBlock block, Properties builder) {
+	public TeleportRailBlockItem(Block block, Properties builder) {
 		super(block, builder.stacksTo(1).rarity(Rarity.EPIC));
 	}
 	

@@ -45,7 +45,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 	
@@ -112,7 +111,7 @@ public class BufferStopBlock extends CustomAdvancedBlockEntityRailBlock {
 			cart.destroy(cart.damageSources().magic());
 			
 			drops.stream().map(ItemEntity::getItem).forEach(stack -> {
-				final ItemStack stackLeft = ItemHandlerHelper.insertItem(bufferStop.getMinecartSlots(), stack, false);
+				final ItemStack stackLeft = bufferStop.getMinecartSlots().addItem(stack);
 				if (!stackLeft.isEmpty()) {
 					popResource(level, pos, stackLeft);
 				}
