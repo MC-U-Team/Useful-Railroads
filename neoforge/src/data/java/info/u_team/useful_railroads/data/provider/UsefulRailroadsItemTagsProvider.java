@@ -14,7 +14,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 	
@@ -27,7 +27,7 @@ public class UsefulRailroadsItemTagsProvider extends CommonItemTagsProvider {
 		copy(BlockTags.RAILS, ItemTags.RAILS);
 		tag(TRACK_BUILDER_RAILS).add(Items.POWERED_RAIL, UsefulRailroadsBlocks.HIGHSPEED_RAIL.get().asItem(), UsefulRailroadsBlocks.SPEED_CLAMP_RAIL.get().asItem());
 		tag(TRACK_BUILDER_GROUND_BLOCKS).add(Items.GRAVEL);
-		tag(TRACK_BUILDER_TUNNEL_BLOCKS).addTag(ItemTags.STONE_BRICKS).addTag(Tags.Items.STONE).addTag(Tags.Items.COBBLESTONE).addTag(Tags.Items.SANDSTONE);
+		tag(TRACK_BUILDER_TUNNEL_BLOCKS).addTag(ItemTags.STONE_BRICKS).addTag(Tags.Items.STONES).addTag(Tags.Items.COBBLESTONES).addTag(Tags.Items.SANDSTONE_BLOCKS);
 		tag(TRACK_BUILDER_REDSTONE_TORCHES).add(Items.REDSTONE_TORCH, Items.REDSTONE_BLOCK);
 		tag(TRACK_BUILDER_TORCHES).add(Items.REDSTONE_TORCH, Items.TORCH);
 	}

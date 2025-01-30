@@ -13,7 +13,7 @@ import info.u_team.u_team_core.data.CommonRecipeProvider;
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.useful_railroads.UsefulRailroadsMod;
 import info.u_team.useful_railroads.data.builder.FuelRecipeBuilder;
-import info.u_team.useful_railroads.init.UsefulRailroadsRecipeSerializers;
+import info.u_team.useful_railroads.recipe.TeleportRailSpecialCraftingRecipe;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -25,7 +25,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 	
@@ -44,11 +44,11 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("IDI") //
 				.pattern("LSL") //
 				.pattern("IRI") //
-				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('R', Tags.Items.DUSTS_REDSTONE) //
 				.define('S', Items.STICK) //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.define('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
-				.define('L', getIngredientOfTag(Tags.Items.GEMS_LAPIS)) //
+				.define('I', Tags.Items.INGOTS_IRON) //
+				.define('D', Tags.Items.GEMS_DIAMOND) //
+				.define('L', Tags.Items.GEMS_LAPIS) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(output);
 		
@@ -56,11 +56,11 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("IDI") //
 				.pattern("LSL") //
 				.pattern("IRI") //
-				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('R', Tags.Items.DUSTS_REDSTONE) //
 				.define('S', Items.STICK) //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.define('D', getIngredientOfTag(Tags.Items.GEMS_EMERALD)) //
-				.define('L', getIngredientOfTag(Tags.Items.SLIMEBALLS)) //
+				.define('I', Tags.Items.INGOTS_IRON) //
+				.define('D', Tags.Items.GEMS_EMERALD) //
+				.define('L', Tags.Items.SLIME_BALLS) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(output);
 		
@@ -69,8 +69,8 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("IRI") //
 				.pattern("ISI") //
 				.define('S', Items.STICK) //
-				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('R', Tags.Items.DUSTS_REDSTONE) //
+				.define('I', Tags.Items.INGOTS_IRON) //
 				.define('E', Items.REPEATER) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(output);
@@ -79,10 +79,10 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("IDI") //
 				.pattern("ESE") //
 				.pattern("IRI") //
-				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('R', Tags.Items.DUSTS_REDSTONE) //
 				.define('S', Items.STICK) //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.define('D', getIngredientOfTag(Tags.Items.GEMS_DIAMOND)) //
+				.define('I', Tags.Items.INGOTS_IRON) //
+				.define('D', Tags.Items.GEMS_DIAMOND) //
 				.define('E', Items.ENDER_PEARL) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(output);
@@ -92,7 +92,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("ISI") //
 				.pattern("III") //
 				.define('S', Items.STICK) //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('I', Tags.Items.INGOTS_IRON) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(output);
 		
@@ -100,8 +100,8 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("III") //
 				.pattern(" B ") //
 				.pattern("I I") //
-				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
+				.define('B', Tags.Items.STORAGE_BLOCKS_IRON) //
+				.define('I', Tags.Items.INGOTS_IRON) //
 				.unlockedBy("has_minecart", has(Items.MINECART)) //
 				.save(output);
 		
@@ -109,10 +109,10 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("IBI") //
 				.pattern("PRC") //
 				.pattern("IAI") //
-				.define('I', getIngredientOfTag(Tags.Items.INGOTS_IRON)) //
-				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_REDSTONE)) //
+				.define('I', Tags.Items.INGOTS_IRON) //
+				.define('B', Tags.Items.STORAGE_BLOCKS_REDSTONE) //
 				.define('P', Items.REPEATER) //
-				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('R', Tags.Items.DUSTS_REDSTONE) //
 				.define('C', Items.COMPARATOR) //
 				.define('A', Items.POWERED_RAIL) //
 				.unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE)) //
@@ -124,10 +124,10 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.pattern("IBI") //
 				.pattern("PRC") //
 				.pattern("AIA") //
-				.define('I', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_IRON)) //
-				.define('B', getIngredientOfTag(Tags.Items.STORAGE_BLOCKS_REDSTONE)) //
+				.define('I', Tags.Items.STORAGE_BLOCKS_IRON) //
+				.define('B', Tags.Items.STORAGE_BLOCKS_REDSTONE) //
 				.define('P', Items.REPEATER) //
-				.define('R', getIngredientOfTag(Tags.Items.DUSTS_REDSTONE)) //
+				.define('R', Tags.Items.DUSTS_REDSTONE) //
 				.define('C', Items.COMPARATOR) //
 				.define('A', Items.POWERED_RAIL) //
 				.unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE)) //
@@ -135,7 +135,7 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 				.unlockedBy("has_rail", has(Items.POWERED_RAIL)) //
 				.save(output);
 		
-		SpecialRecipeBuilder.special(UsefulRailroadsRecipeSerializers.CRAFTING_SPECIAL_TELEPORT_RAIL_REMOVE_LOCATION.get()).save(output, UsefulRailroadsMod.MODID + ":teleport_rail_remove_location");
+		SpecialRecipeBuilder.special(TeleportRailSpecialCraftingRecipe::new).save(output, UsefulRailroadsMod.MODID + ":teleport_rail_remove_location");
 	}
 	
 	private void registerFuelRecipes(RecipeOutput output) {
@@ -157,18 +157,18 @@ public class UsefulRailroadsRecipeProvider extends CommonRecipeProvider {
 	}
 	
 	private void addTeleportRailFuel(TagKey<Item> tag, int fuel, RecipeOutput output, String name) {
-		addTeleportRailFuel(getIngredientOfTag(tag), has(tag), fuel, output, name);
+		addTeleportRailFuel(Ingredient.of(tag), has(tag), fuel, output, name);
 	}
 	
 	private void addTeleportRailFuel(Ingredient ingredient, Criterion<?> trigger, int fuel, RecipeOutput output, String name) {
-		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).unlockedBy("has_ingredient", trigger).save(output, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
+		FuelRecipeBuilder.teleportRailFuel(ingredient, fuel).unlockedBy("has_ingredient", trigger).save(output, ResourceLocation.fromNamespaceAndPath(UsefulRailroadsMod.MODID, "fuel/teleport_rail/" + name));
 	}
 	
 	private void addTrackBuilderFuel(TagKey<Item> tag, int fuel, RecipeOutput output, String name) {
-		addTrackBuilderFuel(getIngredientOfTag(tag), has(tag), fuel, output, name);
+		addTrackBuilderFuel(Ingredient.of(tag), has(tag), fuel, output, name);
 	}
 	
 	private void addTrackBuilderFuel(Ingredient ingredient, Criterion<?> trigger, int fuel, RecipeOutput output, String name) {
-		FuelRecipeBuilder.trackBuilderFuel(ingredient, fuel).unlockedBy("has_ingredient", trigger).save(output, new ResourceLocation(UsefulRailroadsMod.MODID, "fuel/track_builder/" + name));
+		FuelRecipeBuilder.trackBuilderFuel(ingredient, fuel).unlockedBy("has_ingredient", trigger).save(output, ResourceLocation.fromNamespaceAndPath(UsefulRailroadsMod.MODID, "fuel/track_builder/" + name));
 	}
 }

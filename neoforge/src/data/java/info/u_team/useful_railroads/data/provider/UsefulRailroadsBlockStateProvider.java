@@ -31,14 +31,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.RailShape;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.IGeneratedBlockState;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
-import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
-import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.IGeneratedBlockState;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 
 public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider {
 	
@@ -80,11 +80,11 @@ public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider 
 		}, BufferStopBlock.POWERED, CustomAdvancedBlockEntityRailBlock.SHAPE);
 	}
 	
-	private void customFlatPoweredRail(CustomPoweredRailBlock block, ModelFile normal, ModelFile powered) {
+	private void customFlatPoweredRail(Block block, ModelFile normal, ModelFile powered) {
 		customFlatPoweredRail(block, blockState -> blockState.getValue(PoweredRailBlock.POWERED) ? powered : normal);
 	}
 	
-	private void customFlatPoweredRail(CustomPoweredRailBlock block, Function<BlockState, ModelFile> modelFunc) {
+	private void customFlatPoweredRail(Block block, Function<BlockState, ModelFile> modelFunc) {
 		forAllFlatRailStates(getUncheckedVariantBuilder(block), state -> {
 			final RailShape shape = state.getValue(PoweredRailBlock.SHAPE);
 			return ConfiguredModel.builder() //

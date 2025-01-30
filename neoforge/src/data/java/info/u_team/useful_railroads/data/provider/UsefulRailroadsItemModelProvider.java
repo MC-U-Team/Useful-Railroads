@@ -11,11 +11,12 @@ import static info.u_team.useful_railroads.init.UsefulRailroadsItems.SINGLE_TRAC
 
 import info.u_team.u_team_core.data.CommonItemModelProvider;
 import info.u_team.u_team_core.data.GenerationData;
+import info.u_team.u_team_core.util.RegistryUtil;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
-import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile;
 
 public class UsefulRailroadsItemModelProvider extends CommonItemModelProvider {
 	
@@ -80,7 +81,7 @@ public class UsefulRailroadsItemModelProvider extends CommonItemModelProvider {
 	}
 	
 	private void simpleRail(ItemLike provider) {
-		final String registryPath = ForgeRegistries.ITEMS.getKey(provider.asItem()).getPath();
+		final String registryPath = RegistryUtil.getBuiltInRegistry(Registries.ITEM).getKey(provider.asItem()).getPath();
 		getBuilder(registryPath).parent(new UncheckedModelFile("item/generated")).texture("layer0", "block/" + registryPath);
 	}
 	
