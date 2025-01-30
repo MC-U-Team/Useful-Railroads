@@ -1,0 +1,6 @@
+// 1.21.1	2025-01-30T01:25:23.0857324	Loot-Table: usefulrailroads
+cf483d1bcbbace4a7e82ab75fd3ab2935149edc3 data/usefulrailroads/loot_table/blocks/buffer_stop.json
+26e5286256a794d92aec1060efb210e9b96902f6 data/usefulrailroads/loot_table/blocks/clamp_rail.json
+9c94442bd17dd4d8eb71b822c97dda98bd1c166a data/usefulrailroads/loot_table/blocks/direction_rail.json
+9894c7cc45db19e30e4f3ec5510d40e6a4e135ca data/usefulrailroads/loot_table/blocks/highspeed_rail.json
+09f85ffdb28d39d47bdc8f5a299d0a696849af32 data/usefulrailroads/loot_table/blocks/intersection_rail.json

@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"D": {
+			"tag": "c:gems/emerald"
+		},
+		"I": {
+			"tag": "c:ingots/iron"
+		},
+		"L": {
+			"tag": "c:slime_balls"
+		},
+		"R": {
+			"tag": "c:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		}
+	},
+	"pattern": [
+		"IDI",
+		"LSL",
+		"IRI"
+	],
+	"result": {
+		"count": 24,
+		"id": "usefulrailroads:clamp_rail"
+	}
+}

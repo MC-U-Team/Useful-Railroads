@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"D": {
+			"tag": "c:gems/diamond"
+		},
+		"E": {
+			"item": "minecraft:ender_pearl"
+		},
+		"I": {
+			"tag": "c:ingots/iron"
+		},
+		"R": {
+			"tag": "c:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		}
+	},
+	"pattern": [
+		"IDI",
+		"ESE",
+		"IRI"
+	],
+	"result": {
+		"count": 1,
+		"id": "usefulrailroads:teleport_rail"
+	}
+}

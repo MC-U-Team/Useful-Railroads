@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"E": {
+			"item": "minecraft:repeater"
+		},
+		"I": {
+			"tag": "c:ingots/iron"
+		},
+		"R": {
+			"tag": "c:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		}
+	},
+	"pattern": [
+		"IEI",
+		"IRI",
+		"ISI"
+	],
+	"result": {
+		"count": 16,
+		"id": "usefulrailroads:direction_rail"
+	}
+}

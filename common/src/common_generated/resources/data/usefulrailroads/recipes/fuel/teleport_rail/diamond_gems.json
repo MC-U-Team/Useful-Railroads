@@ -1,7 +1,0 @@
-{
-	"type": "usefulrailroads:teleport_rail_fuel",
-	"fuel": 50,
-	"ingredient": {
-		"tag": "forge:gems/diamond"
-	}
-}

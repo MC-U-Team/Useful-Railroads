@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"D": {
+			"tag": "c:gems/diamond"
+		},
+		"I": {
+			"tag": "c:ingots/iron"
+		},
+		"L": {
+			"tag": "c:gems/lapis"
+		},
+		"R": {
+			"tag": "c:dusts/redstone"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		}
+	},
+	"pattern": [
+		"IDI",
+		"LSL",
+		"IRI"
+	],
+	"result": {
+		"count": 24,
+		"id": "usefulrailroads:highspeed_rail"
+	}
+}
