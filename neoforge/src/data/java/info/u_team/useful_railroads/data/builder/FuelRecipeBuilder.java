@@ -2,6 +2,7 @@ package info.u_team.useful_railroads.data.builder;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import info.u_team.useful_railroads.recipe.FuelRecipe;
 import info.u_team.useful_railroads.recipe.TeleportRailFuelRecipe;
@@ -59,11 +60,16 @@ public class FuelRecipeBuilder implements RecipeBuilder {
 	}
 	
 	@Override
+	public void save(RecipeOutput recipeOutput) {
+		throw new IllegalStateException("Id must be specified, use other method with resource location");
+	}
+	
+	@Override
 	public void save(RecipeOutput output, ResourceLocation id) {
 		validate(id);
 		final Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
 		criteria.forEach(builder::addCriterion);
-		final FuelRecipe fuelRecipe = factory.create(group, ingredient, fuel);
+		final FuelRecipe fuelRecipe = factory.create(Objects.requireNonNullElse(group, ""), ingredient, fuel);
 		output.accept(id, fuelRecipe, builder.build(id.withPrefix("recipes/")));
 	}
 	
