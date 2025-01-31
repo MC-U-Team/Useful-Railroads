@@ -8,7 +8,7 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.ModConfig;
 
 @Construct(modid = UsefulRailroadsReference.MODID)
-public class UsefulRailroadsForgeCommonConstruct implements ModConstruct {
+public class UsefulRailroadsNeoForgeCommonConstruct implements ModConstruct {
 	
 	@Override
 	public void construct() {
