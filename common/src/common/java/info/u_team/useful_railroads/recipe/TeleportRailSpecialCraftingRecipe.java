@@ -45,6 +45,7 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 				final CustomData component = copy.get(DataComponents.BLOCK_ENTITY_DATA);
 				final CompoundTag compound = component == null ? null : component.copyTag();
 				compound.remove("location");
+				compound.remove("id");
 				if (compound.isEmpty()) {
 					copy.remove(DataComponents.BLOCK_ENTITY_DATA);
 				}

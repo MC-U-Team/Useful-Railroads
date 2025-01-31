@@ -2,6 +2,7 @@ package info.u_team.useful_railroads.item;
 
 import info.u_team.u_team_core.api.item.UItemExtension;
 import info.u_team.u_team_core.util.MathUtil;
+import info.u_team.useful_railroads.init.UsefulRailroadsBlockEntityTypes;
 import info.u_team.useful_railroads.util.Location;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -35,7 +37,8 @@ public class TeleportRailBlockItem extends BlockItem implements UItemExtension {
 	@Override
 	public InteractionResult place(BlockPlaceContext context) {
 		final CustomData component = context.getItemInHand().get(DataComponents.BLOCK_ENTITY_DATA);
-		final CompoundTag compound = component == null ? null : component.copyTag();
+		@SuppressWarnings("deprecation")
+		final CompoundTag compound = component == null ? null : component.getUnsafe();
 		if (compound != null && compound.contains("location")) {
 			return super.place(context);
 		}
@@ -49,7 +52,8 @@ public class TeleportRailBlockItem extends BlockItem implements UItemExtension {
 	@Override
 	public boolean updateItemEntity(ItemStack stack, ItemEntity itemEntity) {
 		final CustomData component = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-		final CompoundTag compound = component == null ? null : component.copyTag();
+		@SuppressWarnings("deprecation")
+		final CompoundTag compound = component == null ? null : component.getUnsafe();
 		if (compound != null && compound.contains("location")) { // Prevent overwriting already installed rails
 			return false;
 		}
@@ -85,8 +89,11 @@ public class TeleportRailBlockItem extends BlockItem implements UItemExtension {
 						stack.update(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY, old -> {
 							final CompoundTag oldCompound = old.copyTag();
 							oldCompound.put("location", new Location(world.dimension(), itemEntity.blockPosition()).serializeNBT());
+							BlockEntity.addEntityType(oldCompound, UsefulRailroadsBlockEntityTypes.TELEPORT_RAIL.get());
 							return CustomData.of(oldCompound);
 						});
+						
+						System.out.println(stack.toString());
 						
 						final ItemEntity newItemEntity = new ItemEntity(world, itemEntityVector.x(), itemEntityVector.y(), itemEntityVector.z(), stack);
 						newItemEntity.setDefaultPickUpDelay();

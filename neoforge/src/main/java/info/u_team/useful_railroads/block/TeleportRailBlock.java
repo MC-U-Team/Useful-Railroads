@@ -69,12 +69,10 @@ public class TeleportRailBlock extends CustomBlockEntityPoweredRailBlock {
 	
 	private ItemStack getItemStack(BlockGetter level, BlockPos pos) {
 		final ItemStack stack = new ItemStack(this);
-		getBlockEntity(level, pos).map(TeleportRailBlockEntity.class::cast).ifPresent(tileEntity -> {
+		getBlockEntity(level, pos).map(TeleportRailBlockEntity.class::cast).ifPresent(blockEntity -> {
 			final CompoundTag compound = new CompoundTag();
-			tileEntity.saveNBT(compound, tileEntity.getLevel().registryAccess());
-			if (!compound.isEmpty()) {
-				stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(compound));
-			}
+			blockEntity.saveNBT(compound, blockEntity.getLevel().registryAccess());
+			BlockItem.setBlockEntityData(stack, blockEntityType.get(), compound);
 		});
 		return stack;
 	}
