@@ -4,7 +4,7 @@ import info.u_team.u_team_core.api.block.BlockItemProvider;
 import info.u_team.u_team_core.util.CastUtil;
 import net.minecraft.world.level.block.Block;
 
-public class ForgeRailBlockCreator implements RailBlockCreator.Creator {
+public class NeoForgeRailBlockCreator implements RailBlockCreator.Creator {
 	
 	@Override
 	public <B extends Block & BlockItemProvider> B createHighspeedRail() {
