@@ -13,5 +13,7 @@ public class UsefulRailroadsNeoForgeCommonConstruct implements ModConstruct {
 	@Override
 	public void construct() {
 		ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, NeoForgeCommonConfig.CONFIG);
+		
+		UsefulRailroadsNeoForgeCapabilities.register();
 	}
 }
