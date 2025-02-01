@@ -10,7 +10,6 @@ public class UsefulRailroadsClientConstruct implements ModConstruct {
 	
 	@Override
 	public void construct() {
-		UsefulRailroadsModels.register();
 		UsefulRailroadsScreens.register();
 		
 		DrawTrackBuilderSelectionEventHandler.register();
