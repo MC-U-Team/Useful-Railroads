@@ -24,9 +24,9 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 		int count = 0;
 		for (int i = 0; i < input.size(); i++) {
 			final ItemStack stack = input.getItem(i);
-			// TODO: maybe REWORK WITH CUSTOM COMPONENT
 			final CustomData component = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-			final CompoundTag compound = component == null ? null : component.copyTag();
+			@SuppressWarnings("deprecation")
+			final CompoundTag compound = component == null ? null : component.getUnsafe();
 			if (stack.getItem() == UsefulRailroadsBlocks.TELEPORT_RAIL.getItem().asItem() && compound != null && compound.contains("location")) {
 				count++;
 			} else if (!stack.isEmpty()) {
@@ -44,10 +44,14 @@ public class TeleportRailSpecialCraftingRecipe extends CustomRecipe {
 				final ItemStack copy = stack.copy();
 				final CustomData component = copy.get(DataComponents.BLOCK_ENTITY_DATA);
 				final CompoundTag compound = component == null ? null : component.copyTag();
-				compound.remove("location");
-				compound.remove("id");
-				if (compound.isEmpty()) {
-					copy.remove(DataComponents.BLOCK_ENTITY_DATA);
+				if (component != null) {
+					compound.remove("location");
+					copy.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(compound));
+					// Remove if only id is present as well, CustomData.of copies compound
+					compound.remove("id");
+					if (compound.isEmpty()) {
+						copy.remove(DataComponents.BLOCK_ENTITY_DATA);
+					}
 				}
 				return copy;
 			}
