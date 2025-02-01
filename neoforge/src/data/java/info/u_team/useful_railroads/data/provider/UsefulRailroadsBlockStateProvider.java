@@ -107,6 +107,8 @@ public class UsefulRailroadsBlockStateProvider extends CommonBlockStateProvider 
 				final RailShape shape = fullState.getValue(PoweredRailBlock.SHAPE);
 				if (shape == RailShape.NORTH_SOUTH || shape == RailShape.EAST_WEST) { // We only generate the NORTH_SOUTH and EAST_WEST shapes
 					builder.setModels(partialState, mapper.apply(fullState));
+				} else {
+					builder.setModels(partialState, ConfiguredModel.builder().modelFile(new ExistingModelFile(mcLoc("block/bedrock"), models().existingFileHelper)).build());
 				}
 			}
 		});

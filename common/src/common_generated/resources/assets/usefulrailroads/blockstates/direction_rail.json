@@ -1,11 +1,35 @@
 {
 	"variants": {
+		"positive_axis=false,powered=false,shape=ascending_east": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=false,powered=false,shape=ascending_north": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=false,powered=false,shape=ascending_south": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=false,powered=false,shape=ascending_west": {
+			"model": "minecraft:block/bedrock"
+		},
 		"positive_axis=false,powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/direction_rail",
 			"y": -90
 		},
 		"positive_axis=false,powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/direction_rail"
+		},
+		"positive_axis=false,powered=true,shape=ascending_east": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=false,powered=true,shape=ascending_north": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=false,powered=true,shape=ascending_south": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=false,powered=true,shape=ascending_west": {
+			"model": "minecraft:block/bedrock"
 		},
 		"positive_axis=false,powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/direction_powered_rail",
@@ -14,6 +38,18 @@
 		"positive_axis=false,powered=true,shape=north_south": {
 			"model": "usefulrailroads:block/direction_powered_rail"
 		},
+		"positive_axis=true,powered=false,shape=ascending_east": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=true,powered=false,shape=ascending_north": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=true,powered=false,shape=ascending_south": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=true,powered=false,shape=ascending_west": {
+			"model": "minecraft:block/bedrock"
+		},
 		"positive_axis=true,powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/direction_rail",
 			"y": 90
@@ -21,6 +57,18 @@
 		"positive_axis=true,powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/direction_rail",
 			"y": 180
+		},
+		"positive_axis=true,powered=true,shape=ascending_east": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=true,powered=true,shape=ascending_north": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=true,powered=true,shape=ascending_south": {
+			"model": "minecraft:block/bedrock"
+		},
+		"positive_axis=true,powered=true,shape=ascending_west": {
+			"model": "minecraft:block/bedrock"
 		},
 		"positive_axis=true,powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/direction_powered_rail",

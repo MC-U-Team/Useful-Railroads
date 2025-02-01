@@ -1,11 +1,35 @@
 {
 	"variants": {
+		"powered=false,shape=ascending_east": {
+			"model": "minecraft:block/bedrock"
+		},
+		"powered=false,shape=ascending_north": {
+			"model": "minecraft:block/bedrock"
+		},
+		"powered=false,shape=ascending_south": {
+			"model": "minecraft:block/bedrock"
+		},
+		"powered=false,shape=ascending_west": {
+			"model": "minecraft:block/bedrock"
+		},
 		"powered=false,shape=east_west": {
 			"model": "usefulrailroads:block/teleport_rail",
 			"y": 90
 		},
 		"powered=false,shape=north_south": {
 			"model": "usefulrailroads:block/teleport_rail"
+		},
+		"powered=true,shape=ascending_east": {
+			"model": "minecraft:block/bedrock"
+		},
+		"powered=true,shape=ascending_north": {
+			"model": "minecraft:block/bedrock"
+		},
+		"powered=true,shape=ascending_south": {
+			"model": "minecraft:block/bedrock"
+		},
+		"powered=true,shape=ascending_west": {
+			"model": "minecraft:block/bedrock"
 		},
 		"powered=true,shape=east_west": {
 			"model": "usefulrailroads:block/teleport_powered_rail",

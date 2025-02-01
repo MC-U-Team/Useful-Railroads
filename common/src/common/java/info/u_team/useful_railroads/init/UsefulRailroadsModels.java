@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 public class UsefulRailroadsModels {
 	
 	private static void onSetup() {
+		System.out.println("______________________________________________________________________________ REGISTERD");
 		ModelUtil.addCustomStateContainer(HIGHSPEED_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(HIGHSPEED_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
 		ModelUtil.addCustomStateContainer(SPEED_CLAMP_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(SPEED_CLAMP_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).create(Block::defaultBlockState, BlockState::new));
 		ModelUtil.addCustomStateContainer(DIRECTION_RAIL.getId(), (new StateDefinition.Builder<Block, BlockState>(DIRECTION_RAIL.get())).add(BaseRailBlock.WATERLOGGED, PoweredRailBlock.POWERED, EnumProperty.create("shape", RailShape.class, RailShape.NORTH_SOUTH, RailShape.EAST_WEST)).add(RailBlockCustomProperty.AXIS_DIRECTION).create(Block::defaultBlockState, BlockState::new));
