@@ -85,6 +85,9 @@ repositories {
 		url = "https://maven.minecraftforge.net"
 	}
 	maven {
+		url = "https://repo.u-team.info"
+	}
+	maven {
 		url = "https://maven.blamejared.com"
 	}
 }
