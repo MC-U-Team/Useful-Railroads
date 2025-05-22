@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.21.1-1.6.0.61] - 2025-05-22
+### Changed
+ - Update build scripts
+ - Future proof for updates
+
 ## [1.21.1-1.6.0.60] - 2025-02-01
 ### Changed
  - Port to 1.21.1
